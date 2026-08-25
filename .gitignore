@@ -1,0 +1,12 @@
+configs/config.yaml
+configs/test_config.yaml
+.venv/
+__pycache__/
+data/pdfs/
+data/chroma_db/
+data/figures/
+data_test/
+*.pyc
+node_modules/
+data/processed/
+data/raw_metadata/

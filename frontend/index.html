@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResearchGPT — Corpus Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="ledger-header">
+  <div class="ledger-header__left">
+    <span class="stamp-mark">RG</span>
+    <div>
+      <h1>Corpus Catalog</h1>
+      <p class="ledger-header__sub" id="corpus-subtitle">Loading records&hellip;</p>
+    </div>
+  </div>
+  <div class="ledger-header__right">
+    <button id="analysis-toggle" class="btn btn--ghost">Corpus Analysis</button>
+    <button id="corpus-table-toggle" class="btn btn--ghost">Read all papers at once</button>
+    <button id="compare-toggle" class="btn btn--ghost" disabled>
+      Compare selected (<span id="compare-count">0</span>)
+    </button>
+  </div>
+</header>
+
+<main id="app">
+  <section class="control-deck" aria-label="New search or upload">
+    <div class="control-deck__tabs">
+      <button class="deck-tab active" id="deck-tab-search" type="button">New Search</button>
+      <button class="deck-tab" id="deck-tab-upload" type="button">Upload Corpus</button>
+      <button class="deck-tab" id="deck-tab-novelty" type="button">Check Novelty vs Corpus</button>
+    </div>
+
+    <form id="search-form" class="control-panel">
+      <div class="control-row">
+        <label for="search-query">Query</label>
+        <input type="text" id="search-query" required
+               placeholder="e.g. domain-generalizable medical image segmentation">
+      </div>
+      <div class="control-row control-row--grid">
+        <div>
+          <label for="search-target">Target papers</label>
+          <input type="number" id="search-target" value="50" min="5" max="300">
+        </div>
+        <div>
+          <label for="search-pool">Candidate pool</label>
+          <input type="number" id="search-pool" value="150" min="10" max="1000">
+        </div>
+        <div>
+          <label for="search-year-start">Year from</label>
+          <input type="number" id="search-year-start" placeholder="optional">
+        </div>
+        <div>
+          <label for="search-year-end">Year to</label>
+          <input type="number" id="search-year-end" placeholder="optional">
+        </div>
+        <div>
+          <label for="search-clusters">Clusters</label>
+          <select id="search-clusters">
+            <option value="">auto</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn" id="search-submit">Run search</button>
+      <span class="control-note">Replaces the current catalog. Full run: 30-60+ min for extraction.</span>
+    </form>
+
+    <form id="upload-form" class="control-panel hidden">
+      <div class="control-row">
+        <label for="upload-files">PDF files (50+ supported)</label>
+        <input type="file" id="upload-files" accept="application/pdf" multiple required>
+      </div>
+      <button type="submit" class="btn" id="upload-submit">Run upload</button>
+      <span class="control-note">Skips search entirely — analyzes exactly the files you attach.</span>
+    </form>
+
+    <form id="novelty-form" class="control-panel hidden">
+      <div class="control-row">
+        <label for="novelty-file">Your paper (PDF)</label>
+        <input type="file" id="novelty-file" accept="application/pdf" required>
+      </div>
+      <button type="submit" class="btn" id="novelty-submit">Check against full corpus</button>
+      <span class="control-note">Retrieves your paper's most similar matches from the ENTIRE current corpus, checks gap-fit, and gives a grounded novelty verdict.</span>
+    </form>
+
+    <div id="job-status-panel" class="job-status hidden">
+      <div class="job-status__stage" id="job-stage-text">—</div>
+      <div class="job-status__bar"><div class="job-status__bar-fill" id="job-bar-fill"></div></div>
+      <div class="job-status__detail" id="job-detail-text"></div>
+    </div>
+  </section>
+
+  <nav id="cluster-tabs" class="cluster-tabs" aria-label="Filter by category"></nav>
+  <section id="catalog" class="catalog" aria-label="Paper catalog"></section>
+</main>
+
+<!-- Record detail — slides in as a pulled card -->
+<div id="record-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="record-sheet" role="dialog" aria-modal="true">
+    <button class="btn btn--close" id="record-close" aria-label="Close record">&times;</button>
+    <div id="record-content"></div>
+  </div>
+</div>
+
+<!-- Comparison sheet -->
+<div id="compare-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="compare-sheet" role="dialog" aria-modal="true">
+    <button class="btn btn--close" id="compare-close" aria-label="Close comparison">&times;</button>
+    <div id="compare-content"></div>
+  </div>
+</div>
+
+<!-- Full-corpus novelty check result -->
+<div id="novelty-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="record-sheet" role="dialog" aria-modal="true">
+    <button class="btn btn--close" id="novelty-close" aria-label="Close novelty report">&times;</button>
+    <div id="novelty-content"></div>
+  </div>
+</div>
+
+<!-- Cumulative full-corpus table — read every paper's every field at once -->
+<div id="table-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="table-sheet" role="dialog" aria-modal="true">
+    <button class="btn btn--close" id="table-close" aria-label="Close corpus table">&times;</button>
+    <div class="table-sheet__header">
+      <h2 class="record-title" style="margin:0;">Full Corpus Table</h2>
+      <button id="table-export-csv" class="btn btn--ghost">Download CSV</button>
+    </div>
+    <div id="table-scroll-wrap" class="table-scroll-wrap">
+      <table id="corpus-table" class="corpus-table"></table>
+    </div>
+  </div>
+</div>
+
+<!-- Corpus-level synthesis + gap analysis -->
+<div id="analysis-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="table-sheet" role="dialog" aria-modal="true">
+    <button class="btn btn--close" id="analysis-close" aria-label="Close corpus analysis">&times;</button>
+    <div class="table-sheet__header">
+      <h2 class="record-title" style="margin:0;">Corpus Analysis</h2>
+    </div>
+    <div id="analysis-scroll-wrap" class="table-scroll-wrap analysis-scroll-wrap">
+      <div id="analysis-content"></div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
