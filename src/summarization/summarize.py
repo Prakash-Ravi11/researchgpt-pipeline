@@ -28,7 +28,9 @@ Run standalone for testing:
 import argparse
 import json
 import re
+import threading
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import numpy as np
@@ -149,6 +151,8 @@ _DATASET_STOPWORDS = {
     "Training", "Test", "Validation", "Proposed", "Public", "Standard",
 }
 
+_CACHE_WRITE_LOCK = threading.Lock()
+
 
 def extract_datasets_by_pattern(text: str) -> list[str]:
     """Deterministic backstop for dataset detection — scans raw text directly
@@ -189,6 +193,27 @@ def merge_datasets(llm_datasets: list, pattern_datasets: list[str]) -> tuple[lis
             merged.append(d)
             seen_lower.add(d.lower())
     return merged, len(merged) == 0
+
+
+def should_attempt_dataset_fallback(text: str) -> bool:
+    """Return True only when the paper text gives evidence of empirical work.
+
+    The main extraction already asks the model to identify datasets; the fallback
+    should not be triggered for purely conceptual or theoretical discussions that
+    have zero empirical signals. This preserves the safety net without paying a
+    second full LLM call on every theoretically-leaning paper.
+    """
+    if not isinstance(text, str) or not text.strip():
+        return False
+
+    lower = text.lower()
+    empirical_patterns = [
+        r"\b(?:dataset|benchmark|corpus|survey|experiment|experimental|trial|cohort|participants?|subjects?|patients?|users?|responses?|interviews?)\b",
+        r"\b(?:training|validation|test)\s+(?:set|split)\b",
+        r"\b(?:accuracy|precision|recall|f1|dice|auc|mse|rmse|nll|bleu|rouge|mae|mape)\b",
+        r"\b\d+\s+(?:participants?|subjects?|patients?|users?|responses?)\b",
+    ]
+    return any(re.search(pattern, lower) for pattern in empirical_patterns)
 
 
 def load_config(config_path: str) -> dict:
@@ -282,13 +307,19 @@ def estimate_num_ctx(user_content: str, system_prompt: str = EXTRACTION_SYSTEM_P
 def load_extraction_cache(processed_dir: str) -> dict:
     path = Path(processed_dir) / "extraction_cache.json"
     if path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
+        try:
+            cache = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return {}
+        return cache if isinstance(cache, dict) else {}
     return {}
 
 
 def save_extraction_cache(processed_dir: str, cache: dict) -> None:
     path = Path(processed_dir) / "extraction_cache.json"
-    path.write_text(json.dumps(cache, indent=2), encoding="utf-8")
+    tmp_path = path.with_suffix(".json.tmp")
+    tmp_path.write_text(json.dumps(cache, indent=2), encoding="utf-8")
+    tmp_path.replace(path)
 
 
 def _parse_json_response(content: str) -> dict:
@@ -299,7 +330,10 @@ def _parse_json_response(content: str) -> dict:
     content = content.strip()
 
     try:
-        return json.loads(content)
+        parsed = json.loads(content)
+        if not isinstance(parsed, dict):
+            raise json.JSONDecodeError("Expected a JSON object", content, 0)
+        return parsed
     except json.JSONDecodeError:
         pass
 
@@ -307,14 +341,20 @@ def _parse_json_response(content: str) -> dict:
     fence_match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", content, re.DOTALL)
     if fence_match:
         try:
-            return json.loads(fence_match.group(1))
+            parsed = json.loads(fence_match.group(1))
+            if not isinstance(parsed, dict):
+                raise json.JSONDecodeError("Expected a JSON object", content, 0)
+            return parsed
         except json.JSONDecodeError:
             pass
 
     # Last resort: grab the first {...} block, in case of trailing junk text.
     brace_match = re.search(r"\{.*\}", content, re.DOTALL)
     if brace_match:
-        return json.loads(brace_match.group(0))  # let this raise if still invalid — caller retries
+        parsed = json.loads(brace_match.group(0))  # let this raise if still invalid — caller retries
+        if not isinstance(parsed, dict):
+            raise json.JSONDecodeError("Expected a JSON object", content, 0)
+        return parsed
 
     raise json.JSONDecodeError("No JSON object found in response", content, 0)
 
@@ -354,20 +394,26 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
         try:
             resp = requests.post(url, json=payload, timeout=timeout)
             resp.raise_for_status()
-            content = resp.json()["message"]["content"]
+            response_json = resp.json()
+            if not isinstance(response_json, dict):
+                raise ValueError("Ollama response root is not a JSON object")
+            message = response_json.get("message")
+            if not isinstance(message, dict) or not isinstance(message.get("content"), str):
+                raise ValueError("Ollama response has no message.content string")
+            content = message["content"]
             return _parse_json_response(content)
-        except requests.exceptions.ConnectionError as e:
-            raise RuntimeError(
-                f"Could not reach Ollama at {base_url}. Is it installed and running? "
-                f"Check with: ollama list"
-            ) from e
         except requests.exceptions.Timeout:
             if attempt < max_retries:
                 print(f"    Timed out after {timeout}s (attempt {attempt + 1}/{max_retries + 1}) — retrying...")
                 continue
             print(f"    Still timing out after {max_retries + 1} attempts — skipping this paper")
             return None
-        except (json.JSONDecodeError, KeyError) as e:
+        except requests.exceptions.RequestException as e:
+            if attempt < max_retries:
+                continue
+            print(f"    Ollama request failed after {max_retries + 1} attempts: {e}")
+            return None
+        except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
             if attempt < max_retries:
                 continue
             print(f"    Failed to parse LLM JSON output after {max_retries + 1} attempts: {e}")
@@ -376,89 +422,139 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
     return None
 
 
-def extract_paper_fields(papers: dict, llm_cfg: dict, progress_path: Path | None = None,
-                          cache: dict | None = None, processed_dir: str | None = None) -> dict:
-    """Run structured extraction for every paper. Returns paper_id -> extraction dict.
+_STRING_EXTRACTION_FIELDS = [
+    "summary", "problem_addressed", "method", "results", "inferences",
+    "novelty_claim", "limitations", "key_findings",
+]
+_LIST_EXTRACTION_FIELDS = ["datasets", "metrics"]
 
-    If cache is provided, papers already present in it are read directly and
-    skipped — the main speed lever for repeated/overlapping runs. New
-    extractions are added to the cache and flushed to disk after every paper
-    (same crash-resilience reasoning as progress_path below).
 
-    If progress_path is given, results are saved after EVERY paper, so a
-    crash (timeout, connection drop, Ctrl+C) doesn't lose already-completed
-    work.
-    """
-    results = {}
-    cache = cache if cache is not None else {}
-    cache_hits = 0
-
-    for paper_id, paper in tqdm(papers.items(), desc="Extracting per-paper fields"):
-        if paper_id in cache:
-            results[paper_id] = cache[paper_id]
-            cache_hits += 1
-            continue
-
-        user_content = f"Title: {paper['title']}\n\nText:\n{paper['text']}"
-        num_ctx = estimate_num_ctx(user_content)
-        extraction = call_ollama_json(
-            base_url=llm_cfg["base_url"],
-            model=llm_cfg["model"],
-            system_prompt=EXTRACTION_SYSTEM_PROMPT,
-            user_content=user_content,
-            temperature=llm_cfg.get("temperature", 0.2),
-            timeout=llm_cfg.get("timeout_seconds", 300),
-            num_ctx=num_ctx,
-        )
-        if extraction is None:
-            extraction = {
-                "summary": "", "problem_addressed": "", "method": "",
-                "datasets": [], "metrics": [], "key_findings": "",
-                "_extraction_failed": True,
-            }
+def normalize_extraction(extraction: dict) -> dict:
+    """Normalize LLM fields before caching, clustering, or downstream output."""
+    normalized = dict(extraction) if isinstance(extraction, dict) else {}
+    for field in _STRING_EXTRACTION_FIELDS:
+        normalized[field] = _stringify(normalized.get(field, ""))
+    for field in _LIST_EXTRACTION_FIELDS:
+        value = normalized.get(field, [])
+        if isinstance(value, list):
+            normalized[field] = [_stringify(item).strip() for item in value if _stringify(item).strip()]
+        elif value:
+            normalized[field] = [_stringify(value).strip()]
         else:
-            # Mandatory per faculty review — every experimental paper should have
-            # a dataset identified. Three layers, each only engaged if the one
-            # before it came up empty:
-            #   1. The main extraction call above (semantic understanding)
-            #   2. Deterministic pattern backstop over the raw text (catches
-            #      mentions the LLM's summarization glossed over)
-            #   3. A focused, dataset-only fallback LLM call — narrower prompt,
-            #      explicitly told dataset names are sometimes a single passing
-            #      mention, before we accept "genuinely none"
-            pattern_datasets = extract_datasets_by_pattern(paper["text"])
-            merged, none_found = merge_datasets(extraction.get("datasets"), pattern_datasets)
+            normalized[field] = []
+    return normalized
 
-            if none_found:
-                fallback = call_ollama_json(
-                    base_url=llm_cfg["base_url"],
-                    model=llm_cfg["model"],
-                    system_prompt=DATASET_FALLBACK_PROMPT,
-                    user_content=user_content,
-                    temperature=llm_cfg.get("temperature", 0.2),
-                    timeout=llm_cfg.get("timeout_seconds", 300),
-                    num_ctx=num_ctx,
-                )
-                if fallback and fallback.get("datasets"):
-                    merged, none_found = merge_datasets(fallback["datasets"], [])
-                    extraction["_dataset_fallback_used"] = True
 
-            extraction["datasets"] = merged
-            if none_found:
-                # Genuinely dataset-less papers (pure theory/survey) do exist —
-                # this makes that exception visible and explicit rather than
-                # silently indistinguishable from a missed extraction.
-                extraction["_no_dataset_stated"] = True
-        results[paper_id] = extraction
+def is_usable_extraction(extraction: dict) -> bool:
+    if not isinstance(extraction, dict) or extraction.get("_extraction_failed"):
+        return False
+    return sum(bool(extraction.get(field, "").strip()) for field in
+               ["summary", "problem_addressed", "method", "key_findings"]) >= 2
 
-        if not extraction.get("_extraction_failed"):
+
+def failed_extraction() -> dict:
+    return normalize_extraction({"_extraction_failed": True})
+
+
+def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict, processed_dir: str | None = None) -> tuple[str, dict]:
+    """One paper's extraction, factored out so it can run under a small worker pool."""
+    cached = cache.get(paper_id)
+    if isinstance(cached, dict):
+        cached = normalize_extraction(cached)
+        if is_usable_extraction(cached):
+            return paper_id, cached
+
+    user_content = f"Title: {paper['title']}\n\nText:\n{paper['text']}"
+    num_ctx = estimate_num_ctx(user_content)
+    extraction = call_ollama_json(
+        base_url=llm_cfg["base_url"],
+        model=llm_cfg["model"],
+        system_prompt=EXTRACTION_SYSTEM_PROMPT,
+        user_content=user_content,
+        temperature=llm_cfg.get("temperature", 0.2),
+        timeout=llm_cfg.get("timeout_seconds", 300),
+        num_ctx=num_ctx,
+    )
+    if extraction is None:
+        extraction = failed_extraction()
+    else:
+        extraction = normalize_extraction(extraction)
+        pattern_datasets = extract_datasets_by_pattern(paper["text"])
+        merged, none_found = merge_datasets(extraction.get("datasets"), pattern_datasets)
+
+        if none_found and should_attempt_dataset_fallback(paper["text"]):
+            fallback = call_ollama_json(
+                base_url=llm_cfg["base_url"],
+                model=llm_cfg["model"],
+                system_prompt=DATASET_FALLBACK_PROMPT,
+                user_content=user_content,
+                temperature=llm_cfg.get("temperature", 0.2),
+                timeout=llm_cfg.get("timeout_seconds", 300),
+                num_ctx=num_ctx,
+            )
+            if fallback and fallback.get("datasets"):
+                merged, none_found = merge_datasets(fallback["datasets"], [])
+                extraction["_dataset_fallback_used"] = True
+
+        extraction["datasets"] = merged
+        if none_found:
+            extraction["_no_dataset_stated"] = True
+
+    if not extraction.get("_extraction_failed"):
+        with _CACHE_WRITE_LOCK:
             cache[paper_id] = extraction
             if processed_dir is not None:
                 save_extraction_cache(processed_dir, cache)
 
-        if progress_path is not None:
-            progress_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    return paper_id, extraction
 
+
+def extract_paper_fields(papers: dict, llm_cfg: dict, progress_path: Path | None = None,
+                          cache: dict | None = None, processed_dir: str | None = None,
+                          max_workers: int | None = 2) -> dict:
+    """Run structured extraction for every paper.
+
+    The main optimization is to avoid the expensive dataset-only fallback LLM
+    call for papers that give no empirical evidence in the source text, and to
+    cap per-paper extraction parallelism at a modest worker count to avoid the
+    Ollama saturation we saw at 4 workers without sacrificing the serial-vs-2x
+    improvement.
+    """
+    results = {}
+    cache = cache if cache is not None else {}
+    max_workers = max(1, min(max_workers or 2, len(papers) or 1))
+    cached_ids = {paper_id for paper_id, value in cache.items()
+                  if isinstance(value, dict) and is_usable_extraction(value)}
+
+    if len(papers) <= 1 or max_workers == 1:
+        for paper_id, paper in tqdm(papers.items(), desc="Extracting per-paper fields"):
+            paper_id, extraction = _extract_single_paper(paper_id, paper, llm_cfg, cache, processed_dir)
+            results[paper_id] = extraction
+            if progress_path is not None:
+                progress_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+    else:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {
+                executor.submit(_extract_single_paper, paper_id, paper, llm_cfg, cache, processed_dir): paper_id
+                for paper_id, paper in papers.items()
+            }
+            for future in tqdm(as_completed(futures), total=len(futures), desc="Extracting per-paper fields"):
+                paper_id = futures[future]
+                try:
+                    paper_id, extraction = future.result()
+                except Exception as exc:
+                    print(f"    Extraction failed for {paper_id}: {exc}")
+                    extraction = {
+                        "summary": "", "problem_addressed": "", "method": "",
+                        "datasets": [], "metrics": [], "key_findings": "",
+                        "_extraction_failed": True,
+                        "_extraction_error": str(exc),
+                    }
+                results[paper_id] = extraction
+                if progress_path is not None:
+                    progress_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+
+    cache_hits = len(cached_ids.intersection(papers))
     if cache_hits:
         print(f"  {cache_hits}/{len(papers)} papers served from extraction cache (skipped LLM call)")
 
@@ -575,23 +671,47 @@ def cluster_papers(paper_embeddings: dict[str, np.ndarray], k) -> tuple[dict[str
     from sklearn.cluster import KMeans
     from sklearn.metrics import silhouette_score
 
+    def fit(candidate_k: int):
+        min_size = max(2, int(np.ceil(len(paper_ids) / (candidate_k * 4))))
+        best = None
+        for seed in range(42, 52):
+            candidate = KMeans(n_clusters=candidate_k, random_state=seed, n_init=10).fit_predict(X)
+            counts = np.bincount(candidate, minlength=candidate_k)
+            score = silhouette_score(X, candidate) if len(set(candidate)) > 1 else -1.0
+            if best is None or score > best[0]:
+                best = (score, candidate)
+            if counts.min() >= min_size:
+                return candidate, score
+        return best[1], best[0]
+
     paper_ids = list(paper_embeddings.keys())
     X = np.stack([paper_embeddings[pid] for pid in paper_ids])
 
+    if len(paper_ids) < 2:
+        labels = np.zeros(1, dtype=int)
+        return {pid: int(label) for pid, label in zip(paper_ids, labels)}, -1.0
+
     if k == "auto":
+        if len(paper_ids) == 2:
+            labels = np.zeros(len(paper_ids), dtype=int)
+            return {pid: int(label) for pid, label in zip(paper_ids, labels)}, -1.0
+
         best_k, best_score, best_labels = None, -1, None
-        k_min, k_max = 3, min(8, len(paper_ids) - 1)
+        k_min, k_max = 2, min(8, len(paper_ids) - 1)
         for candidate_k in range(k_min, k_max + 1):
-            labels = KMeans(n_clusters=candidate_k, random_state=42, n_init=10).fit_predict(X)
-            score = silhouette_score(X, labels)
+            labels, score = fit(candidate_k)
             if score > best_score:
                 best_k, best_score, best_labels = candidate_k, score, labels
-        print(f"  auto-selected k={best_k} (silhouette={best_score:.3f})")
-        labels, score = best_labels, best_score
+
+        if best_labels is None:
+            labels = np.zeros(len(paper_ids), dtype=int)
+            score = -1.0
+        else:
+            labels, score = best_labels, best_score
+        print(f"  auto-selected k={best_k} (silhouette={score:.3f})")
     else:
-        k = min(k, len(paper_ids))  # can't have more clusters than papers
-        labels = KMeans(n_clusters=k, random_state=42, n_init=10).fit_predict(X)
-        score = silhouette_score(X, labels) if len(set(labels)) > 1 else -1.0
+        k = min(k, max(1, len(paper_ids) - 1))
+        labels, score = fit(k)
 
     return {pid: int(label) for pid, label in zip(paper_ids, labels)}, score
 
@@ -643,7 +763,12 @@ def name_clusters(cluster_assignments: dict[str, int], papers: dict, extractions
 
     cluster_info = {}
     for cluster_id, paper_ids in tqdm(sorted(by_cluster.items()), desc="Naming clusters"):
-        exemplars = paper_ids[:max_exemplars]
+        exemplars = [pid for pid in paper_ids if pid in papers][:max_exemplars]
+        if not exemplars:
+            cluster_info[cluster_id] = {
+                "label": f"Cluster {cluster_id}", "description": "", "paper_count": 0,
+            }
+            continue
         lines = []
         for pid in exemplars:
             title = papers[pid]["title"]
@@ -659,13 +784,16 @@ def name_clusters(cluster_assignments: dict[str, int], papers: dict, extractions
             temperature=0.3,
             num_ctx=CLUSTER_NAMING_NUM_CTX,
         )
-        if naming is None:
+        if not isinstance(naming, dict):
             naming = {"label": f"Cluster {cluster_id}", "description": ""}
 
+        label = _stringify(naming.get("label", "")).strip() or f"Cluster {cluster_id}"
+        description = _stringify(naming.get("description", "")).strip()
+
         cluster_info[cluster_id] = {
-            "label": naming.get("label", f"Cluster {cluster_id}"),
-            "description": naming.get("description", ""),
-            "paper_count": len(paper_ids),
+            "label": label,
+            "description": description,
+            "paper_count": len(exemplars),
         }
 
     return cluster_info
@@ -677,7 +805,12 @@ def run_summarization(config: dict) -> None:
     cat_cfg = config.get("categorization", {})
 
     chunks = load_chunks(paths_cfg["processed_dir"])
-    papers = reconstruct_paper_texts(chunks, llm_cfg.get("max_context_words", 3000))
+    max_context_words = llm_cfg.get("max_context_words", 3000)
+    if config.get("summarization", {}).get("context_selection") == "retrieval_aware":
+        from src.summarization.retrieval_aware import build_retrieval_aware_papers
+        papers = build_retrieval_aware_papers(config, max_context_words)
+    else:
+        papers = reconstruct_paper_texts(chunks, max_context_words)
     print(f"Reconstructed {len(papers)} papers from {len(chunks)} chunks")
 
     cache = load_extraction_cache(paths_cfg["processed_dir"])

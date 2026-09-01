@@ -13,18 +13,12 @@ Stops immediately if any stage fails, rather than continuing on broken data.
 import argparse
 import sys
 
-import yaml
-
 from src.collection.semantic_scholar import run_collection
+from src.config import load_config
 from src.processing.pdf_parser import run_processing
 from src.embedding.build_index import run_embedding
 from src.summarization.summarize import run_summarization
 from sanity_check import run_sanity_check
-
-
-def load_config(config_path: str) -> dict:
-    with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
 
 
 def run_all(config: dict, config_path: str) -> bool:

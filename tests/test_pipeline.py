@@ -17,7 +17,7 @@ import numpy as np
 
 from src.processing.pdf_parser import chunk_text, clean_text
 from src.summarization.validate import stringify, listify, find_weak_extractions
-from src.summarization.summarize import cluster_papers
+from src.summarization.summarize import cluster_papers, should_attempt_dataset_fallback
 
 PASS_COUNT = 0
 FAIL_COUNT = 0
@@ -171,7 +171,7 @@ def test_cluster_papers_small_corpus():
     for n in [2, 3, 4, 5, 9]:
         embeddings = {f"paper_{i}": rng.random(16) for i in range(n)}
         try:
-            result = cluster_papers(embeddings, k="auto")
+            result, score = cluster_papers(embeddings, k="auto")
             ok = len(result) == n and all(pid in result for pid in embeddings)
             check(f"auto-k with n={n} papers doesn't crash and covers all papers", ok)
         except Exception as e:
@@ -180,26 +180,38 @@ def test_cluster_papers_small_corpus():
     # Fixed k larger than paper count should clamp, not crash.
     embeddings = {f"paper_{i}": rng.random(16) for i in range(3)}
     try:
-        result = cluster_papers(embeddings, k=6)
+        result, score = cluster_papers(embeddings, k=6)
         check("fixed k=6 with only 3 papers clamps instead of crashing",
               len(result) == 3)
     except Exception as e:
         check("fixed k=6 with only 3 papers clamps instead of crashing", False, str(e))
 
 
+def test_should_attempt_dataset_fallback():
+    print("\nshould_attempt_dataset_fallback()")
+
+    check("empirical study text triggers dataset fallback",
+          should_attempt_dataset_fallback("We surveyed 200 participants and evaluated on the MNIST benchmark") is True)
+    check("pure theory text does not trigger dataset fallback",
+          should_attempt_dataset_fallback("This is a conceptual discussion of abstraction and proof-based reasoning") is False)
+    check("empty text does not trigger dataset fallback",
+          should_attempt_dataset_fallback("") is False)
+
+
 # ---------------------------------------------------------------------------
 
 def main():
-    test_chunk_text()
-    test_clean_text()
-    test_stringify_listify()
-    test_find_weak_extractions()
-    test_cluster_papers_small_corpus()
+            test_chunk_text()
+            test_clean_text()
+            test_stringify_listify()
+            test_find_weak_extractions()
+            test_cluster_papers_small_corpus()
+            test_should_attempt_dataset_fallback()
 
-    print(f"\n{'=' * 50}")
-    print(f"{PASS_COUNT} passed, {FAIL_COUNT} failed")
-    print("=" * 50)
-    sys.exit(1 if FAIL_COUNT else 0)
+            print(f"\n{'=' * 50}")
+            print(f"{PASS_COUNT} passed, {FAIL_COUNT} failed")
+            print("=" * 50)
+            sys.exit(1 if FAIL_COUNT else 0)
 
 
 if __name__ == "__main__":

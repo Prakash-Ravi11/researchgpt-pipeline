@@ -380,13 +380,28 @@ function updateJobPanel(job) {
 async function pollJob(jobId) {
   showJobPanel();
   setFormsDisabled(true);
+  let transientFailures = 0;
 
   const poll = async () => {
     let job;
     try {
       job = await fetchJSON(`/api/jobs/${jobId}`);
+      transientFailures = 0;
     } catch (err) {
-      el("#job-detail-text").textContent = `Lost connection to server: ${err.message}`;
+      transientFailures += 1;
+      if (err.message.includes("-> 404")) {
+        el("#job-detail-text").textContent =
+          "This job is no longer available. Please start the search again.";
+        setFormsDisabled(false);
+        return;
+      }
+      if (transientFailures < 4) {
+        el("#job-detail-text").textContent =
+          `Waiting for the server to respond (retry ${transientFailures}/3)...`;
+        setTimeout(poll, 4000);
+        return;
+      }
+      el("#job-detail-text").textContent = `Server connection failed: ${err.message}`;
       setFormsDisabled(false);
       return;
     }
@@ -448,7 +463,7 @@ el("#search-form").addEventListener("submit", async (e) => {
   const payload = {
     query: el("#search-query").value.trim(),
     target_corpus_size: parseInt(el("#search-target").value, 10) || 50,
-    candidate_pool_size: parseInt(el("#search-pool").value, 10) || 150,
+    candidate_pool_size: parseInt(el("#search-pool").value, 10) || 100,
     year_start: yearStart ? parseInt(yearStart, 10) : null,
     year_end: yearEnd ? parseInt(yearEnd, 10) : null,
     num_clusters: clusters ? parseInt(clusters, 10) : null,

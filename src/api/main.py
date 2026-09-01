@@ -11,13 +11,13 @@ import shutil
 import tempfile
 from pathlib import Path
 
-import yaml
 from fastapi import BackgroundTasks, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from src.api.data import load_corpus
+from src.config import load_config
 from src.orchestration.jobs import get_job
 from src.orchestration.pipeline import run_search_pipeline, run_upload_pipeline
 from src.processing.pdf_parser import clean_text, extract_pdf_text
@@ -28,7 +28,7 @@ app = FastAPI(title="ResearchGPT Catalog")
 
 CONFIG_PATH = "configs/config.yaml"
 with open(CONFIG_PATH, encoding="utf-8") as f:
-    _config = yaml.safe_load(f)
+    _config = load_config(CONFIG_PATH)
 
 _corpus = load_corpus(_config["paths"])
 _raw_papers_by_id = {}  # paper_id -> raw Stage 1 record (has pdf_path) — populated by _reload_corpus
@@ -61,7 +61,7 @@ class SearchRequest(BaseModel):
     not just the query string. Anything left at its default behaves exactly like
     your current config.yaml settings."""
     query: str
-    candidate_pool_size: int = 150
+    candidate_pool_size: int = 100
     target_corpus_size: int = 50
     year_start: int | None = None
     year_end: int | None = None

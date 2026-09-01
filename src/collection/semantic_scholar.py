@@ -14,16 +14,12 @@ import time
 from pathlib import Path
 
 import requests
-import yaml
 from tqdm import tqdm
+
+from src.config import load_config
 
 SEARCH_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
 FIELDS = "title,abstract,year,venue,authors,fieldsOfStudy,citationCount,externalIds,openAccessPdf,tldr"
-
-
-def load_config(config_path: str) -> dict:
-    with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
 
 
 def _get_with_backoff(params: dict, headers: dict, max_retries: int = 6) -> requests.Response:
