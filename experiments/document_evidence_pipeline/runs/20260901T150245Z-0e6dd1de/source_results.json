@@ -1,0 +1,42 @@
+{
+  "probes": [
+    {
+      "content_type": "application/json",
+      "credential_configured": false,
+      "http_status": 200,
+      "identifier_applicable": true,
+      "latency_ms": 1800.629,
+      "sample_bytes": 4096,
+      "source": "OpenAlex",
+      "status": "measured"
+    },
+    {
+      "content_type": "application/json",
+      "credential_configured": false,
+      "http_status": 200,
+      "identifier_applicable": true,
+      "latency_ms": 816.176,
+      "sample_bytes": 2968,
+      "source": "Crossref",
+      "status": "measured"
+    },
+    {
+      "credential_configured": false,
+      "identifier_applicable": true,
+      "reason": "email_parameter_required; no secret supplied",
+      "source": "Unpaywall",
+      "status": "blocked"
+    },
+    {
+      "content_type": "application/json;charset=UTF-8",
+      "credential_configured": false,
+      "http_status": 200,
+      "identifier_applicable": true,
+      "latency_ms": 629.76,
+      "sample_bytes": 985,
+      "source": "Europe PMC",
+      "status": "measured"
+    }
+  ],
+  "status": "measured"
+}

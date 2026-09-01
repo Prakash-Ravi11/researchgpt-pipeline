@@ -1,0 +1,114 @@
+{
+  "abstract_full_text_availability": {
+    "abstract_missing": 0,
+    "abstract_present": 60,
+    "full_text_missing": 29,
+    "full_text_present": 31
+  },
+  "chunk_count": 304,
+  "chunk_coverage": {
+    "chunk_paper_ids_without_metadata": 0,
+    "coverage_rate": 1.0,
+    "papers_with_chunks": 60,
+    "papers_without_chunks": 0
+  },
+  "current_deterministic_verifier": {
+    "abstention_precision": 1.0,
+    "case_count": 24,
+    "citation_validity": 0.9583333333333334,
+    "cited_paper_false_own_rate": 0.0,
+    "failed": 0,
+    "passed": 24,
+    "provenance_valid_rate": 0.9583333333333334,
+    "status": "measured"
+  },
+  "field_presence_count": {
+    "abstract": 60,
+    "authors": 60,
+    "citationCount": 60,
+    "externalIds": 60,
+    "fieldsOfStudy": 60,
+    "has_full_text": 60,
+    "openAccessPdf": 60,
+    "paperId": 60,
+    "pdf_path": 31,
+    "relevance_score": 60,
+    "title": 60,
+    "tldr": 60,
+    "venue": 60,
+    "year": 60
+  },
+  "field_type_counts": {
+    "abstract": {
+      "str": 60
+    },
+    "authors": {
+      "list": 60
+    },
+    "citationCount": {
+      "int": 60
+    },
+    "externalIds": {
+      "dict": 60
+    },
+    "fieldsOfStudy": {
+      "NoneType": 26,
+      "list": 34
+    },
+    "has_full_text": {
+      "bool": 60
+    },
+    "openAccessPdf": {
+      "dict": 60
+    },
+    "paperId": {
+      "str": 60
+    },
+    "pdf_path": {
+      "str": 31
+    },
+    "relevance_score": {
+      "float": 60
+    },
+    "title": {
+      "str": 60
+    },
+    "tldr": {
+      "NoneType": 23,
+      "dict": 37
+    },
+    "venue": {
+      "str": 60
+    },
+    "year": {
+      "int": 60
+    }
+  },
+  "paper_count": 60,
+  "paper_id_count": 60,
+  "pdf_count": 249,
+  "peak_memory_mb": null,
+  "stage_artifact_id_consistency": {
+    "artifact_id_counts": {
+      "chunks": 60,
+      "raw_metadata": 60,
+      "summaries": 60,
+      "weak_extractions": 0
+    },
+    "ids_not_shared_by_all": {
+      "chunks": 0,
+      "raw_metadata": 0,
+      "summaries": 0,
+      "weak_extractions": 0
+    },
+    "intersection_id_count": 60,
+    "note": "ID keys are inferred from common field names; hashes are not recomputed across semantic stages.",
+    "status": "measured",
+    "union_id_count": 60
+  },
+  "status": "measured",
+  "timing_ms": {
+    "baseline_read_and_measure": 30.511
+  },
+  "weak_extraction_count": 1
+}

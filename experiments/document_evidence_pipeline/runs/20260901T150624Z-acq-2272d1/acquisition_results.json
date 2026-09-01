@@ -1,0 +1,4998 @@
+[
+  {
+    "paper_id": "ef1e4a1671918fbed15a7a0e3996fe3dbd8bffc4",
+    "title": "A Scalable Retrieval-Augmented Generation Pipeline for Domain-Specific Knowledge Applications",
+    "external_ids": {
+      "DOI": "10.51584/ijrias.2025.1010000014",
+      "CorpusId": "282662259"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "ef1e4a1671918fbed15a7a0e3996fe3dbd8bffc4",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "ef1e4a1671918fbed15a7a0e3996fe3dbd8bffc4",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.51584/ijrias.2025.1010000014",
+        "url_type": "doi_lookup",
+        "oa_status": "bronze",
+        "is_oa": true,
+        "oa_url": "https://rsisinternational.org/journals/ijrias/uploads/vol10-iss10-pg193-201-202510_pdf.pdf",
+        "best_oa_pdf_url": "https://rsisinternational.org/journals/ijrias/uploads/vol10-iss10-pg193-201-202510_pdf.pdf",
+        "meta_latency_ms": 1019.3,
+        "url": "https://rsisinternational.org/journals/ijrias/uploads/vol10-iss10-pg193-201-202510_pdf.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 600303,
+        "final_url": "https://rsisinternational.org/journals/ijrias/uploads/vol10-iss10-pg193-201-202510_pdf.pdf",
+        "latency_ms": 2655.3,
+        "sha256": "b794024ed0cabbc48717de8dda12df79f8256666cb0d55496a28c355099b0cea",
+        "pdf_chars": 28236,
+        "pdf_pages": 9,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.51584/ijrias.2025.1010000014",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.51584/ijrias.2025.1010000014",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1083.8,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": true
+  },
+  {
+    "paper_id": "2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd",
+    "title": "GINGER: Grounded Information Nugget-Based Generation of Responses",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2503-18174",
+      "ArXiv": "2503.18174",
+      "DOI": "10.1145/3726302.3730166",
+      "CorpusId": "277272473"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 274729,
+        "sha256": "cc0be61e348599e6abec0b6632473871915b2853532cbd57995818a0290a7e25",
+        "pdf_chars": 36890,
+        "pdf_pages": 5,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd",
+        "url_type": "openAccessPdf.url",
+        "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730166",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 352.0
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2503.18174",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2503.18174.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 274729,
+        "final_url": "https://arxiv.org/pdf/2503.18174",
+        "latency_ms": 478.4,
+        "sha256": "cc0be61e348599e6abec0b6632473871915b2853532cbd57995818a0290a7e25",
+        "pdf_chars": 36890,
+        "pdf_pages": 5,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1145/3726302.3730166",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730166",
+        "best_oa_pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730166",
+        "meta_latency_ms": 794.4,
+        "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730166",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 346.8
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1145/3726302.3730166",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1145/3726302.3730166",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 993.2,
+        "has_license": false,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1",
+    "title": "UiS-IAI@LiveRAG: Retrieval-Augmented Information Nugget-Based Generation of Responses",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2506-22210",
+      "ArXiv": "2506.22210",
+      "DOI": "10.48550/arXiv.2506.22210",
+      "CorpusId": "280012073"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 608620,
+        "sha256": "23b1b4810b9ce9dc0c18820a8b19505b21652284d41c188780d4a1fc491032b1",
+        "pdf_chars": 36221,
+        "pdf_pages": 6,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2506.22210",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2506.22210.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 608620,
+        "final_url": "https://arxiv.org/pdf/2506.22210",
+        "latency_ms": 520.3,
+        "sha256": "23b1b4810b9ce9dc0c18820a8b19505b21652284d41c188780d4a1fc491032b1",
+        "pdf_chars": 36221,
+        "pdf_pages": 6,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2506.22210",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2506.22210",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2506.22210",
+        "meta_latency_ms": 978.0,
+        "url": "https://arxiv.org/pdf/2506.22210",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 608620,
+        "final_url": "https://arxiv.org/pdf/2506.22210",
+        "latency_ms": 463.1,
+        "sha256": "23b1b4810b9ce9dc0c18820a8b19505b21652284d41c188780d4a1fc491032b1",
+        "pdf_chars": 36221,
+        "pdf_pages": 6,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2506.22210",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2506.22210",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1200.4
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "c1e75f6f1819ef2b0ebad2f9f4b290cc7c4a3b65",
+    "title": "Advancing Retrieval-Augmented Generation for Financial Question Answering",
+    "external_ids": {
+      "DOI": "10.1109/MERCon67903.2025.11217080",
+      "CorpusId": "282824171"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "c1e75f6f1819ef2b0ebad2f9f4b290cc7c4a3b65",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "c1e75f6f1819ef2b0ebad2f9f4b290cc7c4a3b65",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/MERCon67903.2025.11217080",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 744.3,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/MERCon67903.2025.11217080",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/MERCon67903.2025.11217080",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1042.5,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "f3b06a91470232d1587b194e2bc82fa9a50f3c9f",
+    "title": "Toward Optimal Search and Retrieval for RAG",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2411-07396",
+      "ArXiv": "2411.07396",
+      "DOI": "10.48550/arXiv.2411.07396",
+      "CorpusId": "273969566"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "f3b06a91470232d1587b194e2bc82fa9a50f3c9f",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1203843,
+        "sha256": "3e84d768fe94f8f676f607e33039e4b9ed226492442db5d643623d3a53c48d95",
+        "pdf_chars": 52446,
+        "pdf_pages": 19,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\f3b06a91470232d1587b194e2bc82fa9a50f3c9f.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "f3b06a91470232d1587b194e2bc82fa9a50f3c9f",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2411.07396",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2411.07396.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1203843,
+        "final_url": "https://arxiv.org/pdf/2411.07396",
+        "latency_ms": 570.5,
+        "sha256": "3e84d768fe94f8f676f607e33039e4b9ed226492442db5d643623d3a53c48d95",
+        "pdf_chars": 52446,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2411.07396",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2411.07396",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2411.07396",
+        "meta_latency_ms": 701.2,
+        "url": "https://arxiv.org/pdf/2411.07396",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1203843,
+        "final_url": "https://arxiv.org/pdf/2411.07396",
+        "latency_ms": 563.5,
+        "sha256": "3e84d768fe94f8f676f607e33039e4b9ed226492442db5d643623d3a53c48d95",
+        "pdf_chars": 52446,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2411.07396",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2411.07396",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1088.2
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "18ded60eea5012332f14e542be7282525cda2632",
+    "title": "Towards Optimized Retrieval-Augmented Generation: A Comprehensive Survey",
+    "external_ids": {
+      "DOI": "10.1109/ICTAACS69003.2025.11399325",
+      "CorpusId": "286016832"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "18ded60eea5012332f14e542be7282525cda2632",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "18ded60eea5012332f14e542be7282525cda2632",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICTAACS69003.2025.11399325",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 695.5,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICTAACS69003.2025.11399325",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICTAACS69003.2025.11399325",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1048.4,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "311229078564290247ffc51e884ec065e4560b3d",
+    "title": "A Multi-Agent Orchestrated RAG System for Intelligent Information Retrieval",
+    "external_ids": {
+      "DOI": "10.1109/ICICI68867.2026.11565018",
+      "CorpusId": "289396195"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "311229078564290247ffc51e884ec065e4560b3d",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "311229078564290247ffc51e884ec065e4560b3d",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICICI68867.2026.11565018",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1585.6,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICICI68867.2026.11565018",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICICI68867.2026.11565018",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1012.8,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "fef0393e997ec51b184e39c712be63197d99fd46",
+    "title": "RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture",
+    "external_ids": {
+      "ArXiv": "2401.08406",
+      "DBLP": "journals/corr/abs-2401-08406",
+      "DOI": "10.48550/arXiv.2401.08406",
+      "CorpusId": "267027552"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "fef0393e997ec51b184e39c712be63197d99fd46",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1786632,
+        "sha256": "0d14009d8b28062d838bb11ac5cdfb2a3ce5135511bfb4fe343037d3b2309010",
+        "pdf_chars": 121517,
+        "pdf_pages": 33,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\fef0393e997ec51b184e39c712be63197d99fd46.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "fef0393e997ec51b184e39c712be63197d99fd46",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2401.08406",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2401.08406.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1786632,
+        "final_url": "https://arxiv.org/pdf/2401.08406",
+        "latency_ms": 973.9,
+        "sha256": "0d14009d8b28062d838bb11ac5cdfb2a3ce5135511bfb4fe343037d3b2309010",
+        "pdf_chars": 121517,
+        "pdf_pages": 33,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2401.08406",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2401.08406",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2401.08406",
+        "meta_latency_ms": 929.6,
+        "url": "https://arxiv.org/pdf/2401.08406",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1786632,
+        "final_url": "https://arxiv.org/pdf/2401.08406",
+        "latency_ms": 2040.8,
+        "sha256": "0d14009d8b28062d838bb11ac5cdfb2a3ce5135511bfb4fe343037d3b2309010",
+        "pdf_chars": 121517,
+        "pdf_pages": 33,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2401.08406",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2401.08406",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1030.8
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "db6965ad1807185b1b771397d66b5e660941b71b",
+    "title": "Enhancing Retrieval-Augmented Generation through Modular Optimization: Evaluation Across the RAG Pipeline",
+    "external_ids": {
+      "DBLP": "conf/siot/MattosAGMOBNCCO25",
+      "DOI": "10.1109/SIoT68426.2025.11368805",
+      "CorpusId": "285315703"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "db6965ad1807185b1b771397d66b5e660941b71b",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "db6965ad1807185b1b771397d66b5e660941b71b",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/SIoT68426.2025.11368805",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 932.4,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/SIoT68426.2025.11368805",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/SIoT68426.2025.11368805",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1086.8,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "eaec7401af70c7c80370d056fa847ed267a10ca6",
+    "title": "OpRAG: A Resource-Deterministic Runtime for GPU-Backed Multi-Stage RAG Workflows",
+    "external_ids": {
+      "ArXiv": "2608.08340",
+      "CorpusId": "290990834"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "eaec7401af70c7c80370d056fa847ed267a10ca6",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 872919,
+        "sha256": "0604c4be956c9dbfbe8355a0cd96a986702294b74ac3aa3da41fa362cbc13bbd",
+        "pdf_chars": 87027,
+        "pdf_pages": 14,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\eaec7401af70c7c80370d056fa847ed267a10ca6.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "eaec7401af70c7c80370d056fa847ed267a10ca6",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2608.08340",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2608.08340.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 872919,
+        "final_url": "https://arxiv.org/pdf/2608.08340",
+        "latency_ms": 973.4,
+        "sha256": "0604c4be956c9dbfbe8355a0cd96a986702294b74ac3aa3da41fa362cbc13bbd",
+        "pdf_chars": 87027,
+        "pdf_pages": 14,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi_pmid_pmcid"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+    "title": "PlanSightRAG: A Visual-First Multimodal RAG for Automating Question Answering and Compliance Checking for Civil Standard Plans",
+    "external_ids": {
+      "ArXiv": "2608.26091",
+      "CorpusId": "291371151"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 22130636,
+        "sha256": "cd3c72611414983ce1c258d44f447f626faf1e28255eb90f86892ded05e7e04e",
+        "pdf_chars": 139315,
+        "pdf_pages": 32,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\413a184de4b1c752466fbfca3cd3b1f039f99d48.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2608.26091",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2608.26091.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 6029312,
+        "final_url": "https://arxiv.org/pdf/2608.26091",
+        "latency_ms": 4184.5,
+        "sha256": "9505b03bb56297a7f848260b91e2aacce2237641aefec021ec8b3f5403c3b63f",
+        "pdf_chars": 52140,
+        "pdf_pages": 32,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi_pmid_pmcid"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "e0efa866a1e464e65e3a217fd67d6c18bc422302",
+    "title": "Investigating the Robustness of Retrieval-Augmented Generation at the Query Level",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2507-06956",
+      "ArXiv": "2507.06956",
+      "DOI": "10.48550/arXiv.2507.06956",
+      "CorpusId": "280078903"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "e0efa866a1e464e65e3a217fd67d6c18bc422302",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 3104646,
+        "sha256": "b27f762c9436638914cebfdf960df834fd168a9cae2268152105439cacf4ee32",
+        "pdf_chars": 60517,
+        "pdf_pages": 19,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\e0efa866a1e464e65e3a217fd67d6c18bc422302.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "e0efa866a1e464e65e3a217fd67d6c18bc422302",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2507.06956",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2507.06956.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 3104646,
+        "final_url": "https://arxiv.org/pdf/2507.06956",
+        "latency_ms": 1495.4,
+        "sha256": "b27f762c9436638914cebfdf960df834fd168a9cae2268152105439cacf4ee32",
+        "pdf_chars": 60517,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2507.06956",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2507.06956",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2507.06956",
+        "meta_latency_ms": 945.5,
+        "url": "https://arxiv.org/pdf/2507.06956",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 3104646,
+        "final_url": "https://arxiv.org/pdf/2507.06956",
+        "latency_ms": 816.7,
+        "sha256": "b27f762c9436638914cebfdf960df834fd168a9cae2268152105439cacf4ee32",
+        "pdf_chars": 60517,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2507.06956",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2507.06956",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1085.0
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "db78acdc12fda41813ab97cd7d0dd1f300e70fe6",
+    "title": "Optimizing RAG Pipelines for Arabic: A Systematic Analysis of Core Components",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2506-06339",
+      "ArXiv": "2506.06339",
+      "DOI": "10.48550/arXiv.2506.06339",
+      "CorpusId": "279251737"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "db78acdc12fda41813ab97cd7d0dd1f300e70fe6",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 583990,
+        "sha256": "cec949f317cf4f5c3b045cbebc4a9d0246d5b995fd80c1d0ff4d32799c008b5f",
+        "pdf_chars": 41116,
+        "pdf_pages": 12,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\db78acdc12fda41813ab97cd7d0dd1f300e70fe6.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "db78acdc12fda41813ab97cd7d0dd1f300e70fe6",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2506.06339",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2506.06339.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 583990,
+        "final_url": "https://arxiv.org/pdf/2506.06339",
+        "latency_ms": 1336.6,
+        "sha256": "cec949f317cf4f5c3b045cbebc4a9d0246d5b995fd80c1d0ff4d32799c008b5f",
+        "pdf_chars": 41116,
+        "pdf_pages": 12,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2506.06339",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2506.06339",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2506.06339",
+        "meta_latency_ms": 712.0,
+        "url": "https://arxiv.org/pdf/2506.06339",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 583990,
+        "final_url": "https://arxiv.org/pdf/2506.06339",
+        "latency_ms": 548.4,
+        "sha256": "cec949f317cf4f5c3b045cbebc4a9d0246d5b995fd80c1d0ff4d32799c008b5f",
+        "pdf_chars": 41116,
+        "pdf_pages": 12,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2506.06339",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2506.06339",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1055.0
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "93db4f9a329da15f5aa6ba6cf7fdc3903eefa89e",
+    "title": "An Approach for Embedding-Guided Function Reuse Detection in Embedded C Software",
+    "external_ids": {
+      "ArXiv": "2608.04137",
+      "CorpusId": "290842514"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "93db4f9a329da15f5aa6ba6cf7fdc3903eefa89e",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1695488,
+        "sha256": "02fe964a8e1f2bda44db7fb2a9cc23ee067d0318984d420c39687a53bf64ac9d",
+        "pdf_chars": 56942,
+        "pdf_pages": 11,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\93db4f9a329da15f5aa6ba6cf7fdc3903eefa89e.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "93db4f9a329da15f5aa6ba6cf7fdc3903eefa89e",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2608.04137",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2608.04137.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1695488,
+        "final_url": "https://arxiv.org/pdf/2608.04137",
+        "latency_ms": 1824.3,
+        "sha256": "02fe964a8e1f2bda44db7fb2a9cc23ee067d0318984d420c39687a53bf64ac9d",
+        "pdf_chars": 56942,
+        "pdf_pages": 11,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi_pmid_pmcid"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "1016250721201821285c39eba5ab77eddf80812e",
+    "title": "Muitas Classes Desbalanceadas? Escale na Nuvem! Um Relato de Uso da AWS para Classifica\u00e7\u00e3o de Texto com RAG-labels",
+    "external_ids": {
+      "DOI": "10.5753/pesquisanuvem.2026.22215",
+      "CorpusId": "290939222"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "1016250721201821285c39eba5ab77eddf80812e",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1868900,
+        "sha256": "758b530df839540e42c09b78c52d77c948d350a4b305048be89b3e32bc5ccb51",
+        "pdf_chars": 27472,
+        "pdf_pages": 9,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\1016250721201821285c39eba5ab77eddf80812e.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "1016250721201821285c39eba5ab77eddf80812e",
+        "url_type": "openAccessPdf.url",
+        "url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1868900,
+        "final_url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "latency_ms": 14173.3,
+        "sha256": "758b530df839540e42c09b78c52d77c948d350a4b305048be89b3e32bc5ccb51",
+        "pdf_chars": 27472,
+        "pdf_pages": 9,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.5753/pesquisanuvem.2026.22215",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "best_oa_pdf_url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "meta_latency_ms": 4636.8,
+        "url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1868900,
+        "final_url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "latency_ms": 5587.7,
+        "sha256": "758b530df839540e42c09b78c52d77c948d350a4b305048be89b3e32bc5ccb51",
+        "pdf_chars": 27472,
+        "pdf_pages": 9,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.5753/pesquisanuvem.2026.22215",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.5753/pesquisanuvem.2026.22215",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1024.9,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1868900,
+        "final_url": "https://sol.sbc.org.br/index.php/pesquisanuvem/article/download/43079/42845",
+        "latency_ms": 4514.6,
+        "sha256": "758b530df839540e42c09b78c52d77c948d350a4b305048be89b3e32bc5ccb51",
+        "pdf_chars": 27472,
+        "pdf_pages": 9,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "crossref",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "7aa47391a0ea982b14ae1847097e48e6b8da18a2",
+    "title": "Generative AI-Powered Rag Pipelines for Intelligent Cloud Operations and Knowledge Retrieval",
+    "external_ids": {
+      "DOI": "10.1109/ICICCS67901.2026.11502902",
+      "CorpusId": "288080125"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "7aa47391a0ea982b14ae1847097e48e6b8da18a2",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "7aa47391a0ea982b14ae1847097e48e6b8da18a2",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICICCS67901.2026.11502902",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1211.4,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICICCS67901.2026.11502902",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICICCS67901.2026.11502902",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1386.8,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "e6f1d66c34b525dc480ced9902cf46419b6a37fa",
+    "title": "NLP-CEIA-UFG at SemEval-2026 Task 8: Iterative Retrieval with Notes-Guided Query Refinement for Multi-Turn RAG",
+    "external_ids": {
+      "DBLP": "conf/semeval/DutraCSSFO26",
+      "DOI": "10.18653/v1/2026.semeval-1.349",
+      "CorpusId": "289797482"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "e6f1d66c34b525dc480ced9902cf46419b6a37fa",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 517548,
+        "sha256": "7e8ff6843643db27d598ee68aafdbbd36db3832544a769f412150560080c9f10",
+        "pdf_chars": 30590,
+        "pdf_pages": 8,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\e6f1d66c34b525dc480ced9902cf46419b6a37fa.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "e6f1d66c34b525dc480ced9902cf46419b6a37fa",
+        "url_type": "openAccessPdf.url",
+        "url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 517548,
+        "final_url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "latency_ms": 2480.6,
+        "sha256": "7e8ff6843643db27d598ee68aafdbbd36db3832544a769f412150560080c9f10",
+        "pdf_chars": 30590,
+        "pdf_pages": 8,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.18653/v1/2026.semeval-1.349",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "best_oa_pdf_url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "meta_latency_ms": 1149.1,
+        "url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 517548,
+        "final_url": "https://aclanthology.org/2026.semeval-1.349.pdf",
+        "latency_ms": 2471.8,
+        "sha256": "7e8ff6843643db27d598ee68aafdbbd36db3832544a769f412150560080c9f10",
+        "pdf_chars": 30590,
+        "pdf_pages": 8,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.18653/v1/2026.semeval-1.349",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.18653/v1/2026.semeval-1.349",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1329.6,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "be7c4dc39030508deb495c9f689526ca1b4289cf",
+    "title": "Retrieval-Augmented Large Language Models for Schema-Constrained Clinical Information Extraction",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2605-15467",
+      "ArXiv": "2605.15467",
+      "DOI": "10.63317/2xwjn5f2urna",
+      "CorpusId": "288392578"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "be7c4dc39030508deb495c9f689526ca1b4289cf",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 643406,
+        "sha256": "b72c870327cd48e99644490480f90f9cbfcd2992be122cfec14fb7db832c037b",
+        "pdf_chars": 43247,
+        "pdf_pages": 10,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\be7c4dc39030508deb495c9f689526ca1b4289cf.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "be7c4dc39030508deb495c9f689526ca1b4289cf",
+        "url_type": "openAccessPdf.url",
+        "url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 643406,
+        "final_url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "latency_ms": 1764.6,
+        "sha256": "b72c870327cd48e99644490480f90f9cbfcd2992be122cfec14fb7db832c037b",
+        "pdf_chars": 43247,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2605.15467",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2605.15467.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 577942,
+        "final_url": "https://arxiv.org/pdf/2605.15467",
+        "latency_ms": 1463.5,
+        "sha256": "287adca624d437281d0fe489ad7ebf72f4b5107753b2a0512445d2e6af09ae07",
+        "pdf_chars": 43071,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.63317/2xwjn5f2urna",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "best_oa_pdf_url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "meta_latency_ms": 1332.0,
+        "url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 643406,
+        "final_url": "http://www.lrec-conf.org/proceedings/lrec2026/workshops/clinicalnlp/pdf/2026.clinicalnlp-1.17.pdf",
+        "latency_ms": 3570.6,
+        "sha256": "b72c870327cd48e99644490480f90f9cbfcd2992be122cfec14fb7db832c037b",
+        "pdf_chars": 43247,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.63317/2xwjn5f2urna",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.63317/2xwjn5f2urna",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1579.3,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "78797b71788ba1c852407d6010e8454f7b95f0b5",
+    "title": "AI-Based Monitoring Of Mental Health and Work Performance",
+    "external_ids": {
+      "DOI": "10.47392/irjaeh.2026.0460",
+      "CorpusId": "288200326"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "78797b71788ba1c852407d6010e8454f7b95f0b5",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 386711,
+        "sha256": "e2085428652c050f5c20be7354c09620fe216c5f1821a8bbe0e555d605a19f8d",
+        "pdf_chars": 13213,
+        "pdf_pages": 4,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\78797b71788ba1c852407d6010e8454f7b95f0b5.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "78797b71788ba1c852407d6010e8454f7b95f0b5",
+        "url_type": "openAccessPdf.url",
+        "url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 386711,
+        "final_url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "latency_ms": 1207.5,
+        "sha256": "e2085428652c050f5c20be7354c09620fe216c5f1821a8bbe0e555d605a19f8d",
+        "pdf_chars": 13213,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.47392/irjaeh.2026.0460",
+        "url_type": "doi_lookup",
+        "oa_status": "diamond",
+        "is_oa": true,
+        "oa_url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "best_oa_pdf_url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "meta_latency_ms": 2807.6,
+        "url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 386711,
+        "final_url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "latency_ms": 1957.1,
+        "sha256": "e2085428652c050f5c20be7354c09620fe216c5f1821a8bbe0e555d605a19f8d",
+        "pdf_chars": 13213,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.47392/irjaeh.2026.0460",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.47392/irjaeh.2026.0460",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1436.5,
+        "has_license": true,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 386711,
+        "final_url": "https://irjaeh.com/index.php/journal/article/download/1747/1602",
+        "latency_ms": 992.4,
+        "sha256": "e2085428652c050f5c20be7354c09620fe216c5f1821a8bbe0e555d605a19f8d",
+        "pdf_chars": 13213,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "crossref",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "6252ba2dd02e77a40ea31c8f58a607a0bfcd7d40",
+    "title": "GRAIL-RAG: A Multi-Layer Guardrails Architecture with Session-Aware Memory and Multi-Stage Retrieval for Document-Grounded QA",
+    "external_ids": {
+      "DOI": "10.1109/ICVADV67766.2026.11470472",
+      "CorpusId": "287545224"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "6252ba2dd02e77a40ea31c8f58a607a0bfcd7d40",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "6252ba2dd02e77a40ea31c8f58a607a0bfcd7d40",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICVADV67766.2026.11470472",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1299.2,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICVADV67766.2026.11470472",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICVADV67766.2026.11470472",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1350.6,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "b1632c72effb47064cc7a9046bc0a83be07ad0d6",
+    "title": "Evaluating Lexical, Dense, and Hybrid Retrieval Pipelines for RAG",
+    "external_ids": {
+      "DOI": "10.1109/PuneCon67554.2025.11379254",
+      "CorpusId": "285731549"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "b1632c72effb47064cc7a9046bc0a83be07ad0d6",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "b1632c72effb47064cc7a9046bc0a83be07ad0d6",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/PuneCon67554.2025.11379254",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1379.9,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/PuneCon67554.2025.11379254",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/PuneCon67554.2025.11379254",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1480.6,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "377a89466c1b1384204648f8c15c835be738ac0c",
+    "title": "RadOncRAG: A Novel Retrieval-Augmented Generation Framework Improves Large Language Model Benchmark Performance in Radiation Oncology.",
+    "external_ids": {
+      "DOI": "10.1200/CCI-25-00220",
+      "CorpusId": "283049202",
+      "PubMed": "41237352"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "377a89466c1b1384204648f8c15c835be738ac0c",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "377a89466c1b1384204648f8c15c835be738ac0c",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1200/CCI-25-00220",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1390.1,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "41237352",
+        "epmc_pmcid": null,
+        "is_open_access": false,
+        "in_epmc": false,
+        "has_pdf_flag": "N",
+        "meta_latency_ms": 1402.9,
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "epmc_no_open_fulltext"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1200/CCI-25-00220",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1458.3,
+        "has_license": false,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "cf203b38643215071f87b0ded580887d13222c77",
+    "title": "Multistage Modeling from Application Signals to Downstream Success: Predicting Admission, Matriculation, and Retention",
+    "external_ids": {
+      "DBLP": "conf/lats/JoynerD26",
+      "DOI": "10.1145/3774398.3811595",
+      "CorpusId": "289514176"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "cf203b38643215071f87b0ded580887d13222c77",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "cf203b38643215071f87b0ded580887d13222c77",
+        "url_type": "openAccessPdf.url",
+        "url": "https://doi.org/10.1145/3774398.3811595",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 2150.4
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1145/3774398.3811595",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.1145/3774398.3811595",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1521.5,
+        "url": "https://doi.org/10.1145/3774398.3811595",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 1995.7
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1145/3774398.3811595",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1145/3774398.3811595",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1463.7,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "c093b845f68ee02f440f80ec911220395ba5f904",
+    "title": "Clutch or Cry at SemEval-2026 Task 12: Offline Retrieval-Augmented Generation with Frozen DeBERTa for Abductive Event Reasoning",
+    "external_ids": {
+      "DBLP": "conf/semeval/PrasadTKMK26",
+      "DOI": "10.18653/v1/2026.semeval-1.261",
+      "CorpusId": "289819737"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "c093b845f68ee02f440f80ec911220395ba5f904",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 5650897,
+        "sha256": "8d527cdd6a7db594a1d2a68e826b8c12f534eeb4ee1db60b19463cd936824a78",
+        "pdf_chars": 12788,
+        "pdf_pages": 4,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\c093b845f68ee02f440f80ec911220395ba5f904.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "c093b845f68ee02f440f80ec911220395ba5f904",
+        "url_type": "openAccessPdf.url",
+        "url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 5650897,
+        "final_url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "latency_ms": 4891.6,
+        "sha256": "8d527cdd6a7db594a1d2a68e826b8c12f534eeb4ee1db60b19463cd936824a78",
+        "pdf_chars": 12788,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.18653/v1/2026.semeval-1.261",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "best_oa_pdf_url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "meta_latency_ms": 1228.8,
+        "url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 5650897,
+        "final_url": "https://aclanthology.org/2026.semeval-1.261.pdf",
+        "latency_ms": 3595.8,
+        "sha256": "8d527cdd6a7db594a1d2a68e826b8c12f534eeb4ee1db60b19463cd936824a78",
+        "pdf_chars": 12788,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.18653/v1/2026.semeval-1.261",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.18653/v1/2026.semeval-1.261",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1476.0,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "68f93a5921c1c6bbc5e0032f87366e46a06fded0",
+    "title": "On Automating Security Policies with Contemporary LLMs (Short Paper)",
+    "external_ids": {
+      "DBLP": "conf/IEEEscc/SauraJIBS25",
+      "ArXiv": "2506.04838",
+      "DOI": "10.1109/SSE67621.2025.00018",
+      "CorpusId": "279244874"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "68f93a5921c1c6bbc5e0032f87366e46a06fded0",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 275371,
+        "sha256": "4a6c8d9be822340c105f845e9c2c8119c117fc38a37bb28ad2a0611b25a66e35",
+        "pdf_chars": 32016,
+        "pdf_pages": 7,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\68f93a5921c1c6bbc5e0032f87366e46a06fded0.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "68f93a5921c1c6bbc5e0032f87366e46a06fded0",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2506.04838",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2506.04838.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 275371,
+        "final_url": "https://arxiv.org/pdf/2506.04838",
+        "latency_ms": 1414.4,
+        "sha256": "4a6c8d9be822340c105f845e9c2c8119c117fc38a37bb28ad2a0611b25a66e35",
+        "pdf_chars": 32016,
+        "pdf_pages": 7,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/SSE67621.2025.00018",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1299.1,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/SSE67621.2025.00018",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/SSE67621.2025.00018",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1567.1,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "d3b5f3c050b4e155c80620a0c1f831ee5fdb73ce",
+    "title": "SPAR: Session-based Pipeline for Adaptive Retrieval on Legacy File Systems",
+    "external_ids": {
+      "ArXiv": "2512.12938",
+      "DBLP": "journals/corr/abs-2512-12938",
+      "DOI": "10.48550/arXiv.2512.12938",
+      "CorpusId": "283896032"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "d3b5f3c050b4e155c80620a0c1f831ee5fdb73ce",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 905968,
+        "sha256": "2216034ef52812885539b8623b3b6765f0069a68bfb1a39fcba787eaad66a0ba",
+        "pdf_chars": 71337,
+        "pdf_pages": 19,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\d3b5f3c050b4e155c80620a0c1f831ee5fdb73ce.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "d3b5f3c050b4e155c80620a0c1f831ee5fdb73ce",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2512.12938",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2512.12938.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 905968,
+        "final_url": "https://arxiv.org/pdf/2512.12938",
+        "latency_ms": 1993.7,
+        "sha256": "2216034ef52812885539b8623b3b6765f0069a68bfb1a39fcba787eaad66a0ba",
+        "pdf_chars": 71337,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2512.12938",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2512.12938",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2512.12938",
+        "meta_latency_ms": 1537.0,
+        "url": "https://arxiv.org/pdf/2512.12938",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 905968,
+        "final_url": "https://arxiv.org/pdf/2512.12938",
+        "latency_ms": 1755.4,
+        "sha256": "2216034ef52812885539b8623b3b6765f0069a68bfb1a39fcba787eaad66a0ba",
+        "pdf_chars": 71337,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2512.12938",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2512.12938",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1555.8
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "9feadf3ce9890a69a1dfe3225b616013335f9608",
+    "title": "Can Large Language Models Perform Retrieval-Augmented Generation as Multi-Hop Reasoning Over Knowledge Graphs?",
+    "external_ids": {
+      "DOI": "10.1109/MIUCC66482.2025.11196859",
+      "CorpusId": "282274112"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "9feadf3ce9890a69a1dfe3225b616013335f9608",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "9feadf3ce9890a69a1dfe3225b616013335f9608",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/MIUCC66482.2025.11196859",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1222.6,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/MIUCC66482.2025.11196859",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/MIUCC66482.2025.11196859",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1509.3,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "f3d7e0165df8da3fad6cbfb776e0371c31d68c48",
+    "title": "Chunking, Retrieval, and Re-ranking: An Empirical Evaluation of RAG Architectures for Policy Document Question Answering",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2601-15457",
+      "ArXiv": "2601.15457",
+      "DOI": "10.48550/arXiv.2601.15457",
+      "CorpusId": "284934963"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "f3d7e0165df8da3fad6cbfb776e0371c31d68c48",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 834787,
+        "sha256": "92c96437bacf8423b79b20c2d11a0fda6c680f3a2ef1b73b1f130d24f53e11ed",
+        "pdf_chars": 19464,
+        "pdf_pages": 5,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\f3d7e0165df8da3fad6cbfb776e0371c31d68c48.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "f3d7e0165df8da3fad6cbfb776e0371c31d68c48",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2601.15457",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2601.15457.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 834787,
+        "final_url": "https://arxiv.org/pdf/2601.15457",
+        "latency_ms": 1529.3,
+        "sha256": "92c96437bacf8423b79b20c2d11a0fda6c680f3a2ef1b73b1f130d24f53e11ed",
+        "pdf_chars": 19464,
+        "pdf_pages": 5,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2601.15457",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2601.15457",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1583.7,
+        "url": "https://doi.org/10.48550/arxiv.2601.15457",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 43394,
+        "final_url": "https://arxiv.org/abs/2601.15457",
+        "latency_ms": 2815.9,
+        "sha256": "6b96ee2d3a8fb372be6e081309308ff64c7c8df0daca5f0f5432e27859bb3ebe",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2601.15457",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2601.15457",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1556.4
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "141276ba659da6e5aca1d3499713104eb3ca3c78",
+    "title": "Enhancing Financial RAG with Agentic AI and Multi-HyDE: A Novel Approach to Knowledge Retrieval and Hallucination Reduction",
+    "external_ids": {
+      "ArXiv": "2509.16369",
+      "DBLP": "journals/corr/abs-2509-16369",
+      "DOI": "10.48550/arXiv.2509.16369",
+      "CorpusId": "281420374"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "141276ba659da6e5aca1d3499713104eb3ca3c78",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 437311,
+        "sha256": "b798a23d27489774db00933fc3e8af4d9c2338b774dd94c9b8a3e94d9a627bb0",
+        "pdf_chars": 50427,
+        "pdf_pages": 14,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\141276ba659da6e5aca1d3499713104eb3ca3c78.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "141276ba659da6e5aca1d3499713104eb3ca3c78",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2509.16369",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2509.16369.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 437311,
+        "final_url": "https://arxiv.org/pdf/2509.16369",
+        "latency_ms": 1465.6,
+        "sha256": "b798a23d27489774db00933fc3e8af4d9c2338b774dd94c9b8a3e94d9a627bb0",
+        "pdf_chars": 50427,
+        "pdf_pages": 14,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2509.16369",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2509.16369",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2509.16369",
+        "meta_latency_ms": 1477.4,
+        "url": "https://arxiv.org/pdf/2509.16369",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 437311,
+        "final_url": "https://arxiv.org/pdf/2509.16369",
+        "latency_ms": 1064.5,
+        "sha256": "b798a23d27489774db00933fc3e8af4d9c2338b774dd94c9b8a3e94d9a627bb0",
+        "pdf_chars": 50427,
+        "pdf_pages": 14,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2509.16369",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2509.16369",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1495.5
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "0549e2e9e6bec759723fded85a49c2c076b6a978",
+    "title": "A hybrid pipeline for carotid artery segmentation using YOLOv11n and contour models",
+    "external_ids": {
+      "PubMedCentral": "13018575",
+      "DOI": "10.1038/s41598-026-41007-2",
+      "CorpusId": "286768137",
+      "PubMed": "41872242"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "0549e2e9e6bec759723fded85a49c2c076b6a978",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "0549e2e9e6bec759723fded85a49c2c076b6a978",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1038/s41598-026-41007-2",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.1038/s41598-026-41007-2",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1404.5,
+        "url": "https://doi.org/10.1038/s41598-026-41007-2",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 463206,
+        "final_url": "https://www.nature.com/articles/s41598-026-41007-2",
+        "latency_ms": 5937.7,
+        "sha256": "097c3b500e35baa7085710dc98f0002c18ff85fda16e19d32b6b9fc9680a7a54",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "PMC13018575",
+        "epmc_pmcid": "PMC13018575",
+        "is_open_access": true,
+        "in_epmc": true,
+        "has_pdf_flag": "Y",
+        "meta_latency_ms": 1448.9,
+        "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13018575/fullTextXML",
+        "disposition": "FULL_TEXT",
+        "reason": "validated_jats_xml",
+        "format": "jats_xml",
+        "bytes": 164827,
+        "xml_chars": 164275,
+        "sha256": "10cbf17c8e7aa0e35d7db83a23ecc6245a71e5b410891b21c6e1cc71ec7af243",
+        "latency_ms": 2080.8
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1038/s41598-026-41007-2",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1560.1,
+        "has_license": true,
+        "link_count": 3,
+        "pdf_link_count": 2,
+        "url": "https://www.nature.com/articles/s41598-026-41007-2.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 6029312,
+        "final_url": "https://www.nature.com/articles/s41598-026-41007-2.pdf",
+        "latency_ms": 5439.2,
+        "sha256": "1b1fddccbb67e6cfb5fbac93042c9255e380440a56af0bb61c89a41f79f48720",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "thin_text_0chars_0pages",
+        "format": "pdf?"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "europepmc"
+    ],
+    "jats_available": true,
+    "newly_recoverable": true
+  },
+  {
+    "paper_id": "2a717e6277c0312fc268f2ba6e137b087bbd04f6",
+    "title": "LUCID: An Explainable Multi-Stage Framework for Lung CT Image Analysis and Clinical Outcome Interpretation",
+    "external_ids": {
+      "DOI": "10.1109/ICKECS70176.2026.11527997",
+      "CorpusId": "288703179"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "2a717e6277c0312fc268f2ba6e137b087bbd04f6",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "2a717e6277c0312fc268f2ba6e137b087bbd04f6",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICKECS70176.2026.11527997",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1156.3,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICKECS70176.2026.11527997",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICKECS70176.2026.11527997",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1454.8,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "19e3ad7235d53625b669d97ea99d1162de99ff1a",
+    "title": "PEARL: Performance-Efficient Agentic Retrieval-Augmented Generation Through Learned Orchestration",
+    "external_ids": {
+      "DOI": "10.1109/ICCBI68589.2026.11619898",
+      "CorpusId": "290649844"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "19e3ad7235d53625b669d97ea99d1162de99ff1a",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "19e3ad7235d53625b669d97ea99d1162de99ff1a",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ICCBI68589.2026.11619898",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1067.2,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ICCBI68589.2026.11619898",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ICCBI68589.2026.11619898",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1503.1,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "9507a252f657bdda60048a424ece503cacac0226",
+    "title": "MetaBPL: Fault Detection in Business Logic Systems",
+    "external_ids": {
+      "DOI": "10.54941/ahfe1006454",
+      "CorpusId": "279761663"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "9507a252f657bdda60048a424ece503cacac0226",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "9507a252f657bdda60048a424ece503cacac0226",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.54941/ahfe1006454",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1059.0,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.54941/ahfe1006454",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.54941/ahfe1006454",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1381.9,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "938908bc82d5c37b1df2c76d4fbdbdf2075e50de",
+    "title": "Advancing Question-Answering in Ophthalmology with Retrieval Augmented Generations (RAG): Benchmarking Open-source and Proprietary Large Language Models",
+    "external_ids": {
+      "DOI": "10.1101/2024.11.18.24317510",
+      "CorpusId": "274137777"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "938908bc82d5c37b1df2c76d4fbdbdf2075e50de",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "938908bc82d5c37b1df2c76d4fbdbdf2075e50de",
+        "url_type": "openAccessPdf.url",
+        "url": "https://doi.org/10.1101/2024.11.18.24317510",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 114466,
+        "final_url": "https://www.medrxiv.org/content/10.1101/2024.11.18.24317510v3",
+        "latency_ms": 2502.6,
+        "sha256": "d07cad29852a874ed3985d1dd597b53d835d48743000cb768f7121f470fc124b",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1101/2024.11.18.24317510",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.1101/2024.11.18.24317510",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1404.7,
+        "url": "https://doi.org/10.1101/2024.11.18.24317510",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 114466,
+        "final_url": "https://www.medrxiv.org/content/10.1101/2024.11.18.24317510v3",
+        "latency_ms": 2684.0,
+        "sha256": "97ff09c8498aa0f45ff095c2819efd9a52a2e90826b4d486cec374a7a7799baa",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1101/2024.11.18.24317510",
+        "epmc_pmcid": null,
+        "is_open_access": false,
+        "in_epmc": false,
+        "has_pdf_flag": "N",
+        "meta_latency_ms": 1285.7,
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "epmc_no_open_fulltext"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1101/2024.11.18.24317510",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1432.6,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "ddb170b2eeb8f645b63915992196b0bcfbf3f46b",
+    "title": "Retrieval-Augmented Generation for Electrocardiogram-Language Models",
+    "external_ids": {
+      "ArXiv": "2510.00261",
+      "DBLP": "journals/corr/abs-2510-00261",
+      "DOI": "10.48550/arXiv.2510.00261",
+      "CorpusId": "281706040"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "ddb170b2eeb8f645b63915992196b0bcfbf3f46b",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1257762,
+        "sha256": "5dbcadf37b1c1aace9411ed983657a42512aeefe94adf3d110798146d7bb7eb9",
+        "pdf_chars": 22629,
+        "pdf_pages": 5,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\ddb170b2eeb8f645b63915992196b0bcfbf3f46b.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "ddb170b2eeb8f645b63915992196b0bcfbf3f46b",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2510.00261",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2510.00261.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1257762,
+        "final_url": "https://arxiv.org/pdf/2510.00261",
+        "latency_ms": 1482.1,
+        "sha256": "5dbcadf37b1c1aace9411ed983657a42512aeefe94adf3d110798146d7bb7eb9",
+        "pdf_chars": 22629,
+        "pdf_pages": 5,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2510.00261",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2510.00261",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1125.5,
+        "url": "https://doi.org/10.48550/arxiv.2510.00261",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 41735,
+        "final_url": "https://arxiv.org/abs/2510.00261",
+        "latency_ms": 2045.9,
+        "sha256": "5e8386556a758b0d2bd76fb89ba127c19cb0fb39b7c5fe86a7e75da819113170",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2510.00261",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2510.00261",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1466.3
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "81e060664f2446a3c2b8f6597c5ccf0984e744d5",
+    "title": "Automated Construction of a Knowledge Graph of Nuclear Fusion Energy for Effective Elicitation and Retrieval of Information",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2504-07738",
+      "ArXiv": "2504.07738",
+      "DOI": "10.1109/TPS.2026.3681118",
+      "CorpusId": "277667522"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "81e060664f2446a3c2b8f6597c5ccf0984e744d5",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 4013961,
+        "sha256": "f8ccacd7613ebc91eabfa2cfb025e47e7fc30a89fad4e1b5bd21e1fc36f985da",
+        "pdf_chars": 31502,
+        "pdf_pages": 6,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\81e060664f2446a3c2b8f6597c5ccf0984e744d5.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "81e060664f2446a3c2b8f6597c5ccf0984e744d5",
+        "url_type": "openAccessPdf.url",
+        "url": "https://doi.org/10.1109/tps.2026.3681118",
+        "http_status": 202,
+        "content_type": "text/html",
+        "bytes": 0,
+        "final_url": "https://ieeexplore.ieee.org/document/11483170/",
+        "latency_ms": 1552.5,
+        "sha256": null,
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "not_pdf_magic",
+        "format": "pdf?"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2504.07738",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2504.07738.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 4013961,
+        "final_url": "https://arxiv.org/pdf/2504.07738",
+        "latency_ms": 2551.7,
+        "sha256": "f8ccacd7613ebc91eabfa2cfb025e47e7fc30a89fad4e1b5bd21e1fc36f985da",
+        "pdf_chars": 31502,
+        "pdf_pages": 6,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/TPS.2026.3681118",
+        "url_type": "doi_lookup",
+        "oa_status": "hybrid",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.1109/tps.2026.3681118",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1268.4,
+        "url": "https://doi.org/10.1109/tps.2026.3681118",
+        "http_status": 202,
+        "content_type": "text/html",
+        "bytes": 0,
+        "final_url": "https://ieeexplore.ieee.org/document/11483170/",
+        "latency_ms": 1600.4,
+        "sha256": null,
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "not_pdf_magic",
+        "format": "pdf?"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/TPS.2026.3681118",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/TPS.2026.3681118",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1485.3,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "a9b2a3fd6070b35eb74611255bee4f581d1274a9",
+    "title": "Test-Time Strategies for More Efficient and Accurate Agentic RAG",
+    "external_ids": {
+      "ArXiv": "2603.12396",
+      "DBLP": "conf/acl/SharmaZGZCZDMRL26",
+      "DOI": "10.48550/arXiv.2603.12396",
+      "CorpusId": "286517822"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "a9b2a3fd6070b35eb74611255bee4f581d1274a9",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 511257,
+        "sha256": "bade81a02c10261b1a6c22ec9a126f5bc128ba5daca238e0b22c52ed614d3a25",
+        "pdf_chars": 24515,
+        "pdf_pages": 6,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\a9b2a3fd6070b35eb74611255bee4f581d1274a9.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "a9b2a3fd6070b35eb74611255bee4f581d1274a9",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2603.12396",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2603.12396.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 511257,
+        "final_url": "https://arxiv.org/pdf/2603.12396",
+        "latency_ms": 1142.7,
+        "sha256": "bade81a02c10261b1a6c22ec9a126f5bc128ba5daca238e0b22c52ed614d3a25",
+        "pdf_chars": 24515,
+        "pdf_pages": 6,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2603.12396",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2603.12396",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1329.7,
+        "url": "https://doi.org/10.48550/arxiv.2603.12396",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 43452,
+        "final_url": "https://arxiv.org/abs/2603.12396",
+        "latency_ms": 2433.0,
+        "sha256": "93c942553b2a5bb580200403e0a3bd7479784ed2b356a9632c4a8e667737a817",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2603.12396",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2603.12396",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1435.7
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "5ce51877fcad85ee39c518b3e1cfab13d902af5f",
+    "title": "Towards Field Testing of the Flowback Technology for Multistage-Fractured Horizontal Wells: Modeling-Based Design and Practical Implications",
+    "external_ids": {
+      "MAG": "2979045948",
+      "DOI": "10.2118/196979-ms",
+      "CorpusId": "210301683"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "5ce51877fcad85ee39c518b3e1cfab13d902af5f",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "5ce51877fcad85ee39c518b3e1cfab13d902af5f",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.2118/196979-ms",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1317.6,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.2118/196979-ms",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.2118/196979-ms",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1372.4,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://onepetro.org/SPERPTC/proceedings-pdf/doi/10.2118/196979-MS/1133852/spe-196979-ms.pdf",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 809.4
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "ce4ee10f8476b4d65d51c764f6edf4b9132dbfee",
+    "title": "Neural-Network (Large-Language-Model-Based) Approach to Local Cost Estimates",
+    "external_ids": {
+      "DOI": "10.31659/0044-4472-2026-4-66-74",
+      "CorpusId": "288628784"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "ce4ee10f8476b4d65d51c764f6edf4b9132dbfee",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "ce4ee10f8476b4d65d51c764f6edf4b9132dbfee",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.31659/0044-4472-2026-4-66-74",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1074.3,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.31659/0044-4472-2026-4-66-74",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.31659/0044-4472-2026-4-66-74",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 2006.6,
+        "has_license": false,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "ac8fffa1a4ae940d0810a52af515f572bfda183d",
+    "title": "Uma Arquitetura de RAG com Busca Sem\u00e2ntica e Filtros Estruturados para Perguntas e Respostas no Dom\u00ednio Jur\u00eddico",
+    "external_ids": {
+      "DOI": "10.5753/erigo.2025.17152",
+      "CorpusId": "285372455"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "ac8fffa1a4ae940d0810a52af515f572bfda183d",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 840822,
+        "sha256": "3c53817b9efd83ef57b50222ab5154d9d08c8eeb2c214a85e2786088920f819b",
+        "pdf_chars": 29287,
+        "pdf_pages": 10,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\ac8fffa1a4ae940d0810a52af515f572bfda183d.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "ac8fffa1a4ae940d0810a52af515f572bfda183d",
+        "url_type": "openAccessPdf.url",
+        "url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 840822,
+        "final_url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "latency_ms": 4019.0,
+        "sha256": "3c53817b9efd83ef57b50222ab5154d9d08c8eeb2c214a85e2786088920f819b",
+        "pdf_chars": 29287,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.5753/erigo.2025.17152",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "best_oa_pdf_url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "meta_latency_ms": 1156.2,
+        "url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 840822,
+        "final_url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "latency_ms": 6114.5,
+        "sha256": "3c53817b9efd83ef57b50222ab5154d9d08c8eeb2c214a85e2786088920f819b",
+        "pdf_chars": 29287,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.5753/erigo.2025.17152",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.5753/erigo.2025.17152",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1556.8,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 840822,
+        "final_url": "https://sol.sbc.org.br/index.php/erigo/article/download/39531/39303",
+        "latency_ms": 4494.6,
+        "sha256": "3c53817b9efd83ef57b50222ab5154d9d08c8eeb2c214a85e2786088920f819b",
+        "pdf_chars": 29287,
+        "pdf_pages": 10,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "crossref",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "5a905c4e23d268c24de1cae2ff2618bb6464a800",
+    "title": "Carolinian Chatbot: End-to-End Question-Answer Pipeline on the University of San Carlos Policies, Procedures, and Guidelines Via Retrieval Augmented Generation",
+    "external_ids": {
+      "DOI": "10.1109/COMNETSAT63286.2024.10862750",
+      "CorpusId": "276186688"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "5a905c4e23d268c24de1cae2ff2618bb6464a800",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "5a905c4e23d268c24de1cae2ff2618bb6464a800",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/COMNETSAT63286.2024.10862750",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1195.0,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/COMNETSAT63286.2024.10862750",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/COMNETSAT63286.2024.10862750",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1545.6,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "976fdb1e99f147fc696a6d9df8362f646fde01a3",
+    "title": "Analysing Code-Based Retrieval Augmented Generation Methods for Knowledge Retention",
+    "external_ids": {
+      "DOI": "10.1109/ACCESS65134.2025.11135582",
+      "CorpusId": "280975614"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "976fdb1e99f147fc696a6d9df8362f646fde01a3",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "976fdb1e99f147fc696a6d9df8362f646fde01a3",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ACCESS65134.2025.11135582",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1770.0,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ACCESS65134.2025.11135582",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ACCESS65134.2025.11135582",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1537.2,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "cf099b7cd7e8d567efbcf748d30e616b683a2f2b",
+    "title": "RAG over Thinking Traces Can Improve Reasoning Tasks",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2605-03344",
+      "ArXiv": "2605.03344",
+      "DOI": "10.48550/arXiv.2605.03344",
+      "CorpusId": "287963354"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "cf099b7cd7e8d567efbcf748d30e616b683a2f2b",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1083310,
+        "sha256": "5a94ee74062e2f0e9b762b26bd84627915cc3adff4bcb041366a2d1c09e83fda",
+        "pdf_chars": 77353,
+        "pdf_pages": 20,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\cf099b7cd7e8d567efbcf748d30e616b683a2f2b.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "cf099b7cd7e8d567efbcf748d30e616b683a2f2b",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2605.03344",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2605.03344.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1083310,
+        "final_url": "https://arxiv.org/pdf/2605.03344",
+        "latency_ms": 1300.3,
+        "sha256": "5a94ee74062e2f0e9b762b26bd84627915cc3adff4bcb041366a2d1c09e83fda",
+        "pdf_chars": 77353,
+        "pdf_pages": 20,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2605.03344",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2605.03344",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1563.5,
+        "url": "https://doi.org/10.48550/arxiv.2605.03344",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 42482,
+        "final_url": "https://arxiv.org/abs/2605.03344",
+        "latency_ms": 2104.5,
+        "sha256": "9dabb17781f31377077e993225821c1529f19212009e1bcd332956d6267c7898",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2605.03344",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2605.03344",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1577.6
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "6e864397fd3aaa71524f7d388c0845ee6248b752",
+    "title": "Retrieval-Augmented Generation for Drilling and Completion Knowledge Management",
+    "external_ids": {
+      "DOI": "10.4043/36203-ms",
+      "CorpusId": "282285562"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "6e864397fd3aaa71524f7d388c0845ee6248b752",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "6e864397fd3aaa71524f7d388c0845ee6248b752",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.4043/36203-ms",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1651.0,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.4043/36203-ms",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.4043/36203-ms",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1819.4,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://onepetro.org/OTCBRASIL/proceedings-pdf/doi/10.4043/36203-MS/5280739/otc-36203-ms.pdf",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 797.6
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "96285d75a5258dbbb883b31e23ff292605fa6f5a",
+    "title": "Highlight & Summarize: RAG without the jailbreaks",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2508-02872",
+      "ArXiv": "2508.02872",
+      "DOI": "10.48550/arXiv.2508.02872",
+      "CorpusId": "280527203"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "96285d75a5258dbbb883b31e23ff292605fa6f5a",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 1542260,
+        "sha256": "bf5f2733faa3f16837494763620207db5e77a58de4365436d0995a58dd84db56",
+        "pdf_chars": 73352,
+        "pdf_pages": 18,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\96285d75a5258dbbb883b31e23ff292605fa6f5a.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "96285d75a5258dbbb883b31e23ff292605fa6f5a",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2508.02872",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2508.02872.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1542260,
+        "final_url": "https://arxiv.org/pdf/2508.02872",
+        "latency_ms": 1683.5,
+        "sha256": "bf5f2733faa3f16837494763620207db5e77a58de4365436d0995a58dd84db56",
+        "pdf_chars": 73352,
+        "pdf_pages": 18,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2508.02872",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2508.02872",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1149.3,
+        "url": "https://doi.org/10.48550/arxiv.2508.02872",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 42339,
+        "final_url": "https://arxiv.org/abs/2508.02872",
+        "latency_ms": 2387.4,
+        "sha256": "d2bbc35336973fe6d0ffe86afc199c52591d0ec955c1f3c34ab22af5a980ce53",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2508.02872",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2508.02872",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1437.1
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "4d6e977f0e5c096f334fab7b50e3e72b1979ebe9",
+    "title": "Can QPP Choose the Right Query variant? Evaluating Query Variant Selection for RAG Pipelines",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2604-22661",
+      "ArXiv": "2604.22661",
+      "DOI": "10.1145/3805712.3808571",
+      "CorpusId": "287774200"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "4d6e977f0e5c096f334fab7b50e3e72b1979ebe9",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 677423,
+        "sha256": "8ee0e13a564f207cbe53d5d53b649df70bec43f37c4e0dc77cb0c1c3977b3e0d",
+        "pdf_chars": 73473,
+        "pdf_pages": 11,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\4d6e977f0e5c096f334fab7b50e3e72b1979ebe9.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "4d6e977f0e5c096f334fab7b50e3e72b1979ebe9",
+        "url_type": "openAccessPdf.url",
+        "url": "https://doi.org/10.1145/3805712.3808571",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 2157.1
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2604.22661",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2604.22661.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 677423,
+        "final_url": "https://arxiv.org/pdf/2604.22661",
+        "latency_ms": 1379.1,
+        "sha256": "8ee0e13a564f207cbe53d5d53b649df70bec43f37c4e0dc77cb0c1c3977b3e0d",
+        "pdf_chars": 73473,
+        "pdf_pages": 11,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1145/3805712.3808571",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.1145/3805712.3808571",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1496.7,
+        "url": "https://doi.org/10.1145/3805712.3808571",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 1662.8
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1145/3805712.3808571",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1145/3805712.3808571",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1395.2,
+        "has_license": true,
+        "link_count": 0,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "2c5d1cec95971e2d3a85dba2abdd56c6a60aff49",
+    "title": "Zero-Shot Retrieval Augmented Generation for Arabic Trivia Question Answering",
+    "external_ids": {
+      "DOI": "10.1109/EngiTek68245.2025.11567629",
+      "CorpusId": "289491440"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "2c5d1cec95971e2d3a85dba2abdd56c6a60aff49",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "2c5d1cec95971e2d3a85dba2abdd56c6a60aff49",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/EngiTek68245.2025.11567629",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1107.3,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/EngiTek68245.2025.11567629",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/EngiTek68245.2025.11567629",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1488.2,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "a6ecdf69703d98cc3e05176a930276d4480d7ced",
+    "title": "Engineering Inferential Composition Control for Federated RAG in Data Spaces",
+    "external_ids": {
+      "DOI": "10.5753/cibse.2026.42438",
+      "CorpusId": "288820522"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "a6ecdf69703d98cc3e05176a930276d4480d7ced",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 503409,
+        "sha256": "69785772255c76db61c2daf9a18de5a902ee195a34dcb2e2e086ddeaba9c6b39",
+        "pdf_chars": 43839,
+        "pdf_pages": 15,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\a6ecdf69703d98cc3e05176a930276d4480d7ced.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "a6ecdf69703d98cc3e05176a930276d4480d7ced",
+        "url_type": "openAccessPdf.url",
+        "url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 503409,
+        "final_url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "latency_ms": 3970.5,
+        "sha256": "69785772255c76db61c2daf9a18de5a902ee195a34dcb2e2e086ddeaba9c6b39",
+        "pdf_chars": 43839,
+        "pdf_pages": 15,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.5753/cibse.2026.42438",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "best_oa_pdf_url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "meta_latency_ms": 1761.5,
+        "url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 503409,
+        "final_url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "latency_ms": 4030.6,
+        "sha256": "69785772255c76db61c2daf9a18de5a902ee195a34dcb2e2e086ddeaba9c6b39",
+        "pdf_chars": 43839,
+        "pdf_pages": 15,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.5753/cibse.2026.42438",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.5753/cibse.2026.42438",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1483.2,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 503409,
+        "final_url": "https://sol.sbc.org.br/index.php/cibse/article/download/42438/42205",
+        "latency_ms": 7677.5,
+        "sha256": "69785772255c76db61c2daf9a18de5a902ee195a34dcb2e2e086ddeaba9c6b39",
+        "pdf_chars": 43839,
+        "pdf_pages": 15,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "crossref",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "a6d08e12d2ef4936f9a65279e73627d4f861145e",
+    "title": "KeyKnowledgeRAG (K^2RAG): An Enhanced RAG method for improved LLM question-answering capabilities",
+    "external_ids": {
+      "DBLP": "conf/iconip/MarkondapatnaikuniSCE25",
+      "ArXiv": "2507.07695",
+      "DOI": "10.48550/arXiv.2507.07695",
+      "CorpusId": "280284452"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "a6d08e12d2ef4936f9a65279e73627d4f861145e",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 2032899,
+        "sha256": "4b2d4ea5deec7d972d4805eac261b189378f072aab085dab6d5067cf692c5181",
+        "pdf_chars": 59157,
+        "pdf_pages": 19,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\a6d08e12d2ef4936f9a65279e73627d4f861145e.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "a6d08e12d2ef4936f9a65279e73627d4f861145e",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2507.07695",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2507.07695.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 2032899,
+        "final_url": "https://arxiv.org/pdf/2507.07695",
+        "latency_ms": 1577.1,
+        "sha256": "4b2d4ea5deec7d972d4805eac261b189378f072aab085dab6d5067cf692c5181",
+        "pdf_chars": 59157,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2507.07695",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://arxiv.org/pdf/2507.07695",
+        "best_oa_pdf_url": "https://arxiv.org/pdf/2507.07695",
+        "meta_latency_ms": 1522.4,
+        "url": "https://arxiv.org/pdf/2507.07695",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 2032899,
+        "final_url": "https://arxiv.org/pdf/2507.07695",
+        "latency_ms": 2615.1,
+        "sha256": "4b2d4ea5deec7d972d4805eac261b189378f072aab085dab6d5067cf692c5181",
+        "pdf_chars": 59157,
+        "pdf_pages": 19,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2507.07695",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2507.07695",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1450.9
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline",
+      "openalex"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "f1f07a37d4cd44daab987ff19c0bcd185910f50c",
+    "title": "Command A: An Enterprise-Ready Large Language Model",
+    "external_ids": {
+      "ArXiv": "2504.00698",
+      "CorpusId": "277467379"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "f1f07a37d4cd44daab987ff19c0bcd185910f50c",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 4801556,
+        "sha256": "f02c55acc8341e45e04368acdccb888dc700240f1ab2bdf5d2ba8b4c77434c3e",
+        "pdf_chars": 193405,
+        "pdf_pages": 55,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\f1f07a37d4cd44daab987ff19c0bcd185910f50c.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "f1f07a37d4cd44daab987ff19c0bcd185910f50c",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2504.00698",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2504.00698.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 4801556,
+        "final_url": "https://arxiv.org/pdf/2504.00698",
+        "latency_ms": 3425.2,
+        "sha256": "f02c55acc8341e45e04368acdccb888dc700240f1ab2bdf5d2ba8b4c77434c3e",
+        "pdf_chars": 193405,
+        "pdf_pages": 55,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi_pmid_pmcid"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "8d690971ac7cdc6512383ae041efb5de90eacdd9",
+    "title": "WIReTT: Whisper, IndicTrans2 and RAG Enhanced Transcription and Translation for Knowledge Access Pipeline in Kannada Education",
+    "external_ids": {
+      "DOI": "10.1109/CICT67193.2025.11399068",
+      "CorpusId": "286012925"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "8d690971ac7cdc6512383ae041efb5de90eacdd9",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "8d690971ac7cdc6512383ae041efb5de90eacdd9",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/CICT67193.2025.11399068",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1044.9,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/CICT67193.2025.11399068",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/CICT67193.2025.11399068",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1614.4,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "f42ad6e24897246e3cc55746c34f153f6bfcdc76",
+    "title": "Advancing Question-Answering in Ophthalmology With Retrieval-Augmented Generation: Benchmarking Open-Source and Proprietary Large Language Models",
+    "external_ids": {
+      "PubMedCentral": "12439504",
+      "DOI": "10.1167/tvst.14.9.18",
+      "CorpusId": "281261980",
+      "PubMed": "40938068"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "f42ad6e24897246e3cc55746c34f153f6bfcdc76",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "f42ad6e24897246e3cc55746c34f153f6bfcdc76",
+        "url_type": "openAccessPdf.url",
+        "url": "https://tvst.arvojournals.org/arvo/content_public/journal/tvst/938731/i2164-2591-14-9-18_1757673101.73545.pdf",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 768.8
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1167/tvst.14.9.18",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://tvst.arvojournals.org/arvo/content_public/journal/tvst/938731/i2164-2591-14-9-18_1757673101.73545.pdf",
+        "best_oa_pdf_url": "https://tvst.arvojournals.org/arvo/content_public/journal/tvst/938731/i2164-2591-14-9-18_1757673101.73545.pdf",
+        "meta_latency_ms": 1670.3,
+        "url": "https://tvst.arvojournals.org/arvo/content_public/journal/tvst/938731/i2164-2591-14-9-18_1757673101.73545.pdf",
+        "disposition": "FAILED",
+        "reason": "http_403",
+        "latency_ms": 699.6
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "PMC12439504",
+        "epmc_pmcid": "PMC12439504",
+        "is_open_access": true,
+        "in_epmc": true,
+        "has_pdf_flag": "N",
+        "meta_latency_ms": 2095.5,
+        "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12439504/fullTextXML",
+        "disposition": "FULL_TEXT",
+        "reason": "validated_jats_xml",
+        "format": "jats_xml",
+        "bytes": 93910,
+        "xml_chars": 93660,
+        "sha256": "a311626ba6a1bf5636635996d21d2837fac9e02fd5b1171b8838c6b633e0b7a0",
+        "latency_ms": 1873.2
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1167/tvst.14.9.18",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1402.7,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "europepmc"
+    ],
+    "jats_available": true,
+    "newly_recoverable": true
+  },
+  {
+    "paper_id": "a36f58f9c276b3afb2b239a3015463351fbdfa34",
+    "title": "Classical RAG for Semantic Search & Quantum Modules for Research Evaluation",
+    "external_ids": {
+      "DOI": "10.1109/IITCEE67948.2026.11394480",
+      "CorpusId": "286014194"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "a36f58f9c276b3afb2b239a3015463351fbdfa34",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "a36f58f9c276b3afb2b239a3015463351fbdfa34",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/IITCEE67948.2026.11394480",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1254.5,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/IITCEE67948.2026.11394480",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/IITCEE67948.2026.11394480",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1302.7,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "780ff4fe14d26365a81030d0c84be3d293b909d4",
+    "title": "No Atomics, No Problem. Developing a RAG Pipeline for Shared CXL Memory",
+    "external_ids": {
+      "DBLP": "journals/tc/BratterudDFGJSMGI26",
+      "DOI": "10.1109/TC.2026.3667821",
+      "CorpusId": "286031579"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "780ff4fe14d26365a81030d0c84be3d293b909d4",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "780ff4fe14d26365a81030d0c84be3d293b909d4",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/TC.2026.3667821",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1472.1,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/TC.2026.3667821",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/TC.2026.3667821",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1398.7,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "bd9fa2701c705a6b1647bcf8a699d6a65fd0e562",
+    "title": "Lightweight LLM for Accurate & Accessible Automated Course Support in Student Forums",
+    "external_ids": {
+      "DOI": "10.1109/FIE63693.2025.11328668",
+      "CorpusId": "284723157"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "bd9fa2701c705a6b1647bcf8a699d6a65fd0e562",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "bd9fa2701c705a6b1647bcf8a699d6a65fd0e562",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/FIE63693.2025.11328668",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1870.8,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/FIE63693.2025.11328668",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/FIE63693.2025.11328668",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1441.7,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "102cc45c506725c5ad2c2ae91b1a2d0e3489e4b6",
+    "title": "Enhancing RAG Pipeline Performance with Translation-Based Embedding Strategies for Non-English Documents",
+    "external_ids": {
+      "DOI": "10.1109/ASYU62119.2024.10756977",
+      "CorpusId": "274371618"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "102cc45c506725c5ad2c2ae91b1a2d0e3489e4b6",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "102cc45c506725c5ad2c2ae91b1a2d0e3489e4b6",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/ASYU62119.2024.10756977",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1069.3,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/ASYU62119.2024.10756977",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/ASYU62119.2024.10756977",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1495.9,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "ae2768758f9928d50eebd4c945f47ff51e0e6f3b",
+    "title": "An\u00e1lise de Efici\u00eancia Computacional em Sistemas RAG com Busca Vetorial: Um Estudo de Caso no ProbY",
+    "external_ids": {
+      "DOI": "10.5753/eradrs.2026.21493",
+      "CorpusId": "289886999"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "ae2768758f9928d50eebd4c945f47ff51e0e6f3b",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 253133,
+        "sha256": "c957ad7f790267ea5da5fb86dadb3227d6d67e27f042ee7faf8d7cd98a5a6e7e",
+        "pdf_chars": 11768,
+        "pdf_pages": 4,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\ae2768758f9928d50eebd4c945f47ff51e0e6f3b.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "ae2768758f9928d50eebd4c945f47ff51e0e6f3b",
+        "url_type": "openAccessPdf.url",
+        "url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 253133,
+        "final_url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "latency_ms": 3611.5,
+        "sha256": "c957ad7f790267ea5da5fb86dadb3227d6d67e27f042ee7faf8d7cd98a5a6e7e",
+        "pdf_chars": 11768,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.5753/eradrs.2026.21493",
+        "url_type": "doi_lookup",
+        "oa_status": "gold",
+        "is_oa": true,
+        "oa_url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "best_oa_pdf_url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "meta_latency_ms": 1150.2,
+        "url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 253133,
+        "final_url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "latency_ms": 3710.8,
+        "sha256": "c957ad7f790267ea5da5fb86dadb3227d6d67e27f042ee7faf8d7cd98a5a6e7e",
+        "pdf_chars": 11768,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.5753/eradrs.2026.21493",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.5753/eradrs.2026.21493",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 1415.3,
+        "has_license": false,
+        "link_count": 2,
+        "pdf_link_count": 1,
+        "url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 253133,
+        "final_url": "https://sol.sbc.org.br/index.php/eradrs/article/download/42695/42462",
+        "latency_ms": 3732.7,
+        "sha256": "c957ad7f790267ea5da5fb86dadb3227d6d67e27f042ee7faf8d7cd98a5a6e7e",
+        "pdf_chars": 11768,
+        "pdf_pages": 4,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "crossref",
+      "current_pipeline",
+      "openalex",
+      "s2"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "69b02cfebf3cb23711c9a261748e3de2f4442aed",
+    "title": "An Automated Retrieval-Augmented Generation LLaMA-4 109B-based System for Evaluating Radiotherapy Treatment Plans",
+    "external_ids": {
+      "DBLP": "journals/corr/abs-2509-20707",
+      "ArXiv": "2509.20707",
+      "DOI": "10.48550/arXiv.2509.20707",
+      "CorpusId": "281525497"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "69b02cfebf3cb23711c9a261748e3de2f4442aed",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 713139,
+        "sha256": "f0a66f20834e800475e74af3d7329d46f82b32490952850fa8acb9a58a2ac1bb",
+        "pdf_chars": 59111,
+        "pdf_pages": 16,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\69b02cfebf3cb23711c9a261748e3de2f4442aed.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "69b02cfebf3cb23711c9a261748e3de2f4442aed",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2509.20707",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2509.20707.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 713139,
+        "final_url": "https://arxiv.org/pdf/2509.20707",
+        "latency_ms": 3795.3,
+        "sha256": "f0a66f20834e800475e74af3d7329d46f82b32490952850fa8acb9a58a2ac1bb",
+        "pdf_chars": 59111,
+        "pdf_pages": 16,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.48550/arXiv.2509.20707",
+        "url_type": "doi_lookup",
+        "oa_status": "green",
+        "is_oa": true,
+        "oa_url": "https://doi.org/10.48550/arxiv.2509.20707",
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1362.8,
+        "url": "https://doi.org/10.48550/arxiv.2509.20707",
+        "http_status": 200,
+        "content_type": "text/html",
+        "bytes": 46388,
+        "final_url": "https://arxiv.org/abs/2509.20707",
+        "latency_ms": 2960.8,
+        "sha256": "511da0d0dbb634ce52d123e1ca309e608c4de1072677b6b4621a1aff0ea0b05a",
+        "pdf_chars": 0,
+        "pdf_pages": 0,
+        "disposition": "FAILED",
+        "reason": "html_landing_page",
+        "format": "html"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.48550/arXiv.2509.20707",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.48550/arXiv.2509.20707",
+        "url_type": "doi_lookup",
+        "disposition": "FAILED",
+        "reason": "http_404",
+        "latency_ms": 1658.9
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d",
+    "title": "Evidence-Grounded Constraint Checking in Construction Documents",
+    "external_ids": {
+      "ArXiv": "2607.29058",
+      "CorpusId": "290781866"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d",
+        "url_type": "local_file",
+        "disposition": "FULL_TEXT",
+        "reason": "ok",
+        "format": "pdf",
+        "bytes": 253495,
+        "sha256": "7e5b564a8e2c3fbc466f0055dbf39243ea5afab9239d4d16b98f3c3feae43b4b",
+        "pdf_chars": 48254,
+        "pdf_pages": 11,
+        "pdf_path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d.pdf"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "2607.29058",
+        "url_type": "arxiv_pdf",
+        "url": "https://arxiv.org/pdf/2607.29058.pdf",
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 253495,
+        "final_url": "https://arxiv.org/pdf/2607.29058",
+        "latency_ms": 1381.1,
+        "sha256": "7e5b564a8e2c3fbc466f0055dbf39243ea5afab9239d4d16b98f3c3feae43b4b",
+        "pdf_chars": 48254,
+        "pdf_pages": 11,
+        "disposition": "FULL_TEXT",
+        "reason": "validated_pdf",
+        "format": "pdf"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi_pmid_pmcid"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "",
+        "url_type": "doi_lookup",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_doi"
+      }
+    },
+    "baseline_full_text": true,
+    "any_source_full_text": true,
+    "full_text_sources": [
+      "arxiv",
+      "current_pipeline"
+    ],
+    "jats_available": false,
+    "newly_recoverable": false
+  },
+  {
+    "paper_id": "cc6ee3fedc28f747f3931821594f3bfdbe57f8ba",
+    "title": "Fusing Deterministic Caching and RAG-Enhanced LLM Inference for On-Device Conversational Command Execution",
+    "external_ids": {
+      "DOI": "10.1109/IITCEE67948.2026.11394602",
+      "CorpusId": "286015131"
+    },
+    "has_abstract": true,
+    "sources": {
+      "current_pipeline": {
+        "provider": "current_pipeline",
+        "identifier": "cc6ee3fedc28f747f3931821594f3bfdbe57f8ba",
+        "url_type": "local_file",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "stage1_no_full_text"
+      },
+      "s2": {
+        "provider": "semantic_scholar",
+        "identifier": "cc6ee3fedc28f747f3931821594f3bfdbe57f8ba",
+        "url_type": "openAccessPdf.url",
+        "disposition": "ABSTRACT_ONLY",
+        "reason": "no_openAccessPdf_url"
+      },
+      "arxiv": {
+        "provider": "arxiv",
+        "identifier": "",
+        "url_type": "arxiv_pdf",
+        "disposition": "METADATA_ONLY",
+        "reason": "no_arxiv_id"
+      },
+      "openalex": {
+        "provider": "openalex",
+        "identifier": "10.1109/IITCEE67948.2026.11394602",
+        "url_type": "doi_lookup",
+        "oa_status": "closed",
+        "is_oa": false,
+        "oa_url": null,
+        "best_oa_pdf_url": null,
+        "meta_latency_ms": 1526.9,
+        "disposition": "METADATA_ONLY",
+        "reason": "openalex_no_oa_pdf_url"
+      },
+      "europepmc": {
+        "provider": "europepmc",
+        "url_type": "epmc_fulltext",
+        "identifier": "10.1109/IITCEE67948.2026.11394602",
+        "disposition": "METADATA_ONLY",
+        "reason": "epmc_no_record"
+      },
+      "crossref": {
+        "provider": "crossref",
+        "identifier": "10.1109/IITCEE67948.2026.11394602",
+        "url_type": "doi_lookup",
+        "meta_latency_ms": 2787.3,
+        "has_license": true,
+        "link_count": 1,
+        "pdf_link_count": 0,
+        "disposition": "METADATA_ONLY",
+        "reason": "crossref_no_pdf_link"
+      }
+    },
+    "baseline_full_text": false,
+    "any_source_full_text": false,
+    "full_text_sources": [],
+    "jats_available": false,
+    "newly_recoverable": false
+  }
+]

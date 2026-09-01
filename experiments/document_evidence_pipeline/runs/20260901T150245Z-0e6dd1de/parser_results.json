@@ -1,0 +1,54 @@
+{
+  "chroma": {
+    "collection_count": 1,
+    "collections": [
+      {
+        "count": 304,
+        "name": "researchgpt_papers"
+      }
+    ],
+    "latency_ms": 1705.693,
+    "status": "measured"
+  },
+  "parsers": {
+    "proxies": {
+      "figures": "pending",
+      "reason": "Current PyMuPDF text probe does not establish structural section/table/figure recall.",
+      "sections": "pending",
+      "tables": "pending"
+    },
+    "pymupdf": {
+      "latency_ms": 713.285,
+      "nonempty_pages": 14,
+      "page_count": 14,
+      "peak_memory_mb": null,
+      "sample_pdf": "00d386a906e0eb4438ce62cef2d5404cd55a5319.pdf",
+      "status": "measured",
+      "text_chars": 56410
+    },
+    "tool_availability": {
+      "ChromaDB": {
+        "available": true
+      },
+      "Docling": {
+        "available": false
+      },
+      "GROBID": {
+        "available": false
+      },
+      "MinerU": {
+        "available": false
+      },
+      "PyMuPDF": {
+        "available": true
+      },
+      "psutil": {
+        "available": false
+      },
+      "requests": {
+        "available": true
+      }
+    }
+  },
+  "status": "measured"
+}

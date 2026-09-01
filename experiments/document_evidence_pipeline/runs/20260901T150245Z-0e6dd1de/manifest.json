@@ -1,0 +1,62 @@
+{
+  "cells": {
+    "A": {
+      "metrics": null,
+      "reason": "Cell A-E execution not part of read-only baseline pass",
+      "status": "PENDING"
+    },
+    "B": {
+      "metrics": null,
+      "reason": "Cell A-E execution not part of read-only baseline pass",
+      "status": "PENDING"
+    },
+    "C": {
+      "metrics": null,
+      "reason": "Cell A-E execution not part of read-only baseline pass",
+      "status": "PENDING"
+    },
+    "D": {
+      "metrics": null,
+      "reason": "Cell A-E execution not part of read-only baseline pass",
+      "status": "PENDING"
+    },
+    "E": {
+      "metrics": null,
+      "reason": "Cell A-E execution not part of read-only baseline pass",
+      "status": "PENDING"
+    }
+  },
+  "credentials": {
+    "credential_configured": false
+  },
+  "ended_at": "2026-09-01T15:02:50.759755Z",
+  "git_dirty": true,
+  "git_revision": "af6de8e96ff2871a99eaa19ce712d56adc9aafba",
+  "input_file_sha256": {
+    "data\\processed\\automated_retrieval_benchmark.json": "820c832da4072150e2e61b6896f74b8dc73295a1d6a8ace5f311e6f8ef7b15d6",
+    "data\\processed\\chunks.json": "82dddb5cd96e6b718477f3779be316343606c3c9f5702771b9a8caadd2d23cbf",
+    "data\\processed\\extraction_cache.json": "32197fd0a66ce57788d101454306959059a96af35f7b361afba22ca91f856835",
+    "data\\processed\\extraction_quality_audit.json": "442aad44bc17f0d46f7bb47ad1e2edf2b71572d332396cdb42bbecc5f07cb38c",
+    "data\\processed\\figures_manifest.json": "daaf339137e95064239fe950af5ab9eb821ac7d31c06777ff1f7405fc1dbc0a8",
+    "data\\processed\\gap_matrix.json": "d67fd23b5fed98758086df053b5fa39bd11e0a071ac99ef5d02665327e698b79",
+    "data\\processed\\paper_summaries.json": "5236362034f2b0409234fc28b62d4d42a10f667940f1eccb4d72152a471f5471",
+    "data\\processed\\retry_progress.json": "57e6dad132f57e2a9eccff464b4b510e4875c62c86c205493aa8ca067df7b560",
+    "data\\processed\\weak_extractions.json": "72b99909268ca202c8cd13122da7eec3fd86f007b46445c65afd02e1a41f18ce",
+    "data\\raw_metadata\\collected_papers.json": "cf3bf90addf1d38446a3772a0758141fb376ad9c6662cd528b75e1cce4abf646"
+  },
+  "platform": "Windows-10-10.0.26200-SP0",
+  "production_chromadb_writes": false,
+  "production_paths_touched": false,
+  "python": "3.10.18 | packaged by Anaconda, Inc. | (main, Jun  5 2025, 13:08:55) [MSC v.1929 64 bit (AMD64)]",
+  "run_id": "20260901T150245Z-0e6dd1de",
+  "schema_version": "document-evidence-baseline-1",
+  "secrets_present": false,
+  "source_roots": [
+    "data/raw_metadata",
+    "data/processed",
+    "data/pdfs",
+    "data/chroma_db"
+  ],
+  "started_at": "2026-09-01T15:02:45.055549Z",
+  "writes_under": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline\\runs\\20260901T150245Z-0e6dd1de"
+}

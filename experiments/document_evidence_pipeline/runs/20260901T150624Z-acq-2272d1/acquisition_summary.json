@@ -1,0 +1,53 @@
+{
+  "papers": 60,
+  "baseline_full_text": 31,
+  "baseline_full_text_rate": 0.5167,
+  "multi_source_full_text": 34,
+  "multi_source_full_text_rate": 0.5667,
+  "delta_papers": 3,
+  "newly_recoverable_paper_ids": [
+    "ef1e4a1671918fbed15a7a0e3996fe3dbd8bffc4",
+    "0549e2e9e6bec759723fded85a49c2c076b6a978",
+    "f42ad6e24897246e3cc55746c34f153f6bfcdc76"
+  ],
+  "jats_xml_available": 2,
+  "still_unrecoverable": 26,
+  "per_source_disposition": {
+    "current_pipeline": {
+      "ABSTRACT_ONLY": 29,
+      "FULL_TEXT": 31
+    },
+    "s2": {
+      "ABSTRACT_ONLY": 46,
+      "FAILED": 6,
+      "FULL_TEXT": 8
+    },
+    "arxiv": {
+      "METADATA_ONLY": 36,
+      "FULL_TEXT": 24
+    },
+    "openalex": {
+      "FULL_TEXT": 17,
+      "FAILED": 13,
+      "METADATA_ONLY": 30
+    },
+    "europepmc": {
+      "METADATA_ONLY": 56,
+      "ABSTRACT_ONLY": 2,
+      "FULL_TEXT": 2
+    },
+    "crossref": {
+      "METADATA_ONLY": 38,
+      "FAILED": 17,
+      "FULL_TEXT": 5
+    }
+  },
+  "full_text_source_attribution": {
+    "current_pipeline": 31,
+    "arxiv": 24,
+    "openalex": 17,
+    "s2": 8,
+    "crossref": 5,
+    "europepmc": 2
+  }
+}

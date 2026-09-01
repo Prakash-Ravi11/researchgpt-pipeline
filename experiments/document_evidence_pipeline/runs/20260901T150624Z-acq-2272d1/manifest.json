@@ -1,0 +1,33 @@
+{
+  "run_id": "20260901T150624Z-acq-2272d1",
+  "experiment": "phase2_acquisition_resolver",
+  "started_at": "2026-09-01T15:06:24.246028Z",
+  "ended_at": "2026-09-01T15:17:31.792082Z",
+  "elapsed_seconds": 667.5,
+  "python": "3.10.18",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "git_revision": "a721c0d9c1a4046a7f8b5fbd108841a477ead155",
+  "git_dirty": true,
+  "corpus_path": "data\\raw_metadata\\collected_papers.json",
+  "corpus_sha256": "cf3bf90addf1d38446a3772a0758141fb376ad9c6662cd528b75e1cce4abf646",
+  "paper_count": 60,
+  "skipped_sources": [],
+  "sources": [
+    "current_pipeline",
+    "s2",
+    "arxiv",
+    "openalex",
+    "europepmc",
+    "crossref"
+  ],
+  "classification_thresholds": {
+    "MIN_PDF_BYTES": 20000,
+    "MIN_PDF_CHARS": 2000,
+    "MIN_PDF_PAGES": 2,
+    "MIN_XML_CHARS": 4000
+  },
+  "writes_under": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline\\runs\\20260901T150624Z-acq-2272d1",
+  "production_paths_touched": false,
+  "credentials_used": false,
+  "polite_mailto": "researchgpt-acquisition-benchmark@example.org"
+}
