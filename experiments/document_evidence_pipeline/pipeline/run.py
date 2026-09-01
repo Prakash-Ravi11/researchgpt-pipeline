@@ -30,6 +30,7 @@ def prepare_paper(paper: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     return {
         "paper_id": paper.get("paperId", ""),
         "title": paper.get("title", ""),
+        "authors": [a.get("name", "") for a in (paper.get("authors") or []) if isinstance(a, dict)],
         "baseline_has_full_text": bool(paper.get("has_full_text")),
         "acquisition": acq,
         "document": {k: v for k, v in doc.items() if k != "blocks"},
@@ -39,11 +40,22 @@ def prepare_paper(paper: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     }
 
 
-def _block_text_for(prepared: dict[str, Any], block_id: str) -> str:
+def _block_for(prepared: dict[str, Any], block_id: str) -> dict[str, Any] | None:
     for b in prepared["blocks"]:
         if b["block_id"] == block_id:
-            return b["text"]
-    return ""
+            return b
+    return None
+
+
+def _section_context(prepared: dict[str, Any], section: str, limit: int = 6000) -> str:
+    parts, used = [], 0
+    for b in prepared["blocks"]:
+        if b["section"] == section:
+            parts.append(b["text"])
+            used += len(b["text"])
+            if used >= limit:
+                break
+    return " ".join(parts)
 
 
 def extract_paper(prepared: dict[str, Any], index: RetrievalIndex,
@@ -57,14 +69,23 @@ def extract_paper(prepared: dict[str, Any], index: RetrievalIndex,
 
         if item["evidence_status"] in ("EXPLICIT", "INFERRED") and item.get("provenance_valid"):
             # attribution runs against the FULL source block (exact block_id from
-            # the span match), not a section/page re-match - a PDF page can hold
-            # several blocks, so section+page alone is not a unique key.
-            block_text = _block_text_for(prepared, item.get("_block_id", "")) \
+            # the span match), escalating to section context if the block alone
+            # is inconclusive. A PDF page holds several blocks, so section+page
+            # is not a unique key - the block_id from the verified span match is.
+            src_block = _block_for(prepared, item.get("_block_id", ""))
+            block_text = (src_block or {}).get("text") \
                 or item.get("_matched_chunk_text", "") or item.get("evidence_span") or ""
-            attr = attribute_claim(block_text, item.get("evidence_span") or "")
+            attr = attribute_claim(
+                block_text, item.get("evidence_span") or "",
+                block_type=(src_block or {}).get("block_type"),
+                section=item.get("section"),
+                section_context=_section_context(prepared, item.get("section") or ""),
+                own_author_surnames=prepared.get("authors"),
+            )
             item["attribution"] = attr["attribution"]
             item["attribution_confidence"] = attr["confidence"]
             item["_attr_window"] = attr["window"]
+            item["_attr_level"] = attr.get("level")
         item = decide(item)
         items.append(item)
 

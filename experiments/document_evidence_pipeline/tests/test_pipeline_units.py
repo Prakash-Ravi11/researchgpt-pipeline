@@ -131,15 +131,67 @@ def run():
     check("chunker: no chunk crosses blocks",
           all(c["chunk_id"].split("#")[0] == c["block_id"] for c in chunks))
 
-    # --- attribution
-    a_own = attribute_claim("We propose X. Our method achieved a Dice score of 0.91 on the test set.",
-                            "Our method achieved a Dice score of 0.91")
-    check("attribute: first-person result -> OWN_PAPER", a_own["attribution"] == OWN_PAPER, str(a_own))
-    a_cite = attribute_claim("Smith et al. reported 0.87 Dice on a different cohort.",
-                             "Smith et al. reported 0.87 Dice")
-    check("attribute: 'Smith et al. reported' -> CITED_PAPER", a_cite["attribution"] == CITED_PAPER, str(a_cite))
-    a_unk = attribute_claim("The Dice score was 0.9.", "The Dice score was 0.9")
-    check("attribute: bare sentence -> UNKNOWN", a_unk["attribution"] == UNKNOWN, str(a_unk))
+    # --- attribution (hierarchical) : Task-7 targeted set A-J + precision guards
+    FIRST_PERSON_SECTION = (
+        "We propose a hybrid retrieval pipeline. In this work we introduce a "
+        "session-based reranking stage and we evaluate our method on three "
+        "benchmarks. Our approach combines dense and sparse retrieval. "
+        "We report all metrics on the held-out split.")
+
+    # A. clearly OWN
+    a = attribute_claim("We propose SPAR. SPAR achieves a 9.2% absolute improvement in retrieval accuracy.",
+                        "SPAR achieves a 9.2% absolute improvement", section="results",
+                        section_context=FIRST_PERSON_SECTION)
+    check("attr A: 'we propose SPAR ... achieves' -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # B. clearly CITED
+    a = attribute_claim("Smith et al. achieved 94.2% F1 on Dataset X.", "94.2% F1",
+                        section="introduction_related_work")
+    check("attr B: 'Smith et al. achieved 94.2%' -> CITED", a["attribution"] == CITED_PAPER, str(a))
+    # C. passive voice in a first-person results section -> OWN via section-subject
+    a = attribute_claim(
+        "Retrieval was generally effective, as indicated by high context precision and recall scores.",
+        "high context precision and recall scores", section="results",
+        section_context=FIRST_PERSON_SECTION)
+    check("attr C: passive voice in first-person results section -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # C2. same passive sentence but NO first-person section context -> stays UNKNOWN (no guessing)
+    a = attribute_claim(
+        "Retrieval was generally effective, as indicated by high context precision and recall scores.",
+        "high context precision and recall scores", section="results",
+        section_context="This section reports numbers. Effectiveness was measured across systems.")
+    check("attr C2: passive voice, no first-person cues -> UNKNOWN", a["attribution"] == UNKNOWN, str(a))
+    # D. "our method achieved"
+    a = attribute_claim("Our method achieved a Dice score of 0.91 on the test set.",
+                        "Dice score of 0.91", section="results")
+    check("attr D: 'our method achieved' -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # E. table result with an 'ours' caption
+    TBL = ("Table 5 Ablation study performance metrics. The (-) symbol denotes the reference "
+           "proposed system. Configuration Dice Accuracy. Ablation 1 (No Preprocess) 84.82 99.18. "
+           "Proposed 90.76 99.54.")
+    a = attribute_claim(TBL, "Proposed 90.76 99.54", block_type="table", section="results")
+    check("attr E: table 'Proposed' row with proposed-system caption -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # F. ablation-table variant row must NOT be CITED (the old 'vs.' bug)
+    a = attribute_claim(TBL, "Ablation 1 (No Preprocess) 84.82 99.18", block_type="table", section="results")
+    check("attr F: ablation variant row -> not CITED", a["attribution"] != CITED_PAPER, str(a))
+    # G. metric stated in Methods, first-person
+    a = attribute_claim("For each approach, we evaluate performance using Exact Match and F1.",
+                        "Exact Match and F1", section="method")
+    check("attr G: 'we evaluate using ...' in Methods -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # H. metric in Results, first-person
+    a = attribute_claim("In Table 3 we report K-Precision and Recall for each variant.",
+                        "K-Precision and Recall", section="results")
+    check("attr H: 'we report ...' in Results -> OWN", a["attribution"] == OWN_PAPER, str(a))
+    # I/J. abstract-only / inaccessible: bare sentence, no section context -> UNKNOWN
+    a = attribute_claim("The Dice score was 0.9.", "Dice score was 0.9")
+    check("attr I/J: bare sentence, no context -> UNKNOWN", a["attribution"] == UNKNOWN, str(a))
+    # precision guard: citation marker hugging the number -> CITED even with 'we' in sentence
+    a = attribute_claim("Unlike prior work by Smith et al. [12] which reached 92%, we target robustness.",
+                        "92%", section="introduction_related_work")
+    check("attr guard: number hugging '[12]' -> CITED", a["attribution"] == CITED_PAPER, str(a))
+    # self-citation discount: own author surname in an 'et al.' -> not penalised
+    a = attribute_claim("Building on our earlier study (Chen et al., 2022), we achieve 88% accuracy.",
+                        "we achieve 88% accuracy", section="results",
+                        own_author_surnames=["Wei Chen", "A. Kumar"])
+    check("attr self-cite: own-author 'Chen et al.' discounted -> OWN", a["attribution"] == OWN_PAPER, str(a))
 
     # --- abstention gate
     it = evidence_item("results"); it.update(evidence_status=MISSING)

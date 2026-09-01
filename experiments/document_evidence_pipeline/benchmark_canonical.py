@@ -101,6 +101,7 @@ def prepare_with_cache(paper: dict[str, Any], use_cache: bool) -> dict[str, Any]
         doc = build_document(acq, data, fallback_abstract=paper.get("abstract"))
         chunks = chunk_document(doc)
         return {"paper_id": pid, "title": paper.get("title", ""),
+                "authors": [a.get("name", "") for a in (paper.get("authors") or []) if isinstance(a, dict)],
                 "baseline_has_full_text": bool(paper.get("has_full_text")),
                 "acquisition": acq, "document": {k: v for k, v in doc.items() if k != "blocks"},
                 "blocks": doc["blocks"], "chunks": chunks, "prepare_seconds": 0.0, "cached": True}
