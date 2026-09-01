@@ -139,6 +139,8 @@ def extract_field(paper_id: str, field: str, chunks: list[dict[str, Any]],
     item["representation"] = match["representation"]
     item["section"] = match["section"]
     item["page_or_node"] = match["page_or_node"]
+    item["_block_id"] = match["block_id"]  # exact provenance for attribution context lookup
+    item["_matched_chunk_text"] = match["text"]
     item["provenance_valid"] = True
     item["evidence_status"] = EXPLICIT if is_explicit else INFERRED
     item["confidence"] = 0.85 if is_explicit else 0.55

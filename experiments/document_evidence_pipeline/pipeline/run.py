@@ -56,17 +56,12 @@ def extract_paper(prepared: dict[str, Any], index: RetrievalIndex,
         item = extract_field(pid, field, chunks, doc_repr, llm_cfg)
 
         if item["evidence_status"] in ("EXPLICIT", "INFERRED") and item.get("provenance_valid"):
-            # attribution only matters for quantitative/ownership fields; run it
-            # against the FULL source block, not just the retrieved slice
-            src_block_id = item["page_or_node"]
-            # locate the block that produced the matched chunk
-            block_text = ""
-            for c in chunks:
-                if c["section"] == item["section"] and c["page_or_node"] == item["page_or_node"]:
-                    block_text = _block_text_for(prepared, c["block_id"])
-                    break
-            attr = attribute_claim(block_text or (item.get("evidence_span") or ""),
-                                   item.get("evidence_span") or "")
+            # attribution runs against the FULL source block (exact block_id from
+            # the span match), not a section/page re-match - a PDF page can hold
+            # several blocks, so section+page alone is not a unique key.
+            block_text = _block_text_for(prepared, item.get("_block_id", "")) \
+                or item.get("_matched_chunk_text", "") or item.get("evidence_span") or ""
+            attr = attribute_claim(block_text, item.get("evidence_span") or "")
             item["attribution"] = attr["attribution"]
             item["attribution_confidence"] = attr["confidence"]
             item["_attr_window"] = attr["window"]

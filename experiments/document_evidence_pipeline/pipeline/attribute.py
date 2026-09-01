@@ -25,8 +25,13 @@ _CITED = [
     re.compile(r"\b(prior|previous|existing|earlier|related|baseline|reference)\s+"
                r"(work|works|method|methods|approach|approaches|study|studies|model|models|system|systems)\b", re.I),
     re.compile(r"\b(reported|achieved|obtained|proposed) by\b", re.I),
-    re.compile(r"\b(compared (to|with)|versus|vs\.?)\b", re.I),
 ]
+# NOTE: bare comparison words ("compared to", "vs.") were removed from _CITED —
+# measured on the level-2 run they misfired on ablation-table headers like
+# "p-value (vs. Proposed)", flipping the paper's OWN ablation result to
+# CITED_PAPER. A comparison word alone is not citation evidence; only count it
+# when it co-occurs with an actual citation marker (see _CITED_WEAK below).
+_CITED_WEAK = [re.compile(r"\b(compared (to|with)|versus|vs\.?)\b", re.I)]
 
 
 def _window(text: str, span: str) -> str:
