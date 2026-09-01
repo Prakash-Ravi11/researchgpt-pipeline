@@ -238,7 +238,11 @@ def acquire_paper(paper: dict[str, Any], cache_dir: Path | None = None) -> tuple
             time.sleep(0.2)
             continue
 
-        r = fetch(url, cap_bytes=8_000_000)
+        # 40MB cap: some legitimate papers (image-heavy PDFs) run 20-30MB, and a
+        # truncated PDF parses just enough for content validation to pass while
+        # losing the title page, causing a FALSE identity rejection (observed on
+        # 413a184de4 / PlanSightRAG, a 22MB arXiv PDF, in run 20260901T160444Z).
+        r = fetch(url, cap_bytes=40_000_000)
         entry["url"] = url
         entry["latency_ms"] = r.get("latency_ms")
         if not r.get("ok") or r["http_status"] >= 400:

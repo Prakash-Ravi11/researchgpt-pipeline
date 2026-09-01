@@ -39,13 +39,45 @@ classified FULL_TEXT / ABSTRACT_ONLY / METADATA_ONLY / FAILED with PyMuPDF + JAT
 - Reliability: S2 `openAccessPdf` 6/60 FAILED (dead/HTML), OpenAlex 13/60 FAILED, Crossref 17/60 FAILED.
 - JATS/XML available for only **2/60** papers.
 
+### Canonical pipeline — built + validated (`pipeline/`, tests `tests/`, `benchmark_canonical.py`)
+Modules: schema · acquire (canonical record + deterministic identity + content validation) ·
+represent (JATS + PDF → provenance blocks) · chunker (block-bounded, char offsets) · index (isolated
+Chroma + BGE-M3, **no reranker**) · extract (LLM + verbatim-span verification) · attribute (deterministic
+OWN/CITED/UNKNOWN) · decide (abstention gate) · run.
+
+- **Level 1** unit/logic tests: **28/28** (`tests/test_pipeline_units.py`).
+- **Level 2** (6-paper subset): ran E2E; 2 defects found + fixed (block-id provenance mismatch;
+  bare "vs."/"compared to" misfiring as CITED on ablation-table headers).
+- **Level 3** (full 60, run `runs/20260901T160444Z-canon-L3-ca6e/`, 38.7 min, qwen2.5:7b, reranker OFF):
+  - Acquisition **33/60 as-run → 34/60 (56.7%) after fetch-cap fix** vs baseline 31/60. Wrong-paper accepted **0**.
+    Identity rejections 1, content (landing-page) rejections 2.
+  - Provenance-valid rate **100% (146/146)** grounded items. Schema problems **0**.
+  - **Abstention on no-full-text quantitative fields: 81/81 (100%)** — zero fabricated Dataset/Metric/Result
+    for the 26 inaccessible papers (baseline emits them anyway).
+  - Attribution on quantitative items: OWN 8 (all correct on inspection), CITED 2, UNKNOWN 28
+    (passive-voice self-description → not guessed).
+  - Extraction returned/field: dataset 22, metrics 5, results 3, method 53, limitations 33.
+    metrics/results low = abstention gate (23 EXPLICIT metrics / 11 EXPLICIT results suppressed for
+    unconfirmed ownership).
+  - **Post-run fix:** `pipeline/acquire.py` fetch cap 8 MB → 40 MB (8 MB truncated a 22 MB PDF →
+    false identity reject of `413a184de4`). One-paper re-acquisition confirmed FULL_TEXT, title_sim 1.0.
+
+## DECISION — see `FINAL_REPORT.md`
+
+**GO_WITH_CHANGES.** Canonical architecture beats baseline on every axis that matters (acquisition
+51.7→56.7%, 0 wrong-paper, 100% provenance, 0 fabricated quant claims for inaccessible papers, 0 false
+OWN), runs in 39 min on the 6 GB laptop GPU with no new models/services. Not GO because: cap fix confirmed
+on 1 paper not a full re-run; quantitative recall low (needs wider attribution window); no human-gold eval.
+
 ## BLOCKED / NOT ATTEMPTED
 - `pytest` not installed in `.venv` → prior "37 tests pass" unverifiable.
-- GROBID/Docling/MinerU not installed; no Docker. Java 24 present. GPU RTX 3050 6GB.
-- Phases 3–13 not started (gated behind P1–P3 per brief).
+- GROBID/Docling/MinerU not installed; no Docker. Java 24 present. GPU RTX 3050 6GB. **Not needed** — no
+  measured structural problem PyMuPDF can't handle at the current bottleneck.
+- Human-gold Dataset/Metric/Result labels — none exist; §9/§10 numbers are coverage-under-verification,
+  not precision/recall.
+- Paired A/B of the recommended Stage-4 changes inside production code (needs the integration in `FINAL_REPORT.md` §18).
 
 ## NEXT (single step)
-Decision on Phase 2/3 (see `acquisition/DECISION_phase2.md`): **MODIFY — small**. Add OpenAlex `best_oa_location.pdf_url`
-and Europe-PMC-by-PMCID as two extra links in the existing `_candidate_pdf_urls` fallback chain (+3 papers, ~30 LOC,
-no new heavy deps). Do NOT pursue XML/JATS-first (2/60 availability) or full Crossref integration (~0 gain here).
-Then re-run Stage 1 to get a *logged* per-source recovery rate and confirm +3 in production.
+Integrate `FINAL_REPORT.md` §18 item 1 only (Stage 1 fallback links: OpenAlex + EuropePMC-by-PMCID +
+`pdf_source` logging + ≥40 MB cap) behind a config flag, re-run Stage 1, confirm 34/60 with a logged
+per-source breakdown. Everything else stays experimental until that lands and a paired A/B runs.
