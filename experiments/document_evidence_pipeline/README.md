@@ -16,7 +16,9 @@ and the exact 5 production changes recommended (§18). Answers questions A–Q.
 |---|---|---|
 | P0 baseline (read-only) | `runs/20260901T150245Z-0e6dd1de/` | 15:02Z |
 | P1 multi-source acquisition probe | `runs/20260901T150624Z-acq-2272d1/` | 15:06Z |
-| **Canonical pipeline, full 60-paper (run of record)** | `runs/20260901T160444Z-canon-L3-ca6e/` | 16:04Z |
+| Canonical pipeline, first full run | `runs/20260901T160444Z-canon-L3-ca6e/` | 16:04Z |
+| 40 MB-cap re-acquisition (60 papers) | `runs/20260901T165648Z-acqverify-3b2b/` | 16:56Z |
+| **Canonical pipeline, final 60-paper A/B (run of record)** | `runs/20260901T170346Z-canon-L3-525e/` | 17:03Z |
 
 (`runs/` is gitignored — regenerate with the harnesses below. Headline numbers are frozen here and in `FINAL_REPORT.md`.)
 
@@ -35,16 +37,16 @@ and the exact 5 production changes recommended (§18). Answers questions A–Q.
 
 | | baseline six-stage | canonical pipeline |
 |---|---|---|
-| full-text acquisition | 31/60 (51.7%) | **34/60 (56.7%)** (33 as-run + fetch-cap fix) |
+| full-text acquisition | 31/60 (51.7%) | **34/60 (56.7%)** (full re-acquisition, 40 MB cap) |
 | wrong-paper accepted | not checked | **0** |
 | landing-page/abstract as full text | possible | **0** |
-| provenance on returned evidence | none | **100% (146/146)** |
-| fabricated Dataset/Metric/Result for the 26 inaccessible papers | emitted anyway | **0** (81/81 abstain) |
+| provenance on returned evidence | none | **100% (150/150)** |
+| fabricated Dataset/Metric/Result for the 26 inaccessible papers | emitted anyway | **0** (78/78 abstain) |
 | false OWN_PAPER attributions | n/a | **0 observed** |
 | new models / services | — | **none** (BGE-M3 + qwen2.5:7b kept, no reranker, no GROBID/Docling/MinerU) |
-| runtime (full corpus) | — | 38.7 min on RTX 3050 6 GB |
+| runtime (full corpus) | — | 51 min extraction on RTX 3050 6 GB, 2.65 GB VRAM |
 
 - **26/60 papers are closed access with no preprint** (DOI but no ArXiv/PMCID) — hard free-acquisition ceiling.
-- Quantitative-field recall is deliberately low (metrics 5/33, results 3/33 returned): the abstention gate
-  suppresses EXPLICIT numbers whose author-ownership can't be confirmed. Safe; a known coverage cost.
-- ChromaDB: working, no panic. JATS/XML: 2/60. Decision: **GO_WITH_CHANGES** (see `FINAL_REPORT.md` §20).
+- Quantitative recall after the hierarchical-attribution rework: metrics 13 returned, results 8 (was 5 / 3);
+  quantitative OWN attribution 8 -> 22, **0 false OWN** across all 21 returned items, CITED unchanged at 2.
+- ChromaDB: working, no panic. JATS/XML: 2/60. Decision: **GO_WITH_CHANGES** (see `FINAL_REPORT.md` §P).

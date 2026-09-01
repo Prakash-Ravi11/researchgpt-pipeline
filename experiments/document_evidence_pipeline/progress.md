@@ -62,22 +62,34 @@ OWN/CITED/UNKNOWN) · decide (abstention gate) · run.
   - **Post-run fix:** `pipeline/acquire.py` fetch cap 8 MB → 40 MB (8 MB truncated a 22 MB PDF →
     false identity reject of `413a184de4`). One-paper re-acquisition confirmed FULL_TEXT, title_sim 1.0.
 
+## FINAL A/B (run `runs/20260901T170346Z-canon-L3-525e/`, 51 min, git a823aac)
+
+- Acquisition: **34/60 (56.7%)** vs baseline 31/60 — confirmed by a full 60-paper re-acquisition
+  (`runs/20260901T165648Z-acqverify-3b2b`, 40 MB cap). Lost vs baseline: none. Wrong-paper: 0.
+- Provenance-valid: **150/150 (100%)**. Schema problems: 0. (Task-5 regression: no provenance loss.)
+- Abstention on no-full-text quantitative fields: **78/78 (100%)**.
+- Attribution rework effect: quantitative OWN **8 -> 22**, UNKNOWN 28 -> 16, CITED **2 -> 2**.
+  metrics RETURNED **5 -> 13**, results RETURNED **3 -> 8**. All 21 returned quantitative items
+  manually reviewed: **0 false OWN**. Both CITED items correctly abstained.
+- VRAM peak 2.65 GB (of 6). No new models/services/parsers/rerankers.
+
 ## DECISION — see `FINAL_REPORT.md`
 
-**GO_WITH_CHANGES.** Canonical architecture beats baseline on every axis that matters (acquisition
-51.7→56.7%, 0 wrong-paper, 100% provenance, 0 fabricated quant claims for inaccessible papers, 0 false
-OWN), runs in 39 min on the 6 GB laptop GPU with no new models/services. Not GO because: cap fix confirmed
-on 1 paper not a full re-run; quantitative recall low (needs wider attribution window); no human-gold eval.
+**GO_WITH_CHANGES.** Beats baseline on every axis (acquisition 51.7->56.7% at the validated
+ceiling, 0 wrong-paper, 100% provenance, 0 fabricated quant claims for the 26 inaccessible papers,
+0 false OWN across 21 returned quantitative items) and the recall rework tripled quantitative
+coverage without losing precision. Not flat GO: production integration (FINAL_REPORT §O) + a
+paired in-production A/B + a value sanity check remain; no human-gold precision measurement.
 
 ## BLOCKED / NOT ATTEMPTED
 - `pytest` not installed in `.venv` → prior "37 tests pass" unverifiable.
 - GROBID/Docling/MinerU not installed; no Docker. Java 24 present. GPU RTX 3050 6GB. **Not needed** — no
   measured structural problem PyMuPDF can't handle at the current bottleneck.
-- Human-gold Dataset/Metric/Result labels — none exist; §9/§10 numbers are coverage-under-verification,
-  not precision/recall.
-- Paired A/B of the recommended Stage-4 changes inside production code (needs the integration in `FINAL_REPORT.md` §18).
+- Human-gold Dataset/Metric/Result labels — none exist; §H/§I/§J/§K numbers are coverage-under-verification
+  + full manual inspection, not precision/recall vs gold.
+- Paired A/B of the recommended Stage-4 changes inside production code (needs the integration in `FINAL_REPORT.md` §O).
 
 ## NEXT (single step)
-Integrate `FINAL_REPORT.md` §18 item 1 only (Stage 1 fallback links: OpenAlex + EuropePMC-by-PMCID +
+Integrate `FINAL_REPORT.md` §O item 1 only (Stage 1 fallback links: OpenAlex + EuropePMC-by-PMCID +
 `pdf_source` logging + ≥40 MB cap) behind a config flag, re-run Stage 1, confirm 34/60 with a logged
 per-source breakdown. Everything else stays experimental until that lands and a paired A/B runs.

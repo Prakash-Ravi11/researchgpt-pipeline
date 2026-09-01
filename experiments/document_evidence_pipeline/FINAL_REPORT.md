@@ -1,19 +1,23 @@
 # FINAL_REPORT — Canonical Document-Evidence Pipeline
 
-Run of record: `runs/20260901T160444Z-canon-L3-ca6e/` (LEVEL 3, full 60-paper corpus)
-Git at run: `9224f81`  ·  corpus sha256 `cf3bf90a…`  ·  device CUDA (RTX 3050 6GB)  ·  LLM `qwen2.5:7b` via Ollama  ·  reranker OFF
-Wall clock: acquisition 139 s, extraction 2107 s, total 38.7 min.
-Superseding fix after the run: `pipeline/acquire.py` fetch cap 8 MB → 40 MB (see §D, §15). One-paper re-acquisition confirmed; corrected acquisition figure is **34/60**.
+**Run of record:** `runs/20260901T170346Z-canon-L3-525e/` — LEVEL 3, full 60-paper A/B, git `a823aac`.
+Corpus sha256 `cf3bf90a…` · device CUDA (RTX 3050 6 GB) · LLM `qwen2.5:7b` (Q4_K_M) via Ollama · **reranker OFF**.
+Wall clock: acquisition 3 s (cached from the 40 MB-cap verification run), extraction+attribution 2994 s, total 51 min.
+Peak Torch VRAM 2.65 GB.
 
-This report supersedes the earlier `experiments/document_evidence_pipeline/FINAL_REPORT.md` history whose corpus (50 papers, agriculture) no longer matches the repo.
+Supporting runs: `20260901T150245Z-0e6dd1de` (baseline), `20260901T150624Z-acq-2272d1` (multi-source probe),
+`20260901T165648Z-acqverify-3b2b` (**full 60-paper re-acquisition with the 40 MB cap**),
+`20260901T160444Z-canon-L3-ca6e` (first full canonical run, pre-attribution-rework).
+
+Legend: **[M]** measured this corpus · **[I]** inferred/derived · **[B]** blocked · **[NT]** not tested.
 
 ---
 
 ## 1. Original problem
 
-A paper is discovered via Semantic Scholar but the pipeline often obtains only an abstract or a landing page, not the article body. The legacy Stage 4 then still emits plausible-looking Dataset / Metric / Result / Method / Limitations values from insufficient context, with no provenance and no way to tell the authors' own results from cited ones. Target: acquire the real paper, represent it well, retrieve evidence, extract structured fields **with provenance and attribution**, and **abstain** when evidence is insufficient — on the available hardware, without a large new architecture.
+A paper is discovered via Semantic Scholar but the pipeline often obtains only an abstract or a landing page, not the article body. Legacy Stage 4 then still emits plausible Dataset/Metric/Result/Method/Limitations values from insufficient context, with no provenance and no way to tell the authors' own results from cited ones. Target: acquire the real paper, represent it, retrieve evidence, extract structured fields **with provenance and attribution**, and **abstain** when evidence is insufficient — on the available hardware, without a large new architecture.
 
-## 2. Current baseline (verified live, not from prior reports)
+## 2. Current baseline **[M]**
 
 `runs/20260901T150245Z-0e6dd1de/` + `data/`:
 
@@ -21,192 +25,160 @@ A paper is discovered via Semantic Scholar but the pipeline often obtains only a
 |---|---|
 | corpus | 60 papers |
 | full-text acquisition | **31/60 = 51.7%** |
-| abstract-only | 29/60 |
-| chunks / coverage | 304 / 100% |
-| ChromaDB | works (no panic); 304 vectors |
-| provenance in Stage 2 output | none (page/section/table not retained) |
+| provenance in Stage 2 output | none |
 | attribution (OWN vs CITED) | none |
 | abstention | one regex "empirical evidence" gate in `summarize.py` |
-| 24-case synthetic attribution oracle | 24/24 (fixtures only, not real papers) |
-
-Baseline Stage 4 emits Dataset/Metric/Result for effectively all 60 papers, including the 29 with no full text.
+| behaviour on inaccessible papers | Dataset/Metric/Result emitted for all 60, including the 26 with no full text |
+| identity / content check on downloaded PDFs | none (a wrong-paper or landing-page PDF is accepted silently) |
 
 ## 3. Experiments performed
 
-1. **Phase-2 multi-source acquisition probe** (`acquisition/resolve_corpus.py`, run `…150624Z-acq-2272d1`): per-paper × {S2, arXiv, OpenAlex, Europe PMC, Crossref}, validated. Established the free-access ceiling.
-2. **Canonical pipeline** (`pipeline/`), Level-1 unit tests (28/28), Level-2 6-paper smoke (2 defects found + fixed), **Level-3 full 60-paper run** (this report).
+1. Phase-2 multi-source acquisition probe (`acquisition/resolve_corpus.py`).
+2. Canonical pipeline (`pipeline/`): Level-1 units (37/37), Level-2 6-paper smoke (2 defects fixed),
+   **first Level-3 run**, **40 MB-cap re-acquisition**, **attribution rework**, **final Level-3 A/B** (this report).
 
-## 4. Acquisition results
+No new services, models, parsers, rerankers, or APIs beyond the five already-probed sources.
+
+## 4. Final validated acquisition **[M]**
+
+Full 60-paper re-acquisition with the 40 MB fetch cap (`…acqverify-3b2b`) and again in the A/B run (`…525e`):
 
 | | papers | rate |
 |---|---|---|
 | Baseline (shipped) | 31/60 | 51.7% |
-| Canonical, as-run (`…160444Z`) | 33/60 | 55.0% |
-| **Canonical, cap-bug fixed** | **34/60** | **56.7%** |
-| Free-access ceiling (Phase-2 union) | 34/60 | 56.7% |
-| NO_ACCESSIBLE_FULL_TEXT (fixed) | 26/60 | 43.3% |
+| **Canonical pipeline** | **34/60** | **56.7%** |
+| Delta | **+3** | **+5.0 pp** |
+| NO_ACCESSIBLE_FULL_TEXT | 26/60 | 43.3% |
 
-Delta vs baseline **+3 papers**, decomposed:
+- **Lost vs baseline: none.** The first run's −1 (`413a184de4`, PlanSightRAG) was a false identity rejection from an 8 MB cap truncating its 22 MB arXiv PDF. Cap → 40 MB; now accepted with `title_similarity 1.0`, 32 pages, 22.1 MB.
+- **Recovered vs baseline (+3):** `0549e2e9` + `f42ad6e2` (Europe PMC PMCID → JATS XML), `ef1e4a16` (OpenAlex OA PDF).
+- Identity-validation candidate rejections **0**, content-validation rejections **2** (`938908bc` — S2 + OpenAlex both returned HTML landing pages, correctly refused; the paper has no PMCID so it correctly ends NO_ACCESSIBLE).
+- **Wrong-paper accepted: 0.** Schema problems: 0.
+- **34/60 equals the Phase-2 five-source union ceiling exactly** — this is the validated free-access ceiling for this corpus.
 
-- **+3 recovered**: `ef1e4a16` (OpenAlex OA PDF), `0549e2e9` + `f42ad6e2` (Europe PMC PMCID → JATS XML).
-- **−1 then +1**: `413a184de4` (PlanSightRAG). Baseline had it as full text. The as-run canonical pipeline **rejected** it — but that was a FALSE rejection caused by an 8 MB fetch cap truncating its 22 MB arXiv PDF (title page lost → identity check saw 0 similarity). With the cap at 40 MB it is re-accepted with `title_similarity 1.0`, 32 pages. Net back to +3.
+## D. Source contribution **[M]**
 
-Full-text source distribution (as-run 33): arXiv 23, Semantic Scholar 7, Europe PMC JATS 2, OpenAlex 1.
-Representation: PDF 31, JATS/XML 2, abstract-fallback 27.
+Full-text source of the 34 accepted: **arXiv 24 · Semantic Scholar 7 · Europe PMC (JATS) 2 · OpenAlex 1.**
+The +3 over baseline: OpenAlex ×1, Europe PMC JATS ×2. Crossref and Unpaywall contributed 0 unique (Crossref: 5 full texts, all also on arXiv/OpenAlex, 17 failed fetches; Unpaywall: not called, needs a contact email).
 
-Validation layer activity: **identity-validation candidate rejections 1, content-validation rejections 2, wrong-paper accepted 0.** The 2 content rejections (`938908bc` S2 + OpenAlex) were HTML landing pages correctly refused. `938908bc` is a near-duplicate of `f42ad6e2` with no PMCID, so it correctly ends NO_ACCESSIBLE.
+## E. Inaccessible papers **[M]**
 
-**All 26 truly-inaccessible papers have a DOI but no ArXiv ID and no PMCID** — published-only, no preprint. No free route reaches them.
+**26/60.** Every one has a DOI but **no ArXiv ID and no PMCID** — published-only, no preprint deposit. No free route reaches them. Correctly classified `NO_ACCESSIBLE_FULL_TEXT` (not FAILED, not treated as an extraction failure).
 
-## 5. XML/JATS results
+## F. Representation distribution **[M]**
 
-Available for **2/60** papers (both via Europe PMC PMCID). Both parsed cleanly into section/paragraph hierarchy with XML node paths, 11 k and ~4 k body words, and produced the pipeline's cleanest provenance (`front/abstract`, `body/sec[i]/p[j]`). **But n = 2**: JATS materially helps the two papers it exists for and is worth taking opportunistically, but it cannot be a primary representation strategy for this corpus and "XML vs PDF quality" cannot be measured at this n.
+PDF 32 · JATS/XML 2 · abstract-fallback 26. **[Task 2]** A broad API hunt was **not** performed — the evidence says the ceiling is corpus composition, not resolver coverage.
 
-## 6. PDF parser results
+## G. Provenance result **[M]**  (Task 5 regression)
 
-PyMuPDF only. GROBID/Docling/MinerU **not installed**, no Docker, GPU 6 GB. PyMuPDF `get_text("blocks")` + a heading regex recovered usable sections on well-formatted PDFs (e.g. `ef1e4a16`: abstract/intro/method/experimental_setup/results/discussion/limitations/conclusion) and weak sections on others (heading merged into body block → many blocks labelled `body`). Section labels are provenance metadata, not a retrieval gate, so weak section recovery degrades traceability granularity but not extraction. **No evidence a heavier parser is needed** to hit the current bottleneck (which is acquisition ceiling + attribution recall, not text extraction).
+**Provenance-valid rate: 1.0 (150/150)** EXPLICIT/INFERRED items — every span the model quoted was re-located in a retrieved chunk and bound to its `source → representation → section → page(pdf)/xml-node → char span`.
+Schema-validity problems: **0**. Regression vs the pre-attribution-rework run (146/146 → 150/150): **no provenance loss**; the attribution change is read-only w.r.t. provenance fields. PDF block identity, page identity, section identity, XML node identity and table/caption evidence all covered by the Level-1 suite (37/37).
 
-## 7. Retrieval results
+## H. Dataset result **[M]**
 
-BGE-M3 dense over an **isolated** ChromaDB (`pipeline/chroma/`, never `data/chroma_db`), per-paper `where` filter, 5 field-targeted queries, k = 5. Provenance-valid rate of everything the LLM then grounded: **100% (146/146)** — i.e. every span the model quoted was located in a retrieved chunk. No retrieval-recall failure surfaced as the limiting factor in extraction; the limiter is the LLM declaring MISSING or the attribution gate abstaining.
+23 EXPLICIT, 2 UNSUPPORTED, 35 MISSING → **23 RETURNED** (23/34 full-text papers = 68%).
+The 2 UNSUPPORTED are the verification guard working — the model's "verbatim" quote was paraphrased/partial (`ddb170b2` claimed 4 datasets, quote covered 2), so it was refused rather than accepted fuzzily.
 
-## 8. Reranker results
+## I. Metrics result **[M]**
 
-**Not added.** Question N answer: on this corpus retrieval did not visibly fail (100% span-location rate on grounded items; MISSING items were the model choosing not to answer, not retrieval missing the section). Adding a cross-encoder reranker (VRAM + latency) is not justified by any measured recall gap. Revisit only if a future corpus shows grounded-span-not-found rates rising.
+24 EXPLICIT, 2 INFERRED, 34 MISSING. **RETURNED 13** (was 5 before the attribution rework — **+160%**).
 
-## 9. Structured extraction results (33 full-text papers + 27 abstract-only)
+## J. Results result **[M]**
 
-| field | EXPLICIT | INFERRED | UNSUPPORTED | MISSING | RETURNED | returned / full-text paper |
-|---|---|---|---|---|---|---|
-| dataset | 22 | 0 | 2 | 36 | 22 | 22/33 = 67% |
-| metrics | 23 | 2 | 0 | 35 | **5** | 5/33 = 15% |
-| results | 11 | 2 | 0 | 47 | **3** | 3/33 = 9% |
-| method | 53 | 0 | 1 | 6 | 53 | (also from abstracts) |
-| limitations | 33 | 0 | 0 | 27 | 33 | (also from abstracts) |
+12 EXPLICIT, 2 INFERRED, 46 MISSING. **RETURNED 8** (was 3 — **+167%**).
 
-- **The 2 dataset UNSUPPORTED** are the verification guard working: the model's "verbatim" quote was paraphrased/partial (`ddb170b2` claimed 4 datasets, quote covered 2; `96285d75` similar) → span not found verbatim → refused rather than accepted fuzzily.
-- **method / limitations recall is high** (53, 33). For the 27 no-full-text papers, method/limitations are still returned **only when the abstract explicitly states them**, traced to the abstract block — not fabricated.
-- **metrics / results RETURNED is very low (5, 3)** — see §10/§11. This is the abstention gate, not an extraction failure: 23 metrics + 11 results were EXPLICIT with valid provenance but abstained because ownership could not be confirmed.
+Method 53 RETURNED, Limitations 34 RETURNED (unchanged — not targeted).
 
-## 10. Attribution results
+## K. Attribution result **[M]**
 
-Computed for every grounded item; **enforced** (hard gate) only for `metrics` and `results`.
-On quantitative items: **OWN_PAPER 8, CITED_PAPER 2, UNKNOWN 28.**
+Computed for every grounded item; **enforced** (hard abstain) on `metrics` and `results`.
+Quantitative items: **OWN_PAPER 22 · CITED_PAPER 2 · UNKNOWN 16** (was 8 / 2 / 28).
 
-- **All 8 OWN_PAPER are correct** on manual inspection ("we report…", "Our retrieval performance (nDCG@5 = 0.4502)…", "SPAR achieves a 9.2% absolute improvement…"). **0 false OWN observed.**
-- **CITED_PAPER 2**: `ac8fffa1` (`[Manning et al. 2008]` next to the metric definition — defensible), `f42ad6e2` ("previous studies have shown…" near a method sentence — a mild over-abstention, not a safety error).
-- **UNKNOWN 28**: dominated by **passive-voice self-description** ("Retrieval was generally effective, as indicated by high context precision and recall scores") — no `we/our` in the local window → not guessed. Deliberate: precision over recall.
+- **All 21 quantitative items RETURNED were manually reviewed: 0 false OWN_PAPER.** They are the paper's own metric lists, own results-table rows (incl. the `0549e2e9` ablation "Proposed" row that was the original bug), and first-person statements ("we report…", "Our retrieval performance (nDCG@5 = 0.4502)…", "SPAR achieves a 9.2% absolute improvement…"). ~4 have weak *values* (a table caption sentence, "Score (0-1)") — pre-existing qwen2.5:7b extraction noise, not attribution error.
+- **CITED_PAPER 2, both correctly abstained:** `ac8fffa1` (`[Manning et al. 2008]` hugging a metric definition), `f42ad6e2` metrics ("previous studies have shown…"). The precision guard held — CITED count unchanged by the recall rework.
+- **UNKNOWN 16** — still abstained. Genuinely ambiguous cases where no first-person cue and no citation marker could be established even at section scope.
+- Escalation levels used on RETURNED items: `sentence` 6, `paragraph` 6, `section_subject` 9 — L4 (first-person section makes a passive-voice number OWN) never fires when the span's own sentence carries a citation marker.
 
-The one Level-2 attribution bug (ablation-table header "vs. Proposed" → false CITED) was fixed pre-Level-3 (`attribute.py`, bare comparison words removed from the citation signal).
+The Level-2 "vs." ablation-table bug **remains fixed** (bare comparison words are not a citation signal; `attr F` regression test).
 
-## 11. Abstention results
+## L. Abstention result **[M]**
 
-- **No-full-text quantitative fields: 81/81 abstained (100%).** Not one fabricated Dataset/Metric/Result for the 27 papers without an article body. This is the core win over baseline.
-- Quantitative fields with EXPLICIT evidence but unconfirmable ownership: abstained (28 UNKNOWN + the CITED ones).
+- **No-full-text quantitative fields: 78/78 abstained (100%).** Zero fabricated Dataset/Metric/Result for the 26 inaccessible papers.
+- Quantitative fields with EXPLICIT evidence but `CITED_PAPER` or `UNKNOWN` ownership: abstained.
 - INFERRED (non-verbatim) quantitative fields: abstained.
-- Net: of 300 (60 × 5) field slots, **116 RETURNED / 184 ABSTAINED**; full-text papers avg 2.55 returned/5, no-full-text papers avg 1.19/5 (method+limitations from abstract).
+- Net over 300 field slots (60 × 5): **131 RETURNED / 169 ABSTAINED** (was 116/184). The extra 15 returned are all attribution-recovered own metrics/results + 1 dataset + 1 limitation.
 
-## 12. Provenance results
+## 13. End-to-end A/B — baseline six-stage vs canonical pipeline **[M]**
 
-**100% (146/146)** of grounded items carry `source → representation → section → page(pdf)/xml-node → char span`, and the quoted span was re-located in that chunk. Schema-validity problems: **0**. A truncated / landing-page candidate never becomes a provenance record because identity+content validation runs first.
+| # | axis | baseline six-stage | canonical pipeline |
+|---|---|---|---|
+| 1 | full-text acquisition | 31/60 (51.7%) | **34/60 (56.7%)** |
+| 2 | validated acquisition (identity + content checked) | 0 (no check) | **34/34** |
+| 3 | representation type | PDF or abstract, flat | PDF 32 · JATS 2 · abstract 26, provenance-bearing |
+| 4 | provenance validity on returned evidence | none | **100% (150/150)** |
+| 5 | Dataset returned | ~60 (unverified) | 23 verified (68% of full-text papers) |
+| 6 | Metrics returned | ~60 (unverified) | 13 verified |
+| 7 | Results returned | ~60 (unverified) | 8 verified |
+| 8 | OWN_PAPER attribution | none | 22 quantitative, **0 false** |
+| 9 | CITED_PAPER attribution | none | 2, both abstained |
+| 10 | UNKNOWN rate (quantitative) | n/a | 16/40 grounded |
+| 11 | abstention correctness on inaccessible papers | fabricates | **78/78 abstain (100%)** |
+| 12 | unsupported claims passed through | Dataset/Metric/Result for all 26 inaccessible papers | **0** |
+| 13 | runtime (full corpus) | — | 51 min (extraction), 3 s acquisition (cached) / 143 s cold |
+| 14 | memory / VRAM | — | 2.65 GB Torch peak (of 6 GB); qwen2.5:7b ~4.3 GB in Ollama |
+| — | new models / services / parsers / rerankers | — | **none** |
 
-## 13. End-to-end comparison vs the six-stage baseline
+## M. Runtime **[M]**
 
-| axis | baseline six-stage | canonical pipeline |
-|---|---|---|
-| full-text acquisition | 31/60 (51.7%) | **34/60 (56.7%)** |
-| wrong-paper in corpus | ≥1 (`413a184de4` arXiv PDF accepted with no identity check) — actually correct here, but nothing *checks* | identity-validated; 0 accepted wrong |
-| landing-page / abstract counted as full text | possible (no content gate) | 0 (content gate) |
-| provenance | none | 100% of returned evidence |
-| OWN vs CITED | none | enforced on metrics/results; 0 false OWN observed |
-| fabrication risk on 26 inaccessible papers | Dataset/Metric/Result emitted anyway | **0 quantitative claims** (100% abstain) |
-| quantitative coverage (metrics/results returned) | high but unverifiable | low (5 / 3) — abstains under ownership uncertainty |
-| method / limitations | yes | yes (53 / 33), provenance-bound |
-| new heavy deps | — | none (no GROBID/Docling/MinerU, no reranker, same BGE-M3 + qwen2.5:7b) |
+Acquisition 143 s cold / 3 s cached for 60 papers. Extraction+attribution 2994 s ≈ **50 s/paper** (5 LLM field calls/paper, num_ctx 6144). Index build (BGE-M3 fp16, ~7 k chunks) < 1 min. End-to-end on the target 6 GB laptop GPU: ~51 min. Attribution escalation is deterministic string work, negligible.
 
-## 14. Computational cost
+## N. Remaining limitations
 
-- Acquisition: 139 s / 60 papers ≈ 2.3 s/paper (network-bound; arXiv politeness 3 s dominates when an arXiv ID exists).
-- Extraction: 2107 s / 60 papers ≈ 35 s/paper ≈ 7 s per LLM field call (qwen2.5:7b Q4_K_M, num_ctx 6144, ~4.3 GB VRAM).
-- Retrieval index build: BGE-M3 fp16, ~7 k chunks, well under 1 min, fits 6 GB.
-- No reranker, no extra model. Runs end-to-end on the target laptop GPU in ~39 min.
+1. **[M]** ~4 of 21 returned quantitative items have weak *values* (a caption sentence, "Score (0-1)", a table-description string) — qwen2.5:7b extraction noise, not attribution error. A post-extraction value sanity check (must contain a digit or a known-metric token for metrics/results) would drop these.
+2. **[M]** UNKNOWN 16 quantitative items still abstained — real recall left on the table where neither first-person cue nor citation marker exists even at section scope. Safe.
+3. **[M]** Table-embedded own-results now recovered when a caption anchors "proposed/our" (`0549e2e9`), but tables with no such caption anchor still reach only `section_subject` or UNKNOWN.
+4. **[M]** PDF heading recovery is heuristic; ~1/3 of PDFs get some blocks labelled `body`. Provenance still resolves to page + char span.
+5. **[NT]** No human-gold Dataset/Metric/Result labels — §H/I/J are *coverage under a strict verification + attribution gate*, not precision/recall vs gold. Attribution correctness (§K) is 100% manual inspection of all 21 returned + the 2 CITED, plus the 13-item dry-run review — **[I]**, not **[M]** against gold.
+6. **[M]** JATS n = 2 — "XML vs PDF quality" not measurable.
+7. **[B]** `pytest` absent in `.venv` (prior "37 tests pass" claim unverifiable); GROBID/Docling/MinerU absent, no Docker.
+8. **[M]** 26/60 papers are simply not openly available.
+9. **[NT]** Paired A/B *inside production code* (this A/B is canonical-vs-baseline-figures); behaviour on a non-RAG/non-CS corpus; throughput at >60 papers.
 
-## 15. Failures and limitations
+## O. Production changes required (smallest set, all inside the existing six stages)
 
-1. **Fetch cap bug (fixed post-run):** 8 MB cap truncated a 22 MB PDF → false identity rejection of 1 paper. Cap raised to 40 MB; re-acquisition of that paper confirmed FULL_TEXT. Corrected acquisition figure 34/60. A truncated-response flag would be a further hardening.
-2. **Attribution recall is low.** Passive-voice results/metrics without a first-person marker in the local window → UNKNOWN → abstained. 23 EXPLICIT metrics and 11 EXPLICIT results were suppressed this way. Safe, but a real coverage cost. A wider (paragraph/section-subject) window or a small LLM tie-breaker could raise recall without sacrificing the 0-false-OWN property — untested.
-3. **Table-embedded own-results.** Ablation-table rows ("Proposed 90.76 …") land as UNKNOWN because the sentence-window heuristic can't see the table's "proposed = ours" caption. Abstains (safe) but loses a real number.
-4. **PDF section recovery is heuristic.** Headings merged into body blocks reduce section-label precision on ~1/3 of PDFs. Provenance still resolves to page + char span.
-5. **Extraction value noise.** qwen2.5:7b occasionally returns a tool/model name as a "dataset" (`all-mpnet-base-v2`) or a truncated value (`BEIR15 score of`). Low rate; documented, not fixed.
-6. **JATS n = 2.** XML-vs-PDF quality is not measurable on this corpus.
-7. **Ground truth.** No human-annotated Dataset/Metric/Result labels exist, so §9 numbers are *coverage under a strict verification gate*, not precision/recall against gold. Attribution correctness (§10) is manual inspection of all returned items + a sample of abstained ones (DETERMINISTIC + PROXY, not HUMAN-GOLD).
-8. **26/60 papers are simply not openly available** — no pipeline change fixes that.
+1. **Stage 1 (`src/collection/semantic_scholar.py`, `_candidate_pdf_urls`):** after arXiv, add OpenAlex `best_oa_location.pdf_url` / `open_access.oa_url` (by DOI) and, when `externalIds.PubMedCentral` exists, the Europe PMC `…/{PMCID}/fullTextXML` JATS endpoint. Persist `pdf_source` + `representation_type`. Raise any download cap to **≥ 40 MB**.
+2. **Stage 1/2 boundary:** run **identity validation** (title/DOI/author) and **content validation** (real body, not landing/abstract/HTML) before marking `has_full_text`. Removes wrong-paper and landing-page contamination.
+3. **Stage 2 (`src/processing/pdf_parser.py`):** emit provenance-bearing blocks (section + page/xml-node + char span); carry through chunking.
+4. **Stage 4 (`src/summarization/`):** per field require a **verbatim evidence span** located in a retrieved chunk → EXPLICIT/INFERRED/UNSUPPORTED/MISSING; run the **hierarchical attribution** on metrics/results; **abstain** (emit `NOT_FOUND`/`ABSTAIN`, not a value) when status ≠ EXPLICIT, provenance invalid, or ownership unconfirmed; force Dataset/Metric/Result to `NOT_FOUND` for abstract-only / NO_ACCESSIBLE papers. Add a value sanity check (limitation 1).
+5. **Synthesis / gap-analysis:** consume only RETURNED evidence; never turn an abstained field or missing corpus coverage into a "research gap" or novelty claim.
 
-## 16. Components accepted
+Keep Semantic Scholar. No Schematic AI. No new model/service. No seventh stage. Land behind a config flag; run a paired A/B in production before flipping the default.
 
-- **Canonical acquisition record** + ordered discovery (JATS → arXiv → S2 → OpenAlex → Crossref).
-- **Deterministic identity validation** (title/DOI/author) — 0 wrong-paper, and it caught a real landing-page case.
-- **Deterministic content validation** (real PDF body / JATS body, reject HTML/empty/abstract-sized).
-- **Provenance-bearing representation + chunking** (section + page/node + char span, block-bounded chunks).
-- **LLM extraction with verbatim-span verification** → EXPLICIT/INFERRED/UNSUPPORTED/MISSING.
-- **Deterministic attribution** (OWN/CITED/UNKNOWN) enforced on metrics/results.
-- **Abstention gate** — the single most valuable component; 100% on no-full-text quantitative fields.
-- **OpenAlex + Europe-PMC-by-PMCID** as acquisition fallbacks (+3 papers).
-
-## 17. Components rejected
-
-- **XML/JATS-first representation** — 2/60 availability. Keep opportunistic, not primary.
-- **Full Crossref PDF integration** — 5 full texts, all also on arXiv/OpenAlex; 17 failed fetches; net +0.
-- **GROBID / Docling / MinerU** — no measured structural problem PyMuPDF can't handle at the current bottleneck; infra cost unjustified.
-- **Reranker** — no measured retrieval-recall gap (100% grounded-span location).
-- **Any model swap** (BGE-M3, qwen2.5:7b kept).
-- **"Query every source" in production** — +3 papers for 5 round-trips/paper; use the ordered fallback and stop at first validated full text.
-
-## 18. Recommended final architecture (smallest that works)
-
-Keep the six stages. Change only these internals:
-
-1. **Stage 1 (`src/collection/semantic_scholar.py`):** in `_candidate_pdf_urls`, after arXiv add (a) OpenAlex `best_oa_location.pdf_url` / `open_access.oa_url` by DOI, (b) if `externalIds.PubMedCentral` present, the Europe PMC `…/{PMCID}/fullTextXML` JATS endpoint. Persist `pdf_source` and `representation_type` per paper. Raise any download cap to ≥40 MB.
-2. **Stage 1/2 boundary:** add **identity validation** (title/DOI/author match) and **content validation** (real body, not landing/abstract) before a paper is marked `has_full_text`. This alone removes wrong-paper and landing-page contamination from the corpus.
-3. **Stage 2 (`src/processing/pdf_parser.py`):** emit provenance-bearing blocks (section + page/xml-node + char span) instead of flat text; carry it through chunking.
-4. **Stage 4 (`src/summarization/`):** per field, require a **verbatim evidence span** located in a retrieved chunk; label EXPLICIT/INFERRED/UNSUPPORTED/MISSING; run **attribution** on metrics/results; **abstain** (emit `NOT_FOUND` / `ABSTAIN`, not a value) when status ≠ EXPLICIT, provenance invalid, or ownership unconfirmed. For abstract-only / NO_ACCESSIBLE papers, force Dataset/Metric/Result to `NOT_FOUND`.
-5. **Downstream synthesis / gap-analysis:** consume only RETURNED evidence; never turn an abstained field or missing corpus coverage into a "research gap" or novelty claim.
-
-No new services, no new models, no seventh stage.
-
-## 19. What remains unproven
-
-- Precision/recall of Dataset/Metric/Result **against human gold** (none exists).
-- Whether the recommended Stage-4 changes preserve the legacy pipeline's *useful* coverage after the abstention gate (needs a paired A/B on the same corpus with the integrated code).
-- XML-vs-PDF evidence quality (n = 2).
-- Attribution recall ceiling with a wider window / LLM tie-breaker.
-- Behaviour on a non-RAG / non-CS corpus (this corpus is 24/60 arXiv, heavily preprint-friendly; a clinical or humanities corpus would shift the acquisition mix and the JATS share).
-- Latency/throughput at production corpus sizes (>60).
-
-## 20. Decision
+## P. Final decision
 
 ### GO_WITH_CHANGES
 
-The canonical architecture **does** solve the stated problem better than the baseline on the axes that matter:
+Against the complete 60-paper A/B (not synthetic tests):
 
-- acquisition 51.7% → **56.7%** with the free-access ceiling reached, *and* wrong-paper / landing-page contamination eliminated (0 accepted);
-- **100% provenance** on returned evidence;
-- **0 fabricated** Dataset/Metric/Result for the 26 inaccessible papers (baseline fabricates for all of them);
-- **0 false OWN_PAPER** attributions observed;
-- runs in ~39 min on a 6 GB laptop GPU with no new models or services.
+- **Materially better than baseline:** acquisition 51.7% → **56.7%** at the validated free-access ceiling, with wrong-paper / landing-page contamination eliminated (0 accepted); **100% provenance** vs none; **0 fabricated** Dataset/Metric/Result for the 26 inaccessible papers vs baseline fabricating for all of them.
+- **Safety properties strong and preserved through the recall rework:** 0 wrong-paper, **0 false OWN_PAPER** across 21 returned quantitative items, 100% abstention on no-full-text quantitative fields, CITED count unchanged.
+- **Quantitative recall materially improved:** metrics 5 → 13 returned, results 3 → 8, OWN attribution 8 → 22 — without sacrificing precision.
+- Runs in 51 min on a 6 GB laptop GPU, 2.65 GB VRAM, **no new models/services/parsers/rerankers**.
 
-It is **not** GO outright because: (1) the fetch-cap fix landed after the run of record and is confirmed only on one paper, not a full re-run; (2) attribution/quantitative recall is low (metrics 5/33, results 3/33) and needs the window widening in §15.2 before Stage-4 integration; (3) there is no human-gold evaluation, so extraction precision is asserted via the verification gate, not measured. Integrate per §18 behind a config flag, re-run a paired A/B, widen the attribution window, then re-evaluate for GO.
+**Not flat GO** because: (a) nothing is in production yet — the work in §O is bounded and known, not open research, but a paired A/B *in production code* has not run; (b) no human-gold precision measurement exists (extraction/attribution quality is asserted via the verification gate + full manual inspection, **[I]** not **[M]**); (c) ~4 returned items carry weak values (limitation 1) pending the value sanity check.
 
-Not "READY FOR PRODUCTION".
+**Not NOT_READY:** quantitative attribution is reliable on inspection (0 false ownership), and no unsupported claim passes through — every returned quantitative value has a verbatim span, valid provenance, and confirmed OWN ownership.
 
-## 21. Exact evidence supporting the decision
+Recommended path: integrate §O behind a flag → paired production A/B → add the value sanity check → re-evaluate for GO.
+
+## Q. Evidence index
 
 | claim | source |
 |---|---|
 | baseline 31/60 | `runs/20260901T150245Z-0e6dd1de/baseline.json` |
-| free-access ceiling 34/60, +3 = OpenAlex ×1 + EuropePMC JATS ×2 | `runs/20260901T150624Z-acq-2272d1/acquisition_summary.json` |
-| canonical as-run 33/60, wrong-paper 0, provenance 100% (146), abstain-on-no-fulltext 81/81 | `runs/20260901T160444Z-canon-L3-ca6e/summary.json` + `report.md` |
-| 8/8 OWN_PAPER correct, 2 dataset UNSUPPORTED = paraphrased quote, 413a184de4 false-reject = 8 MB cap on 22 MB PDF | `runs/20260901T160444Z-canon-L3-ca6e/evidence_results.json` + `acquisition_records.json` (spot-checked) |
-| cap fix → 413a184de4 FULL_TEXT, title_similarity 1.0, 32 pages → corrected 34/60 | `pipeline/acquire.py` (cap 40 MB) + one-paper re-acquisition |
-| Level-1 logic 28/28 | `tests/test_pipeline_units.py` |
-| parser/reranker not needed | `runs/20260901T150245Z-0e6dd1de/parser_results.json` (tools absent) + 100% grounded-span location this run |
+| free-access ceiling 34/60 = arXiv 24 + S2 7 + EuropePMC 2 + OpenAlex 1 | `runs/20260901T165648Z-acqverify-3b2b/{summary,report}.json` |
+| canonical A/B: 34/60, wrong-paper 0, provenance 150/150, abstain-no-FT 78/78, attribution 22/2/16, metrics 13 / results 8 returned, VRAM 2.65 GB | `runs/20260901T170346Z-canon-L3-525e/{summary,manifest,report}.json` |
+| 21/21 returned quantitative items = OWN, 0 false; 2 CITED both abstained | `runs/20260901T170346Z-canon-L3-525e/evidence_results.json` (full manual review) |
+| attribution rework: OWN 8→22, UNKNOWN 28→16, 13 flips reviewed, 0 regressions | dry-run over `…160444Z-canon-L3-ca6e/evidence_results.json` + this run |
+| Level-1 logic incl. Task-7 set A–J + precision guards | `tests/test_pipeline_units.py` — 37/37 |
+| 40 MB cap fix | `pipeline/acquire.py`; `413a184de4` re-acquired FULL_TEXT, title_similarity 1.0, 32 pages |

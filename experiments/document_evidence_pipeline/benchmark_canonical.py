@@ -251,16 +251,26 @@ def main() -> None:
               f"abstained={res['n_abstained']} status={res['acquisition_status']}")
     extract_seconds = round(time.perf_counter() - t1, 1)
 
+    vram = {}
+    try:
+        import torch
+        if torch.cuda.is_available():
+            vram = {"peak_torch_vram_mb": round(torch.cuda.max_memory_allocated() / 2**20, 1),
+                    "reserved_torch_vram_mb": round(torch.cuda.max_memory_reserved() / 2**20, 1)}
+    except Exception:
+        pass
+
     summary = aggregate(paper_results, prepared, corpus)
     manifest = {
         "run_id": run_id, "level": 2 if level2 else 3, "started_at": started, "ended_at": utc(),
         "acq_seconds": acq_seconds, "extract_seconds": extract_seconds,
         "total_seconds": round(time.perf_counter() - t0, 1),
+        "seconds_per_paper_extract": round(extract_seconds / max(1, len(prepared)), 1),
         "python": sys.version.split()[0], "platform": platform.platform(),
         "git_revision": git_rev(),
         "corpus_path": str(CORPUS.relative_to(ROOT)),
         "corpus_sha256": __import__("hashlib").sha256(CORPUS.read_bytes()).hexdigest(),
-        "paper_count": len(corpus), "llm": LLM_CFG, "device": args.device,
+        "paper_count": len(corpus), "llm": LLM_CFG, "device": args.device, **vram,
         "reranker_used": False, "production_paths_touched": False, "credentials_used": False,
     }
     (run_dir / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
