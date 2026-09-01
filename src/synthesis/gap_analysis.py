@@ -50,7 +50,12 @@ def load_config(config_path: str) -> dict:
 
 def build_gap_matrix(papers: list[dict]) -> dict:
     """category -> dataset -> count. Sparse/empty cells are candidate gaps.
-    Deterministic — no LLM call in this function."""
+    Deterministic — no LLM call in this function.
+
+    Reads each paper's ``datasets`` list from paper_summaries.json. When the
+    evidence gate is enabled (FINAL_REPORT.md §O) that list has already been
+    filtered to RETURNED (grounded + attributed) datasets only, so a gap is
+    never derived from an unsupported/abstained dataset mention."""
     categories = sorted({p.get("category", "Uncategorized") for p in papers})
     all_datasets = sorted({d for p in papers for d in p.get("datasets", []) if d})
 

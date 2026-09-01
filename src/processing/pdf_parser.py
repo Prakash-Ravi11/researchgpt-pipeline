@@ -117,21 +117,77 @@ def process_paper(paper: dict, chunk_size: int, overlap: int) -> list[dict]:
     return records
 
 
+def process_paper_grounded(paper: dict) -> list[dict]:
+    """Provenance-bearing chunking (FINAL_REPORT.md §O change 3).
+
+    Parses the validated PDF or JATS/XML into section/page/node-anchored blocks,
+    then chunks WITHIN blocks so every chunk keeps section + page/node + char
+    span. Returns the same superset schema as ``process_paper`` PLUS the
+    provenance fields, so Stage 3 / retrieval / the evidence gate can consume it
+    while nothing that reads the legacy fields breaks.
+    """
+    from src.evidence.represent import build_document
+    from src.evidence.chunker import chunk_document
+
+    pid = paper["paperId"]
+    rep = paper.get("representation_type") or ("pdf" if paper.get("has_full_text") else "abstract")
+    acq = {"paper_id": pid, "source": paper.get("pdf_source") or "semantic_scholar",
+           "representation_type": rep, "status": paper.get("acquisition_status", "")}
+
+    data = None
+    if paper.get("has_full_text") and paper.get("pdf_path"):
+        p = Path(paper["pdf_path"])
+        if p.exists():
+            data = p.read_bytes()
+    doc = build_document(acq, data, fallback_abstract=paper.get("abstract"))
+    ev_chunks = chunk_document(doc)
+
+    legacy_source = ("full_text" if doc["representation"] in ("pdf", "jats_xml")
+                     else "abstract_only")
+    records = []
+    for i, c in enumerate(ev_chunks):
+        records.append({
+            "chunk_id": c["chunk_id"],
+            "paper_id": pid,
+            "title": paper.get("title", ""),
+            "year": paper.get("year"),
+            "venue": paper.get("venue", ""),
+            "has_full_text": paper.get("has_full_text", False),
+            "source": legacy_source,
+            "chunk_index": i,
+            "text": c["text"],
+            # provenance (§O)
+            "representation": c["representation"],
+            "section": c["section"],
+            "page_or_node": c["page_or_node"],
+            "block_id": c["block_id"],
+            "block_type": c["block_type"],
+            "char_start": c["char_start"],
+            "char_end": c["char_end"],
+        })
+    return records
+
+
 def run_processing(config: dict) -> list[dict]:
     proc_cfg = config["processing"]
     paths_cfg = config["paths"]
+    grounded = bool((config.get("evidence_grounding", {}) or {}).get("enabled"))
 
     metadata_path = Path(paths_cfg["raw_metadata_dir"]) / "collected_papers.json"
     with open(metadata_path, encoding="utf-8") as f:
         papers = json.load(f)
 
     print(f"Processing {len(papers)} papers "
-          f"(chunk_size={proc_cfg['chunk_size']}, overlap={proc_cfg['chunk_overlap']})")
+          f"(chunk_size={proc_cfg['chunk_size']}, overlap={proc_cfg['chunk_overlap']}"
+          f"{', provenance-aware' if grounded else ''})")
 
     all_chunks = []
     empty_papers = []
     for paper in tqdm(papers, desc="Chunking"):
-        records = process_paper(paper, proc_cfg["chunk_size"], proc_cfg["chunk_overlap"])
+        if grounded:
+            records = process_paper_grounded(paper)
+        else:
+            records = process_paper(paper, proc_cfg["chunk_size"], proc_cfg["chunk_overlap"])
         if not records:
             empty_papers.append(paper.get("title", paper["paperId"]))
         all_chunks.extend(records)

@@ -106,6 +106,12 @@ def build_collection(chunks: list[dict], embeddings, chroma_dir: str, collection
             "has_full_text": c["has_full_text"],
             "source": c["source"],
             "chunk_index": c["chunk_index"],
+            # provenance carried through when Stage 2 ran provenance-aware
+            # (FINAL_REPORT.md §O); empty strings otherwise — Chroma rejects None.
+            "section": c.get("section") or "",
+            "page_or_node": c.get("page_or_node") or "",
+            "block_id": c.get("block_id") or "",
+            "representation": c.get("representation") or "",
         }
         for c in chunks
     ]

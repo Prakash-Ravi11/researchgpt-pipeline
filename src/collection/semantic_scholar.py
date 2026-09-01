@@ -122,24 +122,50 @@ def rerank_by_relevance(query: str, papers: list[dict], model_name: str,
     return ranked[:top_n]
 
 
-def _candidate_pdf_urls(paper: dict, contact_email: str | None) -> list[str]:
-    """Build an ordered list of URLs worth trying for this paper's PDF, best
-    source first. Semantic Scholar's own openAccessPdf field is often empty
-    even when a free copy genuinely exists elsewhere — arXiv and Unpaywall
-    catch a meaningful chunk of those misses."""
-    urls = []
+def _candidate_pdf_urls(paper: dict, contact_email: str | None,
+                        use_extra_sources: bool = False) -> list[tuple[str, str, str]]:
+    """Ordered (source, url, representation_type) candidates for this paper's
+    full text, best/most-structured source first.
 
-    oa = paper.get("openAccessPdf")
-    if oa and oa.get("url"):
-        urls.append(oa["url"])
-
+    Semantic Scholar's own openAccessPdf field is often empty even when a free
+    copy exists elsewhere — arXiv and Unpaywall catch many misses. With
+    ``use_extra_sources`` (FINAL_REPORT.md §O), Europe PMC JATS/XML (when a
+    PMCID exists) and OpenAlex are also consulted; both were validated to add
+    +3 papers on the reference corpus. Crossref is included but contributed 0
+    unique there — kept only because it is a cheap DOI lookup.
+    """
     external_ids = paper.get("externalIds") or {}
-
+    pmcid = external_ids.get("PubMedCentral")
     arxiv_id = external_ids.get("ArXiv")
-    if arxiv_id:
-        urls.append(f"https://arxiv.org/pdf/{arxiv_id}.pdf")
-
     doi = external_ids.get("DOI")
+    oa = paper.get("openAccessPdf")
+    cands: list[tuple[str, str, str]] = []
+
+    if not use_extra_sources:
+        # LEGACY ordering, byte-for-byte: Semantic Scholar's own link, then arXiv,
+        # then optionally Unpaywall. Nothing else is consulted.
+        if oa and oa.get("url"):
+            cands.append(("semantic_scholar", oa["url"], "pdf"))
+        if arxiv_id:
+            cands.append(("arxiv", f"https://arxiv.org/pdf/{arxiv_id}.pdf", "pdf"))
+    else:
+        # §O ordering: most-structured / most-reliable first.
+        if pmcid:
+            from src.evidence.acquire import europepmc_jats_url
+            cands.append(("europepmc", europepmc_jats_url(pmcid), "jats_xml"))
+        if arxiv_id:
+            cands.append(("arxiv", f"https://arxiv.org/pdf/{arxiv_id}.pdf", "pdf"))
+        if oa and oa.get("url"):
+            cands.append(("semantic_scholar", oa["url"], "pdf"))
+        if doi:
+            from src.evidence.acquire import resolve_openalex_pdf, resolve_crossref_pdf
+            oa_url, _ = resolve_openalex_pdf(doi)
+            if oa_url:
+                cands.append(("openalex", oa_url, "pdf"))
+            cr_url, _ = resolve_crossref_pdf(doi)
+            if cr_url:
+                cands.append(("crossref", cr_url, "pdf"))
+
     if doi and contact_email:
         # Unpaywall is free, no API key, but requires a real contact email per
         # their terms of use — only attempted if one is configured.
@@ -150,56 +176,104 @@ def _candidate_pdf_urls(paper: dict, contact_email: str | None) -> list[str]:
             location = resp.json().get("best_oa_location") or {}
             pdf_url = location.get("url_for_pdf") or location.get("url")
             if pdf_url:
-                urls.append(pdf_url)
+                cands.append(("unpaywall", pdf_url, "pdf"))
         except requests.RequestException:
             pass  # Unpaywall lookup failing shouldn't block trying the other sources
 
-    return urls
+    return cands
 
 
-def download_open_access_pdfs(papers: list[dict], pdf_dir: str, contact_email: str | None = None) -> None:
-    """Download PDF where available; flag has_full_text either way.
+def download_open_access_pdfs(papers: list[dict], pdf_dir: str, contact_email: str | None = None,
+                              validate: bool = False, use_extra_sources: bool = False) -> None:
+    """Download full text where available; flag has_full_text either way.
 
-    Tries multiple sources in order (Semantic Scholar's own link, then arXiv,
-    then optionally Unpaywall) before giving up on a paper — a meaningful
-    fraction of "abstract-only" papers turn out to have a free copy on arXiv
-    even when Semantic Scholar's own openAccessPdf field is empty.
+    Tries multiple sources in order (structured JATS first when enabled, then
+    arXiv, Semantic Scholar's own link, OpenAlex/Crossref, Unpaywall) before
+    giving up — many "abstract-only" papers have a free copy elsewhere.
+
+    Legacy path (validate=False): a candidate is accepted on the ``%PDF`` magic
+    byte alone, exactly as before.
+
+    Validated path (validate=True, FINAL_REPORT.md §O): every candidate is
+    streamed under a 40 MB cap and must pass BOTH deterministic content
+    validation (real article body, not a landing/error/abstract page) AND
+    identity validation (title / DOI / author match) before ``has_full_text``
+    is set. Per-paper provenance is recorded in ``pdf_source`` /
+    ``representation_type`` / ``acquisition_status`` / ``identity_validation`` /
+    ``content_validation``.
     """
     Path(pdf_dir).mkdir(parents=True, exist_ok=True)
     recovered_via_fallback = 0
 
-    for paper in tqdm(papers, desc="Downloading PDFs"):
+    if validate:
+        from src.evidence.acquire import (fetch, content_validate, identity_validate,
+                                          full_text_confidence, sha256_bytes)
+
+    for paper in tqdm(papers, desc="Downloading full text"):
         paper_id = paper.get("paperId", "unknown")
-        candidate_urls = _candidate_pdf_urls(paper, contact_email)
+        candidates = _candidate_pdf_urls(paper, contact_email, use_extra_sources=use_extra_sources)
+        paper["has_full_text"] = False
+        paper["pdf_source"] = None
+        paper["representation_type"] = None
+        if validate:
+            paper["acquisition_status"] = "NO_ACCESSIBLE_FULL_TEXT" if candidates else (
+                "NO_ACCESSIBLE_FULL_TEXT" if paper.get("abstract") else "METADATA_ONLY")
+            paper["acquisition_candidates"] = []
 
-        if not candidate_urls:
-            paper["has_full_text"] = False
-            continue
+        for i, (source, url, rep_type) in enumerate(candidates):
+            if not validate:
+                try:
+                    resp = requests.get(url, timeout=30)
+                    resp.raise_for_status()
+                    if not resp.content.startswith(b"%PDF"):
+                        continue
+                    out_path = Path(pdf_dir) / f"{paper_id}.pdf"
+                    out_path.write_bytes(resp.content)
+                    paper["has_full_text"] = True
+                    paper["pdf_path"] = str(out_path)
+                    paper["pdf_source"] = source
+                    paper["representation_type"] = "pdf"
+                    if i > 0:
+                        recovered_via_fallback += 1
+                    break
+                except requests.RequestException:
+                    continue
 
-        downloaded = False
-        for i, url in enumerate(candidate_urls):
-            try:
-                resp = requests.get(url, timeout=30)
-                resp.raise_for_status()
-                if not resp.content.startswith(b"%PDF"):
-                    continue  # some "PDF" links actually return an HTML landing page — skip those
-                out_path = Path(pdf_dir) / f"{paper_id}.pdf"
-                out_path.write_bytes(resp.content)
-                paper["has_full_text"] = True
-                paper["pdf_path"] = str(out_path)
-                if i > 0:
-                    recovered_via_fallback += 1
-                downloaded = True
-                break
-            except requests.RequestException:
-                continue  # try the next candidate source
-
-        if not downloaded:
-            paper["has_full_text"] = False
+            # validated path
+            r = fetch(url)
+            entry = {"source": source, "url": url, "representation_type": rep_type,
+                     "http_status": r.get("http_status"), "bytes": r.get("bytes")}
+            if not r.get("ok") or r["http_status"] >= 400:
+                entry["result"] = f"fetch_failed:{r.get('error') or r.get('http_status')}"
+                paper["acquisition_candidates"].append(entry)
+                continue
+            data = r["body"]
+            content = content_validate(rep_type, data)
+            identity = identity_validate(paper, rep_type, data)
+            entry.update({"content_passed": content["passed"], "content_reason": content["reason"],
+                          "identity_passed": identity["passed"], "identity_reason": identity["reason"]})
+            paper["acquisition_candidates"].append(entry)
+            if not (content["passed"] and identity["passed"]):
+                continue
+            ext = "xml" if rep_type == "jats_xml" else "pdf"
+            out_path = Path(pdf_dir) / f"{paper_id}.{ext}"
+            out_path.write_bytes(data)
+            paper["has_full_text"] = True
+            paper["pdf_path"] = str(out_path)
+            paper["pdf_source"] = source
+            paper["representation_type"] = rep_type
+            paper["acquisition_status"] = "FULL_TEXT"
+            paper["identity_validation"] = identity
+            paper["content_validation"] = content
+            paper["full_text_confidence"] = full_text_confidence(identity, content, rep_type)
+            paper["document_sha256"] = sha256_bytes(data)
+            if i > 0:
+                recovered_via_fallback += 1
+            break
 
     if recovered_via_fallback:
-        print(f"  {recovered_via_fallback} paper(s) recovered via arXiv/Unpaywall fallback "
-              f"(Semantic Scholar's own link was missing or dead)")
+        print(f"  {recovered_via_fallback} paper(s) recovered via a fallback source "
+              f"(Semantic Scholar's own link was missing, dead, or failed validation)")
 
 
 def run_collection(config: dict, limit: int | None = None) -> list[dict]:
@@ -228,10 +302,23 @@ def run_collection(config: dict, limit: int | None = None) -> list[dict]:
     )
     print(f"Kept top {len(ranked)} papers by relevance")
 
-    download_open_access_pdfs(ranked, paths_cfg["pdf_dir"], contact_email=coll_cfg.get("contact_email"))
+    ev_cfg = config.get("evidence_grounding", {}) or {}
+    grounded = bool(ev_cfg.get("enabled"))
+    download_open_access_pdfs(
+        ranked, paths_cfg["pdf_dir"], contact_email=coll_cfg.get("contact_email"),
+        validate=grounded, use_extra_sources=grounded,
+    )
     full_text_count = sum(1 for p in ranked if p.get("has_full_text"))
-    print(f"{full_text_count}/{len(ranked)} papers have full-text PDF; "
-          f"{len(ranked) - full_text_count} are abstract-only")
+    if grounded:
+        by_src = {}
+        for p in ranked:
+            if p.get("has_full_text"):
+                by_src[p.get("pdf_source")] = by_src.get(p.get("pdf_source"), 0) + 1
+        print(f"{full_text_count}/{len(ranked)} papers have VALIDATED full text "
+              f"({len(ranked) - full_text_count} NO_ACCESSIBLE_FULL_TEXT); by source: {by_src}")
+    else:
+        print(f"{full_text_count}/{len(ranked)} papers have full-text PDF; "
+              f"{len(ranked) - full_text_count} are abstract-only")
 
     Path(paths_cfg["raw_metadata_dir"]).mkdir(parents=True, exist_ok=True)
     out_path = Path(paths_cfg["raw_metadata_dir"]) / "collected_papers.json"

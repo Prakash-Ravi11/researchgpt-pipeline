@@ -850,6 +850,14 @@ def run_summarization(config: dict) -> None:
     out_path.write_text(json.dumps(output, indent=2), encoding="utf-8")
     print(f"\nSaved {len(output)} paper summaries to {out_path}")
 
+    # Stage 5 — evidence gate: attribution + confidence + abstention over the
+    # extracted Dataset/Metric/Result values (FINAL_REPORT.md §O change 4).
+    # Rewrites paper_summaries.json so only RETURNED evidence survives, and
+    # writes paper_evidence.json with full provenance. No-op unless enabled.
+    if bool((config.get("evidence_grounding", {}) or {}).get("enabled")):
+        from src.evidence.gate import run_evidence_gate
+        run_evidence_gate(config)
+
     cluster_out_path = Path(paths_cfg["processed_dir"]) / "clusters.json"
     cluster_out_path.write_text(json.dumps(cluster_info, indent=2), encoding="utf-8")
     print(f"Saved cluster definitions to {cluster_out_path}")
