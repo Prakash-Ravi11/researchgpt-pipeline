@@ -89,7 +89,49 @@ paired in-production A/B + a value sanity check remain; no human-gold precision 
   + full manual inspection, not precision/recall vs gold.
 - Paired A/B of the recommended Stage-4 changes inside production code (needs the integration in `FINAL_REPORT.md` §O).
 
-## NEXT (single step)
-Integrate `FINAL_REPORT.md` §O item 1 only (Stage 1 fallback links: OpenAlex + EuropePMC-by-PMCID +
-`pdf_source` logging + ≥40 MB cap) behind a config flag, re-run Stage 1, confirm 34/60 with a logged
-per-source breakdown. Everything else stays experimental until that lands and a paired A/B runs.
+## PRODUCTION INTEGRATION (FINAL_REPORT.md §O) — commits f12089d..fce2328
+
+All 5 §O changes are integrated into the six stages, behind
+`config['evidence_grounding']['enabled']` (default **false** = byte-for-byte legacy).
+
+| # | change | files |
+|---|---|---|
+| — | validated logic promoted to `src/evidence/` (single copy); experiment `pipeline/{schema,attribute,represent,chunker}.py` are re-export shims (−635 LOC, no duplication) | `src/evidence/{schema,attribute,represent,chunker,acquire,gate,verifier}.py` |
+| 1 | Stage 1: `_candidate_pdf_urls` -> `(source,url,repr)`, legacy order preserved when flag off; `download_open_access_pdfs(validate, use_extra_sources)` — identity + content validation, 40 MB streamed cap, OpenAlex/Crossref/Europe-PMC-JATS | `src/collection/semantic_scholar.py`, `src/evidence/acquire.py` |
+| 2 | per-paper `pdf_source` / `representation_type` / `acquisition_status` / `identity_validation` / `content_validation`; `NO_ACCESSIBLE_FULL_TEXT` distinct | `src/collection/semantic_scholar.py` |
+| 3 | Stage 2: `process_paper_grounded()` -> provenance blocks + chunking; chunk schema is a SUPERSET (adds section / page_or_node / block_id / char span) | `src/processing/pdf_parser.py` |
+| 3 | Stage 3: section / page_or_node / block_id / representation into Chroma metadata | `src/embedding/build_index.py` |
+| 4 | Stage 5: `run_evidence_gate()` after Stage 4 — verbatim span + hierarchical attribution + value sanity check + abstain; no-full-text -> Dataset/Metric/Result NOT_FOUND; rewrites `paper_summaries.json`, writes `paper_evidence.json` | `src/evidence/gate.py`, `src/summarization/summarize.py` |
+| 5 | Stage 6 synthesis reads the gated fields directly (no code change; documented) | `src/synthesis/gap_analysis.py` |
+
+**Verified so far (Phases 1–8):**
+- Existing `tests/test_pipeline.py`: **37/37**. Experiment suite against promoted code: **37/37**.
+- Production grounded-acquisition smoke (5 frozen papers): 22.1 MB PDF ✅, Europe PMC JATS ✅, OpenAlex
+  recovery ✅, baseline paper preserved ✅, inaccessible -> NO_ACCESSIBLE_FULL_TEXT ✅.
+- Evidence-gate smoke (synthetic): hallucinated dataset -> ABSTAINED; own metric -> RETURNED+OWN; cited
+  number -> not returned; no-full-text paper -> 3/3 abstained + fields cleared; provenance 3/3.
+- `git diff --check` clean; no secrets in additions; only intended files changed.
+- Pre-existing uncommitted production WIP committed unchanged as baseline checkpoint `f12089d`.
+
+## ⏸ PAUSED — RESUME HERE (Phase 9 + 10 + reports + final decision)
+
+Stopped by user request (laptop offline overnight). Nothing lost — all code + Phase 1–8 validation
+committed through `fce2328`. Partial A/B scratch dir was deleted (fully regenerable).
+
+**To finish, run and then report on:**
+1. `python experiments/document_evidence_pipeline/production_ab.py --arm both`
+   (paired production A/B on the frozen 60-paper corpus; ~100 min: both arms fresh Ollama extraction.
+   Writes `runs/prodab-*/report.md` + `{baseline,canonical}_metrics.json` + `*_paper_evidence.json`.)
+2. Phase 10 quantitative sanity check: for every RETURNED metrics/results item in
+   `canonical_paper_evidence.json`, verify value verbatim-in-evidence, belongs to the paper, provenance
+   valid, attribution OWN (not CITED), not an unsupported inference. Target: 0 false OWN.
+3. Acceptance criteria check (FINAL_REPORT-integration prompt): acq ≥ 31/60 and ≈ 34/60; identity/content
+   validated; provenance ≥ 95%; 0 unsupported quant claims for inaccessible papers; metrics/results recall
+   up vs baseline; `tests/test_pipeline.py` 37/37; production pipeline runs end-to-end.
+4. Update `FINAL_REPORT.md` (add a "Production integration" section + A/B table + sanity check),
+   `progress.md`, `board.md`. Separate MEASURED / INFERRED / BLOCKED / NOT TESTED.
+5. Final decision: GO / GO_WITH_CHANGES / NOT_READY based on the production A/B (not synthetic tests).
+
+Expected (from the isolated Level-3 A/B, `runs/20260901T170346Z-canon-L3-525e`): acq 34/60, provenance
+100%, no-full-text abstention 100%, metrics returned ~13 / results ~8, 0 false OWN. The production A/B
+must reproduce these to earn GO; deviations are the finding to report.
