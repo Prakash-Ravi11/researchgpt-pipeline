@@ -26,6 +26,7 @@ Run standalone for testing:
     python -m src.summarization.summarize --config configs/config.yaml
 """
 import argparse
+import hashlib
 import json
 import re
 import threading
@@ -460,6 +461,198 @@ _STRING_EXTRACTION_FIELDS = [
     "novelty_claim", "limitations", "key_findings",
 ]
 _LIST_EXTRACTION_FIELDS = ["datasets", "metrics"]
+_EXTRACTION_SCHEMA_KEYS = tuple(_STRING_EXTRACTION_FIELDS) + tuple(_LIST_EXTRACTION_FIELDS)
+
+# Bump when EXTRACTION_SYSTEM_PROMPT*, the schema, the domain-variant routing, or
+# the conformance/repair logic changes. This string + a hash of the SELECTED
+# paper text form the extraction cache key (see _extract_single_paper), so a
+# prompt change OR a Stage-3 selection-policy change forces a real re-extraction
+# instead of silently reusing a cached result produced from different inputs.
+# (Before this, the cache key was paper_id alone — a selection change would have
+# shown no effect because every already-extracted paper was served from cache.)
+EXTRACTION_PROMPT_VERSION = "2026-09-02.r1r2-schema+domain"
+
+# R2 — biomedical / clinical / wet-lab prompt variant. Same 10 keys, same
+# "ONLY JSON" contract as EXTRACTION_SYSTEM_PROMPT; only the field DEFINITIONS
+# change. Clinical case reports and wet-lab papers have no "dataset"/"benchmark"/
+# "SOTA" — they have study populations, specimens, outcome measures, statistics.
+EXTRACTION_SYSTEM_PROMPT_BIOMED = """You are extracting structured information from a biomedical / clinical / \
+laboratory research paper for a literature review, at the depth a researcher would cite directly. Given the paper \
+text below, respond with ONLY a JSON object with these exact keys (every string value is plain prose, never a \
+nested object or a markdown heading):
+- "summary": 3-4 sentences on what was studied, in what population or model, how, and the main finding
+- "problem_addressed": 3-4 sentences on the specific clinical or biological question, gap, or unmet need this study targets
+- "method": 4-6 sentences on study design and procedure — design (RCT / cohort / case-control / case report / in vitro / animal), subjects or specimens and how many, groups and conditions, interventions or exposures, assays or imaging performed, and the statistical analysis
+- "results": the concrete findings actually reported — effect sizes, group differences, rates, correlation or regression coefficients, sensitivity and specificity, p-values and confidence intervals where stated. Empty string only if no concrete outcome is reported at all.
+- "inferences": 3-4 sentences on what the authors themselves conclude their findings mean — their interpretation and clinical or biological implications, distinct from the raw results
+- "novelty_claim": what the paper claims is new — its core contribution in the authors' own framing
+- "limitations": limitations the authors state, or clearly evident ones (sample size, single centre, retrospective design, confounding, no control group)
+- "datasets": the data the findings rest on — describe the STUDY POPULATION OR MATERIAL concretely from THIS paper, e.g. "retrospective cohort of 214 glioblastoma patients, single centre 2015-2021", "fetal rat brain tissue, n=24, embryonic day 21", "1,032 chest radiographs from the public NIH ChestX-ray14 set". Use a named public dataset name verbatim if one is used. Empty list only for a pure review or theoretical paper.
+- "metrics": what was measured or evaluated — outcome measures, endpoints, assay readouts, and statistical tests (e.g. "overall survival", "Dice similarity coefficient", "CD39 immunoreactivity", "sensitivity and specificity", "Mann-Whitney U test"). Empty list only if nothing was measured.
+- "key_findings": 2-3 sentence headline takeaway, written so it could stand alone as a citation
+
+Respond with ONLY the JSON object, no other text."""
+
+_BIOMED_CUES = re.compile(
+    r"\b(patients?|clinical|clinician|hospital|diagnos(is|tic)|prognos(is|tic)|treatment|therapy|"
+    r"in vitro|in vivo|ex vivo|assay|western blot|immunohistochem\w*|rt-?pcr|elisa|staining|"
+    r"antibod(y|ies)|mice|rats|murine|rodent|specimen|biopsy|serum|plasma|cohort|"
+    r"case report|retrospective|prospective|randomi[sz]ed|placebo|mg/kg|gestational|"
+    r"fetal|foetal|tumou?r|carcinoma|lesion|physiolog\w*|patholog\w*|histolog\w*)\b", re.I)
+_CSML_CUES = re.compile(
+    r"\b(datasets?|benchmark|baselines?|state-of-the-art|sota|neural network|transformer|"
+    r"training set|test set|epochs?|fine-?tun\w*|pre-?train\w*|gpu|embeddings?|hyper-?parameter|"
+    r"ablation|backbone|inference time|leaderboard|precision-recall)\b", re.I)
+
+
+def select_extraction_prompt(text: str) -> tuple[str, str]:
+    """Cheap, deterministic domain routing for Stage-4 extraction (R2). No extra
+    LLM call — vocabulary counts over text already in hand. Two variants only;
+    the OUTPUT SCHEMA is identical so nothing downstream forks."""
+    bio = len(_BIOMED_CUES.findall(text or ""))
+    csml = len(_CSML_CUES.findall(text or ""))
+    if bio >= 4 and bio > csml:
+        return "biomed", EXTRACTION_SYSTEM_PROMPT_BIOMED
+    return "cs_ml", EXTRACTION_SYSTEM_PROMPT
+
+
+# --- R1: schema-conformance detection + repair --------------------------------
+SCHEMA_REPAIR_PROMPT = """The JSON below was produced as a paper extraction but does NOT match the required schema. \
+Rewrite it as a SINGLE valid JSON object with EXACTLY these keys and no others:
+"summary", "problem_addressed", "method", "results", "inferences", "novelty_claim", "limitations", "key_findings" \
+(each a plain string), and "datasets", "metrics" (each an array of plain strings).
+Move any content that sits under a different key, a nested object, a markdown heading, or a leading-colon key into \
+the closest matching field above. Flatten nested objects and tables into readable prose inside the right field. \
+Do NOT add any information that is not already present in the input. Use "" (or [] for datasets/metrics) for a \
+field with no content.
+Respond with ONLY the JSON object, no other text."""
+
+
+def check_schema_conformance(parsed: dict) -> tuple[bool, list[str]]:
+    """(conformant, issues). Non-conformance is anything that makes
+    normalize_extraction silently drop content: unexpected top-level keys
+    (markdown headings, leading-colon keys, invented structure), a string field
+    delivered as a dict/list, or a datasets/metrics list of dicts."""
+    if not isinstance(parsed, dict):
+        return False, ["response_not_json_object"]
+    issues: list[str] = []
+    unexpected = [k for k in parsed if k not in _EXTRACTION_SCHEMA_KEYS and not str(k).startswith("_")]
+    if unexpected:
+        issues.append(f"unexpected_top_level_keys={unexpected[:6]}")
+    for f in _STRING_EXTRACTION_FIELDS:
+        if isinstance(parsed.get(f), (dict, list)):
+            issues.append(f"{f}_is_{type(parsed[f]).__name__}")
+    for f in _LIST_EXTRACTION_FIELDS:
+        v = parsed.get(f)
+        if isinstance(v, dict):
+            issues.append(f"{f}_is_dict")
+        elif isinstance(v, list) and any(isinstance(x, dict) for x in v):
+            issues.append(f"{f}_has_nested_objects")
+    return (not issues), issues
+
+
+def salvage_nonconformant(parsed: dict) -> dict:
+    """Deterministic best-effort reshape of a non-conforming response into the
+    schema. Runs only on an already-broken response, so it can never make a
+    conforming one worse. A nested results table is content, not junk — it is
+    flattened and kept. Records what moved in `_salvage_notes`."""
+    out: dict = {}
+    notes: list[str] = []
+    for f in _STRING_EXTRACTION_FIELDS:
+        v = parsed.get(f, "")
+        if isinstance(v, (dict, list)):
+            out[f] = _stringify(v)
+            notes.append(f"flattened_{f}")
+        else:
+            out[f] = v if isinstance(v, str) else ("" if v is None else str(v))
+    for f in _LIST_EXTRACTION_FIELDS:
+        v = parsed.get(f, [])
+        if isinstance(v, list):
+            out[f] = [_stringify(x).strip() for x in v if _stringify(x).strip()]
+        elif isinstance(v, dict):
+            out[f] = [f"{k}: {_stringify(val)}".strip() for k, val in v.items() if _stringify(val).strip()]
+            notes.append(f"flattened_{f}_dict")
+        elif v:
+            out[f] = [_stringify(v).strip()]
+        else:
+            out[f] = []
+    for k, v in parsed.items():
+        if k in _EXTRACTION_SCHEMA_KEYS or str(k).startswith("_"):
+            continue
+        name = re.sub(r"^[\s:#*=\-]+", "", str(k)).strip().lower()
+        blob = _stringify(v).strip()
+        if not blob:
+            continue
+        if any(w in name for w in ("objective", "hypothesis", "aim", "gap", "background", "introduction", "motivation")):
+            target = "problem_addressed"
+        elif "limitation" in name or "future work" in name:
+            target = "limitations"
+        elif any(w in name for w in ("conclusion", "discussion", "interpret", "implication")):
+            target = "inferences"
+        elif any(w in name for w in ("method", "material", "procedure", "design", "patient", "diagnosis", "system", "implementation")):
+            target = "method"
+        elif any(w in name for w in ("result", "finding", "outcome", "improvement", "impact", "table", "activit", "score", "performance")):
+            target = "results"
+        elif "summary" in name or name in ("abstract", "title"):
+            target = "summary"
+        else:
+            target = "results"  # invented structure is usually a results breakdown
+        out[target] = (f"{out.get(target, '')}\n{blob}".strip() if out.get(target) else blob)
+        notes.append(f"moved '{str(k)[:40]}' -> {target}")
+    if notes:
+        out["_salvage_notes"] = notes
+    return out
+
+
+def repair_schema(parsed: dict, llm_cfg: dict) -> dict | None:
+    """Ask the model to reshape a malformed extraction to the schema.
+
+    A naive retry does NOT work: at temperature 0 with a fixed seed the same
+    (system_prompt, user_content) is deterministic, so re-issuing the original
+    extraction request returns the identical malformed response. The repair
+    therefore feeds the malformed JSON back in as the user content with a
+    reshape instruction — a different input, hence a different (hopefully
+    conforming) output.
+    """
+    try:
+        blob = json.dumps(parsed, ensure_ascii=False)[:6000]
+    except (TypeError, ValueError):
+        blob = str(parsed)[:6000]
+    return call_ollama_json(
+        base_url=llm_cfg["base_url"], model=llm_cfg["model"],
+        system_prompt=SCHEMA_REPAIR_PROMPT, user_content=blob,
+        temperature=llm_cfg.get("temperature", 0.0),
+        timeout=llm_cfg.get("timeout_seconds", 300),
+        num_ctx=estimate_num_ctx(blob, system_prompt=SCHEMA_REPAIR_PROMPT),
+        seed=llm_cfg.get("seed"),
+    )
+
+
+def _has_min_content(d: dict) -> bool:
+    core = sum(bool(str(d.get(f, "")).strip())
+               for f in ("summary", "problem_addressed", "method", "key_findings"))
+    return core >= 2 or (bool(str(d.get("results", "")).strip()) and core >= 1)
+
+
+def _text_hash(text: str) -> str:
+    return hashlib.sha256((text or "").encode("utf-8")).hexdigest()[:16]
+
+
+def _cache_entry_reusable(cached, text: str) -> bool:
+    """Reuse a cached extraction only if it was produced by the current prompt
+    version from the current selected text, is usable, and is not a recorded
+    non-conformance or a poisoned (junk-key) entry from before this change."""
+    if not isinstance(cached, dict):
+        return False
+    if cached.get("_prompt_version") != EXTRACTION_PROMPT_VERSION:
+        return False
+    if cached.get("_text_hash") != _text_hash(text):
+        return False
+    if cached.get("_extraction_nonconformant") or cached.get("_extraction_failed"):
+        return False
+    if any(k not in _EXTRACTION_SCHEMA_KEYS and not str(k).startswith("_") for k in cached):
+        return False
+    return is_usable_extraction(normalize_extraction(cached))
 
 
 def normalize_extraction(extraction: dict) -> dict:
@@ -490,52 +683,98 @@ def failed_extraction() -> dict:
 
 
 def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict, processed_dir: str | None = None) -> tuple[str, dict]:
-    """One paper's extraction, factored out so it can run under a small worker pool."""
-    cached = cache.get(paper_id)
-    if isinstance(cached, dict):
-        cached = normalize_extraction(cached)
-        if is_usable_extraction(cached):
-            return paper_id, cached
+    """One paper's extraction, factored out so it can run under a small worker pool.
 
-    user_content = f"Title: {paper['title']}\n\nText:\n{paper['text']}"
+    Stage-4 hardening (R1/R2): route to a domain-appropriate prompt variant,
+    then explicitly check the response against the schema. A non-conforming
+    response (nested objects, leading-colon / markdown keys, invented top-level
+    keys) is salvaged deterministically or, failing that, sent back to the model
+    for a reshape. If it still will not conform, the record is FLAGGED
+    (`_extraction_nonconformant`) rather than returned as a partially-empty
+    result that reads like "the paper reported no metrics".
+    """
+    text = paper["text"]
+    cached = cache.get(paper_id)
+    if _cache_entry_reusable(cached, text):
+        return paper_id, normalize_extraction(cached)
+
+    user_content = f"Title: {paper['title']}\n\nText:\n{text}"
     num_ctx = estimate_num_ctx(user_content)
-    extraction = call_ollama_json(
+    variant, sys_prompt = select_extraction_prompt(text)
+    raw = call_ollama_json(
         base_url=llm_cfg["base_url"],
         model=llm_cfg["model"],
-        system_prompt=EXTRACTION_SYSTEM_PROMPT,
+        system_prompt=sys_prompt,
         user_content=user_content,
         temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
         num_ctx=num_ctx,
         seed=llm_cfg.get("seed"),
     )
-    if extraction is None:
+
+    conformance = "conformant"
+    repair_used = False
+    issues: list[str] = []
+    if raw is None:
         extraction = failed_extraction()
+        conformance = "no_response"
     else:
-        extraction = normalize_extraction(extraction)
-        pattern_datasets = extract_datasets_by_pattern(paper["text"])
-        merged, none_found = merge_datasets(extraction.get("datasets"), pattern_datasets)
+        ok, issues = check_schema_conformance(raw)
+        if ok:
+            extraction = normalize_extraction(raw)
+        else:
+            salv = salvage_nonconformant(raw)
+            if _has_min_content(salv):
+                extraction = normalize_extraction(salv)
+                conformance = "salvaged"
+            else:
+                rep = repair_schema(raw, llm_cfg)
+                repair_used = True
+                rep_ok = isinstance(rep, dict) and check_schema_conformance(rep)[0]
+                if rep_ok and _has_min_content(rep):
+                    extraction = normalize_extraction(rep)
+                    conformance = "repaired"
+                elif isinstance(rep, dict) and _has_min_content(salvage_nonconformant(rep)):
+                    extraction = normalize_extraction(salvage_nonconformant(rep))
+                    conformance = "repaired_salvaged"
+                else:
+                    # Keep the best partial content, but FLAG it so downstream /
+                    # the UI / metrics do not read empty fields as "absent from
+                    # the paper".
+                    extraction = normalize_extraction(salv)
+                    extraction["_extraction_nonconformant"] = True
+                    conformance = "nonconformant_unrepaired"
+            extraction["_conformance_issues"] = issues[:8]
 
-        if none_found and should_attempt_dataset_fallback(paper["text"]):
-            fallback = call_ollama_json(
-                base_url=llm_cfg["base_url"],
-                model=llm_cfg["model"],
-                system_prompt=DATASET_FALLBACK_PROMPT,
-                user_content=user_content,
-                temperature=llm_cfg.get("temperature", 0.0),
-                timeout=llm_cfg.get("timeout_seconds", 300),
-                num_ctx=num_ctx,
-                seed=llm_cfg.get("seed"),
-            )
-            if fallback and fallback.get("datasets"):
-                merged, none_found = merge_datasets(fallback["datasets"], [])
-                extraction["_dataset_fallback_used"] = True
+        if not extraction.get("_extraction_failed"):
+            pattern_datasets = extract_datasets_by_pattern(text)
+            merged, none_found = merge_datasets(extraction.get("datasets"), pattern_datasets)
+            if none_found and should_attempt_dataset_fallback(text):
+                fallback = call_ollama_json(
+                    base_url=llm_cfg["base_url"],
+                    model=llm_cfg["model"],
+                    system_prompt=DATASET_FALLBACK_PROMPT,
+                    user_content=user_content,
+                    temperature=llm_cfg.get("temperature", 0.0),
+                    timeout=llm_cfg.get("timeout_seconds", 300),
+                    num_ctx=num_ctx,
+                    seed=llm_cfg.get("seed"),
+                )
+                if fallback and fallback.get("datasets"):
+                    merged, none_found = merge_datasets(fallback["datasets"], [])
+                    extraction["_dataset_fallback_used"] = True
+            extraction["datasets"] = merged
+            if none_found:
+                extraction["_no_dataset_stated"] = True
 
-        extraction["datasets"] = merged
-        if none_found:
-            extraction["_no_dataset_stated"] = True
+    extraction["_domain_variant"] = variant
+    extraction["_conformance"] = conformance
+    if repair_used:
+        extraction["_repair_call_made"] = True
 
     if not extraction.get("_extraction_failed"):
+        extraction["_prompt_version"] = EXTRACTION_PROMPT_VERSION
+        extraction["_text_hash"] = _text_hash(text)
         with _CACHE_WRITE_LOCK:
             cache[paper_id] = extraction
             if processed_dir is not None:
@@ -565,7 +804,9 @@ def extract_paper_fields(papers: dict, llm_cfg: dict, progress_path: Path | None
         max_workers = 1
         prime_ollama_cache(llm_cfg)
     cached_ids = {paper_id for paper_id, value in cache.items()
-                  if isinstance(value, dict) and is_usable_extraction(value)}
+                  if isinstance(value, dict)
+                  and value.get("_prompt_version") == EXTRACTION_PROMPT_VERSION
+                  and is_usable_extraction(value)}
 
     if len(papers) <= 1 or max_workers == 1:
         for paper_id, paper in tqdm(papers.items(), desc="Extracting per-paper fields"):

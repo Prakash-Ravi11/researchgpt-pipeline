@@ -154,9 +154,12 @@ def bucket(doc_row: dict, pages: list[dict]) -> tuple[str, str]:
                            if pn >= 0.35 * len(pages)
                            or RESULT_HEADING_RE.search(pages[pn - 1]["text_raw"][:400] if pn - 1 < len(pages) else "")]
         return "M", f"table-as-image pages {tbl_img_pages}; in results zone: {in_results_zone or 'none'}"
-    # B: text present but ~no chunks
-    if chars > 3000 and chunks <= 1:
-        return "B", f"{chars} extracted chars but chunk_count={chunks} (Stage-2 processing/reference-cut)"
+    # B: text present but ~no chunks.  Char floor = one chunk_size worth of text
+    # (~6 chars/word) so a correctly-chunked single-chunk paper is NOT flagged
+    # (R5 — the old flat 3000 floor false-flagged a 4326-char, 1-chunk paper).
+    b_floor = CFG["processing"]["chunk_size"] * 6
+    if chars > b_floor and chunks <= 1:
+        return "B", f"{chars} extracted chars (> {b_floor}) but chunk_count={chunks} (Stage-2 processing/reference-cut)"
     if chunks >= 1 and embeds >= 1 and chars > 500:
         return "C", "text + chunks + embeddings present; loss is downstream"
     return "D", f"chars={chars} chunks={chunks} embeds={embeds} cpp={cpp:.0f}"
