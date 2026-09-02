@@ -28,7 +28,8 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import requests  # noqa: E402
-from src.evidence.gate import _gate_value, _ground, _NUMVAL, _sig_tokens, _METRIC_TOKENS  # noqa: E402
+from src.evidence.anchors import NUMERIC_ANCHOR_RE as _NUMVAL  # noqa: E402  (single source of truth)
+from src.evidence.gate import _gate_value, _ground, _sig_tokens, _METRIC_TOKENS  # noqa: E402
 
 OUT = HERE / "runs" / "gate_sensitivity"
 LLM_SEED = 42

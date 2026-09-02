@@ -23,6 +23,11 @@ sys.path.insert(0, str(ROOT))
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
+from src.evidence.anchors import (  # noqa: E402  (single source of truth for the anchor rule)
+    NUMERIC_ANCHOR_RE as _NUMVAL,
+    find_anchors as anchors_in_text,
+)
+
 RUN = HERE / "runs" / "prodab-20260902T004416Z" / "canonical"
 CHUNKS = RUN / "processed" / "chunks.json"
 CHROMA = RUN / "chroma_db"
@@ -31,9 +36,8 @@ EVID = HERE / "runs" / "prodab-20260902T004416Z" / "canonical_paper_evidence.jso
 CACHE = RUN / "processed" / "extraction_cache.json"
 OUT = HERE / "runs" / "retrieval_recall"
 
-# gate's anchor rule
-_NUMVAL = re.compile(r"\d+\.\d+|\b\d{2,}\b")
-_YEAR = re.compile(r"^(19|20)\d{2}$")
+# the meaningful-numeric-anchor rule (_NUMVAL, anchors_in_text) is imported
+# from src.evidence.anchors above — shared with the gate and Test 2.
 _METRIC = re.compile(
     r"\b(exact match|nDCG@\d+|recall@\d+|precision@\d+|hit@\d+|p@\d+|r@\d+|f1[- ]?score|f1|"
     r"accuracy|precision|recall|dice(?:\s+index)?|iou|auroc|auprc|auc|bleu(?:-\d)?|rouge(?:-[l\d])?|"
@@ -43,37 +47,10 @@ _DATASET = re.compile(
     r"\b([A-Z][A-Za-z0-9][A-Za-z0-9\-\.]{1,22}(?:Bench|QA|Eval|Bank|Set|k|1k|Nuggets|RAG|Wiki)?)\b"
     r"(?=(?:[^.]{0,40}\b(?:dataset|benchmark|corpus|test set|test split|questions?)\b)|"
     r"|(?:\s+(?:dataset|benchmark|corpus)))")
-_EXCLUDE_PREFIX = re.compile(r"(section|sec\.?|equation|eq\.?|figure|fig\.?|table|tab\.?|appendix|"
-                             r"chapter|line|step|version|v)\s*$", re.I)
 _STOP = {"the", "and", "for", "with", "from", "this", "that", "using", "based", "our", "we",
          "of", "in", "on", "to", "a", "an", "is", "are", "was", "were", "by", "as", "which",
          "were", "where", "when", "than", "then", "also", "such", "these", "those", "their",
          "results", "result", "table", "figure", "shows", "show", "reported", "report"}
-
-
-def is_anchor(value: str, before: str, inside_brackets: bool) -> bool:
-    if _YEAR.match(value):
-        return False
-    if inside_brackets:                       # [12], [3-5] reference ids
-        return False
-    if _EXCLUDE_PREFIX.search(before[-14:]):  # "Section 3.1", "Eq. 2", "Table 4"
-        return False
-    if re.search(r"\d{4}\.\d{4,5}$", before + value):   # arXiv id fragment
-        return False
-    return True
-
-
-def anchors_in_text(text: str) -> list[tuple[str, int]]:
-    out = []
-    for m in _NUMVAL.finditer(text):
-        s = m.start()
-        before = text[max(0, s - 20):s]
-        # crude bracket check
-        lb, rb = text.rfind("[", 0, s), text.rfind("]", 0, s)
-        inside = lb > rb
-        if is_anchor(m.group(0), before, inside):
-            out.append((m.group(0), s))
-    return out
 
 
 def synth_query(window: str, value: str, paper_datasets: list[str]) -> str:

@@ -20,6 +20,7 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from .anchors import NUMERIC_ANCHOR_RE as _NUMVAL
 from .attribute import attribute_claim
 from .schema import (EXPLICIT, UNSUPPORTED, MISSING, RETURNED, ABSTAINED,
                      OWN_PAPER, CITED_PAPER, UNKNOWN, FULL_TEXT)
@@ -37,9 +38,8 @@ _METRIC_TOKENS = {
 }
 _NUM = re.compile(r"\d")
 _SENT = re.compile(r"(?<=[.!?])\s+")
-# a numeric token worth anchoring a result on: a decimal, or a >=2-digit integer.
-# (a lone single digit is usually part of an identifier - "BLEU-4", "GPT-4", "T3".)
-_NUMVAL = re.compile(r"\d+\.\d+|\b\d{2,}\b")
+# _NUMVAL (the meaningful-numeric-anchor regex) is imported from src.evidence.anchors
+# above — single source of truth shared with the Test 2 / Test 3 harnesses.
 
 
 def _norm(s: str) -> str:
