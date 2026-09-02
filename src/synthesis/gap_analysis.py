@@ -28,7 +28,7 @@ from pathlib import Path
 import numpy as np
 import yaml
 
-from src.summarization.summarize import _stringify, call_ollama_json, embed_method_texts
+from src.summarization.summarize import _stringify, call_ollama_json, embed_method_texts, prime_ollama_cache
 
 NOVELTY_SYSTEM_PROMPT = """You are assessing the novelty of a paper against a corpus of related work. You are given \
 the target paper's summary and method, plus the summaries and methods of its most similar existing papers in the \
@@ -104,6 +104,7 @@ def compare_against_corpus(uploaded_extraction: dict, config: dict, top_k: int =
     paths_cfg = config["paths"]
     emb_cfg = config["embedding"]
     llm_cfg = config["llm"]
+    prime_ollama_cache(llm_cfg)  # reproducibility: fixed prompt-cache start (no-op unless seed set)
 
     summaries_path = Path(paths_cfg["processed_dir"]) / "paper_summaries.json"
     papers = json.loads(summaries_path.read_text(encoding="utf-8"))
@@ -156,9 +157,10 @@ def compare_against_corpus(uploaded_extraction: dict, config: dict, top_k: int =
     verdict = call_ollama_json(
         base_url=llm_cfg["base_url"], model=llm_cfg["model"],
         system_prompt=NOVELTY_SYSTEM_PROMPT, user_content=user_content,
-        temperature=llm_cfg.get("temperature", 0.2),
+        temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
         num_ctx=NOVELTY_NUM_CTX,
+        seed=llm_cfg.get("seed"),
     )
     if verdict is None:
         verdict = {"overlap_summary": "", "distinguishing_factors": "", "novelty_verdict": "unknown"}

@@ -11,8 +11,10 @@ Branch: `claude-code-verification`   Baseline git: `af6de8e` (repo dirty: pre-ex
 - Acquisition = Semantic Scholar search + PDF fallback chain **S2 `openAccessPdf` → arXiv → Unpaywall(if contact_email)**.
   No OpenAlex / Crossref / Europe PMC in production code.
 - Parser = PyMuPDF `page.get_text()`, regex-strip references, 800/100 word chunks. **No page/section/table provenance.**
-- Retrieval (Stage 4) = dense ChromaDB cosine over bge-m3, per-paper `where` filter, 5 target queries × top-3
-  (`retrieval_aware.py`). Config names a bm25+cross-encoder `hybrid_rerank` mode that this path does not use.
+- Retrieval (Stage 4) = dense ChromaDB cosine over bge-m3 **only**, per-paper `where` filter, 5 target queries × top-3
+  (`retrieval_aware.py`). No BM25, no hybrid fusion, no cross-encoder reranker anywhere. The `hybrid_rerank`
+  `retrieval:` config block was dead (no source read it) and has been removed from `configs/config.yaml`
+  (see Phase-1 commit). `src/retrieval/` never had source — only stale `.pyc`, now deleted.
 - Attribution: **none** (no OWN_PAPER/CITED_PAPER). Abstention: one regex "empirical evidence" gate in `summarize.py`.
 - `src/evidence/verifier.py` exists but is untracked, `evidence_grounding.enabled: false` — **not wired into production**.
   (Minor bug: `_paper_text_coverage` appends an unsupported field to both `weak` and `supported`.)

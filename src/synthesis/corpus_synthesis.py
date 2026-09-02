@@ -25,7 +25,7 @@ from pathlib import Path
 
 import yaml
 
-from src.summarization.summarize import call_ollama_json, estimate_num_ctx
+from src.summarization.summarize import call_ollama_json, estimate_num_ctx, prime_ollama_cache
 
 SYNTHESIS_SYSTEM_PROMPT = """You are writing the collective synthesis section of a literature review, given \
 structured summaries of multiple papers that share a research domain. Do not describe each paper individually — \
@@ -158,9 +158,10 @@ def _synthesize_group(papers: list[dict], llm_cfg: dict, group_label: str, compa
         model=llm_cfg["model"],
         system_prompt=SYNTHESIS_SYSTEM_PROMPT,
         user_content=user_content,
-        temperature=llm_cfg.get("temperature", 0.2),
+        temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
         num_ctx=num_ctx,
+        seed=llm_cfg.get("seed"),
     )
     if result is None:
         print(f"    Synthesis FAILED for '{group_label}' ({len(papers)} papers, num_ctx={num_ctx}) "
@@ -189,6 +190,8 @@ def _synthesize_group(papers: list[dict], llm_cfg: dict, group_label: str, compa
 def run_corpus_synthesis(config: dict) -> dict:
     paths_cfg = config["paths"]
     llm_cfg = config["llm"]
+
+    prime_ollama_cache(llm_cfg)  # reproducibility: fixed prompt-cache start (no-op unless seed set)
 
     summaries_path = Path(paths_cfg["processed_dir"]) / "paper_summaries.json"
     papers = json.loads(summaries_path.read_text(encoding="utf-8"))

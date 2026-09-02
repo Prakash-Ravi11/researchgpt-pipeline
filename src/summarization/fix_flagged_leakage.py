@@ -64,7 +64,7 @@ def run_fix(config: dict) -> None:
 
     # Slightly higher temperature helps break out of the exact-phrase anchoring
     # pattern that caused this in the first place.
-    retry_llm_cfg = {**llm_cfg, "temperature": max(llm_cfg.get("temperature", 0.2), 0.4)}
+    retry_llm_cfg = {**llm_cfg, "temperature": max(llm_cfg.get("temperature", 0.0), 0.4)}
     new_extractions = extract_paper_fields(papers_to_redo, retry_llm_cfg, cache={}, processed_dir=None)
 
     # Verify the fix actually worked before trusting it — re-run the same

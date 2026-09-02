@@ -236,8 +236,9 @@ async def novelty_check(file: UploadFile = File(...)):
         model=llm_cfg["model"],
         system_prompt=EXTRACTION_SYSTEM_PROMPT,
         user_content=f"Title: {file.filename}\n\nText:\n{budgeted_text}",
-        temperature=llm_cfg.get("temperature", 0.2),
+        temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
+        seed=llm_cfg.get("seed"),
     )
     if extraction is None:
         raise HTTPException(status_code=500,
@@ -295,8 +296,9 @@ async def compare_with_upload(existing_id: str = Form(...), file: UploadFile = F
         model=llm_cfg["model"],
         system_prompt=EXTRACTION_SYSTEM_PROMPT,
         user_content=f"Title: {file.filename}\n\nText:\n{budgeted_text}",
-        temperature=llm_cfg.get("temperature", 0.2),
+        temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
+        seed=llm_cfg.get("seed"),
     )
     if extraction is None:
         raise HTTPException(status_code=500,

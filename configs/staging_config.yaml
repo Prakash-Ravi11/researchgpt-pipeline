@@ -26,7 +26,8 @@ llm:
   model: "qwen2.5:7b"
   base_url: "http://localhost:11434"
   max_context_words: 2500
-  temperature: 0.2
+  temperature: 0            # greedy decoding — reproducibility (was 0.2, non-deterministic)
+  seed: 42                 # generation RNG seed, passed to Ollama options; see call_ollama_json
   timeout_seconds: 300
 
 summarization:

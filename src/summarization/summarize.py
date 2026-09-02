@@ -361,7 +361,7 @@ def _parse_json_response(content: str) -> dict:
 
 def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content: str,
                       temperature: float, max_retries: int = 2, timeout: int = 300,
-                      num_ctx: int = 8192) -> dict | None:
+                      num_ctx: int = 8192, seed: int | None = None) -> dict | None:
     """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict or None.
 
     timeout defaults to 300s because full-text papers can run considerably
@@ -376,6 +376,15 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
     processing the many short abstract-only papers most corpora contain.
     """
     url = f"{base_url}/api/chat"
+    options = {"temperature": temperature, "num_ctx": num_ctx}
+    if seed is not None:
+        # Reproducibility (previously NOT guaranteed): pin the RNG seed and make
+        # the remaining sampling params explicit at Ollama's documented defaults,
+        # so output is fully determined by (model, prompt, seed, these params) and
+        # a future Ollama default change cannot silently alter results. At
+        # temperature 0 decoding is greedy and the seed is inert; it matters for
+        # the deliberate higher-temperature retry paths, which stay reproducible.
+        options.update({"seed": seed, "top_p": 0.9, "top_k": 40, "repeat_penalty": 1.1})
     payload = {
         "model": model,
         "messages": [
@@ -384,10 +393,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
         ],
         "format": "json",
         "stream": False,
-        "options": {
-            "temperature": temperature,
-            "num_ctx": num_ctx,
-        },
+        "options": options,
     }
 
     for attempt in range(max_retries + 1):
@@ -420,6 +426,33 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             return None
 
     return None
+
+
+_PRIME_SYSTEM_PROMPT = "You are a JSON echo service. Reply with exactly {\"ok\": true} and nothing else."
+
+
+def prime_ollama_cache(llm_cfg: dict) -> None:
+    """Issue one fixed throwaway generation so the server-side prompt cache is in a
+    known state before the run's real calls.
+
+    Ollama / llama.cpp reuse KV-cache slots across requests, so a completion is a
+    function of the *previous* request as well as its own prompt (verified: identical
+    calls reproduce byte-for-byte, but the first call after a different prompt can
+    diverge). With a fixed seed + temperature 0 + a fixed priming call + serial
+    execution, a whole extraction pass becomes byte-reproducible run-to-run. No-op
+    unless a seed is configured (i.e. only when reproducibility was asked for).
+    """
+    if llm_cfg.get("seed") is None:
+        return
+    try:
+        call_ollama_json(
+            base_url=llm_cfg["base_url"], model=llm_cfg["model"],
+            system_prompt=_PRIME_SYSTEM_PROMPT, user_content="ping",
+            temperature=0.0, max_retries=0, timeout=30, num_ctx=256,
+            seed=llm_cfg.get("seed"),
+        )
+    except Exception:
+        pass  # priming is best-effort; never block a run on it
 
 
 _STRING_EXTRACTION_FIELDS = [
@@ -471,9 +504,10 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
         model=llm_cfg["model"],
         system_prompt=EXTRACTION_SYSTEM_PROMPT,
         user_content=user_content,
-        temperature=llm_cfg.get("temperature", 0.2),
+        temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
         num_ctx=num_ctx,
+        seed=llm_cfg.get("seed"),
     )
     if extraction is None:
         extraction = failed_extraction()
@@ -488,9 +522,10 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
                 model=llm_cfg["model"],
                 system_prompt=DATASET_FALLBACK_PROMPT,
                 user_content=user_content,
-                temperature=llm_cfg.get("temperature", 0.2),
+                temperature=llm_cfg.get("temperature", 0.0),
                 timeout=llm_cfg.get("timeout_seconds", 300),
                 num_ctx=num_ctx,
+                seed=llm_cfg.get("seed"),
             )
             if fallback and fallback.get("datasets"):
                 merged, none_found = merge_datasets(fallback["datasets"], [])
@@ -523,6 +558,12 @@ def extract_paper_fields(papers: dict, llm_cfg: dict, progress_path: Path | None
     results = {}
     cache = cache if cache is not None else {}
     max_workers = max(1, min(max_workers or 2, len(papers) or 1))
+    if llm_cfg.get("seed") is not None:
+        # Reproducibility: concurrent Ollama requests get non-deterministic slot /
+        # prompt-cache assignment, so a configured seed forces single-worker
+        # extraction (roughly 2x slower) and one fixed priming call up front.
+        max_workers = 1
+        prime_ollama_cache(llm_cfg)
     cached_ids = {paper_id for paper_id, value in cache.items()
                   if isinstance(value, dict) and is_usable_extraction(value)}
 
@@ -781,8 +822,9 @@ def name_clusters(cluster_assignments: dict[str, int], papers: dict, extractions
             model=llm_cfg["model"],
             system_prompt=prompt,
             user_content=user_content,
-            temperature=0.3,
+            temperature=llm_cfg.get("temperature", 0.0),
             num_ctx=CLUSTER_NAMING_NUM_CTX,
+            seed=llm_cfg.get("seed"),
         )
         if not isinstance(naming, dict):
             naming = {"label": f"Cluster {cluster_id}", "description": ""}
@@ -928,7 +970,7 @@ def rerun_weak_extractions(config: dict) -> None:
     # cases that already failed once at the default settings. NOT read from
     # cache — these are known-weak, retrying them against a stale cached
     # (also weak) result would defeat the purpose.
-    retry_llm_cfg = {**llm_cfg, "temperature": max(llm_cfg.get("temperature", 0.2), 0.4)}
+    retry_llm_cfg = {**llm_cfg, "temperature": max(llm_cfg.get("temperature", 0.0), 0.4)}
     progress_path = processed_dir / "retry_progress.json"
     new_extractions = extract_paper_fields(papers_to_redo, retry_llm_cfg, progress_path=progress_path,
                                             cache={}, processed_dir=None)

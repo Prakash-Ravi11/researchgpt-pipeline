@@ -10,8 +10,10 @@ Design choices for speed:
   - One batched collection.add() call per Chroma batch limit, not per-chunk
     upserts — avoids per-call Python/HTTP-free-but-still-overhead cost inside
     the local Chroma client.
-  - Model is loaded once and reused; same model your Stage 1 reranker already
-    pulled, so no extra download.
+  - Model is loaded once and reused; same BGE-M3 model that Stage 1's
+    relevance ranking (rerank_by_relevance, a cosine sort of search
+    candidates — not a cross-encoder reranker) already pulled, so no extra
+    download.
 
 Run standalone for testing:
     python -m src.embedding.build_index --config configs/config.yaml
