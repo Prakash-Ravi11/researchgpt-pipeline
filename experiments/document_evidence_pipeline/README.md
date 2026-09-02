@@ -40,13 +40,15 @@ and the exact 5 production changes recommended (§18). Answers questions A–Q.
 | full-text acquisition | 31/60 (51.7%) | **34/60 (56.7%)** (full re-acquisition, 40 MB cap) |
 | wrong-paper accepted | not checked | **0** |
 | landing-page/abstract as full text | possible | **0** |
-| provenance on returned evidence | none | **100% (150/150)** |
+| provenance on returned evidence | none | **100% (150/150)** — weaker sense: span resolves to a chunk and contains the number; NOT support-identity (see `FINAL_REPORT.md` §N.10) |
 | fabricated Dataset/Metric/Result for the 26 inaccessible papers | emitted anyway | **0** (78/78 abstain) |
 | false OWN_PAPER attributions | n/a | **0 observed** |
 | new models / services | — | **none** (BGE-M3 + qwen2.5:7b kept, no reranker, no GROBID/Docling/MinerU) |
 | runtime (full corpus) | — | 51 min extraction on RTX 3050 6 GB, 2.65 GB VRAM |
 
 - **26/60 papers are closed access with no preprint** (DOI but no ArXiv/PMCID) — hard free-acquisition ceiling.
+  Consequence: **all synthesis / gap analysis is built only on the OA-reachable 34** — open-access selection
+  bias, uncorrected and previously unstated (see `FINAL_REPORT.md` §N.11).
 - Quantitative recall after the hierarchical-attribution rework: metrics 13 returned, results 8 (was 5 / 3);
   quantitative OWN attribution 8 -> 22, **0 false OWN** across all 21 returned items, CITED unchanged at 2.
 - ChromaDB: working, no panic. JATS/XML: 2/60. Decision: **GO_WITH_CHANGES** (see `FINAL_REPORT.md` §P).

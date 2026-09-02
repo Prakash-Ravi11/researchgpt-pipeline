@@ -15,9 +15,11 @@ Legend: **[M]** measured this corpus · **[I]** inferred/derived · **[B]** bloc
 > integrated into the real six stages behind `config['evidence_grounding']['enabled']` (default **false** =
 > byte-for-byte legacy), and a **paired production A/B** was run on the frozen 60-paper corpus. Results and
 > the confirmed decision are in the new section **"R. Production integration + paired A/B"** at the end of
-> this report. Headline: production reproduces the isolated run — acquisition **34/60**, provenance **100%**,
-> no-full-text quantitative abstention **112/112**, **0 false OWN_PAPER**, **0 unsupported claims for the 26
-> inaccessible papers**, 0 pipeline errors. Decision unchanged: **GO_WITH_CHANGES**.
+> this report. Headline: production reproduces the isolated run — acquisition **34/60**, provenance **100%**
+> (weaker sense: every returned span contains its number and resolves to a chunk; not support-identity —
+> §N.10), no-full-text quantitative abstention **112/112**, **0 false OWN_PAPER**, **0 unsupported claims for
+> the 26 inaccessible papers**, 0 pipeline errors. Decision unchanged: **GO_WITH_CHANGES**. Synthesis is
+> built only on the OA-reachable subset (§N.11).
 
 ---
 
@@ -80,7 +82,8 @@ PDF 32 · JATS/XML 2 · abstract-fallback 26. **[Task 2]** A broad API hunt was 
 ## G. Provenance result **[M]**  (Task 5 regression)
 
 **Provenance-valid rate: 1.0 (150/150)** EXPLICIT/INFERRED items — every span the model quoted was re-located in a retrieved chunk and bound to its `source → representation → section → page(pdf)/xml-node → char span`.
-Schema-validity problems: **0**. Regression vs the pre-attribution-rework run (146/146 → 150/150): **no provenance loss**; the attribution change is read-only w.r.t. provenance fields. PDF block identity, page identity, section identity, XML node identity and table/caption evidence all covered by the Level-1 suite (37/37).
+Schema-validity problems: **0**.
+**What this does and does not mean:** it means every returned claim carries a span that contains its number(s) and resolves to a real chunk location. It does **not** mean each claim is bound to *the* passage that supports it — the gate verifies value presence, not support identity (see §N limitation 10; Test 2 `support_deletion_primary` re-grounded 7/26 items on a different chunk when the value recurred). Regression vs the pre-attribution-rework run (146/146 → 150/150): **no provenance loss**; the attribution change is read-only w.r.t. provenance fields. PDF block identity, page identity, section identity, XML node identity and table/caption evidence all covered by the Level-1 suite (37/37).
 
 ## H. Dataset result **[M]**
 
@@ -151,6 +154,8 @@ Acquisition 143 s cold / 3 s cached for 60 papers. Extraction+attribution 2994 s
 7. **[B]** `pytest` absent in `.venv` (prior "37 tests pass" claim unverifiable); GROBID/Docling/MinerU absent, no Docker.
 8. **[M]** 26/60 papers are simply not openly available.
 9. **[NT]** Paired A/B *inside production code* (this A/B is canonical-vs-baseline-figures); behaviour on a non-RAG/non-CS corpus; throughput at >60 papers.
+10. **[M] "Provenance 100%" is the weaker claim.** It means: every returned claim carries a span that contains its number(s) and was re-located in a retrieved chunk. It does **not** mean every claim is traced to *its actual supporting passage*. The gate tracks values, not which chunk supplied them: deleting the specific chunk `_ground` selected does **not** force abstention when the same value recurs elsewhere in the paper (measured — Test 2, `support_deletion_primary`: 7/26 returned items re-grounded on a different chunk, e.g. an abstract restating a body result). Only when *every* chunk containing the number is removed does the gate abstain (14/14). These 7 are recorded here as a known limitation — not scored as passes or as neutral. Fixing it needs chunk-level support identity (bind a claim to the exact `block_id`, abstain if that block is gone), which is not implemented.
+11. **[M] Open-access selection bias in synthesis.** 26/60 papers abstain on Dataset/Metric/Result because no full text was obtainable, so **every synthesis / gap-analysis output is built exclusively on the OA-reachable subset** of the corpus. Paywalled work — which skews toward certain venues, publishers and (often) more recent commercial results — is structurally absent from every downstream claim. This bias is not corrected anywhere and was previously unstated.
 
 ## O. Production changes required (smallest set, all inside the existing six stages)
 
@@ -297,14 +302,16 @@ not an unsupported inference.
 
 Confirmed by the **paired production A/B**, not synthetic tests. Criteria 1-8 and 10-12 pass; criterion 9
 is met for *verified* recall (0 -> 15) and negative for *raw* count by design. All safety properties hold
-in the real pipeline: **0 wrong-paper, 0 false OWN_PAPER, 100% provenance, 100% no-full-text abstention,
-0 fabricated Dataset/Metric/Result for the 26 inaccessible papers** (vs the baseline emitting them for all
-26). No architectural complexity added; flag defaults off so nothing changes until deliberately enabled.
+in the real pipeline: **0 wrong-paper, 0 false OWN_PAPER, 100% provenance (weaker sense — span contains the
+number, not support-identity; see §N.10), 100% no-full-text abstention, 0 fabricated Dataset/Metric/Result
+for the 26 inaccessible papers** (vs the baseline emitting them for all 26). No architectural complexity
+added; flag defaults off so nothing changes until deliberately enabled.
 
 **Not flat GO:** no human-gold precision measurement; the gate's `results` aggressiveness should be tuned
-to the downstream need before the flag is flipped; a second-corpus A/B is outstanding.
+to the downstream need before the flag is flipped; a second-corpus A/B is outstanding; provenance is
+value-presence not support-identity (§N.10); all synthesis is built only on the OA-reachable subset (§N.11).
 **Not NOT_READY:** no unsupported quantitative claim reaches output - every RETURNED value has a verbatim
-supporting sentence, valid provenance, and confirmed OWN ownership.
+supporting sentence that contains its number, valid provenance, and confirmed OWN ownership.
 
 **Path to GO:** (a) pick the `results`-gate operating point against the actual downstream use;
 (b) run one paired A/B on a non-RAG corpus; (c) human-gold spot-check ~20 RETURNED items;

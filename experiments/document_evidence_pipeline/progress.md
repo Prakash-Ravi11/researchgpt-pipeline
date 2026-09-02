@@ -165,6 +165,16 @@ Confirmed by the paired production A/B. Every safety property holds in the real 
 inaccessible papers (baseline emits them for all 26). No new stage/model/service/reranker; flag defaults
 **false** so nothing changes until deliberately enabled.
 
+**Provenance is the weaker claim.** "100% provenance" = every returned span resolves to a real chunk and
+contains its number. It is NOT support-identity: Test 2 `support_deletion_primary` removed the specific
+chunk `_ground` picked and 7/26 returned items stayed RETURNED by re-grounding on another chunk with the
+same value. Abstention is forced only when every number-bearing chunk is removed (14/14). The 7 are a
+recorded known limitation, not passes. See `FINAL_REPORT.md` §N.10.
+
+**Open-access selection bias.** 26/60 papers abstain for lack of full text, so all synthesis / gap
+analysis is built only on the OA-reachable 34. Paywalled work is structurally absent from every
+downstream claim. Uncorrected, previously unstated. See `FINAL_REPORT.md` §N.11.
+
 **Not flat GO:** no human-gold precision measurement; the gate's `results` aggressiveness (5/60 papers)
 should be tuned to the downstream need; a second-corpus (non-RAG) A/B is outstanding.
 **Path to GO:** tune the `results` gate → non-RAG-corpus A/B → human-gold spot-check ~20 items →

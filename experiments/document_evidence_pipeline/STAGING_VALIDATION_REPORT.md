@@ -77,9 +77,9 @@ so it flags "something moved a lot" rather than imposing an arbitrary quality ta
 |---|---|---|
 | 1 | wrong-paper accepted = 0 | **PASS** (0) |
 | 2 | false OWN_PAPER = 0 | **PASS** (0 / 4 RETURNED quant) |
-| 3 | unsupported quantitative claims = 0 (every RETURNED item EXPLICIT + provenance_valid) | **PASS** |
+| 3 | unsupported quantitative claims = 0 (every RETURNED item EXPLICIT + provenance_valid + number verbatim in its span) | **PASS** |
 | 4 | no-full-text quantitative leakage = 0 | **PASS** (0) |
-| 5 | provenance = 100% | **PASS** (19/19) |
+| 5 | provenance = 100% — *weaker sense*: every RETURNED span resolves to a real chunk location and contains the claimed number. NOT support-identity (the gate does not bind a claim to the one chunk that supports it; if the value recurs, deleting that chunk does not force abstention — see Limitations). | **PASS** (19/19, weaker sense) |
 | 6 | errors = 0 | **PASS** |
 | 7 | CITED_PAPER cannot become OWN_PAPER | **PASS** (0 CITED among RETURNED) |
 | 8 | UNKNOWN cannot become OWN_PAPER | **PASS** (0 UNKNOWN among RETURNED; 3 UNKNOWN all abstained) |
@@ -106,6 +106,18 @@ No test was modified.
   manufacturing evidence; this is expected, not a regression.
 - **Limitation — no human gold.** All counts are coverage under a strict grounding + attribution gate
   + manual inspection, not precision/recall vs labelled data.
+- **Limitation — "provenance" is value-presence, not support-identity.** The gate verifies that a
+  returned claim's number appears verbatim in a span that resolves to a real chunk; it does **not**
+  bind the claim to the one chunk that supports it. Measured on the canonical corpus (Test 2,
+  `support_deletion_primary`): removing the specific chunk `_ground` selected left **7 of 26** returned
+  items still RETURNED, re-grounded on another chunk carrying the same value (typically an abstract
+  restating a body result). Abstention is only forced when *every* chunk containing the number is
+  removed (14/14). These 7 are a recorded known limitation — not scored as passes or as neutral.
+  A fix needs chunk-level support identity (bind to `block_id`, abstain if that block is gone); not implemented.
+- **Limitation — open-access selection bias.** In the 60-paper canonical corpus, 26/60 papers abstain
+  on Dataset/Metric/Result for lack of obtainable full text, so **all synthesis / gap analysis is built
+  exclusively on the OA-reachable subset**. Paywalled literature is structurally absent from every
+  downstream claim. Not corrected anywhere; previously unstated.
 - **Limitation — 2 thin RETURNED values** (a table-header "Accuracy (%)", a qualitative
   "disparities …" sentence). Both are the paper's own (attribution correct), just not crisp numbers —
   a value-quality tier (EXPLICIT vs INFERRED) is still not implemented. Not a safety issue.
