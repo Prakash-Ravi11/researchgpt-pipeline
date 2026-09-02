@@ -11,6 +11,14 @@ Supporting runs: `20260901T150245Z-0e6dd1de` (baseline), `20260901T150624Z-acq-2
 
 Legend: **[M]** measured this corpus · **[I]** inferred/derived · **[B]** blocked · **[NT]** not tested.
 
+> **PRODUCTION INTEGRATION UPDATE (2026-09-02, commits `f12089d..2bc2a3c`).** The 5 §O changes are now
+> integrated into the real six stages behind `config['evidence_grounding']['enabled']` (default **false** =
+> byte-for-byte legacy), and a **paired production A/B** was run on the frozen 60-paper corpus. Results and
+> the confirmed decision are in the new section **"R. Production integration + paired A/B"** at the end of
+> this report. Headline: production reproduces the isolated run — acquisition **34/60**, provenance **100%**,
+> no-full-text quantitative abstention **112/112**, **0 false OWN_PAPER**, **0 unsupported claims for the 26
+> inaccessible papers**, 0 pipeline errors. Decision unchanged: **GO_WITH_CHANGES**.
+
 ---
 
 ## 1. Original problem
@@ -182,3 +190,119 @@ Recommended path: integrate §O behind a flag → paired production A/B → add 
 | attribution rework: OWN 8→22, UNKNOWN 28→16, 13 flips reviewed, 0 regressions | dry-run over `…160444Z-canon-L3-ca6e/evidence_results.json` + this run |
 | Level-1 logic incl. Task-7 set A–J + precision guards | `tests/test_pipeline_units.py` — 37/37 |
 | 40 MB cap fix | `pipeline/acquire.py`; `413a184de4` re-acquired FULL_TEXT, title_similarity 1.0, 32 pages |
+
+---
+
+## R. Production integration + paired A/B  (2026-09-02, commits `f12089d..2bc2a3c`)
+
+### R.1 What was integrated (5 §O changes, all inside the existing six stages)
+
+All behind `config['evidence_grounding']['enabled']` — **default `false` = byte-for-byte legacy behaviour**.
+The validated logic was **promoted to `src/evidence/`** as the single copy; the experiment
+`pipeline/{schema,attribute,represent,chunker}.py` are now re-export shims (**-635 LOC**, no duplication).
+
+| # | change | files |
+|---|---|---|
+| 1 | Stage 1: `_candidate_pdf_urls` -> `(source,url,repr)`; **legacy candidate order preserved when flag off**. `download_open_access_pdfs(validate, use_extra_sources)` - deterministic identity + content validation, 40 MB streamed cap, OpenAlex / Crossref / Europe-PMC-JATS resolution. | `src/collection/semantic_scholar.py`, `src/evidence/acquire.py` |
+| 2 | Per-paper `pdf_source` / `representation_type` / `acquisition_status` / `identity_validation` / `content_validation`; `NO_ACCESSIBLE_FULL_TEXT` kept distinct from `FAILED`. | `src/collection/semantic_scholar.py` |
+| 3 | Stage 2: `process_paper_grounded()` -> provenance blocks + chunking (chunk schema is a **superset** of legacy: adds `section` / `page_or_node` / `block_id` / `char_start` / `char_end` / `representation`). Stage 3: those fields carried into Chroma metadata (empty strings when absent). | `src/processing/pdf_parser.py`, `src/embedding/build_index.py` |
+| 4 | Stage 5: `run_evidence_gate()` after Stage 4 - verbatim supporting **sentence** located in a paper chunk (body preferred over the paper's own abstract), hierarchical attribution on metrics/results, value sanity check, RETURNED vs ABSTAINED. Papers without validated full text -> Dataset/Metric/Result forced `NOT_FOUND`. Rewrites `paper_summaries.json` (gated fields) + writes `paper_evidence.json`. | `src/evidence/gate.py`, `src/summarization/summarize.py` |
+| 5 | Stage 6 synthesis (`gap_analysis`, `corpus_synthesis`) consume the gated `datasets` / `metrics` / `results` fields directly - **no code change**, documented. | `src/synthesis/gap_analysis.py` |
+
+Semantic Scholar unchanged. No Schematic AI. No new credentials. No new model / service / parser / reranker.
+
+### R.2 Paired production A/B - `runs/prodab-20260902T004416Z/`  **[M]**
+
+Both arms ran the **actual six-stage production modules** end-to-end on the frozen 60-paper corpus
+(`data/raw_metadata/collected_papers.json`, sha256 `cf3bf90a...`), same Ollama `qwen2.5:7b`, isolated
+scratch paths. Canonical arm re-gated after the R.3 hardening (deterministic, no LLM re-run).
+
+| axis | BASELINE (flag off) | CANONICAL (flag on) |
+|---|---|---|
+| full-text acquired | **31/60 (51.7%)** | **34/60 (56.7%)** |
+| acquisition status tracked | no | FULL_TEXT 34 / NO_ACCESSIBLE_FULL_TEXT 26 |
+| full-text source | not recorded | arXiv 24 / S2 7 / Europe PMC 2 / OpenAlex 1 |
+| representation | not recorded | pdf 32 / jats_xml 2 |
+| identity + content validated | 0 (no check) | **34/34** |
+| **wrong-paper accepted** | 0 | **0** |
+| datasets emitted (total) | 85 (ungated, unverifiable) | 52 (grounded) |
+| metrics emitted (total) | 113 (ungated) | 10 (grounded + OWN-attributed) |
+| papers with results text | 51 (ungated) | 5 (grounded + OWN-attributed) |
+| **provenance-valid rate** | n/a | **91/91 = 100%** |
+| attribution on grounded quant | none | OWN 15 / CITED 7 / UNKNOWN 17 (only the 15 OWN are RETURNED) |
+| **RETURNED quant items** | n/a | 15 (10 metrics + 5 results) |
+| **no-full-text quant fields abstained** | n/a | **112/112 = 100%** |
+| inaccessible papers leaking a Dataset/Metric/Result | 26/26 | **0/26** |
+| pipeline errors | none | none |
+| runtime (60 papers) | 36 min | 34 min + 2.5 min re-gate |
+
+Production **reproduces the isolated Level-3 run**: acquisition 34/60 (same +3 = OpenAlex x1 + Europe PMC
+JATS x2, same sources), provenance 100%, no-full-text abstention 100%, 0 wrong-paper. RETURNED quant is
+15 here vs 21 in the isolated run - the gap is the R.3 body-over-abstract fix being stricter (it re-grounds
+abstract-matched numbers to the body, where a few then attribute UNKNOWN/CITED and correctly abstain).
+
+### R.3 Phase-10 quantitative sanity check + hardening  **[M]**
+
+Every RETURNED metrics/results item in `canonical_paper_evidence.json` was checked: value verbatim in the
+paper's chunks, number(s) verbatim, belongs to the paper, provenance valid, attribution OWN (not CITED),
+not an unsupported inference.
+
+- **0 false OWN_PAPER** among the 15 RETURNED items.
+- **15/15** numbers appear verbatim in the paper text; nothing fabricated.
+- All 7 CITED and 17 UNKNOWN grounded quant items are ABSTAINED.
+- The check surfaced one real defect, fixed in `src/evidence/gate.py` (commit `2bc2a3c`): `evidence_span`
+  was the matched chunk's first 400 chars, not the sentence bracketing the claim; and values often
+  grounded to the paper's own abstract (which restates body results) so attribution ran on abstract
+  boilerplate. `_ground()` now returns `(chunk, supporting_sentence)`, ranks body/results/discussion
+  chunks ahead of the abstract, and stores the value-bearing sentence. **Post-fix: 15/15 stored spans
+  contain the value.**
+
+### R.4 Acceptance criteria (from the integration brief)
+
+| # | criterion | result |
+|---|---|---|
+| 1 | existing regression tests pass | PASS - `tests/test_pipeline.py` 37/37 |
+| 2 | 37/37 targeted tests still pass | PASS - experiment suite 37/37 against the promoted `src/evidence/` code |
+| 3 | acquisition not below 31/60 | PASS - 34/60; baseline arm reproduced 31/60 |
+| 4 | canonical acquisition ~= 34/60 | PASS - exactly 34/60 |
+| 5 | accepted docs pass identity/content validation | PASS - 34/34; wrong-paper 0 |
+| 6 | provenance validity >=95% (100% preferred) | PASS - 91/91 = 100% |
+| 7 | no unsupported quant claims for inaccessible papers | PASS - 112/112 abstained; 0/26 papers leak |
+| 8 | false OWN_PAPER = 0 in final sanity sample | PASS - 0/15 |
+| 9 | Metrics/Results recall materially better than the original baseline | PARTIAL - **verified** recall 0 -> 15 (baseline produces 0 grounded/attributed quant claims); **raw** count 113 -> 10 by design. Precision-first, not count-first. |
+| 10 | production six-stage pipeline works end-to-end | PASS - both arms, 0 errors |
+| 11 | no unnecessary architectural complexity | PASS - 5 changes in existing stages, single `src/evidence/`, -635 LOC, no new stage/model/service/reranker |
+| 12 | no existing production functionality broken | PASS - flag off = byte-for-byte legacy; tests 37/37; baseline arm reproduced 31/60 + full extraction |
+
+### R.5 Remaining (bounded, known - the "changes" in GO_WITH_CHANGES)
+
+1. **[NT]** No human-gold Dataset/Metric/Result labels - R.2 numbers are coverage under a strict
+   verification + attribution gate + full manual inspection, not precision/recall vs gold.
+2. **[M]** Criterion 9 is count-negative by design; the gate is aggressive on `results` (5/60 papers).
+   If the downstream use wants broader coverage, relax `_gate_value` for `results` to keep INFERRED-OWN
+   sentences, or lower the grounding token threshold - measure before shipping that.
+3. **[M]** PDF heading detection still labels some late-body blocks `references`/`body` (2 of the 15
+   RETURNED items). Provenance still resolves to page + char span; the sentence is the paper's own.
+4. **[NT]** One corpus only (RAG / CS, arXiv-heavy). Isolated and production runs agree, but a second
+   corpus (clinical / humanities - shifts the JATS share and acquisition mix) is untested.
+5. **[M]** Enabling the flag in production is itself a change requiring team sign-off + monitoring;
+   default stays `false`.
+6. **[M]** Re-gate re-extracted 1/60 papers via the LLM (a cache `is_usable_extraction` miss) - minor
+   non-determinism, no effect on the safety metrics.
+
+### R.6 Decision - **GO_WITH_CHANGES**
+
+Confirmed by the **paired production A/B**, not synthetic tests. Criteria 1-8 and 10-12 pass; criterion 9
+is met for *verified* recall (0 -> 15) and negative for *raw* count by design. All safety properties hold
+in the real pipeline: **0 wrong-paper, 0 false OWN_PAPER, 100% provenance, 100% no-full-text abstention,
+0 fabricated Dataset/Metric/Result for the 26 inaccessible papers** (vs the baseline emitting them for all
+26). No architectural complexity added; flag defaults off so nothing changes until deliberately enabled.
+
+**Not flat GO:** no human-gold precision measurement; the gate's `results` aggressiveness should be tuned
+to the downstream need before the flag is flipped; a second-corpus A/B is outstanding.
+**Not NOT_READY:** no unsupported quantitative claim reaches output - every RETURNED value has a verbatim
+supporting sentence, valid provenance, and confirmed OWN ownership.
+
+**Path to GO:** (a) pick the `results`-gate operating point against the actual downstream use;
+(b) run one paired A/B on a non-RAG corpus; (c) human-gold spot-check ~20 RETURNED items;
+(d) enable `evidence_grounding.enabled` in staging with monitoring, then production.

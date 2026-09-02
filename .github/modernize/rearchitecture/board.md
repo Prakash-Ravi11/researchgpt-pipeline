@@ -51,10 +51,25 @@ Several earlier claims did not reproduce and were corrected:
   behind `config['evidence_grounding']['enabled']` (default false = exact legacy behaviour). Phases 1–8
   verified (existing `tests/test_pipeline.py` 37/37; production acquisition + gate smokes pass).
 
-### ⏸ PAUSED — resume checklist in `experiments/document_evidence_pipeline/progress.md`
+### ✅ PRODUCTION INTEGRATION + PAIRED A/B DONE — 2026-09-02 (commits `f12089d..2bc2a3c`)
 
-Stopped by user request (laptop offline overnight). Remaining: Phase 9 **paired production A/B**
-(`python experiments/document_evidence_pipeline/production_ab.py --arm both`, ~100 min), Phase 10
-quantitative sanity check, update the three reports, and the **final GO / GO_WITH_CHANGES / NOT_READY
-decision based on the production A/B**. Current standing decision (from the isolated Level-3 A/B):
-**GO_WITH_CHANGES**.
+Paired production A/B `runs/prodab-20260902T004416Z/` — both arms ran the real six-stage modules on the
+frozen 60-paper corpus. **Production reproduces the isolated run:**
+
+- acquisition **31/60 → 34/60**, all 34 identity + content validated, **0 wrong-paper**
+- provenance-valid **91/91 (100%)**; schema problems 0
+- no-full-text quantitative fields abstained **112/112 (100%)**; **0/26** inaccessible papers leak a
+  Dataset/Metric/Result (baseline emits them for all 26)
+- grounded quant attribution OWN 15 / CITED 7 / UNKNOWN 17 → only the 15 OWN RETURNED; Phase-10 check:
+  **0 false OWN_PAPER**, 15/15 numbers verbatim in the paper
+- one gate defect found + fixed (`2bc2a3c`): tight `evidence_span` sentence + body-over-abstract grounding
+- `tests/test_pipeline.py` 37/37; experiment suite 37/37; 0 pipeline errors both arms
+- 5 §O changes only, all inside the existing six stages; single `src/evidence/` copy (−635 LOC from
+  shims); no new stage / model / service / parser / reranker; flag defaults **false**
+
+### FINAL DECISION — **GO_WITH_CHANGES** (`FINAL_REPORT.md` §R.6)
+
+Ship behind `config['evidence_grounding']['enabled']` (default false). Path to flat GO: tune the
+`results`-gate operating point → paired A/B on a non-RAG corpus → human-gold spot-check ~20 RETURNED
+items → enable in staging with monitoring, then production. Not NOT_READY — no unsupported quantitative
+claim reaches output.

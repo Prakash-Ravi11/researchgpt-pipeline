@@ -113,25 +113,41 @@ All 5 §O changes are integrated into the six stages, behind
 - `git diff --check` clean; no secrets in additions; only intended files changed.
 - Pre-existing uncommitted production WIP committed unchanged as baseline checkpoint `f12089d`.
 
-## ⏸ PAUSED — RESUME HERE (Phase 9 + 10 + reports + final decision)
+## ✅ PRODUCTION A/B DONE (Phase 9 + 10) — 2026-09-02, commits `f12089d..2bc2a3c`
 
-Stopped by user request (laptop offline overnight). Nothing lost — all code + Phase 1–8 validation
-committed through `fce2328`. Partial A/B scratch dir was deleted (fully regenerable).
+Paired production A/B: `runs/prodab-20260902T004416Z/` — both arms ran the **real six-stage production
+modules** on the frozen 60-paper corpus, same Ollama qwen2.5:7b, isolated scratch paths.
 
-**To finish, run and then report on:**
-1. `python experiments/document_evidence_pipeline/production_ab.py --arm both`
-   (paired production A/B on the frozen 60-paper corpus; ~100 min: both arms fresh Ollama extraction.
-   Writes `runs/prodab-*/report.md` + `{baseline,canonical}_metrics.json` + `*_paper_evidence.json`.)
-2. Phase 10 quantitative sanity check: for every RETURNED metrics/results item in
-   `canonical_paper_evidence.json`, verify value verbatim-in-evidence, belongs to the paper, provenance
-   valid, attribution OWN (not CITED), not an unsupported inference. Target: 0 false OWN.
-3. Acceptance criteria check (FINAL_REPORT-integration prompt): acq ≥ 31/60 and ≈ 34/60; identity/content
-   validated; provenance ≥ 95%; 0 unsupported quant claims for inaccessible papers; metrics/results recall
-   up vs baseline; `tests/test_pipeline.py` 37/37; production pipeline runs end-to-end.
-4. Update `FINAL_REPORT.md` (add a "Production integration" section + A/B table + sanity check),
-   `progress.md`, `board.md`. Separate MEASURED / INFERRED / BLOCKED / NOT TESTED.
-5. Final decision: GO / GO_WITH_CHANGES / NOT_READY based on the production A/B (not synthetic tests).
+| axis | BASELINE (flag off) | CANONICAL (flag on) |
+|---|---|---|
+| full-text acquired | **31/60 (51.7%)** | **34/60 (56.7%)** — arXiv 24 / S2 7 / EuropePMC 2 / OpenAlex 1 |
+| identity + content validated | 0 (no check) | 34/34; **wrong-paper accepted 0** |
+| datasets / metrics / results-text (raw emitted) | 85 / 113 / 51 papers (ungated) | 52 / 10 / 5 papers (gated) |
+| **provenance-valid rate** | n/a | **91/91 = 100%** |
+| attribution on grounded quant | none | OWN 15 / CITED 7 / UNKNOWN 17 → only the 15 OWN RETURNED |
+| **no-full-text quant fields abstained** | n/a | **112/112 = 100%**; 0/26 inaccessible papers leak a value |
+| pipeline errors | none | none |
+| runtime (60 papers) | 36 min | 34 min + 2.5 min re-gate |
 
-Expected (from the isolated Level-3 A/B, `runs/20260901T170346Z-canon-L3-525e`): acq 34/60, provenance
-100%, no-full-text abstention 100%, metrics returned ~13 / results ~8, 0 false OWN. The production A/B
-must reproduce these to earn GO; deviations are the finding to report.
+**Phase 10 sanity check (all 15 RETURNED metrics/results items):** 0 false OWN_PAPER; 15/15 numbers
+verbatim in the paper text; all 7 CITED + 17 UNKNOWN grounded quant items ABSTAINED. Found + fixed one
+defect (commit `2bc2a3c`): `evidence_span` was a 400-char chunk prefix, and values grounded to the paper's
+own abstract instead of the body. `_ground()` now returns `(chunk, supporting_sentence)`, prefers
+body/results/discussion over abstract, and stores the value-bearing sentence — post-fix 15/15 spans
+contain the value. Re-gate (deterministic) after the fix: metrics 15→10, results 7→5 (some abstract-
+grounded OWNs re-ground to the body and correctly abstain there).
+
+**Acceptance criteria:** 1–8 and 10–12 **PASS**; #9 (recall vs baseline) PARTIAL — *verified* recall
+0→15, *raw* count 113→10 by design (precision-first). Production reproduces the isolated Level-3 run.
+
+## DECISION — **GO_WITH_CHANGES** (see `FINAL_REPORT.md` §R.6)
+
+Confirmed by the paired production A/B. Every safety property holds in the real pipeline: 0 wrong-paper,
+0 false OWN, 100% provenance, 100% no-full-text abstention, 0 fabricated Dataset/Metric/Result for the 26
+inaccessible papers (baseline emits them for all 26). No new stage/model/service/reranker; flag defaults
+**false** so nothing changes until deliberately enabled.
+
+**Not flat GO:** no human-gold precision measurement; the gate's `results` aggressiveness (5/60 papers)
+should be tuned to the downstream need; a second-corpus (non-RAG) A/B is outstanding.
+**Path to GO:** tune the `results` gate → non-RAG-corpus A/B → human-gold spot-check ~20 items →
+enable `evidence_grounding.enabled` in staging with monitoring, then production.
