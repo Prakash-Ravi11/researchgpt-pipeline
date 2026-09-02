@@ -37,6 +37,9 @@ _METRIC_TOKENS = {
 }
 _NUM = re.compile(r"\d")
 _SENT = re.compile(r"(?<=[.!?])\s+")
+# a numeric token worth anchoring a result on: a decimal, or a >=2-digit integer.
+# (a lone single digit is usually part of an identifier - "BLEU-4", "GPT-4", "T3".)
+_NUMVAL = re.compile(r"\d+\.\d+|\b\d{2,}\b")
 
 
 def _norm(s: str) -> str:
@@ -57,6 +60,12 @@ def _supporting_sentence(value: str, text: str) -> str:
         for s in sents:
             if nv in _norm(s):
                 return s.strip()
+    # a sentence carrying all the value's meaningful numbers is the tightest span
+    nums = set(_NUMVAL.findall(value))
+    if nums:
+        for s in sents:
+            if all(n in s for n in nums):
+                return s.strip()
     toks = _sig_tokens(value)
     if toks:
         best, best_ov = "", 0.0
@@ -73,23 +82,37 @@ def _supporting_sentence(value: str, text: str) -> str:
     return value.strip()
 
 
-def _ground(value: str, chunks: list[dict[str, Any]]) -> tuple[dict[str, Any], str] | None:
+def _ground(value: str, chunks: list[dict[str, Any]], *,
+            field: str = "metrics") -> tuple[dict[str, Any], str] | None:
     """Return (chunk, supporting_sentence) for the chunk that verbatim-supports
-    `value` (normalized substring or >=0.8 significant-token containment), or
-    None. A body chunk is preferred over the paper's own abstract when both
-    match, since the abstract merely restates a body result."""
+    `value`, or None. A body chunk is preferred over the paper's own abstract
+    when both match, since the abstract merely restates a body result.
+
+    For `results` the value is an LLM *paraphrase* of the paper (Stage-4's
+    `results` field is a summary, not a quote), so whole-sentence token overlap
+    structurally under-matches. Instead we NUMBER-ANCHOR: every meaningful
+    number in the paraphrase must appear verbatim in one chunk, and >=2 of the
+    paraphrase's significant tokens must co-occur there. For `metrics` (short,
+    near-verbatim values) the substring / >=0.8-token-containment check is kept.
+    """
     nv = _norm(value)
     if len(nv) < 4:
         return None
     toks = _sig_tokens(value)
+    nums = set(_NUMVAL.findall(value)) if field == "results" else set()
 
     def matches(c: dict[str, Any]) -> bool:
-        if nv in _norm(c.get("text", "")):
+        ct = _norm(c.get("text", ""))
+        if nv in ct:
             return True
+        if nums:
+            # number-anchored: all meaningful numbers verbatim in this chunk + local lexical support
+            if all(n in c.get("text", "") for n in nums):
+                return len(toks & set(_WORD.findall(ct))) >= 2
+            return False
         if len(toks) < 2:
             return False
-        ctoks = set(_WORD.findall(_norm(c.get("text", ""))))
-        return len(toks & ctoks) / len(toks) >= 0.8
+        return len(toks & set(_WORD.findall(ct))) / len(toks) >= 0.8
 
     hits = [c for c in chunks if matches(c)]
     if not hits:
@@ -133,7 +156,7 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
     if not _value_sane(field, value):
         item.update(evidence_status=UNSUPPORTED, abstain_reason="value_failed_sanity_check")
         return item
-    grounded = _ground(value, chunks)
+    grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
                     abstain_reason="evidence_span_not_found_in_paper_chunks", confidence=0.2)

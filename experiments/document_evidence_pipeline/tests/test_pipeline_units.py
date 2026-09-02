@@ -213,6 +213,43 @@ def run():
                                             attribution=UNKNOWN)
     check("decide: INFERRED method -> RETURNED (non-quantitative)", decide(it)["final"] == RETURNED)
 
+    # --- evidence gate: number-anchored results grounding (RESULTS_GATE_TUNING_REPORT)
+    from src.evidence.gate import _ground, _gate_value
+    RCHUNKS = [
+        {"text": "We propose SPAR and evaluate our system. The system achieved an nDCG@5 score "
+                 "of 0.4502, competitive with the organizer baseline.", "section": "results",
+                 "page_or_node": "p6", "block_id": "P:5", "block_type": "paragraph",
+                 "representation": "pdf", "source": "arxiv", "char_start": 0, "char_end": 150},
+        {"text": "Related work. Prior systems by Jones et al. reported an nDCG of 0.61 on a "
+                 "different collection.", "section": "introduction_related_work",
+                 "page_or_node": "p2", "block_id": "P:1", "block_type": "paragraph",
+                 "representation": "pdf", "source": "arxiv", "char_start": 0, "char_end": 90},
+    ]
+    # LLM paraphrase of the paper's own result; number is verbatim in a body chunk
+    g = _ground("The system achieved an nDCG@5 score of 0.4502 on the shared task.",
+                RCHUNKS, field="results")
+    check("gate: paraphrased result, number verbatim in body -> grounds",
+          g is not None and g[0]["section"] == "results" and "0.4502" in g[1], str(g))
+    # number NOT present anywhere -> not grounded -> gate abstains
+    g2 = _ground("Our approach reached 88.3% accuracy on the test set.", RCHUNKS, field="results")
+    check("gate: result number absent from every chunk -> not grounded", g2 is None, str(g2))
+    # single-digit identifier ("BLEU-4") must not anchor a result
+    idc = [{"text": "The evaluation used BLEU-4 and ROUGE-L as automatic metrics.",
+            "section": "experimental_setup", "page_or_node": "p4", "block_id": "P:3",
+            "block_type": "paragraph", "representation": "pdf", "source": "arxiv",
+            "char_start": 0, "char_end": 70}]
+    g3 = _ground("Improvements were observed on BLEU-4 across all baselines.", idc, field="results")
+    check("gate: 'BLEU-4' single digit does not number-anchor a result", g3 is None, str(g3))
+    # metrics grounding unchanged: short near-verbatim value still matches by token containment
+    it = _gate_value("metrics", "nDCG@5", RCHUNKS, ["A Lin"])
+    check("gate: metrics value still grounds via token containment",
+          it["evidence_status"] == EXPLICIT and it["provenance_valid"], str(it))
+    # full gate: paraphrased OWN result with grounded number -> RETURNED
+    it = _gate_value("results", "The system achieved an nDCG@5 score of 0.4502.",
+                     RCHUNKS, ["A Lin"])
+    check("gate: grounded OWN paraphrased result -> RETURNED",
+          it["final"] == RETURNED and it["attribution"] == OWN_PAPER, str(it))
+
     print(f"\n{_PASS} passed, {_FAIL} failed")
     if _FAILURES:
         print("FAILURES:")
