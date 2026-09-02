@@ -28,6 +28,13 @@ def _get_with_backoff(params: dict, headers: dict, max_retries: int = 6) -> requ
         resp = requests.get(SEARCH_URL, params=params, headers=headers, timeout=30)
 
         if resp.status_code != 429:
+            # Semantic Scholar returns 400 when `offset` is past the end of the
+            # result set (which happens whenever a query has fewer total hits
+            # than the requested pool). That is not a real error while
+            # paginating — hand the response back so the caller sees no data and
+            # stops. A 400 on the very first page IS a real problem, so still raise.
+            if resp.status_code == 400 and params.get("offset", 0) > 0:
+                return resp
             resp.raise_for_status()
             return resp
 
@@ -73,9 +80,10 @@ def fetch_candidates(query: str, year_range, pool_size: int, api_key: str | None
             }
             resp = _get_with_backoff(params, headers)
 
-            batch = resp.json().get("data", [])
+            payload = resp.json() if resp.status_code == 200 else {}
+            batch = payload.get("data", [])
             if not batch:
-                break  # no more results available
+                break  # no more results available (empty page or 400 past the end)
 
             # Semantic Scholar's pagination isn't perfectly stable across requests —
             # the same paper can occasionally appear on two different pages. Left
@@ -91,7 +99,18 @@ def fetch_candidates(query: str, year_range, pool_size: int, api_key: str | None
                 seen_ids.add(p["paperId"])
             papers.extend(new_papers)
             pbar.update(len(new_papers))
-            offset += page_size
+            offset += params["limit"]  # advance by what we actually asked for, not a fixed 100
+
+            # Stop as soon as Semantic Scholar signals the result set is exhausted:
+            #   - it returned fewer rows than we asked for (short final page), OR
+            #   - it gave no "next" cursor, OR
+            #   - our offset has walked past the reported total.
+            # Without this the loop keeps requesting past the end and S2 answers 400.
+            total = payload.get("total")
+            if (len(batch) < params["limit"] or "next" not in payload
+                    or (isinstance(total, int) and offset >= total)):
+                break
+
             # Semantic Scholar's authenticated tier is 1 req/sec CUMULATIVE across all
             # endpoints — pad slightly above 1.0s so timing overhead never pushes us over.
             time.sleep(3 if not api_key else 1.2)
