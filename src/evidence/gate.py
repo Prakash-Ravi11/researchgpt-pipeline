@@ -47,23 +47,57 @@ def _sig_tokens(s: str) -> set[str]:
     return {t for t in _WORD.findall((s or "").lower()) if len(t) >= 4 and t not in _STOP}
 
 
-def _ground(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any] | None:
-    """Return the chunk that verbatim-supports `value` (normalized substring or
-    >=0.8 significant-token containment), or None."""
+def _supporting_sentence(value: str, text: str) -> str:
+    """The single sentence of `text` that best supports `value` — used as the
+    stored evidence_span so the audit trail brackets the claim, not the whole
+    chunk. Falls back to a char window, then the value itself."""
+    nv = _norm(value)
+    sents = _SENT.split(text or "")
+    if nv:
+        for s in sents:
+            if nv in _norm(s):
+                return s.strip()
+    toks = _sig_tokens(value)
+    if toks:
+        best, best_ov = "", 0.0
+        for s in sents:
+            stoks = set(_WORD.findall(_norm(s)))
+            ov = len(toks & stoks) / len(toks)
+            if ov > best_ov:
+                best, best_ov = s, ov
+        if best_ov >= 0.5:
+            return best.strip()
+    i = _norm(text).find(nv[:30]) if nv else -1
+    if i >= 0:
+        return (text[max(0, i - 140): i + 200]).strip()
+    return value.strip()
+
+
+def _ground(value: str, chunks: list[dict[str, Any]]) -> tuple[dict[str, Any], str] | None:
+    """Return (chunk, supporting_sentence) for the chunk that verbatim-supports
+    `value` (normalized substring or >=0.8 significant-token containment), or
+    None. A body chunk is preferred over the paper's own abstract when both
+    match, since the abstract merely restates a body result."""
     nv = _norm(value)
     if len(nv) < 4:
         return None
-    for c in chunks:
-        if nv in _norm(c.get("text", "")):
-            return c
     toks = _sig_tokens(value)
-    if len(toks) < 2:
-        return None
-    for c in chunks:
+
+    def matches(c: dict[str, Any]) -> bool:
+        if nv in _norm(c.get("text", "")):
+            return True
+        if len(toks) < 2:
+            return False
         ctoks = set(_WORD.findall(_norm(c.get("text", ""))))
-        if len(toks & ctoks) / len(toks) >= 0.8:
-            return c
-    return None
+        return len(toks & ctoks) / len(toks) >= 0.8
+
+    hits = [c for c in chunks if matches(c)]
+    if not hits:
+        return None
+    hits.sort(key=lambda c: (c.get("section") == "abstract",
+                             c.get("section") not in ("results", "experimental_setup", "discussion")))
+    chosen = hits[0]
+    return chosen, _supporting_sentence(value, chosen.get("text", ""))
 
 
 def _value_sane(field: str, value: str) -> bool:
@@ -99,13 +133,14 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
     if not _value_sane(field, value):
         item.update(evidence_status=UNSUPPORTED, abstain_reason="value_failed_sanity_check")
         return item
-    hit = _ground(value, chunks)
-    if hit is None:
+    grounded = _ground(value, chunks)
+    if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
                     abstain_reason="evidence_span_not_found_in_paper_chunks", confidence=0.2)
         return item
+    hit, sentence = grounded
     item.update(
-        evidence_span=(hit.get("text") or "")[:400], source=hit.get("source"),
+        evidence_span=sentence[:400], source=hit.get("source"),
         representation=hit.get("representation"), section=hit.get("section"),
         page_or_node=hit.get("page_or_node"), block_id=hit.get("block_id"),
         char_start=hit.get("char_start"), char_end=hit.get("char_end"),
