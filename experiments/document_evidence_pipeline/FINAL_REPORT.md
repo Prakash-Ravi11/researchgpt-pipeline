@@ -278,13 +278,16 @@ not an unsupported inference.
 
 1. **[NT]** No human-gold Dataset/Metric/Result labels - R.2 numbers are coverage under a strict
    verification + attribution gate + full manual inspection, not precision/recall vs gold.
-2. **[M]** Criterion 9 is count-negative by design; the gate is aggressive on `results` (5/60 papers).
-   If the downstream use wants broader coverage, relax `_gate_value` for `results` to keep INFERRED-OWN
-   sentences, or lower the grounding token threshold - measure before shipping that.
-3. **[M]** PDF heading detection still labels some late-body blocks `references`/`body` (2 of the 15
-   RETURNED items). Provenance still resolves to page + char span; the sentence is the paper's own.
-4. **[NT]** One corpus only (RAG / CS, arXiv-heavy). Isolated and production runs agree, but a second
-   corpus (clinical / humanities - shifts the JATS share and acquisition mix) is untested.
+2. **[RESOLVED 2026-09-02, commit `008397f`]** The `results` gate returned for only 5/60 papers.
+   Root cause: `_ground()` verified the LLM's `results` *paraphrase* by whole-sentence token overlap.
+   Fixed with **number-anchored** grounding (see `RESULTS_GATE_TUNING_REPORT.md`). Production re-gate:
+   RETURNED results **5 → 12**, quant items 15 → 22, 0 false OWN, span-has-value 22/22, all 11 safety
+   invariants preserved. Recommendation: ENABLE_WITH_MONITORING for that change (parent flag still off).
+3. **[M]** PDF heading detection still labels some late-body blocks `references`/`body`. Provenance
+   still resolves to page + char span; the sentence is the paper's own.
+4. **[M, partial]** Second corpus: `data_test` (LLM-reasoning topic, 8 papers) — acquisition A/B
+   1/8 → 7/8, 0 wrong-paper; evidence gate held every invariant (n=7 full-text, survey-heavy). A
+   genuinely distant domain (clinical / humanities) remains an execution dependency.
 5. **[M]** Enabling the flag in production is itself a change requiring team sign-off + monitoring;
    default stays `false`.
 6. **[M]** Re-gate re-extracted 1/60 papers via the LLM (a cache `is_usable_extraction` miss) - minor

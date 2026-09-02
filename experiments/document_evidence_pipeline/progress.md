@@ -140,6 +140,22 @@ grounded OWNs re-ground to the body and correctly abstain there).
 **Acceptance criteria:** 1–8 and 10–12 **PASS**; #9 (recall vs baseline) PARTIAL — *verified* recall
 0→15, *raw* count 113→10 by design (precision-first). Production reproduces the isolated Level-3 run.
 
+## ✅ RESULTS-GATE TUNING DONE — 2026-09-02, commit `008397f` (see `RESULTS_GATE_TUNING_REPORT.md`)
+
+Root cause of results returning for only 5/60: `_ground()` verified the LLM's `results` *paraphrase* by
+≥0.8 whole-sentence token overlap — structurally wrong for a summary. Fixed: **number-anchored**
+grounding for `results` (every meaningful number verbatim in a chunk + ≥2 sig tokens co-occur).
+Deterministic sweep (`results_gate_sweep.py`) confirmed 0.8/number-anchored is the safe maximum.
+
+Production re-gate (deterministic): RETURNED **results 5 → 12**, quant items 15 → 22, **0 false OWN**,
+22/22 numbers verbatim in span, provenance 108/108 = 100%, no-full-text abstention 112/112, leak 0.
+All 11 safety invariants preserved. Acquisition untouched. Tests 37/37 + 42/42.
+
+Second corpus (`data_test`, LLM-reasoning topic, gate frozen from primary): acquisition **1/8 → 7/8**,
+0 wrong-paper; evidence gate held every invariant (0 false OWN, 100% provenance, 4/4 no-full-text
+abstain, 0 leak) — small check (n=7, survey-heavy). Recommendation: **ENABLE_WITH_MONITORING** for the
+results-gate change; parent pipeline stays behind `evidence_grounding.enabled` = false.
+
 ## DECISION — **GO_WITH_CHANGES** (see `FINAL_REPORT.md` §R.6)
 
 Confirmed by the paired production A/B. Every safety property holds in the real pipeline: 0 wrong-paper,
