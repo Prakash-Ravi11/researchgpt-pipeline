@@ -1,0 +1,50 @@
+# STAGING config — the ONLY place evidence_grounding is enabled.
+# Production / default (configs/config.yaml) keeps evidence_grounding.enabled: false.
+# Bounded, reproducible corpus: the 8-paper data_test set (LLM-reasoning topic),
+# separate data_test/ paths and Chroma collection — never touches data/.
+# No secret in this file: set S2_API_KEY in the environment if collection is re-run.
+
+collection:
+  api_key: null
+  domain_query: "large language model reasoning benchmarks"
+  fields_of_study: ["Computer Science"]
+  year_range: [2022, 2026]
+  candidate_pool_size: 20
+  target_corpus_size: 8
+  relevance_threshold: 0.55
+
+processing:
+  chunk_size: 800
+  chunk_overlap: 100
+
+embedding:
+  model: "BAAI/bge-m3"
+  device: "cuda"
+
+llm:
+  provider: "ollama"
+  model: "qwen2.5:7b"
+  base_url: "http://localhost:11434"
+  max_context_words: 2500
+  temperature: 0.2
+  timeout_seconds: 300
+
+summarization:
+  context_selection: "retrieval_aware"
+
+categorization:
+  num_clusters: 2
+
+paths:
+  raw_metadata_dir: "data_test/raw_metadata"
+  pdf_dir: "data_test/pdfs"
+  processed_dir: "data_test/processed"
+  chroma_dir: "data_test/chroma_db"
+  figures_dir: "data_test/figures"
+
+system:
+  seed: 42
+  collection_name: "researchgpt_staging_papers"
+
+evidence_grounding:
+  enabled: true   # STAGING ONLY — do not copy this line into configs/config.yaml

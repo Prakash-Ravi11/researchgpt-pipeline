@@ -306,4 +306,9 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
     print(f"  Evidence gate: returned {stats['returned']}, abstained {stats['abstained']}, "
           f"provenance {stats['provenance_valid']}/{stats['provenance_checked']}, "
           f"no-full-text abstain {stats['no_full_text_quant_abstained']}/{stats['no_full_text_quant_fields']}")
+
+    # deterministic observability around Stage 5 (NOT a new stage): writes
+    # evidence_monitor.json and prints an A/B/C/D status line.
+    from .monitor import run_monitor
+    run_monitor(evidence_out, stats, str(processed), corpus_size=len(summaries))
     return stats
