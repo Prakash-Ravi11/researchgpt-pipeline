@@ -319,6 +319,10 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
             text, traces[paper_id] = _select_legacy(
                 paper_chunks, collection, generic_vecs, paper_id, max_words)
             if sel_cfg["mode"] == "content_aware":
+                # visibility: a run labelled content_aware that silently used legacy
+                # for lack of the grounded schema is PARTLY a legacy run. Label it
+                # distinctly (behaviour unchanged) so a report can count it.
+                traces[paper_id]["mode"] = "legacy_fallback"
                 traces[paper_id]["fell_back_from"] = "content_aware (legacy chunk schema)"
 
         papers[paper_id] = {"paper_id": paper_id, "title": title, "year": year,

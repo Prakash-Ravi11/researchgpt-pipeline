@@ -28,7 +28,9 @@ llm:
   max_context_words: 2500
   temperature: 0            # greedy decoding — reproducibility (was 0.2, non-deterministic)
   seed: 42                 # generation RNG seed, passed to Ollama options; see call_ollama_json
-  timeout_seconds: 300
+  timeout_seconds: 300     # requests connect/read-gap timeout (NOT a total-duration bound)
+  extraction_deadline_seconds: 240   # HARD total wall-clock bound per extraction call
+  extraction_output_reservation: 768 # num_predict cap == output term of num_ctx (schema-derived; see summarize.py)
 
 summarization:
   context_selection: "retrieval_aware"

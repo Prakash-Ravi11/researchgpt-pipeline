@@ -154,3 +154,51 @@ compounded by a laptop sleep during that single paper). Either way:
 - "Table density predicts non-conformance" — 4 papers at ≥ 0.93 table share are all conformant.
 - "Overnight machine slowdown across the medical run" — 18/19 papers ran normally.
 - `a6ecdf69` / `ddb170b2` as fix targets — clean conforming JSON, ordinary selection variance.
+
+---
+
+# APPENDIX (3.2a) — why the 300 s timeout did not bind, and what replaced it
+
+## Why it did not bind
+
+`call_ollama_json` issued `requests.post(url, json=payload, timeout=timeout)` with a scalar
+`timeout` (300). `requests` applies a scalar as `(connect_timeout, read_timeout)`, and the
+**read timeout is the maximum gap between received bytes, not total elapsed time**.
+`requests` / `urllib3` has no total-request-duration timeout at all.
+
+- It was wired to the correct call site — **not a "never wired" bug**. It is a **semantics**
+  problem: this class of timeout cannot bound total call duration.
+- A process frozen by laptop sleep defeats it (the `select()` / `poll()` wait does not accrue
+  frozen wall-time; on resume it re-arms for another full interval). A server that emits one
+  byte every < 300 s indefinitely also defeats it.
+- `stream: False` does not help: Ollama computes the whole response server-side then sends it,
+  so `requests` sits in one blocking read that simply re-arms across a sleep.
+
+STEP 5's data fits this exactly — `9879e1cce9` alone consumed 7.6 h (27 327 s) while the
+`timeout=300` never fired; the other 18 medical papers ran at 14–61 s on both sides.
+
+## What replaced it
+
+Both changes are in the Ollama client (`src/summarization/summarize.py`); nothing else moved.
+
+1. **True total wall-clock deadline.** The request runs in a `daemon` thread;
+   `thread.join(timeout=deadline_seconds)` bounds the wait. On expiry the call is abandoned
+   (sentinel `{"_deadline_exceeded": True, "_elapsed_s": …}`, **no retry** — a deadline is not
+   transient), and `_extract_single_paper` records the paper as `_extraction_failed` with
+   `_failure_reason: "wall_clock_exceeded"` and `_elapsed_s` — **never an empty field, never a
+   silent skip**. The next paper proceeds immediately. Config: `llm.extraction_deadline_seconds`
+   (default 240 s — normal papers run 14–61 s).
+2. **`num_predict` hard output cap** = `EXTRACTION_OUTPUT_RESERVATION` (768, schema-derived —
+   see the constant in `summarize.py`). The degenerate whitespace/tab loop that produced the
+   7.6 h hang can no longer generate unbounded output.
+
+## Verification — `9879e1cce9` alone, seeded
+
+| condition | elapsed | outcome |
+|---|--:|---|
+| real config (deadline 240 s, `num_predict` 768) | **26.3 s** (was 27 327 s) | `num_predict` caps the whitespace loop → still unparseable → `_extraction_failed` / `no_response`, 0 fields, process continues |
+| `extraction_deadline_seconds` forced to 3 s | **3.0 s** | deadline trips exactly; `_extraction_failed` / `_failure_reason: wall_clock_exceeded` / `_elapsed_s: 3.0`; 0 fields; process continues |
+
+One pathological paper can no longer consume a run: the observed 7.6 h hang is eliminated by
+the output cap alone, and the wall-clock deadline is the hard backstop for any other
+total-duration pathology the read-gap timeout cannot see.

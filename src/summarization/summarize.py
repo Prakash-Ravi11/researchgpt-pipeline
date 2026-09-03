@@ -292,16 +292,46 @@ def reconstruct_paper_texts(chunks: list[dict], max_words: int, tail_reserve_rat
     return papers
 
 
+# --- Stage-4 output sizing: SINGLE SOURCE OF TRUTH (see CONTEXT_BUDGET_REPORT.md) ---
+# The extraction schema is 10 fields: 8 prose strings + 2 short string-lists.
+# Per-field length at the depth the prompt asks for: summary / problem_addressed /
+# inferences ~3-4 sentences (~60 tok each = 180), method ~4-6 sentences (~110 tok),
+# results / limitations / key_findings ~2-3 sentences (~55 tok each = 165),
+# novelty_claim ~1-2 sentences (~35 tok); datasets + metrics ~5 short items
+# (~55 tok each = 110); JSON keys/quotes/braces ~60 tok. That is ~660 tok for a
+# full, concise conforming response; a verbose-but-valid one was observed at ~556
+# tok (legacy selector on 0549e2e9). 768 = that estimate + ~15% margin, on a clean
+# boundary.
+#
+# This ONE number is used two ways and must stay one number:
+#   1. num_predict  — a HARD output cap (0549e2e9 transcribed tables to 1251 tok
+#      with no cap; that can no longer happen).
+#   2. the output term of estimate_num_ctx — a FIXED reservation added to the input
+#      estimate, NOT "window size minus input". Sizing output as the remainder
+#      inversely couples the two: a short, table-dense input then buys the model a
+#      huge output window and it fills it transcribing cells instead of summarising.
+EXTRACTION_OUTPUT_RESERVATION = 768
+
+# Hard per-call wall-clock deadline (seconds). Not a read-gap timeout — a total
+# elapsed bound enforced client-side, because requests' `timeout` only bounds the
+# gap between received bytes and cannot bound total call duration (a frozen
+# process / slow drip defeats it — see DIAG_0549E2E9_REPORT.md). Normal papers
+# run 14-61 s; 240 s is generous. Config: llm.extraction_deadline_seconds.
+EXTRACTION_DEADLINE_SECONDS = 240
+
+
 def estimate_num_ctx(user_content: str, system_prompt: str = EXTRACTION_SYSTEM_PROMPT,
-                      response_budget_tokens: int = 600, min_ctx: int = 2048, max_ctx: int = 8192) -> int:
-    """Size the context window to what this specific paper actually needs, instead
-    of always requesting the max. ~1.4 tokens/word is a reasonable rough estimate
-    for English academic text; rounded up to the nearest 512 for clean allocation,
-    clamped to [min_ctx, max_ctx].
+                      output_reservation: int = EXTRACTION_OUTPUT_RESERVATION,
+                      min_ctx: int = 2048, max_ctx: int = 8192) -> int:
+    """num_ctx = (estimated input tokens) + a FIXED output reservation, rounded up
+    to the next 512 and clamped to [min_ctx, max_ctx].
+
+    The output term is a fixed reservation (EXTRACTION_OUTPUT_RESERVATION / config),
+    the SAME number passed as num_predict — NOT "window minus input". See that
+    constant's comment for why the remainder form is a latent failure.
     """
-    word_count = len(user_content.split()) + len(system_prompt.split())
-    estimated_tokens = int(word_count * 1.4) + response_budget_tokens
-    rounded = ((estimated_tokens // 512) + 1) * 512
+    input_tokens = int((len(user_content.split()) + len(system_prompt.split())) * 1.4)
+    rounded = ((input_tokens + output_reservation) // 512 + 1) * 512
     return max(min_ctx, min(max_ctx, rounded))
 
 
@@ -362,22 +392,24 @@ def _parse_json_response(content: str) -> dict:
 
 def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content: str,
                       temperature: float, max_retries: int = 2, timeout: int = 300,
-                      num_ctx: int = 8192, seed: int | None = None) -> dict | None:
-    """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict or None.
+                      num_ctx: int = 8192, seed: int | None = None,
+                      num_predict: int | None = None,
+                      deadline_seconds: float | None = None) -> dict | None:
+    """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict, None,
+    or the sentinel {"_deadline_exceeded": True, "_elapsed_s": ...} when the hard
+    wall-clock deadline fires.
 
-    timeout defaults to 300s because full-text papers can run considerably
-    longer than abstract-only ones on a 7B local model. Retries cover
-    timeouts and connection drops, not just malformed JSON, since a
-    slow/loaded local Ollama instance can time out transiently without the
-    request itself being broken.
+    `timeout` is requests' connect/read-gap timeout — it bounds the gap between
+    received bytes, NOT total call duration. `deadline_seconds`, when set, is a
+    TRUE total wall-clock bound enforced here (the request runs in a daemon thread
+    we stop waiting on); on expiry the call is abandoned and the sentinel returned.
 
-    num_ctx is now a parameter, not hardcoded — see estimate_num_ctx above.
-    Sizing this to what the paper actually needs (rather than always 8192)
-    reduces VRAM allocation pressure, which matters most on a 6GB card when
-    processing the many short abstract-only papers most corpora contain.
+    `num_predict`, when set, is a hard output-token cap (see EXTRACTION_OUTPUT_RESERVATION).
     """
     url = f"{base_url}/api/chat"
     options = {"temperature": temperature, "num_ctx": num_ctx}
+    if num_predict is not None:
+        options["num_predict"] = num_predict
     if seed is not None:
         # Reproducibility (previously NOT guaranteed): pin the RNG seed and make
         # the remaining sampling params explicit at Ollama's documented defaults,
@@ -399,7 +431,30 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
 
     for attempt in range(max_retries + 1):
         try:
-            resp = requests.post(url, json=payload, timeout=timeout)
+            if deadline_seconds is not None:
+                box: dict = {}
+
+                def _worker():  # noqa: ANN202 — local
+                    try:
+                        box["resp"] = requests.post(
+                            url, json=payload, timeout=min(timeout, deadline_seconds))
+                    except Exception as exc:  # noqa: BLE001 — re-raised on the main thread
+                        box["exc"] = exc
+
+                th = threading.Thread(target=_worker, daemon=True)
+                th.start()
+                th.join(timeout=deadline_seconds)
+                if th.is_alive():
+                    # True total-elapsed deadline hit. Abandon (daemon thread dies
+                    # with the process or when the orphaned request finally
+                    # resolves). Not transient -> no retry.
+                    print(f"    Wall-clock deadline {deadline_seconds}s exceeded — abandoning call")
+                    return {"_deadline_exceeded": True, "_elapsed_s": deadline_seconds}
+                if "exc" in box:
+                    raise box["exc"]
+                resp = box["resp"]
+            else:
+                resp = requests.post(url, json=payload, timeout=timeout)
             resp.raise_for_status()
             response_json = resp.json()
             if not isinstance(response_json, dict):
@@ -470,7 +525,7 @@ _EXTRACTION_SCHEMA_KEYS = tuple(_STRING_EXTRACTION_FIELDS) + tuple(_LIST_EXTRACT
 # instead of silently reusing a cached result produced from different inputs.
 # (Before this, the cache key was paper_id alone — a selection change would have
 # shown no effect because every already-extracted paper was served from cache.)
-EXTRACTION_PROMPT_VERSION = "2026-09-02.r1r2-schema+domain"
+EXTRACTION_PROMPT_VERSION = "2026-09-03.numpredict-deadline"  # +num_predict cap / wall-clock deadline change output; re-extract
 
 # R2 — biomedical / clinical / wet-lab prompt variant. Same 10 keys, same
 # "ONLY JSON" contract as EXTRACTION_SYSTEM_PROMPT; only the field DEFINITIONS
@@ -618,14 +673,19 @@ def repair_schema(parsed: dict, llm_cfg: dict) -> dict | None:
         blob = json.dumps(parsed, ensure_ascii=False)[:6000]
     except (TypeError, ValueError):
         blob = str(parsed)[:6000]
-    return call_ollama_json(
+    reservation = int(llm_cfg.get("extraction_output_reservation", EXTRACTION_OUTPUT_RESERVATION))
+    rep = call_ollama_json(
         base_url=llm_cfg["base_url"], model=llm_cfg["model"],
         system_prompt=SCHEMA_REPAIR_PROMPT, user_content=blob,
         temperature=llm_cfg.get("temperature", 0.0),
         timeout=llm_cfg.get("timeout_seconds", 300),
-        num_ctx=estimate_num_ctx(blob, system_prompt=SCHEMA_REPAIR_PROMPT),
+        num_ctx=estimate_num_ctx(blob, system_prompt=SCHEMA_REPAIR_PROMPT,
+                                 output_reservation=reservation),
         seed=llm_cfg.get("seed"),
+        num_predict=reservation,
+        deadline_seconds=float(llm_cfg.get("extraction_deadline_seconds", EXTRACTION_DEADLINE_SECONDS)),
     )
+    return None if isinstance(rep, dict) and rep.get("_deadline_exceeded") else rep
 
 
 def _has_min_content(d: dict) -> bool:
@@ -698,8 +758,10 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
     if _cache_entry_reusable(cached, text):
         return paper_id, normalize_extraction(cached)
 
+    reservation = int(llm_cfg.get("extraction_output_reservation", EXTRACTION_OUTPUT_RESERVATION))
+    deadline = float(llm_cfg.get("extraction_deadline_seconds", EXTRACTION_DEADLINE_SECONDS))
     user_content = f"Title: {paper['title']}\n\nText:\n{text}"
-    num_ctx = estimate_num_ctx(user_content)
+    num_ctx = estimate_num_ctx(user_content, output_reservation=reservation)
     variant, sys_prompt = select_extraction_prompt(text)
     raw = call_ollama_json(
         base_url=llm_cfg["base_url"],
@@ -710,13 +772,21 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
         timeout=llm_cfg.get("timeout_seconds", 300),
         num_ctx=num_ctx,
         seed=llm_cfg.get("seed"),
+        num_predict=reservation,
+        deadline_seconds=deadline,
     )
 
     conformance = "conformant"
     repair_used = False
     issues: list[str] = []
-    if raw is None:
+    if isinstance(raw, dict) and raw.get("_deadline_exceeded"):
         extraction = failed_extraction()
+        extraction["_failure_reason"] = "wall_clock_exceeded"
+        extraction["_elapsed_s"] = raw.get("_elapsed_s")
+        conformance = "wall_clock_exceeded"
+    elif raw is None:
+        extraction = failed_extraction()
+        extraction["_failure_reason"] = "no_response"
         conformance = "no_response"
     else:
         ok, issues = check_schema_conformance(raw)
@@ -759,7 +829,11 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
                     timeout=llm_cfg.get("timeout_seconds", 300),
                     num_ctx=num_ctx,
                     seed=llm_cfg.get("seed"),
+                    num_predict=reservation,
+                    deadline_seconds=deadline,
                 )
+                if isinstance(fallback, dict) and fallback.get("_deadline_exceeded"):
+                    fallback = None
                 if fallback and fallback.get("datasets"):
                     merged, none_found = merge_datasets(fallback["datasets"], [])
                     extraction["_dataset_fallback_used"] = True
@@ -1082,6 +1156,57 @@ def name_clusters(cluster_assignments: dict[str, int], papers: dict, extractions
     return cluster_info
 
 
+_CB_ACCEPT = {"conformant", "salvaged", "repaired", "repaired_salvaged"}
+
+
+def _legacy_schema_fallback_count(processed_dir: str) -> int:
+    """How many papers this run's selector routed content_aware -> legacy because
+    the chunk schema was legacy (visible only in retrieval_selection.json)."""
+    try:
+        traces = json.loads((Path(processed_dir) / "retrieval_selection.json").read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0
+    return sum(1 for t in traces.values() if isinstance(t, dict) and t.get("mode") == "legacy_fallback")
+
+
+def _apply_selection_circuit_breaker(config: dict, extractions: dict, max_context_words: int) -> dict:
+    """A paper that content_aware selection drove to a non-conforming / deadline-
+    failed extraction gets ONE bounded retry under LEGACY selection. Not a loop.
+    Recovered -> accepted with `_selection_fallback: true`. Still failing after
+    both -> `_extraction_failed` (never an empty field). No-op unless the run is
+    content_aware.
+    """
+    if (config.get("selection") or {}).get("mode", "legacy") != "content_aware":
+        return extractions
+    stuck = [pid for pid, e in extractions.items()
+             if e.get("_conformance") in ("nonconformant_unrepaired", "wall_clock_exceeded")
+             and not e.get("_selection_fallback")]
+    if not stuck:
+        return extractions
+    print(f"  Circuit breaker: {len(stuck)} paper(s) non-conforming under content_aware "
+          f"-> one retry under legacy selection: {[p[:10] for p in stuck]}")
+    legacy_config = {**config, "selection": {**(config.get("selection") or {}), "mode": "legacy"}}
+    from src.summarization.retrieval_aware import build_retrieval_aware_papers
+    legacy_papers = build_retrieval_aware_papers(legacy_config, max_context_words)
+    retry_set = {pid: legacy_papers[pid] for pid in stuck if pid in legacy_papers}
+    retried = extract_paper_fields(retry_set, config["llm"], cache={}, processed_dir=None)
+    for pid in stuck:
+        e2 = retried.get(pid)
+        if isinstance(e2, dict) and e2.get("_conformance") in _CB_ACCEPT:
+            e2["_selection_fallback"] = True
+            e2["_selection_fallback_from"] = "content_aware"
+            extractions[pid] = e2
+        else:
+            extractions[pid]["_selection_fallback"] = True
+            extractions[pid]["_extraction_failed"] = True
+            extractions[pid]["_failure_reason"] = "nonconformant_both_selections"
+    ok = sum(1 for pid in stuck if extractions[pid].get("_conformance") in _CB_ACCEPT
+             and not extractions[pid].get("_extraction_failed"))
+    print(f"  Circuit breaker: {ok}/{len(stuck)} recovered under legacy, "
+          f"{len(stuck) - ok} -> _extraction_failed (nonconformant_both_selections)")
+    return extractions
+
+
 def run_summarization(config: dict) -> None:
     paths_cfg = config["paths"]
     llm_cfg = config["llm"]
@@ -1100,9 +1225,18 @@ def run_summarization(config: dict) -> None:
     print(f"Extracting structured fields via {llm_cfg['model']} "
           f"({len(papers)} papers, {len(cache)} already cached from prior runs)...")
     extractions = extract_paper_fields(papers, llm_cfg, cache=cache, processed_dir=paths_cfg["processed_dir"])
+    extractions = _apply_selection_circuit_breaker(config, extractions, max_context_words)
+
+    n_cb = sum(1 for e in extractions.values() if e.get("_selection_fallback"))
+    n_schema_fb = _legacy_schema_fallback_count(paths_cfg["processed_dir"])
     failed = sum(1 for e in extractions.values() if e.get("_extraction_failed"))
+    if n_cb or n_schema_fb:
+        print(f"  Selection fallback: {n_cb} via conformance circuit-breaker, "
+              f"{n_schema_fb} via legacy-schema fallback "
+              f"(a run with a non-zero fallback count is PARTLY a legacy run)")
     if failed:
-        print(f"  Warning: {failed}/{len(papers)} papers failed extraction (empty fields, flagged)")
+        print(f"  Warning: {failed}/{len(papers)} papers failed extraction "
+              f"(flagged _extraction_failed, NOT emitted as empty fields)")
 
     print("Clustering papers (auto-selecting method vs. topic basis by diversity)...")
     k = cat_cfg.get("num_clusters", "auto")
