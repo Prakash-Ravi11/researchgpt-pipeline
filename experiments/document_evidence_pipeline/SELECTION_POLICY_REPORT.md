@@ -75,11 +75,22 @@ peak-near-10 prediction. **Default = 10.**
 ## What got worse — reported, not absorbed
 
 1. **`0549e2e9` (canonical ablation-table paper): 10 → 2 fields.** content_aware's number-aware
-   scoring pulls the paper's many ablation-table chunks; Stage 4 then emits non-conforming JSON
-   that R1 repair (commit `cc016cb`) cannot fix → `nonconformant_unrepaired`. It was `conformant`
-   / 10 fields under legacy. This is the interaction of number-aware prioritisation with Stage-4
-   fragility on dense tables — the single serious individual regression. Follow-up: cap table-chunk
-   share in the score, or strengthen R1's table-response repair. Not fixed here.
+   scoring pulls the paper's many ablation-table chunks into a **short** selection; Stage 4 then
+   emits non-conforming JSON that R1 repair (commit `cc016cb`) cannot fix →
+   `nonconformant_unrepaired`. It was `conformant` / 10 fields under legacy.
+
+   > **Cause corrected (commit `5ecef20`, `DIAG_0549E2E9_REPORT.md`).** This is **not** "Stage-4
+   > fragility on dense tables": four canonical papers sit at ≥ 0.93 table-share and every one is
+   > conformant. The isolating factor is **numeric-anchor count — 175 for `0549e2e9`, versus ≤ 51
+   > for every other canonical paper — inside a short selection**. The mechanism is
+   > `estimate_num_ctx` coupling output headroom *inversely* to input length: the short
+   > anchor-dense selection left ~1278 tokens of headroom, which the model spent transcribing
+   > table cells into nested JSON instead of filling the schema. Follow-up is therefore the
+   > `num_ctx` output-reservation fix (done in 3.2b — `CONTEXT_BUDGET_REPORT.md` §3.2b), **not**
+   > a table-chunk-share cap. Post-3.2b `0549e2e9` is `salvaged`, not `conformant` — the 3.2b
+   > budget change altered what the model generated (`done_reason: stop`, 0 content discarded;
+   > `num_predict` never fired), it did not cap it. Whether that holds under Phase 4's denser
+   > structured tables is unknown; re-test then.
 2. Three smaller canonical regressions: `a6ecdf69` 9→7, `e6f1d66c` 10→8, `ddb170b2` 10→9.
 3. **Medical corpus (legacy chunk schema): 5 / 19 papers regressed** — `330377da` 10→3,
    `c458eeae3a` 10→5, `295fc8094b` 10→7, `dd7cacac10` 9→8, `f09cd60900` 9→8. Root cause:
@@ -115,5 +126,7 @@ Enable `content_aware` (budget **10**) for corpora built with the grounded chunk
 frozen 60 it nearly doubles anchor delivery and lifts `results`/`metrics` extraction coverage
 65→94 % / 71→82 %, at +6 % runtime, with `data_test` clean and 12/12 invariants held. Keep the
 production default at `legacy` (unchanged); staging opts in. Two things gate a production flip:
-the `0549e2e9`-class table-density → Stage-4 non-conformance regression, and the still-missing
-structural denominator for a real coverage measurement.
+the `0549e2e9`-class regression (short anchor-dense selection → `num_ctx` output-headroom
+collapse → Stage-4 non-conformance; addressed in `CONTEXT_BUDGET_REPORT.md` §3.2b, now
+`salvaged` not `conformant`), and the still-missing structural denominator for a real coverage
+measurement.

@@ -12,10 +12,13 @@ path (`temperature 0`, `seed 42`). Harnesses: `verify_deadline.py`, `context_bud
 
 `estimate_num_ctx` sized the context window from input length; output headroom was therefore
 `window − input`, which **inversely couples** the two — a shorter input buys the model more
-room to generate. On `0549e2e9` @10 (1282-token, 93 %-table input, ~1278 tokens of headroom)
-the model spent that headroom transcribing every ablation-table cell into nested JSON: valid
-JSON, **zero schema fields**. `content_aware@15` only "worked" because its larger input
-starved the model of output space.
+room to generate. On `0549e2e9` @10 (1282-token input, ~1278 tokens of headroom) the model
+spent that headroom transcribing every ablation-table cell into nested JSON: valid JSON,
+**zero schema fields**. `content_aware@15` only "worked" because its larger input starved
+the model of output space. The isolating factor for `0549e2e9` (per
+`DIAG_0549E2E9_REPORT.md`, commit `5ecef20`) is **numeric-anchor count — 175, versus ≤ 51
+for every other canonical paper — in a short selection**, not table share: four canonical
+papers sit at ≥ 0.93 table-share and all are conformant.
 
 ### The fix
 
@@ -46,9 +49,20 @@ on a clean boundary.
 | `_extraction_failed` | — | **0** |
 | runtime | 35 s/paper | **32 s/paper** |
 
-**`0549e2e9`: 2 → 7 fields, now `salvaged`** (was `nonconformant_unrepaired`). Capped at 768
-output tokens the model can no longer complete the table transcription; it produces a
-mostly-flat response that salvage recovers to 7 fields.
+**`0549e2e9`: `nonconformant_unrepaired` → `salvaged`.** Decoupling output headroom from
+input length (3.2b) changed *what the model generated*. On `0549e2e9` it produced a
+mostly-conforming response that terminated normally (`done_reason: stop`, not truncated),
+with one stray top-level key that salvage remapped — **0 keys and 0 characters discarded**
+(see §3.2d STEP 2). The paper is `salvaged` rather than `conformant` because of that single
+remap, not because content was cut. `num_predict` did not fire; it remains an untested
+backstop on this corpus.
+
+> **Forward note — re-test `0549e2e9` after Phase 4.** The over-transcription behaviour was
+> **not stopped by a cap** — it changed because the generation budget changed. Phase 4
+> supplies denser structured tables to the extractor, which may make transcription *more*
+> attractive again; whether the 3.2b budget change still holds under that is genuinely
+> unknown. `0549e2e9` must be re-tested specifically after Phase 4 — do **not** assume the
+> aggregate ca@10 numbers cover it.
 
 **Papers that got WORSE: none.** Three others improved: `78797b71` 8→10, `c093b845` 7→10,
 `e6f1d66c` 8→10 (was salvaged → now conformant). The fixed reservation is a net gain across
@@ -56,9 +70,11 @@ the corpus, not just a fix for one paper.
 
 ### DECISION POINT
 
-`0549e2e9` conforms (`salvaged`, an accepted state) after 3.2b, without the circuit breaker
-firing. **The anchor / table-cell cap is NOT built.** It would treat a symptom and would cost
-the 3.9× table-anchor delivery gain that is Phase 3's main result.
+`0549e2e9` reaches `salvaged` (an accepted state — one stray key remapped, 0 content
+discarded; not `conformant`) after 3.2b, without the circuit breaker firing. **The anchor /
+table-cell cap is NOT built.**
+It would treat a symptom and would cost the 3.9× table-anchor delivery gain that is Phase 3's
+main result.
 
 ## 3.2c — conformance circuit breaker
 
@@ -96,10 +112,14 @@ are reported both ways (with / without the fallen-back papers).
 
 ### Medical corpus — the now-visible legacy-schema fallback count
 
-**16 of 50 papers.** These are the long (> 2500-word) full-text medical papers that a run
-labelled `content_aware` was silently handling with `legacy` selection because the medical
-chunks are legacy schema. Previously invisible; now `mode: legacy_fallback` in the trace and
-counted. A `content_aware` measurement on that corpus is 16/19 full-text papers a legacy run.
+**16 of 19 full-text papers — an 84 % fallback rate**, not 16 of 50 (32 %). The denominator
+is 19, not 50: the other 31 medical papers are abstract-only and go through the 2500-word
+passthrough, so they are never selection candidates and cannot fall back. Of the 19 papers
+that *are* selection candidates, 16 are long (> 2500-word) full-text medical papers that a
+run labelled `content_aware` was silently handling with `legacy` selection because the
+medical chunks are legacy schema. Previously invisible; now `mode: legacy_fallback` in the
+trace and counted. A `content_aware` measurement on that corpus is 16/19 full-text papers a
+legacy run.
 
 ## Regression checks
 
@@ -196,17 +216,17 @@ which is the property that matters for the leak.
 
 Both salvages **discarded nothing** — every non-schema key carried content and was routed
 into a schema field, none were dropped. This is the place over-permissiveness would hide;
-it is not hiding here. `0549e2e9` specifically: recovered **7 of 10** fields, `conformance =
-salvaged` (truncate-then-recover — `num_predict` cut the table transcription, salvage
-reshaped the partial; **not** a conformance fix), `selection_fallback = False`, one invented
-key (`systematic_review`) folded into `method`.
+it is not hiding here. `0549e2e9` specifically: `conformance = salvaged` **not** because
+content was cut — `done_reason` was `stop`, `trunc. before salvage` is `False`, 0 keys / 0
+chars discarded — but because the one stray top-level key `systematic_review` was remapped
+into `method`. `selection_fallback = False`.
 
 > `0549e2e9` is present only in the **frozen** canonical corpus
 > (`runs/prodab-20260902T004416Z/canonical/`), not the current 60-paper corpus, so the
 > breakdown above is from the ca@10 measurement run, which is the cheap place to get it.
-> It is `salvaged`, not `conformant`; the over-transcription tendency is unchanged, and it
-> must be re-tested after Phase 4 (structured tables) rather than assumed fixed — see the
-> 3.2b forward note.
+> It is `salvaged`, not `conformant`. The 3.2b budget change altered what the model
+> generated (it did not cap it); whether that survives Phase 4's denser structured tables
+> is unknown, so it must be re-tested then — see the 3.2b forward note.
 
 ### STEP 3 — `done_reason` signal (cap-truncation vs pathology)
 
@@ -253,7 +273,9 @@ gains, unchanged here). Mean identical with / without fallen-back papers (none f
   monitor `overall: OK`, `DECISION: STAGING_PASS`, 0 pipeline errors. No new invariants.
   This run re-extracted all 8 `data_test` papers through the new streaming / `num_predict` /
   deadline path (cache invalid after the `EXTRACTION_PROMPT_VERSION` bump) — 8/8 conformant.
-- Medical corpus legacy-schema fallback count unchanged at **16 / 50**.
+- Medical corpus legacy-schema fallback count unchanged at **16 / 19 full-text papers
+  (84 %)** — denominator is the 19 selection candidates, not all 50 (31 are abstract-only,
+  never candidates).
 
 ### What got worse — 3.2d
 
