@@ -33,6 +33,15 @@ llm:
 summarization:
   context_selection: "retrieval_aware"
 
+# Stage-3/4 chunk selection (src/summarization/retrieval_aware.py).
+# Production default is "legacy" (unchanged); staging opts into content_aware.
+# max_passages sized for Qwen2.5:7b sharing a 6 GB card with BGE-M3 — ~10 is the
+# OpenScholar ceiling for untrained ~7B RAG (beyond it correctness/citation degrade).
+selection:
+  mode: "content_aware"
+  max_passages: 10
+  token_budget_chars: 9000
+
 categorization:
   num_clusters: 2
 
