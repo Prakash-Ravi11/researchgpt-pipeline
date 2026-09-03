@@ -62,8 +62,32 @@ def run(tag, processed, chroma, coll, ids):
              "conformance": ext[p].get("_conformance"), "variant": ext[p].get("_domain_variant"),
              "selection_fallback": bool(ext[p].get("_selection_fallback")),
              "extraction_failed": bool(ext[p].get("_extraction_failed")),
-             "failure_reason": ext[p].get("_failure_reason")} for p in papers]
+             "failure_reason": ext[p].get("_failure_reason"),
+             "done_reason": ext[p].get("_done_reason"),
+             "response_truncated": bool(ext[p].get("_response_truncated")),
+             "salvage_accounting": ext[p].get("_salvage_accounting")} for p in papers]
     (OUT / f"{tag}.json").write_text(json.dumps(rows, indent=2), encoding="utf-8")
+
+    # STEP 3 — done_reason == "length"
+    trunc = [r for r in rows if r["done_reason"] == "length"]
+    trunc_conf = [r for r in trunc if r["conformance"] in ("conformant", "salvaged")]
+    print(f"  done_reason==length: {len(trunc)} {[r['paper_id'][:10] for r in trunc]}")
+    if trunc_conf:
+        print(f"  !! length AND (conformant|salvaged) — cap cutting real content: "
+              f"{[(r['paper_id'][:10], r['conformance']) for r in trunc_conf]} "
+              f"-> constants need separating (follow-up, not this commit)")
+    else:
+        print(f"  length AND (conformant|salvaged): 0 — the cap is not cutting real content")
+    # STEP 2 — per-paper salvage breakdown (individual list, not a total)
+    salv = [r for r in rows if r["conformance"] in ("salvaged", "repaired_salvaged") and r["salvage_accounting"]]
+    print(f"  salvage breakdown ({len(salv)} paper(s)):")
+    for r in salv:
+        a = r["salvage_accounting"]
+        print(f"    {r['paper_id'][:12]}: direct={a['direct_fields']}  recovered={a['recovered_fields']}  "
+              f"flattened={a['flattened_fields']}")
+        print(f"        moved_keys={[(m['key'][:24], m['target'], m['chars']) for m in a['moved_top_level_keys']]}  "
+              f"discarded_keys={a['discarded_top_level_keys']} ({a['discarded_char_volume']} chars)  "
+              f"truncated_before_salvage={a.get('response_truncated_before_salvage')}")
 
     n = len(rows)
     cb_fb = [r["paper_id"] for r in rows if r["selection_fallback"]]

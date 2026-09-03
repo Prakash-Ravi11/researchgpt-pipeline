@@ -30,6 +30,7 @@ import hashlib
 import json
 import re
 import threading
+import time
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -394,17 +395,29 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
                       temperature: float, max_retries: int = 2, timeout: int = 300,
                       num_ctx: int = 8192, seed: int | None = None,
                       num_predict: int | None = None,
-                      deadline_seconds: float | None = None) -> dict | None:
+                      deadline_seconds: float | None = None,
+                      meta_out: dict | None = None) -> dict | None:
     """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict, None,
     or the sentinel {"_deadline_exceeded": True, "_elapsed_s": ...} when the hard
     wall-clock deadline fires.
 
     `timeout` is requests' connect/read-gap timeout — it bounds the gap between
-    received bytes, NOT total call duration. `deadline_seconds`, when set, is a
-    TRUE total wall-clock bound enforced here (the request runs in a daemon thread
-    we stop waiting on); on expiry the call is abandoned and the sentinel returned.
+    received bytes, NOT total call duration. `deadline_seconds`, when set, bounds
+    total elapsed, enforced INLINE between streamed chunks — NO worker thread.
+    (The earlier thread+join design left a daemon thread blocked on a live socket
+    while Ollama kept generating; the next paper then issued a second concurrent
+    request against the same 6 GB card, Ollama serialised them, and later papers
+    slowed / cascaded. Streaming lets the calling thread own the socket and close
+    it on expiry, so nothing leaks — verified: 5x forced-3s on 9879e1cce9 held a
+    flat thread count and flat elapsed, Ollama responsive after.)
+    One blind spot: the check runs only once a line has been yielded, so a
+    deadline shorter than first-token latency (prompt eval of a long paper can be
+    ~12 s on a 6 GB card) fires at first-token, not at `deadline_seconds`. It is
+    a runaway-generation bound, not a sub-first-token bound; production uses 240 s
+    where first-token latency is noise.
 
     `num_predict`, when set, is a hard output-token cap (see EXTRACTION_OUTPUT_RESERVATION).
+    `meta_out`, when a dict, is populated with {"done_reason": str|None, "elapsed_s": float}.
     """
     url = f"{base_url}/api/chat"
     options = {"temperature": temperature, "num_ctx": num_ctx}
@@ -425,57 +438,68 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             {"role": "user", "content": user_content},
         ],
         "format": "json",
-        "stream": False,
+        "stream": True,  # stream so the deadline can be enforced between chunks
         "options": options,
     }
+    # `read_gap` is the requests read timeout — a "no bytes at all for this long"
+    # guard, kept at `timeout` (~300s). It is NOT the total bound: the inline
+    # deadline check below enforces total elapsed. Clamping read_gap to a small
+    # deadline would misfire on cold model load (first token can take >3s).
+    read_gap = timeout
 
     for attempt in range(max_retries + 1):
+        resp = None
         try:
-            if deadline_seconds is not None:
-                box: dict = {}
-
-                def _worker():  # noqa: ANN202 — local
-                    try:
-                        box["resp"] = requests.post(
-                            url, json=payload, timeout=min(timeout, deadline_seconds))
-                    except Exception as exc:  # noqa: BLE001 — re-raised on the main thread
-                        box["exc"] = exc
-
-                th = threading.Thread(target=_worker, daemon=True)
-                th.start()
-                th.join(timeout=deadline_seconds)
-                if th.is_alive():
-                    # True total-elapsed deadline hit. Abandon (daemon thread dies
-                    # with the process or when the orphaned request finally
-                    # resolves). Not transient -> no retry.
-                    print(f"    Wall-clock deadline {deadline_seconds}s exceeded — abandoning call")
-                    return {"_deadline_exceeded": True, "_elapsed_s": deadline_seconds}
-                if "exc" in box:
-                    raise box["exc"]
-                resp = box["resp"]
-            else:
-                resp = requests.post(url, json=payload, timeout=timeout)
+            start = time.monotonic()
+            resp = requests.post(url, json=payload, stream=True, timeout=(10, read_gap))
             resp.raise_for_status()
-            response_json = resp.json()
-            if not isinstance(response_json, dict):
-                raise ValueError("Ollama response root is not a JSON object")
-            message = response_json.get("message")
-            if not isinstance(message, dict) or not isinstance(message.get("content"), str):
-                raise ValueError("Ollama response has no message.content string")
-            content = message["content"]
+            parts: list[str] = []
+            done_reason = None
+            for line in resp.iter_lines(decode_unicode=True):
+                if deadline_seconds is not None and (time.monotonic() - start) > deadline_seconds:
+                    resp.close()  # calling thread owns the socket -> immediate teardown
+                    elapsed = round(time.monotonic() - start, 1)
+                    print(f"    Wall-clock deadline {deadline_seconds}s exceeded — connection closed")
+                    if isinstance(meta_out, dict):
+                        meta_out.update(done_reason="deadline", elapsed_s=elapsed)
+                    return {"_deadline_exceeded": True, "_elapsed_s": elapsed}
+                if not line:
+                    continue
+                chunk = json.loads(line)
+                if not isinstance(chunk, dict):
+                    raise ValueError("Ollama stream chunk is not a JSON object")
+                if chunk.get("error"):
+                    raise ValueError(f"Ollama stream error: {chunk['error']}")
+                piece = (chunk.get("message") or {}).get("content", "")
+                if piece:
+                    parts.append(piece)
+                if chunk.get("done"):
+                    done_reason = chunk.get("done_reason")
+                    break
+            content = "".join(parts)
+            if isinstance(meta_out, dict):
+                meta_out.update(done_reason=done_reason, elapsed_s=round(time.monotonic() - start, 1))
+            if not content:
+                raise ValueError("Ollama stream produced no content")
             return _parse_json_response(content)
         except requests.exceptions.Timeout:
+            if resp is not None:
+                resp.close()
             if attempt < max_retries:
-                print(f"    Timed out after {timeout}s (attempt {attempt + 1}/{max_retries + 1}) — retrying...")
+                print(f"    No data for {read_gap}s (attempt {attempt + 1}/{max_retries + 1}) — retrying...")
                 continue
-            print(f"    Still timing out after {max_retries + 1} attempts — skipping this paper")
+            print(f"    Still stalled after {max_retries + 1} attempts — skipping this paper")
             return None
         except requests.exceptions.RequestException as e:
+            if resp is not None:
+                resp.close()
             if attempt < max_retries:
                 continue
             print(f"    Ollama request failed after {max_retries + 1} attempts: {e}")
             return None
         except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
+            if resp is not None:
+                resp.close()
             if attempt < max_retries:
                 continue
             print(f"    Failed to parse LLM JSON output after {max_retries + 1} attempts: {e}")
@@ -606,37 +630,61 @@ def check_schema_conformance(parsed: dict) -> tuple[bool, list[str]]:
     return (not issues), issues
 
 
+def _field_has_content(v) -> bool:
+    if isinstance(v, (list, dict)):
+        return bool(v)
+    return bool(str(v or "").strip())
+
+
 def salvage_nonconformant(parsed: dict) -> dict:
     """Deterministic best-effort reshape of a non-conforming response into the
     schema. Runs only on an already-broken response, so it can never make a
     conforming one worse. A nested results table is content, not junk — it is
-    flattened and kept. Records what moved in `_salvage_notes`."""
+    flattened and kept.
+
+    Attaches `_salvage_accounting` — per-response, not aggregate — recording which
+    fields came from the conforming part vs were recovered by reshaping, and what
+    was dropped. This is the one path where content enters with its origin
+    transformed, so it is accounted individually.
+    """
     out: dict = {}
     notes: list[str] = []
+    direct = [f for f in _EXTRACTION_SCHEMA_KEYS if _field_has_content(parsed.get(f))
+              and not isinstance(parsed.get(f), (dict, list))]  # already a clean scalar/list-of-str
+    flattened: list[str] = []
     for f in _STRING_EXTRACTION_FIELDS:
         v = parsed.get(f, "")
         if isinstance(v, (dict, list)):
             out[f] = _stringify(v)
             notes.append(f"flattened_{f}")
+            flattened.append(f)
         else:
             out[f] = v if isinstance(v, str) else ("" if v is None else str(v))
     for f in _LIST_EXTRACTION_FIELDS:
         v = parsed.get(f, [])
         if isinstance(v, list):
+            if any(isinstance(x, dict) for x in v):
+                flattened.append(f)
             out[f] = [_stringify(x).strip() for x in v if _stringify(x).strip()]
         elif isinstance(v, dict):
             out[f] = [f"{k}: {_stringify(val)}".strip() for k, val in v.items() if _stringify(val).strip()]
             notes.append(f"flattened_{f}_dict")
+            flattened.append(f)
         elif v:
             out[f] = [_stringify(v).strip()]
         else:
             out[f] = []
+    moved: list[dict] = []
+    discarded: list[str] = []
+    discarded_chars = 0
     for k, v in parsed.items():
         if k in _EXTRACTION_SCHEMA_KEYS or str(k).startswith("_"):
             continue
         name = re.sub(r"^[\s:#*=\-]+", "", str(k)).strip().lower()
         blob = _stringify(v).strip()
         if not blob:
+            discarded.append(str(k)[:60])
+            discarded_chars += len(_stringify(v))
             continue
         if any(w in name for w in ("objective", "hypothesis", "aim", "gap", "background", "introduction", "motivation")):
             target = "problem_addressed"
@@ -654,8 +702,20 @@ def salvage_nonconformant(parsed: dict) -> dict:
             target = "results"  # invented structure is usually a results breakdown
         out[target] = (f"{out.get(target, '')}\n{blob}".strip() if out.get(target) else blob)
         notes.append(f"moved '{str(k)[:40]}' -> {target}")
+        moved.append({"key": str(k)[:60], "target": target, "chars": len(blob)})
     if notes:
         out["_salvage_notes"] = notes
+
+    recovered = [f for f in _EXTRACTION_SCHEMA_KEYS
+                 if _field_has_content(out.get(f)) and f not in direct]
+    out["_salvage_accounting"] = {
+        "direct_fields": [f for f in direct if _field_has_content(out.get(f))],
+        "recovered_fields": recovered,
+        "flattened_fields": flattened,
+        "moved_top_level_keys": moved,
+        "discarded_top_level_keys": discarded,
+        "discarded_char_volume": discarded_chars,
+    }
     return out
 
 
@@ -763,6 +823,7 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
     user_content = f"Title: {paper['title']}\n\nText:\n{text}"
     num_ctx = estimate_num_ctx(user_content, output_reservation=reservation)
     variant, sys_prompt = select_extraction_prompt(text)
+    meta: dict = {}
     raw = call_ollama_json(
         base_url=llm_cfg["base_url"],
         model=llm_cfg["model"],
@@ -774,7 +835,10 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
         seed=llm_cfg.get("seed"),
         num_predict=reservation,
         deadline_seconds=deadline,
+        meta_out=meta,
     )
+    done_reason = meta.get("done_reason")
+    truncated = done_reason == "length"
 
     conformance = "conformant"
     repair_used = False
@@ -815,6 +879,8 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
                     extraction["_extraction_nonconformant"] = True
                     conformance = "nonconformant_unrepaired"
             extraction["_conformance_issues"] = issues[:8]
+            if extraction.get("_salvage_accounting"):
+                extraction["_salvage_accounting"]["response_truncated_before_salvage"] = truncated
 
         if not extraction.get("_extraction_failed"):
             pattern_datasets = extract_datasets_by_pattern(text)
@@ -843,6 +909,9 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
 
     extraction["_domain_variant"] = variant
     extraction["_conformance"] = conformance
+    extraction["_done_reason"] = done_reason           # from the Ollama stream (STEP 3)
+    if truncated:
+        extraction["_response_truncated"] = True       # done_reason == "length" — num_predict cut the output
     if repair_used:
         extraction["_repair_call_made"] = True
 
