@@ -13,7 +13,7 @@ Stops immediately if any stage fails, rather than continuing on broken data.
 import argparse
 import sys
 
-from src.collection.semantic_scholar import run_collection
+from src.collection.semantic_scholar import run_collection, re_acquire_corpus
 from src.config import load_config
 from src.processing.pdf_parser import run_processing
 from src.embedding.build_index import run_embedding
@@ -22,8 +22,16 @@ from sanity_check import run_sanity_check
 
 
 def run_all(config: dict, config_path: str) -> bool:
+    # Stage 1: fresh Semantic Scholar search (default), OR — when
+    # `collection.reacquire_existing` is set — re-run the validated canonical
+    # five-source resolver against the existing collected_papers.json (upgrade a
+    # corpus collected before the §O resolver: adds Europe PMC JATS / OpenAlex /
+    # Crossref, structured-preferred ordering, no new search).
+    reacquire = bool((config.get("collection") or {}).get("reacquire_existing"))
+    stage1 = (("Stage 1 — Re-acquire (canonical resolver)", lambda: re_acquire_corpus(config))
+              if reacquire else ("Stage 1 — Collection", lambda: run_collection(config)))
     stages = [
-        ("Stage 1 — Collection", lambda: run_collection(config)),
+        stage1,
         ("Stage 2 — Processing", lambda: run_processing(config)),
         ("Stage 3 — Embedding", lambda: run_embedding(config)),
         ("Stage 4 — Summarization", lambda: run_summarization(config)),

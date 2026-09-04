@@ -425,12 +425,62 @@ def run_collection(config: dict, limit: int | None = None) -> list[dict]:
     return ranked
 
 
+def re_acquire_corpus(config: dict) -> list[dict]:
+    """Stage 1 — re-run full-text acquisition on an EXISTING corpus (no new
+    Semantic Scholar search) through the validated canonical five-source resolver
+    (Semantic Scholar + arXiv + OpenAlex + Europe PMC + Crossref).
+
+    This is the missing wiring: `run_collection` only reaches the §O resolver via
+    `evidence_grounding.enabled`, and only for a fresh search. This applies the
+    same validated path — four acquisition states, identity + content validation,
+    provenance, structured-preferred ordering (JATS > validated PDF > abstract),
+    NO_ACCESSIBLE_FULL_TEXT abstention — to a corpus that already exists, so a
+    corpus collected before §O can be upgraded without re-searching.
+
+    Reads/writes `<raw_metadata_dir>/collected_papers.json`. arXiv LaTeX e-print
+    ingestion stays whatever `evidence_grounding.latex_ingestion_enabled` says
+    (default false — Phase 4b decision stands).
+    """
+    paths_cfg = config["paths"]
+    coll_cfg = config.get("collection", {}) or {}
+    ev_cfg = config.get("evidence_grounding", {}) or {}
+    meta_path = Path(paths_cfg["raw_metadata_dir"]) / "collected_papers.json"
+    papers = json.loads(meta_path.read_text(encoding="utf-8"))
+    before_ft = sum(1 for p in papers if p.get("has_full_text"))
+    print(f"Re-acquiring {len(papers)} papers (was {before_ft}/{len(papers)} full text) "
+          f"through the canonical five-source resolver")
+
+    download_open_access_pdfs(
+        papers, paths_cfg["pdf_dir"], contact_email=coll_cfg.get("contact_email"),
+        validate=True, use_extra_sources=True,
+        latex_ingestion=bool(ev_cfg.get("latex_ingestion_enabled", False)),
+    )
+
+    after_ft = sum(1 for p in papers if p.get("has_full_text"))
+    by_src = {}
+    by_rep = {}
+    for p in papers:
+        if p.get("has_full_text"):
+            by_src[p.get("pdf_source")] = by_src.get(p.get("pdf_source"), 0) + 1
+            by_rep[p.get("representation_type")] = by_rep.get(p.get("representation_type"), 0) + 1
+    print(f"  {before_ft}/{len(papers)} -> {after_ft}/{len(papers)} validated full text  "
+          f"| by source: {by_src} | by representation: {by_rep}")
+    meta_path.write_text(json.dumps(papers, indent=2), encoding="utf-8")
+    return papers
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/config.yaml")
     parser.add_argument("--limit", type=int, default=None,
                          help="Override candidate_pool_size for a quick test run")
+    parser.add_argument("--reacquire", action="store_true",
+                         help="Re-run the canonical five-source resolver against the existing "
+                              "collected_papers.json (no new search)")
     args = parser.parse_args()
 
     cfg = load_config(args.config)
-    run_collection(cfg, limit=args.limit)
+    if args.reacquire:
+        re_acquire_corpus(cfg)
+    else:
+        run_collection(cfg, limit=args.limit)
