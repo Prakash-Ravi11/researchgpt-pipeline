@@ -307,6 +307,56 @@ def _row_matches_subject(row_label: str, subject: str | None) -> bool:
                         re.sub(r"[^a-z0-9]", "", rl)))
 
 
+# --- table-type classification (deterministic; NO LLM) ----------------------
+# AxCell-style, three classes only. An ablation table's numbers are real but must
+# not surface as the paper's headline result (cf. the earlier "vs." ablation-table
+# attribution bug; 0549e2e9 is ablation-heavy). Classified from caption + header /
+# row vocabulary only.
+_ABLATION_RE = re.compile(
+    r"\bablat\w*|\bw/?o\b|\bwithout\b|\bw/\s|\bvs\.?\b|\bversus\b|leave[- ]one[- ]out|"
+    r"contribution of|effect of|impact of|role of|influence of|sensitivity (?:analysis|study|to)|"
+    r"component[- ]wise|removing |replacing |varying |different (?:choices|settings|values) of|"
+    r"design choice|with and without|w/ and w/o", re.I)
+_RESULTS_RE = re.compile(
+    r"\b(main |overall |final |test[- ]set |benchmark )?results?\b|comparison (?:with|to|against|of)|"
+    r"compared (?:with|to)|state[- ]of[- ]the[- ]art|\bsota\b|leaderboard|performance (?:on|of|comparison)|"
+    r"we compare|against (?:prior|existing|baseline)|held[- ]out|official test", re.I)
+_OTHER_RE = re.compile(
+    r"\bstatistics\b|\bdataset\b .*\b(size|split|counts?|composition)|hyper[- ]?parameters?|"
+    r"\bnotation\b|\bsymbols?\b|training (?:details|config|setup)|prompt template|"
+    r"\bexamples?\b (?:of|from)|qualitative|case stud|annotation guideline|"
+    r"(?:running|inference|training) time|complexity|#\s*params|parameter count|throughput|latency|"
+    r"related work|survey of", re.I)
+
+
+def classify_table(caption: str, headers: set[str] | None = None,
+                   rows: set[str] | None = None) -> str:
+    """'ablation' | 'results' | 'other'. Ablation cues win over results cues."""
+    blob = " ".join(filter(None, [caption or "", " ".join(sorted(headers or [])),
+                                  " ".join(sorted(rows or []))]))
+    low = blob.lower()
+    row_has_ablation = bool(rows) and sum(
+        1 for r in rows if _ABLATION_RE.search(r or "") or (r or "").strip().startswith(("-", "−", "w/o"))
+    ) >= max(2, len(rows) // 3)
+    if _ABLATION_RE.search(low) or row_has_ablation:
+        return "ablation"
+    if _RESULTS_RE.search(low):
+        return "results"
+    if _OTHER_RE.search(low):
+        return "other"
+    # default: a table with >=2 metric-named columns and >=2 method-ish rows reads
+    # as a results table; otherwise 'other'.
+    metric_cols = sum(1 for h in (headers or []) if _col_matches_metric(h, _METRIC_TOKENS))
+    return "results" if (metric_cols >= 1 and len(rows or []) >= 2) else "other"
+
+
+def _table_type_for(caption: str, all_cells: list[dict[str, Any]]) -> str:
+    sib = [c for c in all_cells if (c.get("caption") or "") == (caption or "")]
+    return classify_table(caption or "",
+                          {c.get("column_header", "") for c in sib},
+                          {c.get("row_label", "") for c in sib})
+
+
 def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     """Verdict on whether `value`'s number(s) bind to the cell its subject+metric
     imply.
@@ -316,10 +366,18 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
                wrong_cell                  -> value IS in a cell, but wrong row and/or column
                no_cell                     -> value in no cell of a structured paper
                no_metric                   -> claim names no metric to key a column on
+    `bound` carries `table_type` (results / ablation / other) — a claim bound to a
+    non-results table is labelled and NOT returned as a headline result.
     """
     cells = paper_table_cells(chunks)
     if not cells:
         return {"structured": False, "status": "pdf_only"}
+
+    def _bound(n: str, b: dict[str, Any]) -> dict[str, Any]:
+        return {"structured": True, "status": "bound", "number": n,
+                "table_type": _table_type_for(b.get("caption", ""), cells),
+                "cell": {"row": b.get("row_label"), "col": b.get("column_header"),
+                         "value": b.get("value"), "caption": b.get("caption")}}
 
     nums = [n for n in _NUMVAL.findall(value or "")]
     if not nums:
@@ -348,10 +406,7 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
         # (a) value at the (subject-row, metric-column) cell -> BOUND
         both = [c for c in row_cells if c in col_cells]
         if both:
-            b = both[0]
-            return {"structured": True, "status": "bound", "number": n,
-                    "cell": {"row": b.get("row_label"), "col": b.get("column_header"),
-                             "value": b.get("value"), "caption": b.get("caption")}}
+            return _bound(n, both[0])
         # (b) the paper HAS a column for this metric, and the value sits under it
         #     but for a DIFFERENT row -> cross-row
         if col_cells and not row_cells:
@@ -373,10 +428,7 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
         #     rows -> cross-row.
         if not metric_col_exists:
             if row_cells:
-                b = row_cells[0]
-                return {"structured": True, "status": "bound", "number": n,
-                        "cell": {"row": b.get("row_label"), "col": b.get("column_header"),
-                                 "value": b.get("value"), "caption": b.get("caption")}}
+                return _bound(n, row_cells[0])
             c = val_cells[0]
             return {"structured": True, "status": "wrong_cell", "number": n,
                     "reason": f"value is at row '{c.get('row_label')}', not the claim's subject {subj_lbl}",
@@ -433,8 +485,15 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="unverifiable_binding")
                 return item
-            # status == "bound": structurally verified — fall through to grounding
-            # + attribution (still required: bound cell != own-authored).
+            # status == "bound": the value IS at its cell. But an ablation /
+            # non-results table's numbers, though real, are not the paper's
+            # headline result — label the claim and do not return it as one.
+            if sb.get("table_type") in ("ablation", "other"):
+                item.update(evidence_status=EXPLICIT, provenance_valid=True, final=ABSTAINED,
+                            abstain_reason=f"bound_to_{sb['table_type']}_table")
+                return item
+            # results table + bound: fall through to grounding + attribution
+            # (still required: bound cell != own-authored).
     grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,

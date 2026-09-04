@@ -127,6 +127,85 @@ also now abstain). On **structured** papers (§2) cross-row acceptances are 0.
   PDF-only quant → `unverifiable_binding`).
 - **15/15 staging invariants PASS** (`staging_run.py`, structural binding active).
 
+---
+
+# Phase 5a (cont.) — table-type classification fed into the gate
+
+AxCell classifies each table (leaderboard / ablation / irrelevant) before
+extracting cells; our gate had no notion that some tables are not results tables.
+An ablation table's numbers are real but must not surface as the paper's headline
+result (cf. the earlier "vs." ablation-table attribution bug; `0549e2e9` is
+ablation-heavy).
+
+## The check — `classify_table(caption, headers, rows)` → `results | ablation | other`
+
+Deterministic, **no LLM**. Caption + header + row-label vocabulary only:
+
+- **ablation** (cues win over results cues): `ablat*`, `w/o`, `without`, `vs.`,
+  `versus`, `with and without`, `contribution/effect/impact/role/influence of`,
+  `sensitivity analysis`, `leave-one-out`, `varying/removing/replacing …`, or ≥ ⅓
+  of the row labels are ablation-style (`w/o …`, `− retrieval`).
+- **results**: `(main/overall/final/test-set) results`, `comparison with/to`,
+  `state-of-the-art` / `SOTA`, `leaderboard`, `performance on`, `held-out`,
+  `official test`.
+- **other**: `statistics`, `dataset … size/split/counts`, `hyper-parameters`,
+  `notation`, `prompt template`, `inference/training time`, `#params`,
+  `complexity`, `related work`, `citation commands` (LaTeX template artefacts).
+- default: ≥ 1 metric-named column + ≥ 2 rows → `results`, else `other`.
+
+Fed into `structural_bind`: a `bound` verdict carries `table_type`. In
+`_gate_value`, `status == "bound"` **and** `table_type ∈ {ablation, other}` →
+`ABSTAINED`, `abstain_reason = "bound_to_ablation_table"` / `"bound_to_other_table"`
+(`evidence_status = EXPLICIT`, `provenance_valid = True` — the value *is* at its
+cell; it just isn't a headline result). Only `results`-table bindings fall through
+to grounding + attribution + RETURNED.
+
+## MEASURE
+
+### Classification distribution (13 structured papers, 53 distinct tables)
+
+| class | tables | cells |
+|---|--:|--:|
+| other | 25 | 1033 |
+| results | 21 | 864 |
+| ablation | **7** | 89 |
+
+### Currently-returned quantitative items grounded in an ablation table: **0**
+
+On structured papers the gate returns **0** numeric quant items with binding ON
+(all withheld as `no_cell` / `wrong_cell` — prose-stated, not cell values). With
+binding OFF (pre-5a) it returned 6, and **0 of those bind to an ablation table**
+either (all `no_cell` / `wrong_cell`). So the ablation hazard is currently
+**latent** — 7 ablation tables exist but no returned claim touches one. The
+classification is a guard for when structured ingestion (Phase 4, blocked) is
+re-enabled and cell-bindings start being returned.
+
+### Test 2 confusion matrix — no new false negatives
+
+`gate_sensitivity.py --pass det`: **TP 1 / FN 22 / FP 3 / TN 41** — byte-identical
+to the Phase-5a (structural-binding) matrix. Test 2's corpora are PDF-only, so
+`structural_bind` returns `pdf_only` and never reaches the `bound` + `table_type`
+path; the classification cannot introduce a false negative there. **0**
+`bound_to_*_table` abstentions in Test 2.
+
+### 10-table manual spot-check (deterministic sample)
+
+| paper | class | cells | caption |
+|---|---|--:|---|
+| `0549e2e9e6` | **ablation** | 30 | "Ablation study performance metrics. The (–) symbol denotes the reference proposed system, and Failed indicates instances where the algorithm reached n…" |
+| `0549e2e9e6` | results | 40 | "YOLOv11n transverse and longitudinal lumen localization results." |
+| `69b02cfebf` | results | 45 | "Optimized retrieval configurations and summary metrics across the SentenceTransformer backbone models. The best-performing model is all-MiniLM-L6-v2." |
+| `93db4f9a32` | other | 16 | "Embedding backbones evaluated." |
+| `93db4f9a32` | other | 14 | "Validator failure reasons for Group B (1,399 pairs). \\Venv is involved in 83.5% of all failures." |
+| `a9b2a3fd60` | other | 8 | "Citation commands supported by the style file. The style is based on the natbib package…" (LaTeX template artefact — correctly not results) |
+| `db78acdc12` | **ablation** | 14 | "Comparison of RAG performance **with and without** the bge-reranker-v2-m3 reranker. Values represent overall mean scores across RAGAS metrics." |
+| `ddb170b2ee` | **ablation** | 6 | "**Ablation study** on varying the number of top k retrieved content." |
+| `e0efa866a1` | other | 201 | "Pearson correlation coefficients calculated for the BioASQ dataset." (correlation matrix, not a headline result) |
+| `eaec7401af` | results | 8 | "Conversational retrieval quality in the large multicore run." |
+
+All 10 correct/defensible. The three ablation tables and the LaTeX-template
+`other` are the notable catches.
+
 ## Honest limits
 
 - The gate can now only return a quantitative OWN result when a structured
