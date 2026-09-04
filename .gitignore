@@ -10,3 +10,4 @@ data_test/
 node_modules/
 data/processed/
 data/raw_metadata/
+.github/modernize/
