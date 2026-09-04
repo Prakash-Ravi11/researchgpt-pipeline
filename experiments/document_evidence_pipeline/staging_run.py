@@ -193,9 +193,14 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
     cross_row_accepted = [(rec.get("paper_id"), it.get("value"))
                           for rec, it in ret_binding
                           if (it.get("structural_binding") or {}).get("status") == "wrong_cell"]
+    # 5b: a RETURNED numeric quant claim is valid if it bound to a results-table
+    # cell (status "bound") OR was never a table-cell claim (status "not_bindable"
+    # / "not_a_table_claim" — prose aggregate whose metric column has no such
+    # cell). It must NOT have leaked through a genuine binding failure.
+    _BAD_BIND = {"pdf_only", "wrong_cell", "no_cell", "no_metric"}
     own_from_unverifiable = [(rec.get("paper_id"), it.get("value"))
                              for rec, it in ret_binding
-                             if (it.get("structural_binding") or {}).get("status") != "bound"]
+                             if (it.get("structural_binding") or {}).get("status") in _BAD_BIND]
     # six-stage architecture unchanged: run_pipeline still chains exactly 4 stage fns + sanity
     rp = (ROOT / "run_pipeline.py").read_text(encoding="utf-8")
     six_stage = rp.count("Stage 1") and rp.count("Stage 2") and rp.count("Stage 3") \

@@ -206,6 +206,99 @@ path; the classification cannot introduce a false negative there. **0**
 All 10 correct/defensible. The three ablation tables and the LaTeX-template
 `other` are the notable catches.
 
+---
+
+# Phase 5b — the corrected binding rule (fix a false negative)
+
+The 5a implementation required **every** numeric quant claim on a structured
+paper to sit at a cell, else `unverifiable_binding` — it rejected 6 correct
+claims (structured 6 → 0). Those were **prose / abstract aggregates**
+("our method achieves 92.4 Dice", a mean across folds) that legitimately have no
+cell because they are not tabular. The PDF-only 10 → 3 stays (mandated
+correction); this was a false negative.
+
+## The corrected decision order (`structural_bind`)
+
+| case | condition | status | gate action |
+|---|---|---|---|
+| 1 | no `table_cells` (PDF-only) | `pdf_only` | `unverifiable_binding` — not returned |
+| 2 | claimed metric matches **no column** in any table | `not_bindable` | **fall through** to grounding + attribution + 5a range check |
+| 3 | metric is a column, value at the (subject-row × metric-column) cell | `bound` | proceeds (carries `table_type`; ablation/other → withheld per 5c) |
+| 4 | metric is a column, value ELSEWHERE in that column (different row) | `wrong_cell` | `binding_wrong_cell` — REJECT (cross-row) |
+| 5a | metric is a column, value in **no cell of any table** | `not_a_table_claim` | **fall through** (prose aggregate) |
+| 5b | value not in the metric's column but **is** in some other cell (wrong column / cross-table) | `wrong_cell` | REJECT |
+
+**Case 5 split (5b) — stop condition surfaced and resolved.** The literal rule
+("value nowhere in the metric's column → fall through") let the
+`correct_row_wrong_col` and `cross_table_substitution` probes through, because a
+value in a *different* column or a *different* table also "appears nowhere in the
+metric's column". The disambiguation — *is the value in **any** cell at all?* —
+is the spec's stated intent ("a prose aggregate legitimately appears in no cell")
+made precise: no cell anywhere → prose aggregate (5a, fall through); in a cell
+elsewhere → binding error (5b, reject).
+
+**Residual gap (recorded in code, pre-5b contract, not closed here):** a claim
+naming a metric that is no column anywhere evades cell-binding via case 2 — it is
+checked only by grounding + attribution + the 5a range check. Structured
+table-cell binding reaches only claims whose metric is actually tabulated.
+
+## VERIFY — per-claim case for the 6 structured claims that went to 0
+
+| paper | claim (abbrev.) | case | outcome |
+|---|---|---|---|
+| `69b02cfebf` | "Percentage of test cases where the predicted percentile falls within 5/10 points…" (a metric *description*) | **2** `not_bindable` | recovered |
+| `e0efa866a1` | "the correlation scores are provided in Tables 2, 5, 6" | **2** `not_bindable` | recovered |
+| `f42ad6e248` | "RAG improved accuracy… Llama-3 (23.85%)" | **2** `not_bindable` | recovered |
+| `f42ad6e248` | "GPT-4-turbo's accuracy increased by 11.54%…" | **2** `not_bindable` | recovered |
+| `f3d7e0165d` | "faithfulness score of 0.621… 0.797" (*Faithfulness* is a column; 0.621/0.797 in no cell of it) | **5a** `not_a_table_claim` | recovered |
+| `0549e2e9` | "The hybrid pipeline achieved a Dice index of 90.76%…" | **4** `wrong_cell` | **stays rejected** |
+
+`0549e2e9` is a **genuine case 4** — 90.76 *is* under the "Dice coefficient (%)"
+column at row "Proposed method", but the claim's subject string "the hybrid
+pipeline" does not resolve to that row label. It stays rejected as a cross-row
+mismatch (subject-string vs table-label), not assumed a false negative.
+
+## MEASURE
+
+### Returned numeric metrics/results — binding OFF vs ON (5b)
+
+| subset | OFF | ON (5a) | **ON (5b)** |
+|---|--:|--:|--:|
+| structured (LaTeX + JATS) | 6 | 0 | **5** |
+| PDF-only | 10 | 3 | **3**  (unchanged, as required) |
+| total | 16 | 3 | **8** |
+
+5 of the 6 structured claims recovered (4 × case 2, 1 × case 5a); 1 stays
+rejected (case 4). PDF-only unchanged at 3.
+
+### Adversarial probe classes on structured papers — MUST stay at 0
+
+| class | RETURNED | 
+|---|--:|
+| `correct_row_wrong_col` | **0** / 4 |
+| `correct_col_wrong_row` (cross-row) | **0** / 6 |
+| `cross_table_substitution` | **0** / 10 |
+| `correct_metric_wrong_condition` | (no clean probes constructed) |
+
+**FOOLED = 0.** (The literal case-5 rule scored FOOLED = 2 — `correct_row_wrong_col`
+and `cross_table_substitution` — which is the stop condition; the 5a/5b split
+above resolves it.) `correct_cell` "misses" (8/9) are unchanged: baseline-row
+claims correctly abstained by **attribution** (`ownership_unverified`), or an
+ungroundable single-digit value — not binding failures.
+
+### Test 2 confusion matrix — unchanged
+
+`gate_sensitivity.py --pass det`: **TP 1 / FN 22 / FP 3 / TN 41** — byte-identical
+to Phase 5a. Test 2's corpora are PDF-only, so 5b's recovery (structured cases
+2 / 5a) does not apply there; no new false negatives.
+
+### Invariant 15 predicate updated
+
+A RETURNED numeric quant claim is valid with `structural_binding.status ∈
+{bound, not_bindable, not_a_table_claim}` (or `None` for a single-digit value
+below the anchor rule). It must NOT carry a leaked binding-failure status
+(`pdf_only`, `wrong_cell`, `no_cell`, `no_metric`).
+
 ## Honest limits
 
 - The gate can now only return a quantitative OWN result when a structured

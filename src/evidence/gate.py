@@ -361,13 +361,34 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     """Verdict on whether `value`'s number(s) bind to the cell its subject+metric
     imply.
 
-      structured=False                     -> paper is PDF-only, cannot verify
-      status = bound                       -> value is at the (subject-row, metric-col) cell
-               wrong_cell                  -> value IS in a cell, but wrong row and/or column
-               no_cell                     -> value in no cell of a structured paper
-               no_metric                   -> claim names no metric to key a column on
-    `bound` carries `table_type` (results / ablation / other) — a claim bound to a
-    non-results table is labelled and NOT returned as a headline result.
+    Decision order (5b — binding applies only where a claim is BINDABLE):
+      1. no table_cells (PDF-only)              -> status "pdf_only"
+      2. claimed metric matches NO column in
+         any table in this paper                -> status "not_bindable"
+                                                   (fall through to grounding + attribution;
+                                                    the 5a range check still applies)
+      3. metric IS a column, value at the
+         (subject-row x metric-column) cell     -> status "bound"  (proceeds; carries table_type)
+      4. metric IS a column, value ELSEWHERE in
+         that column at a different row          -> status "wrong_cell"  (cross-row -> REJECT)
+      5. metric IS a column, value NOWHERE in that column:
+           5a. value is in NO cell of ANY table  -> status "not_a_table_claim"
+                                                    (a prose aggregate / mean-across-folds /
+                                                     overall figure legitimately has no cell
+                                                     -> fall through to grounding)
+           5b. value IS in some cell, just not
+               the metric's column               -> status "wrong_cell"  (a wrong-column or
+                                                     cross-table value -> REJECT). The literal
+                                                     "nowhere in that column -> fall through"
+                                                     rule let correct-row/wrong-col and
+                                                     cross-table probes through; "in no cell at
+                                                     all" is what actually makes a claim a
+                                                     prose aggregate.
+
+    RESIDUAL GAP (pre-5b contract, deliberately not closed here): a claim naming a
+    metric that is no column anywhere evades binding via case 2 and is only checked
+    by grounding + attribution + the 5a range check. Structured table-cell binding
+    only reaches claims whose metric is actually tabulated.
     """
     cells = paper_table_cells(chunks)
     if not cells:
@@ -388,57 +409,50 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     subject = sm.group(1).strip() if sm else None
     if subject and _OWN_ROW.search(subject):
         subject = None                        # "Our method reports ..." -> implicit OWN
+    subj_lbl = repr(subject) if subject else "OWN"
 
-    # does the paper have ANY column whose header matches the claimed metric?
-    metric_col_exists = bool(metric_toks) and any(
-        _col_matches_metric(c.get("column_header", ""), metric_toks) for c in cells)
+    # ---- case 2: the claimed metric is not a column in any table -> not_bindable
+    metric_columns = [c for c in cells if metric_toks
+                      and _col_matches_metric(c.get("column_header", ""), metric_toks)]
+    if not metric_columns:
+        return {"structured": True, "status": "not_bindable",
+                "reason": "claimed metric matches no table column in this paper"}
+
+    def _has(n: str, s) -> bool:
+        s = str(s)
+        if n == re.sub(r"[^\d.\-]", "", s):
+            return True
+        # token-boundary match so "0.45" does NOT match inside "0.4502", but
+        # "82.1" DOES match inside "82.1 ± 0.3".
+        return bool(re.search(r"(?<![\d.])" + re.escape(n) + r"(?![\d])", s))
 
     for n in nums:
-        val_cells = [c for c in cells if n == re.sub(r"[^\d.\-]", "", str(c.get("value", "")))
-                     or (len(n) >= 3 and n in str(c.get("value", "")))]
-        if not val_cells:
-            continue
-        row_cells = [c for c in val_cells if _row_matches_subject(c.get("row_label", ""), subject)]
-        col_cells = ([c for c in val_cells if _col_matches_metric(c.get("column_header", ""), metric_toks)]
-                     if metric_toks else [])
-        subj_lbl = repr(subject) if subject else "OWN"
-
-        # (a) value at the (subject-row, metric-column) cell -> BOUND
-        both = [c for c in row_cells if c in col_cells]
-        if both:
-            return _bound(n, both[0])
-        # (b) the paper HAS a column for this metric, and the value sits under it
-        #     but for a DIFFERENT row -> cross-row
-        if col_cells and not row_cells:
-            c = col_cells[0]
+        col_hits = [c for c in metric_columns if _has(n, c.get("value", ""))]
+        if col_hits:
+            # ---- case 3: value at the (subject-row, metric-column) cell -> bound
+            on_row = [c for c in col_hits if _row_matches_subject(c.get("row_label", ""), subject)]
+            if on_row:
+                return _bound(n, on_row[0])
+            # ---- case 4: value IS in the metric's column but at a different row
+            c = col_hits[0]
             return {"structured": True, "status": "wrong_cell", "number": n,
                     "reason": f"value is under column '{c.get('column_header')}' but for row "
                               f"'{c.get('row_label')}', not the claim's subject {subj_lbl}",
                     "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
-        # (c) the paper HAS a column for this metric; the value is at the subject's
-        #     row but under a DIFFERENT column -> wrong column
-        if metric_col_exists and row_cells and not col_cells:
-            c = row_cells[0]
+        # ---- case 5b: value not in the metric's column, but IS in some other cell
+        #      (wrong column / cross-table) -> REJECT
+        elsewhere = [c for c in cells if _has(n, c.get("value", ""))]
+        if elsewhere:
+            c = elsewhere[0]
             return {"structured": True, "status": "wrong_cell", "number": n,
-                    "reason": f"value is at row '{c.get('row_label')}' but under column "
-                              f"'{c.get('column_header')}', not one matching the claimed metric",
+                    "reason": f"value appears in cell (row '{c.get('row_label')}', column "
+                              f"'{c.get('column_header')}'), not under the claimed metric's column",
                     "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
-        # (d) no identifiable metric column anywhere (non-standard headers): fall
-        #     back to value+row. Row matches subject -> BOUND; value only at other
-        #     rows -> cross-row.
-        if not metric_col_exists:
-            if row_cells:
-                return _bound(n, row_cells[0])
-            c = val_cells[0]
-            return {"structured": True, "status": "wrong_cell", "number": n,
-                    "reason": f"value is at row '{c.get('row_label')}', not the claim's subject {subj_lbl}",
-                    "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
-        # metric column exists but value not under it and not at subject's row
-        return {"structured": True, "status": "wrong_cell", "number": n,
-                "reason": "value present in a table but not at the (subject-row, metric-column) cell",
-                "candidate": {"row": val_cells[0].get("row_label"),
-                              "col": val_cells[0].get("column_header")}}
-    return {"structured": True, "status": "no_cell", "number": nums[0]}
+    # ---- case 5a: metric IS a column, value is in no cell of ANY table -> prose
+    #      aggregate / overall figure -> not a table claim -> fall through
+    return {"structured": True, "status": "not_a_table_claim",
+            "reason": "claimed metric is a column, but the value appears in no cell at all "
+                      "(prose aggregate / overall figure)"}
 
 
 def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 6000) -> str:
@@ -473,27 +487,25 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
         if _NUMVAL.search(value or ""):
             sb = structural_bind(value, chunks)
             item["structural_binding"] = sb
-            if not sb["structured"]:
+            if not sb["structured"]:                       # case 1 — PDF-only
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="unverifiable_binding")
                 return item
-            if sb["status"] == "wrong_cell":
+            if sb["status"] == "wrong_cell":               # case 4 — cross-row
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="binding_wrong_cell")
                 return item
-            if sb["status"] in ("no_cell", "no_metric"):
-                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
-                            abstain_reason="unverifiable_binding")
-                return item
-            # status == "bound": the value IS at its cell. But an ablation /
-            # non-results table's numbers, though real, are not the paper's
-            # headline result — label the claim and do not return it as one.
-            if sb.get("table_type") in ("ablation", "other"):
-                item.update(evidence_status=EXPLICIT, provenance_valid=True, final=ABSTAINED,
-                            abstain_reason=f"bound_to_{sb['table_type']}_table")
-                return item
-            # results table + bound: fall through to grounding + attribution
-            # (still required: bound cell != own-authored).
+            if sb["status"] == "bound":                    # case 3 — value at its cell
+                # an ablation / non-results table's numbers are real but are not
+                # the paper's headline result (5c) — label and withhold.
+                if sb.get("table_type") in ("ablation", "other"):
+                    item.update(evidence_status=EXPLICIT, provenance_valid=True, final=ABSTAINED,
+                                abstain_reason=f"bound_to_{sb['table_type']}_table")
+                    return item
+                # results table + bound: fall through to grounding + attribution.
+            # cases 2 (not_bindable) & 5 (not_a_table_claim): the claim is not a
+            # table-cell claim — fall through to grounding + attribution + the 5a
+            # range check, exactly as before structural binding existed.
     grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,

@@ -265,6 +265,17 @@ def run():
     it = _gate_value("results", "Our method reports an nDCG@5 of 0.61.", SCH, ["A Lin"])
     check("gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED",
           it["final"] == ABSTAINED and it["abstain_reason"] == "binding_wrong_cell", str(it))
+    # 5b — structured paper, metric IS a column but the claimed value is a prose
+    # aggregate in no cell of it -> not_a_table_claim -> falls through -> grounds -> RETURNED
+    PCH = [dict(SCH[0], text="Averaged over five folds our system reaches a mean nDCG@5 of "
+                             "0.4502 on the shared task, our own contribution.")]
+    it = _gate_value("results", "Our system reaches a mean nDCG@5 of 0.44 across folds.", PCH, ["A Lin"])
+    check("gate: structured paper, prose aggregate not in metric column -> not_a_table_claim (falls through)",
+          it["structural_binding"]["status"] == "not_a_table_claim", str(it))
+    # 5b — claim names a metric that is NO column anywhere -> not_bindable -> falls through
+    it = _gate_value("results", "Our system reaches a BLEU of 34.1 on the shared task.", SCH, ["A Lin"])
+    check("gate: structured paper, metric not a column anywhere -> not_bindable (falls through)",
+          it["structural_binding"]["status"] == "not_bindable", str(it))
 
     print(f"\n{_PASS} passed, {_FAIL} failed")
     if _FAILURES:
