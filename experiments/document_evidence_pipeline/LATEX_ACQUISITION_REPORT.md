@@ -489,3 +489,72 @@ negative result is Phase 4's deliverable.** Flipping the flag on requires first 
    drives the model past the output cap. A representation change must be validated
    end-to-end (MEASURE 2), never on survival (M1) alone; and "preserves more" is not a
    virtue if the consumer can't read it.
+
+---
+
+# Phase 5x — corpus-wide measurement at reservation 4096 (decision: KEEP OFF)
+
+Phase-4b Task 1 showed the 11 LaTeX-retained papers reach mean 9.09 at
+`extraction_output_reservation = 4096` (11/11 conformant, `done_reason=="length"`
+== 0) but never measured it corpus-wide — the only stated reason ingestion stayed
+off. This measures the **full canonical 34** with LaTeX ingestion ENABLED,
+Task-2 field routing, reservation 4096, seeded, clean cache.
+Harness: `reservation_4096_measure.py`. Staging only — **4096 is NOT adopted in
+`configs/config.yaml`**.
+
+| | baseline (post-3.2b) | reservation 4096 |
+|---|--:|--:|
+| mean non-empty fields / paper | 9.65 | **9.62** |
+| conformance | 32 conf / 2 salv / 0 nonconf | **34 / 0 / 0** |
+| circuit-breaker fallbacks | 0 | **0** |
+| `_extraction_failed` | 0 | **0** |
+| `done_reason == "length"` | 0 | **0** (4096 is sufficient) |
+| method / datasets / metrics / results / limitations | 100 / 97 / 91 / 94 / 94 % | 97 / 94 / 97 / 91 / 97 % |
+| runtime | ~32 s/paper (~1088 s) | **47 s/paper (1582 s)** — +47 % |
+| peak GPU `memory.used` (nvidia-smi, whole device) | — | **5909 / 6144 MiB (96 %)** |
+
+## By representation subset
+
+| subset | n | mean fields | method | datasets | metrics | results | limitations |
+|---|--:|--:|--:|--:|--:|--:|--:|
+| **LaTeX-retained** | 11 | **9.00** | 91 % | 91 % | 91 % | 82 % | 91 % |
+| arXiv-fallback (→ PDF) | 12 | 10.00 | 100 % | 100 % | 100 % | 100 % | 100 % |
+| non-arXiv | 11 | 9.82 | 100 % | 91 % | 100 % | 91 % | 100 % |
+
+LaTeX-retained vs its own post-3.2b frozen: **mean 9.91 → 9.00** (1 better, 2 worse).
+
+## Papers worse (2, both LaTeX-retained)
+
+| paper | frozen → 4096 | note |
+|---|--:|---|
+| `a9b2a3fd6070` | **10 → 0** | `conformant` but empty JSON — reproduces the Phase-4b Task-1 failure (also 0 at 4096). A hard LaTeX-specific pathology: this paper's LaTeX-derived context makes qwen2.5:7b emit valid empty JSON regardless of reservation. |
+| `cf099b7cd7e8` | 10 → 9 | lost 1 field |
+
+(4 papers improved — `0549e2e9` 7→10 [JATS], `ae2768758f99` 5→10, `a6ecdf69` 7→8
+[both PDF], `ddb170b2` 9→10 [LaTeX] — mostly run-to-run variance on the PDF/JATS
+papers, which were not re-ingested differently.)
+
+## DECISION — KEEP OFF, as a measured cost
+
+10 of 11 retained papers reach baseline and `done_reason=="length"` is 0, so
+4096 *works*. Enabling LaTeX ingestion nonetheless carries a **measured** cost:
+
+1. **It is viable only at reservation 4096.** At the production 768 the retained
+   subset collapses to mean 5.82 (Phase-4b MEASURE 2). This task forbids adopting
+   4096 in `configs/config.yaml`, so enabling LaTeX ingestion would ship the
+   broken 768 behaviour.
+2. **Peak VRAM 5909 / 6144 MiB (96 %)** on the target 6 GB GPU — on the edge of
+   OOM; no headroom for a larger paper or the transient double-request the
+   3.2/3.2d socket work was about.
+3. **Runtime +47 %** (32 → 47 s/paper; 1088 → 1582 s for 34).
+4. **One retained paper hard-fails 10 → 0** (`a9b2a3fd6070`, reproducible empty
+   JSON), one more regresses 10 → 9.
+
+This supersedes the earlier "the structured set is only 2 papers" reason: LaTeX
+ingestion requires a reservation not permitted in production, runs at 96 % VRAM
+and +47 % runtime, and still loses 1–2 retained papers. Phase 5's structural
+binding therefore stays measured on the 2 JATS papers; it does not gain the 13
+structured papers a corpus-wide LaTeX ingestion would provide.
+
+**`configs/staging_config.yaml` keeps `latex_ingestion_enabled: false`.
+`configs/config.yaml` unchanged. `EXTRACTION_OUTPUT_RESERVATION = 768` unchanged.**
