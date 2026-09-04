@@ -190,6 +190,10 @@ def process_paper_grounded(paper: dict, latex_parity_tolerance: float | None = N
             "block_type": c["block_type"],
             "char_start": c["char_start"],
             "char_end": c["char_end"],
+            # Phase 4a structural table cells, carried into chunks.json so Stage 5
+            # can bind a quantitative claim to the actual (row, column) cell.
+            **({"table_cells": c["table_cells"], "table_caption": c.get("table_caption", "")}
+               if c.get("table_cells") else {}),
             **({"latex_parity_fallback": parity_fallback} if parity_fallback else {}),
         })
     return records

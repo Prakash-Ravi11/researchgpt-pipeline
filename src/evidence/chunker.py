@@ -31,7 +31,7 @@ def chunk_document(doc: dict[str, Any]) -> list[dict[str, Any]]:
             sub = " ".join(words[s:e])
             # char offset of this sub-chunk within the source block
             prefix_chars = len(" ".join(words[:s])) + (1 if s else 0)
-            chunks.append({
+            rec = {
                 "chunk_id": f"{block['block_id']}#{i}",
                 "paper_id": block["paper_id"],
                 "source": block["source"],
@@ -43,5 +43,12 @@ def chunk_document(doc: dict[str, Any]) -> list[dict[str, Any]]:
                 "char_start": block["char_start"] + prefix_chars,
                 "char_end": block["char_start"] + prefix_chars + len(sub),
                 "text": sub,
-            })
+            }
+            # Structural table cells (Phase 4a) belong to the whole table block —
+            # carry them onto EVERY chunk of that block so Stage 5's structural
+            # binding can reach them regardless of which sub-chunk grounds a claim.
+            if block.get("table_cells"):
+                rec["table_cells"] = block["table_cells"]
+                rec["table_caption"] = block.get("table_caption") or ""
+            chunks.append(rec)
     return chunks

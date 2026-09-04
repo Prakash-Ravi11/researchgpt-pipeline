@@ -242,7 +242,151 @@ def _evidence_item(field: str, value: str) -> dict[str, Any]:
             "evidence_status": MISSING, "attribution": UNKNOWN,
             "attribution_confidence": 0.0, "confidence": 0.0,
             "provenance_valid": False, "final": ABSTAINED, "abstain_reason": None,
-            "range_check": None}
+            "range_check": None, "structural_binding": None}
+
+
+# --------------------------------------------------------------------------
+# STRUCTURAL CELL BINDING  (Phase 5a — consumes Phase 4a's table_cells)
+#
+# ATTRIBUTION = "whose result is this". BINDING = "which result is this" — is the
+# claimed number the value at the (row = subject, column = metric) cell it
+# implies. Grounding ("number + >=2 topical tokens in one chunk") checks neither.
+#
+# Where a paper has a STRUCTURED representation (LaTeX e-print / JATS -> parsed
+# table_cells on its chunks), a quantitative OWN claim is verified against the
+# actual cell. Where only a collapsed PDF representation exists, structural
+# binding CANNOT be verified — the claim is marked `unverifiable_binding` and is
+# NOT returned as an OWN quantitative result (this reduces returned results on
+# PDF-only papers; that reduction is a CORRECTION, like the abstract-vs-body one).
+# --------------------------------------------------------------------------
+
+_OWN_ROW = re.compile(
+    r"\b(our[s]?|ours|proposed|the proposed|our method|our model|our approach|"
+    r"our system|this work|this paper|full model|full|w/o|ablation)\b", re.I)
+_SUBJECT_RE = re.compile(
+    r"^\s*([A-Za-z][A-Za-z0-9\-/\.\+ ]{1,34}?)\s+"
+    r"(?:reports?|achiev\w*|obtain\w*|attain\w*|reach\w*|record\w*|get[s]?|"
+    r"scor\w*|yield\w*|produc\w*|show\w*|ha[sd]|deliver\w*|report\w+ (?:a|an)|"
+    r"=|:|of)\b", re.I)
+
+
+def paper_table_cells(chunks: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Distinct structured table cells across a paper's chunks (Phase 4a shape)."""
+    seen: set[tuple] = set()
+    out: list[dict[str, Any]] = []
+    for c in chunks:
+        for cell in (c.get("table_cells") or []):
+            k = (cell.get("row_label", ""), cell.get("column_header", ""),
+                 str(cell.get("value", "")), cell.get("caption", ""))
+            if k not in seen:
+                seen.add(k)
+                out.append(cell)
+    return out
+
+
+def _tok(s: str) -> set[str]:
+    return {t for t in _WORD.findall((s or "").lower())}
+
+
+def _col_matches_metric(col_header: str, metric_toks: set[str]) -> bool:
+    ch = _tok(col_header)
+    if metric_toks & ch:
+        return True
+    # "F1" vs "f1-score", "AUC" vs "auroc" — substring on the joined header
+    j = re.sub(r"[^a-z0-9]", "", (col_header or "").lower())
+    return any(re.sub(r"[^a-z0-9]", "", m) in j for m in metric_toks if len(m) >= 2)
+
+
+def _row_matches_subject(row_label: str, subject: str | None) -> bool:
+    rl = (row_label or "").lower()
+    if subject is None:                       # implicit OWN claim
+        return bool(_OWN_ROW.search(rl))
+    st = _tok(subject)
+    return bool(st and (st & _tok(row_label) or
+                        re.sub(r"[^a-z0-9]", "", subject.lower())[:12] in
+                        re.sub(r"[^a-z0-9]", "", rl)))
+
+
+def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
+    """Verdict on whether `value`'s number(s) bind to the cell its subject+metric
+    imply.
+
+      structured=False                     -> paper is PDF-only, cannot verify
+      status = bound                       -> value is at the (subject-row, metric-col) cell
+               wrong_cell                  -> value IS in a cell, but wrong row and/or column
+               no_cell                     -> value in no cell of a structured paper
+               no_metric                   -> claim names no metric to key a column on
+    """
+    cells = paper_table_cells(chunks)
+    if not cells:
+        return {"structured": False, "status": "pdf_only"}
+
+    nums = [n for n in _NUMVAL.findall(value or "")]
+    if not nums:
+        return {"structured": True, "status": "no_number"}
+    metric_toks = (_sig_tokens(value) & _METRIC_TOKENS) | {
+        m.group(0).lower() for m in _METRIC_NAME_RE.finditer(value or "")}
+    sm = _SUBJECT_RE.match(value or "")
+    subject = sm.group(1).strip() if sm else None
+    if subject and _OWN_ROW.search(subject):
+        subject = None                        # "Our method reports ..." -> implicit OWN
+
+    # does the paper have ANY column whose header matches the claimed metric?
+    metric_col_exists = bool(metric_toks) and any(
+        _col_matches_metric(c.get("column_header", ""), metric_toks) for c in cells)
+
+    for n in nums:
+        val_cells = [c for c in cells if n == re.sub(r"[^\d.\-]", "", str(c.get("value", "")))
+                     or (len(n) >= 3 and n in str(c.get("value", "")))]
+        if not val_cells:
+            continue
+        row_cells = [c for c in val_cells if _row_matches_subject(c.get("row_label", ""), subject)]
+        col_cells = ([c for c in val_cells if _col_matches_metric(c.get("column_header", ""), metric_toks)]
+                     if metric_toks else [])
+        subj_lbl = repr(subject) if subject else "OWN"
+
+        # (a) value at the (subject-row, metric-column) cell -> BOUND
+        both = [c for c in row_cells if c in col_cells]
+        if both:
+            b = both[0]
+            return {"structured": True, "status": "bound", "number": n,
+                    "cell": {"row": b.get("row_label"), "col": b.get("column_header"),
+                             "value": b.get("value"), "caption": b.get("caption")}}
+        # (b) the paper HAS a column for this metric, and the value sits under it
+        #     but for a DIFFERENT row -> cross-row
+        if col_cells and not row_cells:
+            c = col_cells[0]
+            return {"structured": True, "status": "wrong_cell", "number": n,
+                    "reason": f"value is under column '{c.get('column_header')}' but for row "
+                              f"'{c.get('row_label')}', not the claim's subject {subj_lbl}",
+                    "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
+        # (c) the paper HAS a column for this metric; the value is at the subject's
+        #     row but under a DIFFERENT column -> wrong column
+        if metric_col_exists and row_cells and not col_cells:
+            c = row_cells[0]
+            return {"structured": True, "status": "wrong_cell", "number": n,
+                    "reason": f"value is at row '{c.get('row_label')}' but under column "
+                              f"'{c.get('column_header')}', not one matching the claimed metric",
+                    "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
+        # (d) no identifiable metric column anywhere (non-standard headers): fall
+        #     back to value+row. Row matches subject -> BOUND; value only at other
+        #     rows -> cross-row.
+        if not metric_col_exists:
+            if row_cells:
+                b = row_cells[0]
+                return {"structured": True, "status": "bound", "number": n,
+                        "cell": {"row": b.get("row_label"), "col": b.get("column_header"),
+                                 "value": b.get("value"), "caption": b.get("caption")}}
+            c = val_cells[0]
+            return {"structured": True, "status": "wrong_cell", "number": n,
+                    "reason": f"value is at row '{c.get('row_label')}', not the claim's subject {subj_lbl}",
+                    "candidate": {"row": c.get("row_label"), "col": c.get("column_header")}}
+        # metric column exists but value not under it and not at subject's row
+        return {"structured": True, "status": "wrong_cell", "number": n,
+                "reason": "value present in a table but not at the (subject-row, metric-column) cell",
+                "candidate": {"row": val_cells[0].get("row_label"),
+                              "col": val_cells[0].get("column_header")}}
+    return {"structured": True, "status": "no_cell", "number": nums[0]}
 
 
 def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 6000) -> str:
@@ -271,6 +415,26 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
             item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                         abstain_reason="metric_value_out_of_range", range_check=rng)
             return item
+        # STRUCTURAL CELL BINDING — a quantitative claim must bind to the actual
+        # (row, column) cell, where a structured representation exists; else it is
+        # unverifiable and is not returned as an OWN quantitative result.
+        if _NUMVAL.search(value or ""):
+            sb = structural_bind(value, chunks)
+            item["structural_binding"] = sb
+            if not sb["structured"]:
+                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                            abstain_reason="unverifiable_binding")
+                return item
+            if sb["status"] == "wrong_cell":
+                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                            abstain_reason="binding_wrong_cell")
+                return item
+            if sb["status"] in ("no_cell", "no_metric"):
+                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                            abstain_reason="unverifiable_binding")
+                return item
+            # status == "bound": structurally verified — fall through to grounding
+            # + attribution (still required: bound cell != own-authored).
     grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,

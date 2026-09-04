@@ -187,6 +187,15 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
     from src.evidence.gate import metric_range_check
     out_of_range = [(rec.get("paper_id"), it.get("value"), metric_range_check(it.get("value") or ""))
                     for _, _, it in ret_quant if metric_range_check(it.get("value") or "")]
+    # 14/15 — STRUCTURAL CELL BINDING (Phase 5a). Every RETURNED numeric quant
+    # claim must bind to the actual (row, column) cell of a structured paper.
+    ret_binding = [(rec, it) for rec, _, it in ret_quant if _NUM.search(it.get("value") or "")]
+    cross_row_accepted = [(rec.get("paper_id"), it.get("value"))
+                          for rec, it in ret_binding
+                          if (it.get("structural_binding") or {}).get("status") == "wrong_cell"]
+    own_from_unverifiable = [(rec.get("paper_id"), it.get("value"))
+                             for rec, it in ret_binding
+                             if (it.get("structural_binding") or {}).get("status") != "bound"]
     # six-stage architecture unchanged: run_pipeline still chains exactly 4 stage fns + sanity
     rp = (ROOT / "run_pipeline.py").read_text(encoding="utf-8")
     six_stage = rp.count("Stage 1") and rp.count("Stage 2") and rp.count("Stage 3") \
@@ -207,6 +216,8 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
         "11_number_anchored_results_gate_active": P(num_anchored),
         "12_six_stage_architecture_unchanged": P(bool(six_stage)),
         "13_out_of_range_metric_values_zero": P(len(out_of_range) == 0),
+        "14_cross_row_binding_acceptances_zero": P(len(cross_row_accepted) == 0),
+        "15_no_own_quantitative_from_unverifiable_binding": P(len(own_from_unverifiable) == 0),
     }
 
 

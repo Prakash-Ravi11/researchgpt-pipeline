@@ -244,11 +244,27 @@ def run():
     it = _gate_value("metrics", "nDCG@5", RCHUNKS, ["A Lin"])
     check("gate: metrics value still grounds via token containment",
           it["evidence_status"] == EXPLICIT and it["provenance_valid"], str(it))
-    # full gate: paraphrased OWN result with grounded number -> RETURNED
+    # Phase 5a — STRUCTURAL BINDING.
+    # PDF-only paper: a quantitative OWN result can no longer be verified structurally
+    # -> unverifiable_binding, NOT returned (this is the correction, not a regression).
     it = _gate_value("results", "The system achieved an nDCG@5 score of 0.4502.",
                      RCHUNKS, ["A Lin"])
-    check("gate: grounded OWN paraphrased result -> RETURNED",
-          it["final"] == RETURNED and it["attribution"] == OWN_PAPER, str(it))
+    check("gate: PDF-only quantitative OWN result -> unverifiable_binding (not RETURNED)",
+          it["final"] == ABSTAINED and it["abstain_reason"] == "unverifiable_binding", str(it))
+    # Structured paper: value binds to the (own-row, metric-column) cell -> RETURNED
+    SCELLS = [{"row_label": "Ours", "column_header": "nDCG@5", "value": "0.4502",
+               "caption": "Results on the shared task.", "section": "results"},
+              {"row_label": "Jones et al.", "column_header": "nDCG@5", "value": "0.61",
+               "caption": "Results on the shared task.", "section": "results"}]
+    SCH = [dict(RCHUNKS[0], representation="latex", block_type="table",
+                table_cells=SCELLS, table_caption="Results on the shared task.")]
+    it = _gate_value("results", "Our method reports an nDCG@5 of 0.4502.", SCH, ["A Lin"])
+    check("gate: structured paper, value at own cell -> bound -> RETURNED",
+          it["final"] == RETURNED and it["structural_binding"]["status"] == "bound", str(it))
+    # Structured paper: cross-row number (0.61 is Jones' row) -> binding_wrong_cell
+    it = _gate_value("results", "Our method reports an nDCG@5 of 0.61.", SCH, ["A Lin"])
+    check("gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED",
+          it["final"] == ABSTAINED and it["abstain_reason"] == "binding_wrong_cell", str(it))
 
     print(f"\n{_PASS} passed, {_FAIL} failed")
     if _FAILURES:
