@@ -3,7 +3,10 @@
 Runs the REAL six-stage production modules with evidence_grounding enabled via
 `configs/staging_config.yaml` on the bounded, frozen 8-paper data_test corpus
 (reproducible, no S2 search, minimal LLM cost). Then reads the gate + monitor
-outputs and checks all 12 safety invariants; exits non-zero on any failure.
+outputs and checks all 16 safety invariants; exits non-zero on any failure.
+(Invariant 16 — route-agnostic adversarial-probe acceptances — is evaluated with
+the full both-domain probe suite by binding_validation_invariants.py; here it is
+vacuous, data_test carries no structured probe suite.)
 
     python experiments/document_evidence_pipeline/staging_run.py
 
@@ -151,7 +154,34 @@ def _load(p: Path):
         return None
 
 
-def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dict:
+# Probe classes whose EXPECTED outcome is RETURNED (the positive control). Every
+# other adversarial class must ABSTAIN. Records with no "class" key (the
+# gate_sensitivity _crossrow_probe shape) are all adversarial.
+_SHOULD_RETURN_PROBE_CLASSES = {"correct_cell"}
+
+
+def _adversarial_probe_acceptances(probes) -> list[dict]:
+    """Invariant 16 support. ROUTE-AGNOSTIC: an adversarial probe counts as
+    ACCEPTED iff its FINAL outcome is RETURNED. It does NOT look at
+    structural_binding.status / binding_status / abstain_reason — invariants 14
+    and 15 did exactly that (they key on `wrong_cell` / `pdf_only`), so the 3
+    adversarial claims that reached RETURNED via the `not_bindable` fall-through
+    were invisible to them. 16 sees the outcome, not the route."""
+    out = []
+    for p in (probes or []):
+        cls = p.get("class")
+        if cls in _SHOULD_RETURN_PROBE_CLASSES:
+            continue
+        final = p.get("final") or p.get("gate_final")
+        if final == "RETURNED":
+            out.append({"paper_id": p.get("paper_id"), "class": cls or "crossrow",
+                        "domain": p.get("domain") or p.get("corpus"),
+                        "claim": p.get("claim") or p.get("crafted_claim")})
+    return out
+
+
+def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors,
+                      adversarial_probes=None) -> dict:
     ft = {p.get("paperId") or p.get("paper_id") for p in corpus if p.get("has_full_text")}
     returned = [(rec, f, it) for rec in evidence for f in ("datasets", "metrics", "results")
                 for it in rec.get("evidence", {}).get(f, []) if it.get("final") == "RETURNED"]
@@ -223,6 +253,15 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
         "13_out_of_range_metric_values_zero": P(len(out_of_range) == 0),
         "14_cross_row_binding_acceptances_zero": P(len(cross_row_accepted) == 0),
         "15_no_own_quantitative_from_unverifiable_binding": P(len(own_from_unverifiable) == 0),
+        # 16 — the complete adversarial probe suite (both domains), checked on the
+        # FINAL acceptance outcome regardless of which internal binding route
+        # produced it. Added after controlled adversarial testing showed 14/15
+        # (route-specific: wrong_cell / pdf_only) could not see 3 acceptances that
+        # reached RETURNED via `not_bindable`. `None` -> 0 probes -> vacuous PASS
+        # (the standard data_test staging run carries no structured probe suite;
+        # binding_validation_invariants.py supplies the real suite).
+        "16_adversarial_probe_acceptances_zero_any_route":
+            P(len(_adversarial_probe_acceptances(adversarial_probes)) == 0),
     }
 
 

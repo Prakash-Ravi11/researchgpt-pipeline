@@ -19,6 +19,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 from src.evidence.gate import gate_paper, FULL_TEXT, EXPLICIT, RETURNED       # noqa: E402
 from staging_run import _check_invariants                                     # noqa: E402
+from staging_run import _adversarial_probe_acceptances as _adv_acc           # noqa: E402
 
 REACQ = HERE / "runs" / "medical_reacquire"
 PROC = HERE / "runs" / "binding_validation" / "processed"
@@ -60,14 +61,44 @@ def main() -> int:
         "no_full_text_quant_fields": noft_fields,
         "no_full_text_quant_abstained": noft_abstained,
     }
-    inv = _check_invariants(corpus, evidence, gate_summary, {}, by_paper, [])
+
+    # Invariant 16 — the COMPLETE adversarial probe suite, BOTH domains, checked
+    # route-agnostically (final outcome only). Medical JATS (Task 3), canonical
+    # LaTeX (structural_binding_measure), and the gate_sensitivity cross-row probe.
+    probe_files = [
+        (HERE / "runs" / "binding_validation" / "task3_probes.json", "medical_jats"),
+        (HERE / "runs" / "structural_binding" / "binding_probes.json", "canonical_latex"),
+        (HERE / "runs" / "gate_sensitivity" / "crossrow.json", "crossrow"),
+    ]
+    adversarial_probes: list[dict] = []
+    loaded = []
+    for path, dom in probe_files:
+        if path.exists():
+            recs = json.loads(path.read_text(encoding="utf-8"))
+            for r in recs:
+                r.setdefault("domain", dom)
+            adversarial_probes.extend(recs)
+            loaded.append(f"{dom}:{len(recs)}")
+        else:
+            loaded.append(f"{dom}:MISSING")
+
+    inv = _check_invariants(corpus, evidence, gate_summary, {}, by_paper, [],
+                            adversarial_probes=adversarial_probes)
+    accepted = _adv_acc(adversarial_probes)
     n_pass = sum(1 for v in inv.values() if v == "PASS")
-    print(f"\n=== 15 SAFETY INVARIANTS — medical binding_validation ===")
+    print(f"\n=== 16 SAFETY INVARIANTS — medical binding_validation ===")
     for k, v in inv.items():
         print(f"  {v:4}  {k}")
+    print(f"\n  adversarial probe suite: {'  '.join(loaded)}  "
+          f"(total {len(adversarial_probes)} probes)")
+    print(f"  route-agnostic adversarial acceptances: {len(accepted)}")
+    for a in accepted:
+        print(f"    ACCEPTED [{a.get('domain')}/{a.get('paper_id')}] {a.get('class')}: {a.get('claim')}")
     print(f"\n  {n_pass}/{len(inv)} PASS")
     (HERE / "runs" / "binding_validation" / "invariants.json").write_text(
-        json.dumps({"invariants": inv, "gate_summary": gate_summary}, indent=2), encoding="utf-8")
+        json.dumps({"invariants": inv, "gate_summary": gate_summary,
+                    "adversarial_probe_files": loaded,
+                    "adversarial_acceptances": accepted}, indent=2), encoding="utf-8")
     return 0 if n_pass == len(inv) else 1
 
 

@@ -13,7 +13,7 @@ as diagnostic history and clearly marked.
 
 Harnesses (isolated to `runs/binding_validation/`): `binding_validation_measure.py`
 (Tasks 1–3, 5), `gate_sensitivity.py --medical` (Task 4),
-`binding_validation_invariants.py` (15 invariants).
+`binding_validation_invariants.py` (16 invariants incl. the route-agnostic adversarial check).
 
 ---
 
@@ -84,7 +84,7 @@ reintroduce it:
 | claims that reached `bound` (real Stage-4 extraction) | **0** | **0** |
 | adversarial probe acceptances (Task 3) | **0** | **0** *(was 3 pre-F1)* |
 | Matrix C positives / sensitivity (Task 4) | — | **5 / 0.800** |
-| 15 safety invariants | 15/15 | 15/15 |
+| 16 safety invariants | 16/16 | 16/16 |
 
 **Outcome A + Outcome C, per the pre-registered options:**
 
@@ -277,7 +277,7 @@ canonical run stores statuses for RETURNED items only):
 | adversarial probe acceptances (Task 3) | **0** | **0** *(was 3)* |
 | `wrong_cell` fired on all probes | 2 / 6 cross-row | **12 / 13** |
 | `correct_cell` positive-control returned | 1 / 9 | 0 / 2 |
-| 15 safety invariants | 15/15 | 15/15 |
+| 16 safety invariants | 16/16 | 16/16 |
 
 (Medical's full case distribution over *all* numeric items is in Task 2:
 `pdf_only 11 · not_bindable 4 · bound 0 · wrong_cell 1`. The canonical run did not
@@ -304,21 +304,51 @@ identically:**
 
 ---
 
-## Tests, suite, invariants  (post-F1)
+## Tests, suite, invariants  (post-F1, post-invariant-16)
 
 | check | result |
 |---|---|
 | `tests/test_pipeline.py` + `tests/test_anchors.py` | **15 / 15** |
-| experiment suite `tests/test_pipeline_units.py` | **61 / 61** (46 + 15 F1 regression checks) |
-| 15 safety invariants — medical binding_validation (`binding_validation_invariants.py`) | **15 / 15 PASS** |
-| 15 safety invariants — latest data_test staging run (`staging-20260904T021129Z`) | 15 / 15 PASS |
+| experiment suite `tests/test_pipeline_units.py` | **63 / 63** (46 + 15 F1 checks + 2 inv-16 checks) |
+| **16** safety invariants — medical binding_validation (`binding_validation_invariants.py`) | **16 / 16 PASS** |
+| 16 safety invariants — data_test staging run | 16 / 16 (invariant 16 vacuous — no structured probe suite there) |
 
-Invariants 14 (`cross_row_binding_acceptances_zero`) and 15
-(`no_own_quantitative_from_unverifiable_binding`) PASS on real Stage-4 output in
-both passes — there are 0 fabricated claims in real extraction (the gate returns
-3 numeric items corpus-wide). Post-F1 they also hold against the Task-3 synthetic
-probes, which pre-F1 they did not police (the 3 acceptances routed through
-`not_bindable`, a by-design fall-through outside both invariants' failure sets).
+### The historical blind spot (F2 — invariant 16)
+
+**Evaluation coverage is not evaluation completeness.** Invariants 14
+(`cross_row_binding_acceptances_zero`) and 15
+(`no_own_quantitative_from_unverifiable_binding`) were written *specifically* to
+catch a structured-binding failure that surfaces a wrong number as an OWN result.
+Both are **route-specific**: 14 keys on `structural_binding.status == "wrong_cell"`,
+15 on `status ∈ {pdf_only, wrong_cell, no_cell, no_metric}`. The 3 pre-F1
+adversarial acceptances reached `RETURNED` via `status == "not_bindable"` — a
+route in neither invariant's failure set — so **the two invariants written to
+catch exactly this class of bug reported PASS on it**. Controlled adversarial
+testing (Task 3), not the invariant suite, exposed it.
+
+**Invariant 16** (`_adversarial_probe_acceptances`, `staging_run.py`) is the
+response: it operates on the **final acceptance outcome** of every adversarial
+probe — `RETURNED` on any probe whose class is not `correct_cell` is a failure —
+and never consults `structural_binding.status` / `binding_status` /
+`abstain_reason`. No route-specific exception. It is fed the **complete**
+adversarial suite, both domains:
+
+| probe source | domain | probes | adversarial | route-agnostic acceptances |
+|---|---|--:|--:|--:|
+| `binding_validation_measure.py` Task 3 | medical JATS | 13 | 11 | **0** |
+| `structural_binding_measure.py` | canonical LaTeX | 16 | 11 | **0** |
+| `gate_sensitivity.py` `_crossrow_probe` | both | 8 | 8 | **0** |
+| **total** | | **37** | **30** | **0** |
+
+Post-F1, invariants 14 and 15 also hold against these probes — but 16 is what
+would have caught the pre-F1 `not_bindable` acceptances, and its two unit tests
+(`inv16:` in `test_pipeline_units.py`) pin that it counts a `RETURNED` adversarial
+probe *even when `binding_status == "not_bindable"`*.
+
+The original 15-invariant suite is not presented as complete: it had a
+route-specific blind spot, adversarial testing found it, and the suite was
+strengthened on that evidence. No further invariants added — 16 is
+outcome-level and route-agnostic, which closes the class, not just the instance.
 
 ---
 
@@ -327,11 +357,14 @@ probes, which pre-F1 they did not police (the 3 acceptances routed through
 - `src/evidence/gate.py` — **F1**: `_metric_tokens()` added; `_col_matches_metric`
   made symmetric; `structural_bind` uses `_metric_tokens(value)`. No other gate,
   selector, or acquisition change.
+- `experiments/document_evidence_pipeline/staging_run.py` — **F2**: invariant 16
+  (`_adversarial_probe_acceptances`, route-agnostic) added; `_check_invariants`
+  takes an optional `adversarial_probes` arg (backward-compatible).
 - `experiments/document_evidence_pipeline/tests/test_pipeline_units.py` — 15 F1
-  regression checks (`sym 1a`–`sym 3d`, `adv 4a`–`adv 4d`).
+  regression checks (`sym 1a`–`sym 3d`, `adv 4a`–`adv 4d`) + 2 invariant-16 checks (`inv16:`).
 - `binding_validation_measure.py` — Tasks 1, 2, 3, 5
 - `gate_sensitivity.py` — `--medical` flag (harness only)
-- `binding_validation_invariants.py` — 15 invariants on the medical output
+- `binding_validation_invariants.py` — 16 invariants on the medical output (16 = route-agnostic adversarial-probe acceptances, both domains)
 - `runs/binding_validation/` — `processed/{chunks,extraction_cache,paper_evidence}.json`,
   `task{1,2,3,5}_*.json`, `invariants.json`, `run.log`, `task4_gate_sensitivity.log`
 - `runs/gate_sensitivity/` — `mutants.json`, `contract_matrices.json`

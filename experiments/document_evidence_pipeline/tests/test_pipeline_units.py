@@ -368,6 +368,27 @@ def run():
     check("adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)",
           a4["status"] == "not_bindable", str(a4))
 
+    # ------------------------------------------------------------------
+    # INVARIANT 16 — route-agnostic adversarial-probe acceptances. Receipt that
+    # the check keys on the FINAL outcome, not the binding route: invariants
+    # 14/15 (wrong_cell / pdf_only) could not see an acceptance that reached
+    # RETURNED via not_bindable.
+    # ------------------------------------------------------------------
+    from staging_run import _adversarial_probe_acceptances as _adv_acc
+    _probes = [
+        {"class": "correct_cell", "final": "RETURNED"},                 # positive control — ignored
+        {"class": "correct_col_wrong_row", "final": "ABSTAINED"},       # adversarial, correctly abstained
+        {"class": "cross_table_substitution", "final": "RETURNED",      # adversarial, ACCEPTED via not_bindable
+         "binding_status": "not_bindable", "paper_id": "x"},
+        {"gate_final": "RETURNED", "crafted_claim": "..."},             # crossrow shape, no 'class' -> adversarial, ACCEPTED
+    ]
+    acc = _adv_acc(_probes)
+    check("inv16: route-agnostic — counts a RETURNED adversarial probe even when binding_status=not_bindable",
+          len(acc) == 2 and all(a["class"] != "correct_cell" for a in acc), str(acc))
+    check("inv16: a correct_cell RETURNED is NOT an acceptance; an ABSTAINED adversarial is NOT",
+          _adv_acc([{"class": "correct_cell", "final": "RETURNED"},
+                    {"class": "cross_table_substitution", "final": "ABSTAINED"}]) == [])
+
     print(f"\n{_PASS} passed, {_FAIL} failed")
     if _FAILURES:
         print("FAILURES:")
