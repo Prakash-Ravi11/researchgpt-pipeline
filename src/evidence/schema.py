@@ -20,9 +20,20 @@ ACQ_STATUSES = {FULL_TEXT, ABSTRACT_ONLY, METADATA_ONLY, NO_ACCESSIBLE_FULL_TEXT
 # --- representation type ---------------------------------------------------
 REPR_JATS = "jats_xml"
 REPR_PDF = "pdf"
+REPR_LATEX = "latex"          # arXiv e-print source — CONTENT/TABLES/STRUCTURE ONLY.
+                              # Identity + metadata never come from here (S2ORC: LaTeX
+                              # metadata is worse than PDF-derived). See acquire.py
+                              # `identity_validate` guard and semantic_scholar.py.
 REPR_HTML = "html"
 REPR_ABSTRACT = "abstract"
 REPR_NONE = "none"
+
+# Ranking of structured full-text representations, most-structured first. The
+# acquisition resolver tries candidates in this order: JATS/XML (no table-structure
+# collapse at all) > arXiv LaTeX e-print (real tabular/\caption/\multicolumn) >
+# PDF (PyMuPDF keeps digits + page provenance but collapses table structure —
+# only ~9% of table-resident values stay context-bindable).
+STRUCTURED_REPR_RANK = {REPR_JATS: 0, REPR_LATEX: 1, REPR_PDF: 2}
 
 # --- evidence status -----------------------------------------------------
 EXPLICIT = "EXPLICIT"
@@ -96,9 +107,65 @@ def validate_acquisition_record(rec: dict[str, Any]) -> list[str]:
             problems.append("FULL_TEXT without passed identity_validation")
         if not rec.get("content_validation", {}).get("passed"):
             problems.append("FULL_TEXT without passed content_validation")
-        if rec.get("representation_type") not in (REPR_JATS, REPR_PDF, REPR_HTML):
+        if rec.get("representation_type") not in (REPR_JATS, REPR_PDF, REPR_LATEX, REPR_HTML):
             problems.append("FULL_TEXT without a document representation")
+        # content/identity split: a LaTeX representation is only valid if its
+        # identity was established from something OTHER than the LaTeX source.
+        if rec.get("representation_type") == REPR_LATEX:
+            src = rec.get("identity_validation", {}).get("signals", {}).get("identity_source")
+            if src not in ("arxiv_pdf", "semantic_scholar"):
+                problems.append("REPR_LATEX identity_validation.signals.identity_source "
+                                f"must be arxiv_pdf|semantic_scholar, got {src!r}")
     return problems
+
+
+def structured_table(*, table_id: str, paper_id: str, source: str, representation: str,
+                     section: str | None, caption: str, cells: list[dict[str, Any]],
+                     parse_status: str, fallback: str | None, notes: list[str] | None = None,
+                     raw_text: str = "") -> dict[str, Any]:
+    """ONE canonical shape for a parsed table, emitted identically by the LaTeX
+    e-print path and the Europe PMC JATS path (Phase 5's gate consumes this — two
+    shapes would mean two code paths in the gate).
+
+    `raw_text` is the FULL verbatim cell content of the table — every value,
+    including cells whose structural parsing failed. It is the parity guarantee:
+    structured `cells` are additional metadata layered on top of `raw_text`, never
+    a replacement for it (Phase-4b M1: a value the PDF path keeps must also survive
+    here). `cells` carries value + column_header + row_label + caption + section
+    for the subset that parsed cleanly.
+
+    parse_status: "parsed" | "partial" | "fallback_pdf" (fallback_pdf now means
+    "no structured cells" — the value text still ships via raw_text).
+    """
+    return {
+        "table_id": table_id,
+        "paper_id": paper_id,
+        "source": source,
+        "representation": representation,
+        "section": section,
+        "caption": caption,
+        "n_cells": len(cells),
+        "cells": cells,                 # [{value, column_header, row_label, caption, section, ...}]
+        "raw_text": raw_text,           # full verbatim cell content — never dropped
+        "parse_status": parse_status,
+        "fallback": fallback,
+        "notes": notes or [],
+    }
+
+
+def table_cell(*, value: str, column_header: str, row_label: str,
+               caption: str, section: str | None,
+               row: int, col: int, spans: dict[str, int] | None = None) -> dict[str, Any]:
+    return {
+        "value": value.strip(),
+        "column_header": column_header.strip(),
+        "row_label": row_label.strip(),
+        "caption": caption.strip(),
+        "section": section,
+        "row": row,
+        "col": col,
+        "spans": spans or {},          # {"colspan": n} / {"rowspan": n} when \multicolumn/\multirow
+    }
 
 
 _WORD = re.compile(r"[a-z0-9]+")

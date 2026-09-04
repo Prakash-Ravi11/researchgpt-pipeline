@@ -117,7 +117,7 @@ def process_paper(paper: dict, chunk_size: int, overlap: int) -> list[dict]:
     return records
 
 
-def process_paper_grounded(paper: dict) -> list[dict]:
+def process_paper_grounded(paper: dict, latex_parity_tolerance: float | None = None) -> list[dict]:
     """Provenance-bearing chunking (FINAL_REPORT.md §O change 3).
 
     Parses the validated PDF or JATS/XML into section/page/node-anchored blocks,
@@ -125,6 +125,12 @@ def process_paper_grounded(paper: dict) -> list[dict]:
     span. Returns the same superset schema as ``process_paper`` PLUS the
     provenance fields, so Stage 3 / retrieval / the evidence gate can consume it
     while nothing that reads the legacy fields breaks.
+
+    LaTeX parity gate: a paper acquired as LaTeX is kept ONLY if verbatim survival
+    of its ground-truth numeric values is at least as good as the paired PDF's
+    (`latex_parity_tolerance`, default strict). Otherwise it falls back to the PDF
+    representation and the two survival figures are recorded on every chunk's
+    `latex_parity_fallback`.
     """
     from src.evidence.represent import build_document
     from src.evidence.chunker import chunk_document
@@ -139,10 +145,30 @@ def process_paper_grounded(paper: dict) -> list[dict]:
         p = Path(paper["pdf_path"])
         if p.exists():
             data = p.read_bytes()
+    parity_fallback = None
+    # LaTeX representation: `pdf_path` is the .tex; also load the paired arXiv PDF
+    # so build_document can fall back to it PER TABLE when a tabular env won't parse.
+    if rep == "latex" and paper.get("latex_pdf_fallback_path"):
+        fb = Path(paper["latex_pdf_fallback_path"])
+        if fb.exists():
+            acq["latex_pdf_fallback_bytes"] = fb.read_bytes()
+
     doc = build_document(acq, data, fallback_abstract=paper.get("abstract"))
+
+    if rep == "latex" and data is not None and acq.get("latex_pdf_fallback_bytes"):
+        from src.evidence.latex_parity import check_parity, DEFAULT_PARITY_TOLERANCE
+        tol = DEFAULT_PARITY_TOLERANCE if latex_parity_tolerance is None else latex_parity_tolerance
+        pdf_acq = {**acq, "representation_type": "pdf"}
+        pdf_doc = build_document(pdf_acq, acq["latex_pdf_fallback_bytes"],
+                                 fallback_abstract=paper.get("abstract"))
+        par = check_parity(data.decode("utf-8", "replace"), doc["blocks"], pdf_doc["blocks"], tol)
+        if not par["passed"]:
+            doc = pdf_doc                       # PARITY GATE: never worse than baseline
+            parity_fallback = par
+
     ev_chunks = chunk_document(doc)
 
-    legacy_source = ("full_text" if doc["representation"] in ("pdf", "jats_xml")
+    legacy_source = ("full_text" if doc["representation"] in ("pdf", "jats_xml", "latex")
                      else "abstract_only")
     records = []
     for i, c in enumerate(ev_chunks):
@@ -164,6 +190,7 @@ def process_paper_grounded(paper: dict) -> list[dict]:
             "block_type": c["block_type"],
             "char_start": c["char_start"],
             "char_end": c["char_end"],
+            **({"latex_parity_fallback": parity_fallback} if parity_fallback else {}),
         })
     return records
 
@@ -171,7 +198,9 @@ def process_paper_grounded(paper: dict) -> list[dict]:
 def run_processing(config: dict) -> list[dict]:
     proc_cfg = config["processing"]
     paths_cfg = config["paths"]
-    grounded = bool((config.get("evidence_grounding", {}) or {}).get("enabled"))
+    eg_cfg = config.get("evidence_grounding", {}) or {}
+    grounded = bool(eg_cfg.get("enabled"))
+    parity_tol = eg_cfg.get("latex_parity_tolerance")   # None -> strict (>= PDF)
 
     metadata_path = Path(paths_cfg["raw_metadata_dir"]) / "collected_papers.json"
     with open(metadata_path, encoding="utf-8") as f:
@@ -185,7 +214,7 @@ def run_processing(config: dict) -> list[dict]:
     empty_papers = []
     for paper in tqdm(papers, desc="Chunking"):
         if grounded:
-            records = process_paper_grounded(paper)
+            records = process_paper_grounded(paper, latex_parity_tolerance=parity_tol)
         else:
             records = process_paper(paper, proc_cfg["chunk_size"], proc_cfg["chunk_overlap"])
         if not records:

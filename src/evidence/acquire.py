@@ -10,13 +10,14 @@ from __future__ import annotations
 
 import hashlib
 import io
+import re
 import time
 import xml.etree.ElementTree as ET
 from typing import Any
 
 import requests
 
-from .schema import REPR_JATS, REPR_PDF, title_similarity
+from .schema import REPR_JATS, REPR_LATEX, REPR_PDF, title_similarity
 
 # Courtesy routing only (OpenAlex / Crossref "polite pool") — not authentication,
 # and deliberately not a real person's address.
@@ -106,11 +107,34 @@ def _jats_parts(data: bytes) -> dict[str, Any]:
             "body_words": len(body_text.split()), "root": root}
 
 
+_LATEX_STRIP = re.compile(r"\\[a-zA-Z@]+\*?|[{}$&~%^_#]|\\\\|\\[\[\]]")
+
+
+def latex_body_words(latex: str) -> int:
+    """Rough word count of the LaTeX body after removing commands and math markup."""
+    m = re.search(r"\\begin\s*\{document\}", latex)
+    body = latex[m.end():] if m else latex
+    return len(_LATEX_STRIP.sub(" ", body).split())
+
+
 def content_validate(rep_type: str, data: bytes) -> dict[str, Any]:
     """Is this a substantive article body — not a landing page, error page,
     abstract stub, or corrupt file?"""
     if not data:
         return {"checked": True, "passed": False, "reason": "empty_response", "metrics": {}}
+    if rep_type == REPR_LATEX:
+        # data here is the ASSEMBLED, \input-resolved LaTeX source (content only —
+        # never used for identity; see identity_validate).
+        s = data.decode("utf-8", "replace")
+        has_doc = bool(re.search(r"\\begin\s*\{document\}", s))
+        words = latex_body_words(s)
+        n_secs = len(re.findall(r"\\(?:sub){0,2}section\*?\s*\{", s))
+        ok = has_doc and words >= MIN_BODY_WORDS
+        return {"checked": True, "passed": bool(ok),
+                "reason": "ok" if ok else
+                (f"no_begin_document" if not has_doc else f"thin_latex_words{words}"),
+                "metrics": {"latex_body_words": words, "n_sections": n_secs,
+                            "content_source": "arxiv_eprint"}}
     head = data[:400].lstrip().lower()
     if head.startswith(b"<!doctype html") or head.startswith(b"<html") or b"<title>error" in head:
         return {"checked": True, "passed": False, "reason": "html_or_error_page", "metrics": {}}
@@ -143,7 +167,19 @@ def _pdf_title_text(data: bytes) -> str:
 
 
 def identity_validate(paper: dict[str, Any], rep_type: str, data: bytes) -> dict[str, Any]:
-    """Does this document actually belong to `paper`? Never accept a wrong paper."""
+    """Does this document actually belong to `paper`? Never accept a wrong paper.
+
+    CONTENT / IDENTITY SPLIT (enforced here): identity must NEVER be derived from
+    LaTeX e-print source. S2ORC found author-defined LaTeX metadata is worse than
+    PDF-derived and excluded it from paper matching; our wrong-paper-accepted
+    guarantee depends on this check, so a LaTeX representation gets its identity
+    from the paired arXiv PDF (rep_type=pdf) or Semantic Scholar — never from the
+    `.tex`. Passing REPR_LATEX bytes here is a bug and is refused, not scored.
+    """
+    if rep_type == REPR_LATEX:
+        return {"checked": True, "passed": False, "signals": {},
+                "reason": "identity_must_not_come_from_latex "
+                          "(use the paired arXiv PDF — see download_open_access_pdfs)"}
     meta_title = paper.get("title") or ""
     ext = {k: str(v) for k, v in (paper.get("externalIds") or {}).items() if v is not None}
     doi = (ext.get("DOI") or "").lower()

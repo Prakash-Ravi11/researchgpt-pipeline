@@ -60,3 +60,14 @@ system:
 
 evidence_grounding:
   enabled: true   # STAGING ONLY — do not copy this line into configs/config.yaml
+  # arXiv LaTeX e-print ingestion (Phase 4). DISABLED: it reached numeric parity
+  # (M1) but regressed downstream extraction — the structured table text drives
+  # qwen2.5:7b past the 768 num_predict cap (retained-subset mean fields
+  # 9.91 -> 5.82 at reservation 768; recovers to ~9.09 only at 4096). The
+  # negative result is the Phase-4 deliverable; see
+  # experiments/document_evidence_pipeline/LATEX_ACQUISITION_REPORT.md.
+  latex_ingestion_enabled: false
+  # Parity gate (used only if latex_ingestion_enabled is flipped on): a paper
+  # acquired as LaTeX is kept only if verbatim survival of its ground-truth
+  # numeric values is >= the paired PDF's, minus this tolerance. 0.0 = strict.
+  latex_parity_tolerance: 0.0
