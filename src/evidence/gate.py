@@ -42,6 +42,111 @@ _SENT = re.compile(r"(?<=[.!?])\s+")
 # above — single source of truth shared with the Test 2 / Test 3 harnesses.
 
 
+# --------------------------------------------------------------------------
+# METRIC RANGE PLAUSIBILITY
+#
+# ATTRIBUTION answers "whose result is this"; BINDING answers "which result is
+# this". The grounding check ("number + >=2 topical tokens co-occur in one
+# chunk") verifies neither binding nor plausibility — a cross-row number, or a
+# COUNT misread by Stage 4 as a metric value, co-occurs with the right tokens
+# just as well. Test 2's cross-row probes: 4/7 RETURNED. "False OWN = 0" was
+# never evidence of binding correctness.
+#
+# This is a narrow, one-directional plausibility check: when a claim NAMES a
+# bounded metric, its asserted value must lie inside that metric's physical
+# range, else the claim does not pass the gate. It never *accepts* anything the
+# rest of the gate would reject, and it never fires on a value with no named
+# metric (silent over-rejection would be worse than the bug it closes).
+#
+# Metric list derived from the two corpora's RETURNED metrics/results
+# (canonical60 + data_test) plus the phase brief's explicit list. Only metrics
+# with a FINITE upper bound are in the table. MAE / RMSE / MSE / MAPE /
+# perplexity / Hausdorff (HD95) / PSNR / latency / throughput appear in the
+# corpora but have no finite ceiling -> deliberately NOT range-checked.
+#
+# 0-1 vs 0-100 AMBIGUITY — decided rule (not a per-value guess): a
+# percentage-family metric is reported in the literature on EITHER a 0-1 or a
+# 0-100 scale. The gate accepts both and takes the plausible interval as
+# [0, 100]. It does not infer which scale a given number uses; it only rejects
+# the physically impossible (< 0, or > 100). Correlation-family (Pearson /
+# Spearman / Kendall tau / Cohen kappa) -> [-100, 100] by the same logic.
+_PCT_FAMILY = (
+    "dice", "dice score", "dice coefficient", "dice index", "dsc",
+    "f1", "f1 score", "f1-score", "f-score", "f score", "micro f1", "macro f1",
+    "accuracy", "acc", "balanced accuracy", "top-1 accuracy", "top-5 accuracy",
+    "precision", "recall", "iou", "miou", "jaccard", "jaccard index",
+    "auroc", "auprc", "auc", "auc-roc", "roc-auc", "auc roc", "ap",
+    "sensitivity", "specificity", "tpr", "tnr",
+    "ndcg", "map", "mrr", "hit rate", "hits", "success rate", "pass rate", "pass@1",
+    "bleu", "sacrebleu", "rouge", "rouge-l", "rouge-1", "rouge-2", "rougel",
+    "meteor", "chrf", "ter", "exact match", "em", "ssim", "faithfulness",
+    "relevance", "win rate", "coverage",
+)
+_CORR_FAMILY = ("pearson", "spearman", "kendall", "kendall tau", "kappa",
+                "cohen kappa", "cohen's kappa", "correlation", "r2", "r^2",
+                "r-squared", "matthews correlation", "mcc")
+# {canonical metric name -> (lo, hi)}
+_METRIC_RANGES: dict[str, tuple[float, float]] = {
+    **{m: (0.0, 100.0) for m in _PCT_FAMILY},
+    **{m: (-100.0, 100.0) for m in _CORR_FAMILY},
+}
+# match a metric name, tolerating an @k / -n / -L suffix and a trailing
+# "score|coefficient|index|rate" word. Longest names first so "dice coefficient"
+# wins over "dice".
+_METRIC_NAME_RE = re.compile(
+    r"\b(" + "|".join(re.escape(m) for m in
+                      sorted(_METRIC_RANGES, key=len, reverse=True)) +
+    r")\b(?:\s*@\s*\d+|-\d+|-l\b|-1\b|-2\b)?(?:\s+(?:score|coefficient|index|rate|value))?",
+    re.I)
+# the value ADJACENT to a metric name: "F1 of 0.88", "dice = 94.9", "Dice: 3.1",
+# "94.9% Dice", "Dice score 0.9". A number several words away (a sample count, a
+# citation year) must NOT bind — silent over-rejection is worse than the bug.
+_NUM_AFTER_RE = re.compile(
+    r"^\s*(?:(?:of|is|was|reaches?|reached|at|=|:|~|>|<|>=|<=|about|around|nearly|up to)\s*)?"
+    r"(-?\d+(?:\.\d+)?)\s*%?", re.I)
+_NUM_BEFORE_RE = re.compile(r"(-?\d+(?:\.\d+)?)\s*%?\s*$")
+_EPS = 1e-6
+
+
+def _canon_metric(raw: str) -> str | None:
+    """Map a matched metric phrase to a table key (drops @k / -n / trailing word)."""
+    s = re.sub(r"\s*@\s*\d+|-\d+|-l\b|-1\b|-2\b", "", raw.lower()).strip()
+    s = re.sub(r"\s+(?:score|coefficient|index|rate|value)$", "", s).strip()
+    if s in _METRIC_RANGES:
+        return s
+    # "f1-score" / "rougel" etc. after suffix strip
+    return s if s in _METRIC_RANGES else None
+
+
+def metric_range_check(value: str) -> dict[str, Any] | None:
+    """None  -> claim names no bounded metric, or every named-metric value is in
+                range (nothing to do).
+    dict('metric','value','interval','claim') -> a named metric's asserted value
+                is outside its physical range; the claim must NOT pass the gate.
+    """
+    text = value or ""
+    for nm in _METRIC_NAME_RE.finditer(text):
+        metric = _canon_metric(nm.group(0))
+        if metric is None:
+            continue
+        lo, hi = _METRIC_RANGES[metric]
+        # the ADJACENT number only: "dice of 407" / "F1 = 0.88" (after) or
+        # "94.9% Dice" / "0.9 Dice score" (before). A number that needs several
+        # intervening words does not bind.
+        ma = _NUM_AFTER_RE.match(text[nm.end(): nm.end() + 24])
+        mb = _NUM_BEFORE_RE.search(text[max(0, nm.start() - 14): nm.start()])
+        cand = ma or mb
+        if cand is None:
+            continue
+        try:
+            x = float(cand.group(1))
+        except ValueError:
+            continue
+        if not (lo - _EPS <= x <= hi + _EPS):
+            return {"metric": metric, "value": x, "interval": [lo, hi], "claim": text[:200]}
+    return None
+
+
 def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").lower()).strip()
 
@@ -136,7 +241,8 @@ def _evidence_item(field: str, value: str) -> dict[str, Any]:
             "block_id": None, "char_start": None, "char_end": None,
             "evidence_status": MISSING, "attribution": UNKNOWN,
             "attribution_confidence": 0.0, "confidence": 0.0,
-            "provenance_valid": False, "final": ABSTAINED, "abstain_reason": None}
+            "provenance_valid": False, "final": ABSTAINED, "abstain_reason": None,
+            "range_check": None}
 
 
 def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 6000) -> str:
@@ -156,6 +262,15 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
     if not _value_sane(field, value):
         item.update(evidence_status=UNSUPPORTED, abstain_reason="value_failed_sanity_check")
         return item
+    # BINDING (not attribution): if the claim names a bounded metric, its value
+    # must be physically possible for that metric. Closes the cross-row-number /
+    # count-misread-as-metric hole. No-op when no bounded metric is named.
+    if field in ("metrics", "results"):
+        rng = metric_range_check(value)
+        if rng is not None:
+            item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                        abstain_reason="metric_value_out_of_range", range_check=rng)
+            return item
     grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
@@ -261,6 +376,7 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
              "attribution": {OWN_PAPER: 0, CITED_PAPER: 0, UNKNOWN: 0}}
 
     evidence_out = []
+    range_rejections: list[dict[str, Any]] = []
     for rec in summaries:
         pid = rec.get("paper_id")
         meta = meta_by_id.get(pid, {})
@@ -280,6 +396,8 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
                     stats["returned"][field] += 1
                 else:
                     stats["abstained"][field] += 1
+                if it.get("abstain_reason") == "metric_value_out_of_range" and it.get("range_check"):
+                    range_rejections.append({"paper_id": pid, "field": field, **it["range_check"]})
                 if acq != FULL_TEXT:
                     stats["no_full_text_quant_fields"] += 1
                     if it["final"] == ABSTAINED:
@@ -302,10 +420,20 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
     stats["no_full_text_quant_abstention_rate"] = (
         round(stats["no_full_text_quant_abstained"] / stats["no_full_text_quant_fields"], 4)
         if stats["no_full_text_quant_fields"] else None)
+    stats["metric_range_rejections"] = len(range_rejections)
     (processed / "evidence_gate_summary.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
+    # LOG every metric-range rejection in full (metric, value, paper) — a
+    # legitimate count misread by Stage 4 as a metric value shows up here.
+    (processed / "evidence_gate_range_rejections.json").write_text(
+        json.dumps(range_rejections, indent=2), encoding="utf-8")
     print(f"  Evidence gate: returned {stats['returned']}, abstained {stats['abstained']}, "
           f"provenance {stats['provenance_valid']}/{stats['provenance_checked']}, "
           f"no-full-text abstain {stats['no_full_text_quant_abstained']}/{stats['no_full_text_quant_fields']}")
+    if range_rejections:
+        print(f"  Metric-range rejections: {len(range_rejections)} — "
+              + "; ".join(f"{r['paper_id'][:8]} {r['metric']}={r['value']} !in {r['interval']}"
+                          for r in range_rejections[:8])
+              + (" …" if len(range_rejections) > 8 else ""))
 
     # deterministic observability around Stage 5 (NOT a new stage): writes
     # evidence_monitor.json and prints an A/B/C/D status line.

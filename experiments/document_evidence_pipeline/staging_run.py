@@ -181,6 +181,12 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
     # number-anchored gate active: check the source directly
     gate_src = (ROOT / "src" / "evidence" / "gate.py").read_text(encoding="utf-8")
     num_anchored = 'field == "results"' in gate_src and "_NUMVAL" in gate_src
+    # 13 — no RETURNED metrics/results claim asserts a physically impossible value
+    # for a named bounded metric (Dice/F1/accuracy/... > 100 or < 0; correlation
+    # |x| > 100). A count misread by Stage 4 as a metric value trips this.
+    from src.evidence.gate import metric_range_check
+    out_of_range = [(rec.get("paper_id"), it.get("value"), metric_range_check(it.get("value") or ""))
+                    for _, _, it in ret_quant if metric_range_check(it.get("value") or "")]
     # six-stage architecture unchanged: run_pipeline still chains exactly 4 stage fns + sanity
     rp = (ROOT / "run_pipeline.py").read_text(encoding="utf-8")
     six_stage = rp.count("Stage 1") and rp.count("Stage 2") and rp.count("Stage 3") \
@@ -200,6 +206,7 @@ def _check_invariants(corpus, evidence, gate, monitor, chunks_by, errors) -> dic
         "10_evidence_span_contains_value": P(span_ok == len(ret_quant)),
         "11_number_anchored_results_gate_active": P(num_anchored),
         "12_six_stage_architecture_unchanged": P(bool(six_stage)),
+        "13_out_of_range_metric_values_zero": P(len(out_of_range) == 0),
     }
 
 

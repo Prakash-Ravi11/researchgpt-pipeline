@@ -162,6 +162,122 @@ true support removal (14/14 abstain), LLM paraphrase of numbered results (14/14 
 
 ```
 python experiments/document_evidence_pipeline/gate_sensitivity.py --pass all
+python experiments/document_evidence_pipeline/gate_sensitivity.py --pass all --no-range   # pre-fix baseline
 ```
 Artifacts: `runs/gate_sensitivity/{mutants.json, crossrow.json, single_digit.json}`.
 LLM paraphrase: `qwen2.5:7b`, `temperature=0`, `seed=42`.
+
+---
+
+# FIX for defect B — metric range plausibility
+
+## ATTRIBUTION ≠ BINDING (stated in `src/evidence/gate.py`)
+
+**ATTRIBUTION** answers *whose* result this is (own vs cited). **BINDING** answers
+*which* result this is — is this number the value of this metric, for this row/subject.
+Both must hold for a quantitative claim to be true. The gate verified attribution and
+grounding ("number + ≥ 2 topical tokens co-occur in one chunk"); it **never verified
+binding**. A cross-row number, or a count Stage 4 misread as a metric value, satisfies
+grounding just as well as the real value. Test 2's 7 crafted cross-row claims: **4
+RETURNED**; attribution backstopped only 2, and only when the fake subject resembled a
+citation. **"false OWN = 0" was never evidence of binding correctness.**
+
+This fix is a **one-directional plausibility floor**, not a full binding check: when a
+claim *names* a bounded metric, its value must be physically possible for that metric. It
+cannot tell that a *plausible* number belongs to the wrong row.
+
+## Metric range table
+
+Metric list **derived from the corpora** — every metric name appearing in a RETURNED
+`metrics`/`results` item across `canonical60` + `data_test` — union the phase brief's list.
+Only metrics with a **finite upper bound** are in the table.
+
+| family | metrics | plausible interval |
+|---|---|---|
+| percentage-family | Dice / DSC, F1 (micro/macro), accuracy (balanced, top-k), precision, recall, IoU / mIoU, Jaccard, AUROC, AUPRC, AUC / ROC-AUC, AP, sensitivity, specificity, TPR, TNR, nDCG, MAP, MRR, hit/success/pass rate, pass@1, BLEU / sacreBLEU, ROUGE(-L/-1/-2), METEOR, chrF, TER, exact match / EM, SSIM, faithfulness, relevance, win rate, coverage | **[0, 100]** |
+| correlation-family | Pearson, Spearman, Kendall τ, Cohen κ, MCC, R² | **[−100, 100]** |
+| **not checked** (no finite ceiling) | MAE, RMSE, MSE, MAPE, perplexity, Hausdorff / HD95, PSNR, latency, throughput | — |
+
+### 0–1 vs 0–100 — decided rule (not a per-value guess)
+
+A percentage-family metric is reported in the literature on **either** a 0–1 **or** a 0–100
+scale. The gate **accepts both** and takes the plausible interval as **[0, 100]**. It does
+**not** infer which scale a given number uses — it only rejects the physically impossible
+(`< 0`, or `> 100`; correlation `|x| > 100`). So `Dice 0.914` and `Dice 91.4` both pass;
+`Dice 407` and `accuracy 216` do not.
+
+### When it applies
+
+Only when a table metric is **named in the claim**, and only to the number **adjacent** to
+that name — `"F1 of 0.88"`, `"dice = 94.9"`, `"94.9% Dice"`. A number several words away
+does **not** bind: `"72.69% accuracy on emotion recognition with 216 test samples"` binds
+`72.69`, not the sample count `216`. A value with no named metric is never range-checked —
+silent over-rejection would be worse than the bug.
+
+### Logging
+
+`run_evidence_gate` writes **`evidence_gate_range_rejections.json`** — one entry per
+rejection: `{paper_id, field, metric, value, interval, claim}`. Prints a one-line count +
+the first 8. `stats["metric_range_rejections"]` in `evidence_gate_summary.json`.
+
+## MEASURE — Test 2 re-run, current corpora (`--no-range` vs default)
+
+### Confusion matrix — UNCHANGED
+
+| | phase-brief baseline | measured **before** (`--no-range`) | measured **after** |
+|---|---|---|---|
+| should-ACCEPT (paraphrase) | TP 36 / FN 1 | TP 36 / FN 1 | **TP 36 / FN 1** |
+| should-REJECT (pert/fab/del) | FP 7 / TN 65 | FP 7 / TN 65 | **FP 7 / TN 65** |
+| precision / sensitivity / specificity | .837 / .973 / .903 | .837 / .973 / .903 | **.837 / .973 / .903** |
+
+The standard mutation classes (numeric perturbation, fabrication, support deletion,
+paraphrase) never produce an out-of-range named-metric value, so the range check leaves the
+matrix **exactly** as-is. The 1 FN is `cf099b7cd7` (`evidence_span_not_found`, a
+comparative sentence with no anchorable number — pre-existing, not range-related).
+
+### Cross-row probes: 4 accepted → **2**; range alone rejects **2 of the 4**
+
+| probe (crafted) | before | after | caught by |
+|---|---|---|---|
+| `93db4f9a32` "Validator-pass total reports a **precision of 136**" | RETURNED | ABSTAINED | **range** (136 ∉ [0,100]) |
+| `0549e2e9e6` "Active Oblongs 2D US reports a **dice of 407**" | RETURNED | ABSTAINED | **range** (407 ∉ [0,100]) |
+| `0549e2e9e6` "Proposed reports an **accuracy of 94.9**" | RETURNED | **RETURNED** | — (94.9 is a plausible accuracy — wrong row, range can't tell) |
+| `69b02cfebf` "Nearest Neighbor reports a **pearson of 0.9895**" | RETURNED | **RETURNED** | — (0.9895 is a plausible ρ — wrong row) |
+| `0549e2e9e6` "Adaptive Triple Dice Loss reports a **dice of 2165**" | ABSTAINED (attribution) | ABSTAINED (range, fires first) | range or attribution |
+| `0549e2e9e6` "GVF-Snake reports a **dice of 56**" | ABSTAINED (attribution — cited baseline) | ABSTAINED (attribution) | attribution |
+| `f3d7e0165d` "Van Bas Adv Q1 reports a **faithfulness of 0.35**" | ABSTAINED (grounding) | ABSTAINED (grounding) | grounding |
+
+**Rejection log — full (every entry, all crafted probes; 0 organic corpora rejections):**
+
+| paper | field | metric | value | interval | claim |
+|---|---|---|---|---|---|
+| `93db4f9a329d` | results | precision | 136.0 | [0, 100] | "Validator-pass total reports a precision of 136 on the benchmark." |
+| `0549e2e9e6be` | results | dice | 407.0 | [0, 100] | "Active Oblongs 2D US reports a dice of 407 on the benchmark." |
+| `0549e2e9e6be` | results | dice | 2165.0 | [0, 100] | "Adaptive Triple Dice Loss reports a dice of 2165 on the benchmark." |
+
+Dry-run of `metric_range_check` over all **26 RETURNED** `metrics`/`results` items in both
+corpora: **0 flagged.** (`78797b71788b` "72.69% accuracy … 216 test samples" is *not*
+flagged — the adjacency rule binds `72.69`, not `216`.)
+
+### New false negatives introduced (real claim rejected by the range check)
+
+**None.** First cut of the check bound the *nearest* number regardless of distance and
+flagged `78797b71788b` accuracy=216 (the sample count) — 3 FN in Test 2 + 1 on the corpora.
+Fixed by requiring the number be **adjacent** to the metric name (`_NUM_AFTER_RE` /
+`_NUM_BEFORE_RE`, ≤ 24 chars after with an `of`/`=`/`:`/`%` connector, ≤ 14 before). Post-fix:
+confusion matrix identical to baseline, 0/26 corpora items flagged.
+
+## Invariant 13
+
+`13_out_of_range_metric_values_zero` — no RETURNED `metrics`/`results` claim asserts a
+value outside its named bounded metric's range. Added to `staging_run.py`
+(`_check_invariants`), applied post-gate to the gated evidence.
+
+## Honest limit
+
+Range plausibility closes the *impossible-value* half of defect B (a count or a cross-row
+number that lands outside the metric's range). It does **not** close the
+*plausible-but-wrong-row* half — 2 of the 7 cross-row probes still pass because 94.9 is a
+valid accuracy and 0.9895 a valid ρ; only the row is wrong. That requires positional
+row/column binding at parse time (Phase 4's structured cells were built for exactly this,
+and Phase 4 is blocked). Reported, not tuned.

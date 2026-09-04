@@ -196,7 +196,13 @@ def supporting_chunk(field, value, chunks):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pass", dest="phase", choices=["det", "llm", "all"], default="all")
+    ap.add_argument("--no-range", action="store_true",
+                    help="disable the metric-range-plausibility check (the pre-fix 'before' baseline)")
     args = ap.parse_args()
+    if args.no_range:
+        import src.evidence.gate as _G
+        _G.metric_range_check = lambda v: None       # neutralise for the before/after comparison
+        print("[--no-range] metric_range_check disabled for this run")
     OUT.mkdir(parents=True, exist_ok=True)
     rng = random.Random(20260902)
 
