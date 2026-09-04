@@ -288,13 +288,43 @@ def _tok(s: str) -> set[str]:
     return {t for t in _WORD.findall((s or "").lower())}
 
 
+_ALNUM_SPLIT = re.compile(r"[^a-z0-9]+")
+
+
+def _metric_tokens(text: str) -> set[str]:
+    """Recognised metric tokens in `text` — ONE rule, applied identically to a
+    claim string and to a table column header.
+
+    Whether a claim binds to a structured cell must not depend on which side of
+    the comparison is being parsed. Previously the two sides disagreed:
+      - claim side  = `_sig_tokens(value) & _METRIC_TOKENS` — words of length >=4
+        only, so "f1" / "auc" / "iou" in a claim were invisible, and a claim
+        naming a genuinely tabulated column came back `not_bindable`;
+      - column side = `_col_matches_metric` also did a >=2-char *free substring*
+        match, so "Performance metrics" matched "em" (from "exact match") and a
+        non-metric column looked bindable from one direction only.
+    Both are replaced by this: split on any non-alphanumeric boundary (so
+    "F1-score" -> {f1, score}, "Accuracy (%)" -> {accuracy}), intersect whole
+    tokens with `_METRIC_TOKENS`, and add any bounded-range metric NAME matched
+    by `_METRIC_NAME_RE` ("exact match", "dice coefficient", "r2"). No substring
+    matching: "performance metrics" contains no metric word and resolves to the
+    empty set on BOTH sides.
+    """
+    low = (text or "").lower()
+    out = {t for t in _ALNUM_SPLIT.split(low) if t} & _METRIC_TOKENS
+    for m in _METRIC_NAME_RE.finditer(low):
+        canon = _canon_metric(m.group(0))
+        if canon:
+            out.add(canon)
+    return out
+
+
 def _col_matches_metric(col_header: str, metric_toks: set[str]) -> bool:
-    ch = _tok(col_header)
-    if metric_toks & ch:
-        return True
-    # "F1" vs "f1-score", "AUC" vs "auroc" — substring on the joined header
-    j = re.sub(r"[^a-z0-9]", "", (col_header or "").lower())
-    return any(re.sub(r"[^a-z0-9]", "", m) in j for m in metric_toks if len(m) >= 2)
+    """True iff `col_header` names one of the metrics in `metric_toks`. SYMMETRIC:
+    the header is reduced by the SAME `_metric_tokens` rule as the claim side,
+    then intersected. `metric_toks` is the claim's `_metric_tokens(value)` (from
+    `structural_bind`) or the full `_METRIC_TOKENS` vocab (from `classify_table`)."""
+    return bool(_metric_tokens(col_header) & set(metric_toks or ()))
 
 
 def _row_matches_subject(row_label: str, subject: str | None) -> bool:
@@ -385,10 +415,19 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
                                                      all" is what actually makes a claim a
                                                      prose aggregate.
 
-    RESIDUAL GAP (pre-5b contract, deliberately not closed here): a claim naming a
-    metric that is no column anywhere evades binding via case 2 and is only checked
-    by grounding + attribution + the 5a range check. Structured table-cell binding
-    only reaches claims whose metric is actually tabulated.
+    Case 2 uses `_metric_tokens` on BOTH the claim and every column header (same
+    normalisation, whole-token, no substring) so a claim naming a genuinely
+    tabulated column can never be `not_bindable` merely because the two sides were
+    parsed by different rules. (Earlier asymmetry: claim side dropped tokens < 4
+    chars, e.g. "f1"; column side free-substring-matched, e.g. "em" inside
+    "Performance metrics". Both removed.)
+
+    RESIDUAL GAP (structural, not an implementation artifact): a claim whose
+    metric phrase contains no recognised metric word AT ALL ("performance
+    metrics", "blood component used for measurement") still evades binding via
+    case 2 and is checked only by grounding + attribution + the 5a range check.
+    Structured table-cell binding only reaches claims whose metric is actually a
+    named, recognised metric.
     """
     cells = paper_table_cells(chunks)
     if not cells:
@@ -403,8 +442,7 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     nums = [n for n in _NUMVAL.findall(value or "")]
     if not nums:
         return {"structured": True, "status": "no_number"}
-    metric_toks = (_sig_tokens(value) & _METRIC_TOKENS) | {
-        m.group(0).lower() for m in _METRIC_NAME_RE.finditer(value or "")}
+    metric_toks = _metric_tokens(value)   # SAME rule as the column side (see _metric_tokens)
     sm = _SUBJECT_RE.match(value or "")
     subject = sm.group(1).strip() if sm else None
     if subject and _OWN_ROW.search(subject):

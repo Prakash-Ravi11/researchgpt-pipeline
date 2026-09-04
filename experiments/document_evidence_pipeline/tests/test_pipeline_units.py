@@ -277,6 +277,97 @@ def run():
     check("gate: structured paper, metric not a column anywhere -> not_bindable (falls through)",
           it["structural_binding"]["status"] == "not_bindable", str(it))
 
+    # ------------------------------------------------------------------
+    # SYMMETRIC METRIC MATCHING (F1) — permanent receipt that the claim side
+    # and the column side of structural_bind use ONE rule (_metric_tokens).
+    # Prior asymmetry: claim side dropped tokens < 4 chars (so "f1"/"auc" in a
+    # claim were invisible -> genuinely tabulated columns came back not_bindable);
+    # column side free-substring-matched (so "em" inside "Performance metrics"
+    # made a non-metric column look bindable from one direction).
+    # ------------------------------------------------------------------
+    from src.evidence.gate import _metric_tokens, _col_matches_metric, structural_bind, _METRIC_TOKENS
+
+    # (1) valid metric-column / claim pair that PREVIOUSLY failed now matches:
+    #     "F1" is 2 chars -> _sig_tokens (len>=4) never yielded it -> old metric_toks
+    #     was empty -> not_bindable even though the table has an F1 column.
+    check("sym 1a: _metric_tokens sees short metric tokens ('f1', 'auc')",
+          _metric_tokens("Our model reports an F1 of 0.88.") >= {"f1"}
+          and _metric_tokens("AUC of 0.91") >= {"auc"})
+    F1CELLS = [{"row_label": "Ours", "column_header": "F1", "value": "0.88",
+                "caption": "Main results.", "section": "results"},
+               {"row_label": "Prior et al.", "column_header": "F1", "value": "0.71",
+                "caption": "Main results.", "section": "results"}]
+    F1CH = [dict(RCHUNKS[0], representation="latex", block_type="table",
+                 text="Main results. Ours F1 0.88 Prior et al. F1 0.71",
+                 table_cells=F1CELLS, table_caption="Main results.")]
+    sb = structural_bind("Our method reports an F1 of 0.88.", F1CH)
+    check("sym 1b: claim 'F1 of 0.88' at own F1 cell -> bound (was not_bindable pre-fix)",
+          sb["status"] == "bound", str(sb))
+    sb = structural_bind("Our method reports an F1 of 0.71.", F1CH)
+    check("sym 1c: claim 'F1 of 0.71' (Prior's row) -> wrong_cell (was not_bindable pre-fix)",
+          sb["status"] == "wrong_cell", str(sb))
+
+    # (2) a genuine non-match still does not match — no spurious substring hit.
+    check("sym 2a: _metric_tokens('Performance metrics') is empty (no 'em' substring hit)",
+          _metric_tokens("Performance metrics") == set(), str(_metric_tokens("Performance metrics")))
+    check("sym 2b: _metric_tokens('Blood component used for measurement') is empty",
+          _metric_tokens("Blood component used for measurement") == set())
+    check("sym 2c: _col_matches_metric('Performance metrics', full vocab) is False (was True via 'em')",
+          _col_matches_metric("Performance metrics", _METRIC_TOKENS) is False)
+    check("sym 2d: _col_matches_metric('Blood component used for measurement', full vocab) is False",
+          _col_matches_metric("Blood component used for measurement", _METRIC_TOKENS) is False)
+
+    # (3) the SAME normalisation + token semantics on both sides.
+    check("sym 3a: 'F1-score' and 'F1' share the token 'f1' under _metric_tokens (both sides)",
+          _metric_tokens("F1-score (%)") & _metric_tokens("we report F1") == {"f1"})
+    check("sym 3b: _col_matches_metric reduces its header arg with _metric_tokens too",
+          _col_matches_metric("F1-score", {"f1"}) is True
+          and _col_matches_metric("F1-score", {"em"}) is False)
+    check("sym 3c: no side introduces 'em' from 'exact match' as a substring",
+          _metric_tokens("Performance metrics").isdisjoint(_metric_tokens("exact match")))
+    check("sym 3d: header vs claim symmetry — _col_matches_metric(h, toks(c)) == (toks(h) & toks(c))",
+          all(_col_matches_metric(h, _metric_tokens(c)) ==
+              bool(_metric_tokens(h) & _metric_tokens(c))
+              for h, c in [("Accuracy (%)", "our accuracy is 0.9"),
+                           ("Performance metrics", "a Performance metrics of 80.52"),
+                           ("F1", "an F1 of 0.88"),
+                           ("Dice coefficient", "a Dice of 0.9"),
+                           ("True positive rate (%)", "a rate of 12")]))
+
+    # (4) each of the 3 previously-accepted adversarial cases, re-evaluated post-fix.
+    #     Compact biomedical table: a junk group header ("Performance metrics") plus
+    #     the real metric columns. Outcome recorded for each.
+    ADVCELLS = [{"row_label": r, "column_header": ch, "value": v, "caption": cap, "section": "results"}
+                for cap in ["Comparative performance metrics analysis."]
+                for r, ch, v in [("GA", "Accuracy (%)", "80.82"), ("CNN", "Accuracy (%)", "82.13"),
+                                 ("K-SVM", "Accuracy (%)", "87.03"),
+                                 ("GA", "Performance metrics", "80.52"),
+                                 ("CNN", "Performance metrics", "83.21"),
+                                 ("K-SVM", "Performance metrics", "87.82")]]
+    ADVCH = [dict(RCHUNKS[0], representation="jats_xml", block_type="table",
+                  text="Comparative performance metrics analysis. Methods Performance metrics "
+                       "Accuracy (%) GA 80.52 80.82 CNN 83.21 82.13 K-SVM 87.82 87.03",
+                  table_cells=ADVCELLS, table_caption="Comparative performance metrics analysis.")]
+    # 4a/4b: the two originally-accepted claims named "Performance metrics" — a phrase
+    #        with NO recognised metric word. Post-fix BOTH sides agree it names no
+    #        metric -> not_bindable (a true residual, symmetric — not a confound).
+    a1 = structural_bind("CNN reports a Performance metrics of 80.52 on the study cohort.", ADVCH)
+    a2 = structural_bind("CNN reports a Performance metrics of 87.82 on the study cohort.", ADVCH)
+    check("adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)",
+          a1["status"] == "not_bindable", str(a1))
+    check("adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)",
+          a2["status"] == "not_bindable", str(a2))
+    # 4c: the SAME cross-row attack expressed with the REAL metric name now BINDS and
+    #     is caught — 80.82 is GA's Accuracy, attributed to CNN.
+    a3 = structural_bind("CNN reports an Accuracy of 80.82 on the study cohort.", ADVCH)
+    check("adv 4c: same cross-row attack via real metric 'Accuracy' -> wrong_cell (caught post-fix)",
+          a3["status"] == "wrong_cell", str(a3))
+    # 4d: cross-table substitution case named "Blood component used for measurement" — also
+    #     no recognised metric word -> not_bindable, symmetric.
+    a4 = structural_bind("Arsenic reports a Blood component used for measurement of 12 on the cohort.", ADVCH)
+    check("adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)",
+          a4["status"] == "not_bindable", str(a4))
+
     print(f"\n{_PASS} passed, {_FAIL} failed")
     if _FAILURES:
         print("FAILURES:")
