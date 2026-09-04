@@ -150,8 +150,11 @@ def _synthesize_group(papers: list[dict], llm_cfg: dict, group_label: str, compa
     # Sized to what THIS group's content actually needs, same reasoning as
     # Stage 4's per-paper extraction — a fixed context size was the root
     # cause of the overall pass silently failing on larger corpora.
+    # `output_reservation` is the 3.2b name for what used to be
+    # `response_budget_tokens` (CONTEXT_BUDGET_REPORT.md §3.2b). This call site was
+    # missed in that rename and raised TypeError on every fresh synthesis run.
     num_ctx = estimate_num_ctx(user_content, system_prompt=SYNTHESIS_SYSTEM_PROMPT,
-                                response_budget_tokens=500, min_ctx=2048, max_ctx=8192)
+                                output_reservation=500, min_ctx=2048, max_ctx=8192)
 
     result = call_ollama_json(
         base_url=llm_cfg["base_url"],

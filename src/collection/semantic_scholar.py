@@ -19,13 +19,33 @@ from tqdm import tqdm
 from src.config import load_config
 
 SEARCH_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
-FIELDS = "title,abstract,year,venue,authors,fieldsOfStudy,citationCount,externalIds,openAccessPdf,tldr"
+# NOTE: `tldr` is deliberately NOT requested. It is an ML-generated field served by a
+# separate S2 backend; asking for it alongside limit=100 makes the search endpoint time
+# out (observed: HTTP 500, and 504 with body {"message": "Endpoint request timed out"}).
+# The same request without `tldr` returns 200. Nothing in this repo ever read the field.
+FIELDS = "title,abstract,year,venue,authors,fieldsOfStudy,citationCount,externalIds,openAccessPdf"
 
 
 def _get_with_backoff(params: dict, headers: dict, max_retries: int = 6) -> requests.Response:
-    """GET with exponential backoff on 429. Respects Retry-After when present."""
+    """GET with exponential backoff on 429 AND on transient 5xx. Respects Retry-After.
+
+    Semantic Scholar returns 500 / 502 / 503 / 504 intermittently on this endpoint
+    (a 504 body reads `{"message": "Endpoint request timed out"}`). Those are
+    server-side and transient, so they are retried on the same schedule as 429
+    rather than aborting the whole collection run on the first one. A 4xx other
+    than the paginating 400 below is a real client error and still raises at once.
+    """
+    last_resp: requests.Response | None = None
     for attempt in range(max_retries):
         resp = requests.get(SEARCH_URL, params=params, headers=headers, timeout=30)
+        last_resp = resp
+
+        if resp.status_code >= 500:
+            wait = min(2 ** attempt, 60)
+            print(f"Semantic Scholar {resp.status_code} (attempt {attempt + 1}/{max_retries}) "
+                  f"— server-side, retrying in {wait:.0f}s")
+            time.sleep(wait)
+            continue
 
         if resp.status_code != 429:
             # Semantic Scholar returns 400 when `offset` is past the end of the
@@ -43,6 +63,11 @@ def _get_with_backoff(params: dict, headers: dict, max_retries: int = 6) -> requ
         wait = min(wait, 60)  # don't wait more than a minute on any single attempt
         print(f"Rate limited (attempt {attempt + 1}/{max_retries}) — waiting {wait:.0f}s")
         time.sleep(wait)
+
+    # Exhausted the retries. If the last thing we saw was a server error, surface
+    # that rather than the rate-limit guidance below — they need different fixes.
+    if last_resp is not None and last_resp.status_code >= 500:
+        last_resp.raise_for_status()
 
     if "x-api-key" in headers:
         raise RuntimeError(

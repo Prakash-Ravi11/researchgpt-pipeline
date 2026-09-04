@@ -328,6 +328,28 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
         papers[paper_id] = {"paper_id": paper_id, "title": title, "year": year,
                             "venue": venue, "text": text}
 
+    # Release the embedding model BEFORE returning. Stage 4 extraction runs
+    # immediately after this and asks Ollama to load qwen2.5:7b; on a 6 GB card the
+    # bge-m3 weights this function allocated stay reserved by torch's caching
+    # allocator even after the Python object is dropped, so the LLM lands
+    # partially on CPU and gets evicted between papers. Measured on a 6-paper run:
+    # 4.33 GB of a 5.12 GB model in VRAM, repeated reloads, ~122 s/paper.
+    # After this release: 4.22/5.00 GB resident, no eviction, ~39 s/paper.
+    # NOTE: this is the success path only. If the selection loop above raises,
+    # the weights stay reserved for the life of the process (this runs inside a
+    # long-lived API server), so a later job starts with less VRAM. Wrapping the
+    # body in try/finally would close that; not done here because it needs a
+    # reindent of the whole function and was not part of the measured change.
+    del model, generic_vecs
+    try:
+        import gc
+        import torch
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+    except Exception:  # noqa: BLE001 - never fail a run on cleanup
+        pass
+
     try:
         (Path(paths_cfg["processed_dir"]) / "retrieval_selection.json").write_text(
             json.dumps(traces, indent=2), encoding="utf-8")
