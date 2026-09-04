@@ -47,6 +47,17 @@ CORPORA = [
      ROOT / "data_test/raw_metadata/collected_papers.json"),
 ]
 
+# --medical: append the re-acquired medical corpus (11 Europe PMC JATS papers +
+# 12 PDF). Its paper_evidence.json / chunks.json come from
+# binding_validation_measure.py. Used to give Matrix C a real structured positive
+# set (the canonical corpora above are CS/NLP and PDF-only for the gate).
+MEDICAL_CORPUS = (
+    "medical_jats",
+    HERE / "runs/binding_validation/processed/paper_evidence.json",
+    HERE / "runs/binding_validation/processed/chunks.json",
+    HERE / "runs/medical_reacquire/raw_metadata/collected_papers.json",
+)
+
 _MODEL_PREFIX = re.compile(
     r"(?:gpt|llama|qwen|mistral|mixtral|gemma|gemini|claude|bert|roberta|deberta|t5|"
     r"palm|phi|falcon|vicuna|command|search-r1|colnomic)[-\s]?$", re.I)
@@ -198,7 +209,11 @@ def main():
     ap.add_argument("--pass", dest="phase", choices=["det", "llm", "all"], default="all")
     ap.add_argument("--no-range", action="store_true",
                     help="disable the metric-range-plausibility check (the pre-fix 'before' baseline)")
+    ap.add_argument("--medical", action="store_true",
+                    help="append the re-acquired medical corpus (11 JATS structured papers) — "
+                         "gives Matrix C a real structured positive set")
     args = ap.parse_args()
+    corpora = list(CORPORA) + ([MEDICAL_CORPUS] if args.medical else [])
     if args.no_range:
         import src.evidence.gate as _G
         _G.metric_range_check = lambda v: None       # neutralise for the before/after comparison
@@ -207,7 +222,7 @@ def main():
     rng = random.Random(20260902)
 
     base = []
-    for cp in CORPORA:
+    for cp in corpora:
         base += load(cp)
     print(f"base RETURNED quant items: {len(base)} "
           f"({sum(1 for b in base if b['field']=='metrics')} metrics / {sum(1 for b in base if b['field']=='results')} results)")
