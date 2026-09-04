@@ -303,7 +303,98 @@ def main():
     singled = _single_digit_scan()
     (OUT / "single_digit.json").write_text(json.dumps(singled, indent=2, default=str), encoding="utf-8")
 
+    # ---- post-5 contract oracle: re-derive expected outcomes ----
+    for m in all_rows:
+        ch = _chunks_for(base, m)
+        m["expected_v2"], m["contract_changed"], m["contract_reason"] = _v2_oracle(m, ch)
+    (OUT / "mutants.json").write_text(json.dumps(all_rows, indent=2, default=str), encoding="utf-8")
+
     _summ(base, all_rows, crossrow, singled)
+    _contract_matrices(all_rows)
+
+
+def _paper_is_pdf_only(chunks) -> bool:
+    return not any(c.get("table_cells") for c in (chunks or []))
+
+
+def _v2_oracle(m: dict, chunks) -> tuple[str, bool, str]:
+    """The CORRECT outcome for mutant `m` under the post-5a/5b/5c contract.
+    Returns (expected_v2, contract_changed, reason). A mutant only moves to
+    CONTRACT_CHANGED when the contract genuinely changed the correct outcome
+    (never merely because the gate now fails it)."""
+    from src.evidence.gate import metric_range_check, structural_bind
+    exp = m.get("expected")
+    mv = str(m.get("mutant_value") or "")
+    if exp != "RETURNED":
+        return exp, False, "unchanged (already a should-REJECT case under both contracts)"
+    # 5a — value physically impossible for a named bounded metric
+    if metric_range_check(mv) is not None:
+        return "ABSTAINED", True, "5a: paraphrase asserts an out-of-range value for a bounded metric (metric_value_out_of_range)"
+    if _NUMVAL.search(mv):
+        # 5c — a claim that binds to an ablation / non-results table
+        sb = structural_bind(mv, chunks)
+        if sb.get("status") == "bound" and sb.get("table_type") in ("ablation", "other"):
+            return "ABSTAINED", True, f"5c: claim binds to a {sb['table_type']} table (bound_to_{sb['table_type']}_table)"
+        # 5a/5b — numeric OWN claim on a PDF-only paper: no structured cells, so
+        # binding is unverifiable by design
+        if _paper_is_pdf_only(chunks):
+            return "ABSTAINED", True, "5b: numeric OWN claim on a PDF-only paper (no structured table cells) -> unverifiable_binding by the post-5 contract"
+    return exp, False, "unchanged (no meaningful numeric anchor, or a structured paper where binding still permits acceptance)"
+
+
+def _matrix(rows, oracle_key: str, want_changed=None):
+    sub = rows
+    if want_changed is not None:
+        sub = [r for r in sub if bool(r.get("contract_changed")) == want_changed]
+    sub = [r for r in sub if r.get("gate_final") not in (None, "SKIPPED")]
+    pos = [r for r in sub if r.get(oracle_key) == "RETURNED"]
+    neg = [r for r in sub if r.get(oracle_key) == "ABSTAINED"]
+    TP = sum(1 for r in pos if r["gate_final"] == "RETURNED")
+    FN = sum(1 for r in pos if r["gate_final"] == "ABSTAINED")
+    FP = sum(1 for r in neg if r["gate_final"] == "RETURNED")
+    TN = sum(1 for r in neg if r["gate_final"] == "ABSTAINED")
+    prec = round(TP / (TP + FP), 3) if TP + FP else None
+    rec = round(TP / (TP + FN), 3) if TP + FN else None
+    spec = round(TN / (TN + FP), 3) if TN + FP else None
+    return {"n_pos": len(pos), "n_neg": len(neg), "TP": TP, "FN": FN, "FP": FP, "TN": TN,
+            "precision": prec, "sensitivity": rec, "specificity": spec}
+
+
+def _contract_matrices(rows):
+    changed = [r for r in rows if r.get("contract_changed")]
+    print("\n" + "=" * 70)
+    print("CONTRACT-VERSIONED CONFUSION MATRICES")
+    print("=" * 70)
+    A = _matrix(rows, "expected")            # old oracle, all mutants
+    B = _matrix(rows, "expected_v2")         # new oracle, all mutants
+    C = _matrix(rows, "expected_v2", want_changed=False)  # new oracle, UNCHANGED only
+    for name, mtx, note in (
+        ("A  old oracle, ALL mutants (pre-5 baseline)", A, ""),
+        ("B  new oracle, ALL mutants", B, ""),
+        ("C  new oracle, UNCHANGED mutants only  <-- reported sensitivity", C, "")):
+        print(f"\n{name}")
+        print(f"   pos(should-ACCEPT)={mtx['n_pos']}  neg(should-REJECT)={mtx['n_neg']}")
+        print(f"   TP={mtx['TP']}  FN={mtx['FN']}  FP={mtx['FP']}  TN={mtx['TN']}")
+        print(f"   precision={mtx['precision']}  sensitivity={mtx['sensitivity']}  specificity={mtx['specificity']}")
+    print(f"\n  A->B drop is CONTRACT CHANGE, not capability loss: {len(changed)} mutants "
+          f"have a different correct outcome under the post-5 contract.")
+    print(f"\n=== CONTRACT_CHANGED mutants ({len(changed)}) — each with reason ===")
+    for r in changed:
+        print(f"  [{r['paper_id'][:10]}] {r['cls']:16} v1={r['expected']}->v2={r['expected_v2']}  "
+              f"gate={r.get('gate_final')}")
+        print(f"     reason: {r['contract_reason']}")
+        print(f"     value : {str(r['mutant_value'])[:130]!r}")
+    unchanged_pos = [r for r in rows if not r.get("contract_changed") and r.get("expected_v2") == "RETURNED"
+                     and r.get("gate_final") not in (None, "SKIPPED")]
+    print(f"\n  UNCHANGED should-ACCEPT mutants (matrix C positives): {len(unchanged_pos)}")
+    for r in unchanged_pos:
+        print(f"    [{r['paper_id'][:10]}] {r['cls']:16} gate={r['gate_final']}  {str(r['mutant_value'])[:100]!r}")
+    (OUT / "contract_matrices.json").write_text(json.dumps(
+        {"A": A, "B": B, "C": C, "n_contract_changed": len(changed),
+         "contract_changed": [{"paper_id": r["paper_id"], "cls": r["cls"], "expected": r["expected"],
+                               "expected_v2": r["expected_v2"], "reason": r["contract_reason"],
+                               "gate_final": r.get("gate_final"), "mutant_value": r["mutant_value"]}
+                              for r in changed]}, indent=2, default=str), encoding="utf-8")
 
 
 def _slim(b):

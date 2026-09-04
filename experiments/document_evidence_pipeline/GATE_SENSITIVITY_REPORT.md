@@ -281,3 +281,70 @@ number that lands outside the metric's range). It does **not** close the
 valid accuracy and 0.9895 a valid ρ; only the row is wrong. That requires positional
 row/column binding at parse time (Phase 4's structured cells were built for exactly this,
 and Phase 4 is blocked). Reported, not tuned.
+
+---
+
+# Contract-versioned Test 2 oracle (post-5a/5b/5c)
+
+The Test 2 harness oracle predates 5a/5b/5c. It labels `expected=RETURNED` for mutants
+the new contract now correctly withholds — chiefly **numeric OWN claims on PDF-only
+papers**, which are `unverifiable_binding` by design (task 1's mandated correction). So the
+raw post-5 matrix mixes contract change with capability, and reads as a broken system.
+
+`gate_sensitivity.py` now carries a second oracle (`expected_v2`) and splits every mutant:
+
+- **CONTRACT_CHANGED** — the correct outcome legitimately differs under the post-5 contract.
+  A mutant moves here ONLY with a one-sentence justification, never because it fails.
+- **UNCHANGED** — same correct outcome under both contracts.
+
+`_v2_oracle` derives `expected_v2` deterministically: a `RETURNED`-expected mutant becomes
+`ABSTAINED` iff (5a) its value is out of range for a named bounded metric, OR (5c) it binds
+to an ablation/other table, OR (5b) it carries a meaningful numeric anchor and the paper is
+PDF-only (no `table_cells`). Everything else keeps its v1 expectation.
+
+## Three matrices (`--pass all`, seed 42)
+
+| matrix | oracle | mutants | pos | neg | TP | FN | FP | TN | precision | sensitivity | specificity |
+|---|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| **A** old oracle, ALL (pre-5 baseline) | v1 | 81 | 37 | 44 | 2 | 35 | 3 | 41 | 0.40 | **0.054** | 0.932 |
+| **B** new oracle, ALL | v2 | 81 | 3 | 78 | 2 | 1 | 3 | 75 | 0.40 | 0.667 | 0.962 |
+| **C** new oracle, UNCHANGED only | v2 | 47 | 3 | 44 | 2 | 1 | 3 | 41 | 0.40 | **0.667** | **0.932** |
+
+**Matrix C is the reported sensitivity. Matrix A is the pre-contract baseline: its
+sensitivity 0.054 is not capability loss — 34 numeric-OWN-on-PDF paraphrases whose *correct*
+answer became "withhold" under 5b account for the entire A→B/C gap.**
+
+## CONTRACT_CHANGED — 34 mutants, each justified
+
+All 34 are numeric OWN paraphrases (`paraphrase_rule` 20 + `paraphrase_llm` 14) on a
+PDF-only paper. Identical reason per mutant: *the post-5 contract cannot structurally verify
+a numeric OWN claim on a collapsed PDF, so the correct outcome is `unverifiable_binding`
+(ABSTAINED), not RETURNED*. All 34: the gate ABSTAINED — matches `expected_v2`. Full list
+with per-mutant value/reason in `runs/gate_sensitivity/contract_matrices.json`.
+
+**0** mutants moved for 5a (out-of-range) or 5c (ablation binding): Test 2's corpora
+(`canonical60` + `data_test`) are entirely PDF-only with no structured `table_cells`, so
+those contract changes cannot arise here.
+
+## What matrix C actually measures
+
+- **Positives: 3** — all from `cf099b7cd7`, one comparative claim ("Transformed traces from
+  T 3-59K outperform those from T 3-114K on AIME and GPQA…") with **no meaningful numeric
+  anchor**, so structural binding is never invoked. Gate: 2 RETURNED, 1 ABSTAINED
+  (`evidence_span_not_found` — a synonym swap broke grounding). TP 2 / FN 1.
+- **Negatives: 44** — the unchanged `numeric_perturbation` / `fabrication` /
+  `support_deletion_*` set. FP 3 / TN 41. The 3 FP are the pre-existing
+  `support_deletion_primary` recurrence escapes (defect D — the value re-grounds in another
+  chunk); unchanged by 5x.
+- **Honest limit:** the acceptance path has only 3 test cases on these corpora because
+  every numeric OWN paraphrase is now (correctly) a contract-changed / unverifiable case.
+  Meaningful acceptance-sensitivity measurement needs **structured papers**, which
+  `canonical60` and `data_test` do not contain (LaTeX ingestion disabled since Phase 4b;
+  only ~2 JATS papers corpus-wide, none in Test 2's base set).
+
+### Reproduce
+
+```
+python experiments/document_evidence_pipeline/gate_sensitivity.py --pass all
+```
+Artifacts: `runs/gate_sensitivity/{mutants.json (with expected_v2), contract_matrices.json}`.
