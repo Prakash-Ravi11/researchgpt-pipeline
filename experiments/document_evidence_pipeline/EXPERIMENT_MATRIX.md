@@ -22,18 +22,34 @@ only. No number here was regenerated after the freeze.
 representation versus the PDF path, over 6,530 meaningful numeric values in 23 paired
 arXiv papers. `L` = LaTeX path, `P` = PDF path. "before"/"after" are pre- and post- the
 Phase-4a parity fix; the parity gate is what decides which representation a paper keeps.
+**Provenance is conditional on strict survival and is not an independent axis of evidence** —
+it is reported as `provenance | strict survival` and must not be read as a third
+independent measurement alongside survival and binding (see the note under 1a).
 
 ### 1a — Pooled, all 23 paired papers (occurrence-weighted)
 
-| split | n | vb-lax before L/P | vb-lax after L/P | vb-strict after L/P | provenance L/P | context-bindable after L/P |
+| split | n | vb-lax before L/P | vb-lax after L/P | vb-strict after L/P | provenance \| strict L/P | context-bindable after L/P |
 |---|--:|--:|--:|--:|--:|--:|
 | all | 6,530 | 0.441 / 0.986 | 0.981 / 0.986 | 0.752 / 0.699 | — / 1.000 | 0.184 / 0.168 |
 | table | 5,405 | **0.388** / 0.987 | 0.983 / 0.987 | 0.708 / 0.643 | — / 1.000 | 0.110 / **0.089** |
 | prose | 965 | 0.688 / 0.982 | 0.971 / 0.982 | 0.959 / 0.966 | — / 1.000 | 0.542 / 0.555 |
 | caption | 160 | 0.744 / 1.000 | 0.981 / 1.000 | 0.981 / 1.000 | — / 1.000 | 0.525 / 0.531 |
 
-Provenance is reported only for the PDF path in the source (100 % on every split); the
-LaTeX-side pooled provenance column is not in either report — see §UNTRACEABLE.
+**Provenance is a conditional rate, not an independent axis.** In
+`extraction_fidelity.py:378` the provenance denominator is filtered to strict survivors:
+
+```python
+"with_provenance": rate([r for r in sub if r["in_grounded_pdf_strict"]], "provenance_ok"),
+```
+
+Every sibling metric on lines 376–380 uses the unfiltered `sub`; only this one is filtered.
+The predicate is conditional too — `prov` at line 345 is
+`bool(hit_chunk) and bool(hit_chunk.get("section")) and bool(hit_chunk.get("page_or_node"))`,
+and `in_grounded_pdf_strict` is `bool(hit_chunk)` (line 354), so `provenance_ok ⟹
+in_grounded_pdf_strict` by construction. The reported 1.000 therefore means
+**P(section ∧ page | value survived strictly) = 1.000** — a property of the grounded chunk
+schema, not a measure of how much evidence survives. Provenance is reported only for the PDF
+path in the source; the LaTeX-side pooled column is not in either report — see §UNTRACEABLE.
 
 ### 1b — RETAINED subset (11 papers that passed the parity gate)
 
@@ -41,16 +57,27 @@ Reported as **macro** (mean of per-paper rates) and **gt-wt** (per-paper rates w
 that paper's ground-truth count). The pooled block above is diluted by the 12 papers the
 gate sent back to PDF, where L and P are identical by construction.
 
-| split | vb-strict L/P (macro) | vb-strict L/P (gt-wt) | bindable L/P (macro) | bindable L/P (gt-wt) | prov L/P (macro) |
+| split | vb-strict L/P (macro) | vb-strict L/P (gt-wt) | bindable L/P (macro) | bindable L/P (gt-wt) | prov \| strict L/P (macro) |
 |---|--:|--:|--:|--:|--:|
 | all | 0.837 / 0.840 | **0.877 / 0.786** | 0.311 / 0.249 | **0.210 / 0.174** | 0.837 / 0.840 |
 | table | 0.825 / 0.817 | **0.866 / 0.768** | **0.241 / 0.134** | **0.142 / 0.085** | 0.825 / 0.817 |
 | prose | 0.896 / 0.955 | 0.964 / 0.961 | 0.528 / 0.587 | 0.597 / 0.559 | 0.896 / 0.955 |
 | caption | 0.857 / 1.000 | 0.963 / 1.000 | 0.359 / 0.243 | 0.500 / 0.272 | 0.857 / 1.000 |
 
+The provenance column here is **byte-identical to vb-strict on every split**. That is not
+coincidence and not a second measurement: because `provenance_ok ⟹ in_grounded_pdf_strict`
+by construction, and because every strict survivor carries section + page (the 1.000
+conditional rate in 1a), the two rates are co-extensive and must coincide. The column is
+retained only so the identity is visible; it contributes no independent evidence.
+
+*Scope note:* the 1b/1c figures come from the LaTeX re-slice harness, which this correction
+was not authorised to read. The identity is fully explained by the conditional construction
+verified in `extraction_fidelity.py`, but the exact line in that second harness was not
+inspected.
+
 ### 1c — FALLBACK control (12 papers the gate sent back to PDF)
 
-| split | vb-strict L/P (macro) | bindable L/P (macro) | prov L/P (macro) |
+| split | vb-strict L/P (macro) | bindable L/P (macro) | prov \| strict L/P (macro) |
 |---|--:|--:|--:|
 | all | 0.817 / 0.817 | 0.249 / 0.249 | 0.817 / 0.817 |
 | table | 0.791 / 0.791 | 0.154 / 0.154 | 0.791 / 0.791 |
@@ -326,11 +353,19 @@ Every number above was read back against its source report. Findings:
    note the two reports label the *same* PDF column differently — EF as a standalone rate,
    LATEX as the denominator of an L/P pair.
 
-4. **RETAINED provenance is byte-identical to RETAINED vb-strict on every split**
-   (0.837/0.840 all, 0.825/0.817 table, 0.896/0.955 prose, 0.857/1.000 caption). That is
-   almost certainly because the harness computes provenance conditioned on strict survival,
-   not independently. Reported as-is; flagged because a reader would otherwise read it as
-   two agreeing measurements when it is likely one.
+4. **RESOLVED — provenance is conditional, and Table 1 has been relabelled.** This
+   matrix's own verification pass flagged that RETAINED provenance was byte-identical to
+   RETAINED vb-strict on every split (0.837/0.840 all, 0.825/0.817 table, 0.896/0.955 prose,
+   0.857/1.000 caption). Reading `extraction_fidelity.py` confirmed it: line 378 filters the
+   provenance denominator to strict survivors
+   (`rate([r for r in sub if r["in_grounded_pdf_strict"]], "provenance_ok")`) while every
+   sibling metric uses the unfiltered `sub`, and the predicate itself
+   (line 345) can only be true when `hit_chunk` is set, which is exactly
+   `in_grounded_pdf_strict` (line 354). **Classification: CONDITIONAL.** The reported 1.000
+   is P(section ∧ page | strict survival), a property of the chunk schema rather than an
+   independent axis of evidence. Table 1 now labels the column `provenance | strict survival`
+   and says so in the caption; no value was recomputed and no unconditional version was
+   produced. Found by this matrix's cross-check, not by the source report.
 
 5. **Rounding.** Table 4 aggregate deficits are quoted to 3 dp as the report gives them;
    `96285d75a525` (0.003) and `f3b06a914702` (0.002) round to 0.0 % at one decimal and are
