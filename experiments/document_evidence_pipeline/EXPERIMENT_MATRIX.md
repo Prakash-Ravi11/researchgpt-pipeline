@@ -5,11 +5,14 @@ appears in **and** the run directory that produced it; anything missing either i
 §UNTRACEABLE, not in a table. Wordings follow `CLAIM_LEDGER.md` — where a claim is NARROWED
 or WITHDRAWN, only the current version appears here. Corpora are never pooled.
 
-**Freeze note.** The tag `paper-freeze-v1` points at `f3b6768`. `src/` currently diverges
-from it by one later commit (`6ae3d55`, three runtime fixes: S2 `tldr`/5xx retry, a Stage-6
-`estimate_num_ctx` kwarg rename, and an embedding-model VRAM release). **None of the three
-touches any quantity in these tables** — they affect acquisition robustness, Stage-6
-synthesis, and extraction wall-clock only. No number here was regenerated after the freeze.
+**Freeze note.** The tag `paper-freeze-v1` points at `f3b6768`. Three commits now sit past
+it: `6ae3d55` (the only one that touches `src/` — three runtime fixes: S2 `tldr`/5xx retry, a
+Stage-6 `estimate_num_ctx` kwarg rename, and an embedding-model VRAM release), `acb89d8`
+(harness files and `.gitignore` only; its message restates the `src/` work but the diff
+contains none of it), and this commit. The whole `src/` divergence from the tag is therefore
+`6ae3d55`: 3 files, +53/−3. **None of those three fixes touches any quantity in these
+tables** — they affect acquisition robustness, Stage-6 synthesis, and extraction wall-clock
+only. No number here was regenerated after the freeze.
 
 ---
 
