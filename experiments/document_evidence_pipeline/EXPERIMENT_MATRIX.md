@@ -481,3 +481,47 @@ exactly. The findings above concern the reproduction *procedure*, not the measur
 gitignored run directory and the manifest-rebuild hazard describe how the package must be
 shipped and used, and the 62/63 unit result is an artifact of a test fallback path that no
 table depends on.
+
+---
+
+**Follow-up, same day: the packaging defects above are fixed.** Everything from here down
+records that. The three subsections before it describe the package *as tested*; in particular
+"had to be copied in by hand" no longer applies — the artifacts now ship.
+
+### What the test found, and why reading the package would not have found it
+
+The defect was a **construction-true pass**: on a fresh clone the verifier reported
+`12 passed, 0 failed` and **exited 0**, because `runs/` is gitignored and the 24
+result-bearing checks had no inputs to read. Every line it printed was true. The artifact
+whose entire purpose is to show the five tables' numbers hold was reporting success while
+checking one third of them.
+
+`build_manifests.py` failed the same way from the other side: it exited 0 with three of four
+sources absent and rewrote the shipped manifests from what survived, after which the verifier
+reported four apparent failures against inputs it had itself corrupted.
+
+**Neither is visible by reading the code.** Both scripts are correct on the machine that wrote
+them, where the gitignored inputs are all present; the `SKIP`/`continue` branches only execute
+somewhere else. They surfaced only by cloning into an empty directory and running them — the
+same shape as the three post-freeze runtime defects of `6ae3d55`, which a green 15/15 + 63/63
+suite also could not see (`CLAIM_LEDGER.md` claim 7, rows 7c/7d). This is a fourth instance,
+from the packaging layer: **a passing verifier was not evidence the package verified anything.**
+
+### Fixed
+
+| fix | verified behaviour |
+|---|---|
+| the six run artifacts, 97 KB, shipped byte-identically in `reproducibility/artifacts/` with a `PROVENANCE.json` recording source path, size and SHA-256 for each; the verifier reads that directory only, never `runs/`, so a missing copy cannot fall back to a local run tree | clean clone, no manual copying: **36 passed, 0 failed, 0 skipped, exit 0** |
+| the verifier names every check it could not run as `SKIPPED`, prints `N passed, N failed, N skipped, of 36 expected`, flags any mismatch in that accounting, and exits 0 only when `passed == 36` | delete `artifacts/gate_sensitivity/crossrow.json`: **33 passed, 0 failed, 3 skipped, exit 1** — the two crossrow checks plus the invariant-16 total that needs all three probe files. Delete `per_fallback.json` instead: 11 named skips, exit 1 |
+| `build_manifests.py` preflights all four metadata sources and every retrieved-file directory, prints each absence, exits 2 and writes nothing | clean clone: **refuses, 7 missing sources listed, exit 2, no file written**. On a machine holding the full run tree the rebuild still runs and reproduces the shipped `index.json` exactly |
+
+`runs/` stays gitignored; nothing beyond those six files is shipped from it. No harness, no
+config and no measurement changed — this fixes how the package is shipped and how it reports,
+not what it measured.
+
+### Effect on the tables — after the fixes
+
+**None.** All 36 EXACT checks pass in this tree, as they did before the fix, and they assert
+the Table 1 anchor counts and survival rates, the Table 2 probe outcomes and invariant-16
+totals, the Table 3 case count, the Table 4 parity-gate decisions and conservatism block, and
+the Table 5a structural-cell counts. Not one number in the five tables moved.

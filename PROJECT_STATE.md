@@ -238,9 +238,19 @@ git log --oneline paper-freeze-v1..HEAD | cat      # -> 5 post-freeze commits
 git diff --stat paper-freeze-v1 -- src/ configs/   # -> 3 files, +53/-3 (6ae3d55 only)
 
 # 2. re-run the deterministic verifier (no LLM, no GPU, no network)
-python reproducibility/verify_deterministic.py     # expect: 36 passed, 0 failed
+python reproducibility/verify_deterministic.py     # expect: 36 passed, 0 failed, 0 skipped
+                                                   # exit 0 iff all 36 ran and passed;
+                                                   # a missing input is SKIPPED by name and
+                                                   # exits non-zero. Inputs ship in
+                                                   # reproducibility/artifacts/ (97 KB).
 
 # 3. rebuild the corpus manifests if any run directory changed
+#    HAZARD: only on THIS machine, which holds the full run tree. Three of the four
+#    metadata sources and the PDF stores are gitignored, so anywhere else the rebuild
+#    would produce a degraded manifest. The script now preflights and REFUSES (exit 2,
+#    writes nothing) when a source is absent -- but if an older copy of it already
+#    overwrote the shipped manifests:
+#        git checkout -- reproducibility/manifests/
 python reproducibility/manifests/build_manifests.py
 
 # 4. test suites

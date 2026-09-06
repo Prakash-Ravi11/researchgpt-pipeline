@@ -1,0 +1,178 @@
+[
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "correct_cell",
+    "claim": "Fold 2 reports a Precision of 1 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "evidence_span_not_found_in_paper_chunks",
+    "binding_status": null,
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "cross_table_substitution",
+    "claim": "Fold 2 reports a Precision of 84.82 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "correct_row_wrong_col",
+    "claim": "Proposed reports a Accuracy (%) of 86.21 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "cross_table_substitution",
+    "claim": "Proposed reports a Accuracy (%) of 99.5 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "correct_cell",
+    "claim": "Proposed method reports a Dice coefficient (%) of 90.76 on the benchmark.",
+    "final": "RETURNED",
+    "want": "RETURNED",
+    "reason": "OWN_PAPER",
+    "binding_status": "bound",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "0549e2e9e6",
+    "class": "cross_table_substitution",
+    "claim": "Proposed method reports a Dice coefficient (%) of 1 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "evidence_span_not_found_in_paper_chunks",
+    "binding_status": null,
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "correct_cell",
+    "claim": "all-MiniLM-L6-v2 reports a Loss of 5.532193 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "ownership_unverified",
+    "binding_status": "bound",
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "correct_col_wrong_row",
+    "claim": "all-MiniLM-L6-v2 reports a Loss of 5.564284 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "cross_table_substitution",
+    "claim": "all-MiniLM-L6-v2 reports a Loss of 0.9971 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "correct_cell",
+    "claim": "Nearest Neighbor reports a MAE of 1.7381 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "ownership_unverified",
+    "binding_status": "bound",
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "correct_row_wrong_col",
+    "claim": "Nearest Neighbor reports a MAE of 0.9971 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "correct_col_wrong_row",
+    "claim": "Nearest Neighbor reports a MAE of 2.1361 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "69b02cfebf",
+    "class": "cross_table_substitution",
+    "claim": "Nearest Neighbor reports a MAE of 4 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "evidence_span_not_found_in_paper_chunks",
+    "binding_status": null,
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "eaec7401af",
+    "class": "correct_col_wrong_row",
+    "claim": "HigressRAG reports a MRR of 0.9730 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "f3d7e0165d",
+    "class": "correct_cell",
+    "claim": "Avg reports a Faithfulness of 0.35 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "evidence_span_not_found_in_paper_chunks",
+    "binding_status": "bound",
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "f3d7e0165d",
+    "class": "correct_col_wrong_row",
+    "claim": "Avg reports a Faithfulness of 0.33 on the benchmark.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  }
+]

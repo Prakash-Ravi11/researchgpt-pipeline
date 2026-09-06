@@ -1,0 +1,44 @@
+{
+  "_why": "The 24 result-bearing checks in verify_deterministic.py read these six files. Their source directory experiments/document_evidence_pipeline/runs/ is gitignored (528 MB) and is NOT in the repository, so a clean clone had no inputs for those checks and the verifier reported 12/36 while exiting 0. These are byte-identical copies, shipped so a clean clone reaches 36/36 with no manual step. runs/ stays gitignored; nothing else from it is shipped.",
+  "_frozen_at": "paper-freeze-v1 (f3b6768); produced at or before the freeze, unmodified since",
+  "_verifier_reads": "reproducibility/artifacts/ ONLY -- never runs/, so a deleted copy is a SKIP, not a silent fallback",
+  "files": [
+    {
+      "shipped": "reproducibility/artifacts/parity_gate_precision/per_fallback.json",
+      "source": "experiments/document_evidence_pipeline/runs/parity_gate_precision/per_fallback.json",
+      "bytes": 8521,
+      "sha256": "90f8d7df48763ace9186cf2933f01344536a3c42abed0f2e664d3ac1dbf6d00d"
+    },
+    {
+      "shipped": "reproducibility/artifacts/binding_validation/task3_probes.json",
+      "source": "experiments/document_evidence_pipeline/runs/binding_validation/task3_probes.json",
+      "bytes": 4269,
+      "sha256": "3ba9456f9ee8054a2f566a52203909ed8fba826acd0d82cf8a407487dffe1f20"
+    },
+    {
+      "shipped": "reproducibility/artifacts/binding_validation/task1_verify.json",
+      "source": "experiments/document_evidence_pipeline/runs/binding_validation/task1_verify.json",
+      "bytes": 4911,
+      "sha256": "2c84ab040b2117dcbf607788f336d3ca2dabb2ef25c43c11a572d1c12194847c"
+    },
+    {
+      "shipped": "reproducibility/artifacts/structural_binding/binding_probes.json",
+      "source": "experiments/document_evidence_pipeline/runs/structural_binding/binding_probes.json",
+      "bytes": 5209,
+      "sha256": "534bc6f132482a52e8742e8b811cba3077fe46f7ef09cea90983de87582651a1"
+    },
+    {
+      "shipped": "reproducibility/artifacts/gate_sensitivity/crossrow.json",
+      "source": "experiments/document_evidence_pipeline/runs/gate_sensitivity/crossrow.json",
+      "bytes": 5863,
+      "sha256": "bd498f9625618ac9b8fc67758a365188be0d9598f942d07b88fb63714e8f4f3a"
+    },
+    {
+      "shipped": "reproducibility/artifacts/eval_framework_sensitivity/per_mutant.json",
+      "source": "experiments/document_evidence_pipeline/runs/eval_framework_sensitivity/per_mutant.json",
+      "bytes": 70472,
+      "sha256": "e8a253aeb2b3f7ce73afebf73f26e8a5a79046ef512596fa9cd7af9f7ddb650b"
+    }
+  ],
+  "total_bytes": 99245
+}

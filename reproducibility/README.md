@@ -18,6 +18,7 @@ exactly which half is not deterministic and by how much. Read §3 before you tru
 |---|---|
 | the **EXACT** block of `expected_results.json` | 36 checks: anchor counts, retrieval/survival rates, parity-gate decisions, probe outcomes, structural-cell counts, case counts, corpus identity |
 | the frozen settings every table depends on | `config/frozen_config.json`, re-derived from source by the verifier (anchor regex, `EXTRACTION_OUTPUT_RESERVATION`, `DEFAULT_PARITY_TOLERANCE`, `latex_ingestion_enabled`) |
+| the six frozen run artifacts those checks read | `artifacts/` — 97 KB, byte-identical copies of the run outputs, with `artifacts/PROVENANCE.json` giving each one's source path, size and SHA-256 |
 | the identity of the four corpora | `manifests/` — identifiers + SHA-256 per paper, so you can fetch and prove you hold the same documents |
 | the mutation, probe and Criterion-J definitions | `experiments/definitions.json` — restated so you need not read harness code |
 | which harness and run directory produced each table | `experiments/table_to_harness.json` |
@@ -27,9 +28,11 @@ exactly which half is not deterministic and by how much. Read §3 before you tru
 - **Anything downstream of generation.** Table 2 matrices A/B/C, Table 3 RAGAS scores and
   Table 5b field coverage all pass through `qwen2.5:7b`. They carry tolerances (§7) and need
   a full re-run with a GPU, Ollama and the pinned model — this package does not automate that.
-- **The frozen run artifacts.** `experiments/document_evidence_pipeline/runs/` is gitignored
-  (`experiments/document_evidence_pipeline/.gitignore:4`), 528 MB across 56 directories. It
-  is **not in the repository**, so a clean clone cannot run 24 of the 36 checks. See §3.
+- **The run tree.** `experiments/document_evidence_pipeline/runs/` is gitignored
+  (`experiments/document_evidence_pipeline/.gitignore:4`), 528 MB across 56 directories, and
+  stays out of the repository. The six files the verifier needs — 97 KB — are shipped as
+  byte-identical copies in `artifacts/`, so a clean clone reaches 36/36 with no manual step.
+  Nothing else from `runs/` is available here. See §3.
 - **The corpora.** No PDF, no XML, no abstract text is shipped — publisher copyright. You
   fetch from the manifests. §5.
 - **Model weights.** Pinned by digest and revision, pulled at runtime. §2.3.
@@ -100,33 +103,39 @@ because the 122.8 → 39.1 band is placement, not correctness.
 
 ---
 
-## 3. Read this before you trust a PASS
+## 3. What a PASS means, and the two scripts that write
 
-**`verify_deterministic.py` exits 0 when its inputs are missing.** Six of its inputs live
-under `experiments/document_evidence_pipeline/runs/`, which is gitignored. In a clean clone
-they are absent, the verifier prints `SKIP` (or nothing) for those sections, and reports:
+**The exit code is meaningful. `verify_deterministic.py` exits 0 only when all 36 EXACT
+checks actually ran and passed.** It ends on a line of the form:
 
 ```
-EXACT checks: 12 passed, 0 failed          <-- exit code 0, and WRONG
+36 passed, 0 failed, 0 skipped, of 36 expected
+  VERDICT: OK -- all 36 EXACT checks reproduced
 ```
 
-The correct result is **36 passed, 0 failed**. A run reporting 12 has verified the anchor
-rule, three config constants and the manifest counts — one third of the package — and has
-silently skipped every result-bearing check.
-
-**Acceptance rule: exit code 0 is not sufficient. Require `passed == 36` and `failed == 0`.**
+A check whose input is missing is reported **SKIPPED by name** — never silently omitted — and
+any skip at all makes the verdict `INCOMPLETE` and the exit code non-zero. `passed + failed +
+skipped` must equal 36; the script says so explicitly if it does not. `verify_results.json`
+carries the same four numbers plus an `ok` boolean, so a script can gate on it:
 
 ```bash
-python -c "import json,sys;d=json.load(open('reproducibility/verify_results.json'));ok=d['passed']==36 and d['failed']==0;print(('OK' if ok else 'INCOMPLETE'),d['passed'],'passed',d['failed'],'failed');sys.exit(0 if ok else 1)"
-# clean clone -> "INCOMPLETE 12 passed 0 failed", exit 1
-# artifacts in place -> "OK 36 passed 0 failed", exit 0
+python reproducibility/verify_deterministic.py    # exit 0 == reproduced; anything else == not
 ```
 
-### The six artifacts the verifier needs
+> **This is the defect the clean-checkout test found, now fixed.** The earlier verifier read
+> its inputs from the gitignored `runs/` tree and printed nothing when they were absent: a
+> fresh clone reported `12 passed, 0 failed` **and exited 0** — a construction-true pass in
+> the one artifact whose purpose is to show the numbers hold. The inputs are now shipped
+> (below) and absence is now loud.
 
-97 KB in total, out of 528 MB of run directories.
+### The six shipped artifacts
 
-| file, under `experiments/document_evidence_pipeline/runs/` | bytes | feeds |
+`artifacts/` holds byte-identical copies of the six run outputs that feed the 24
+result-bearing checks — 97 KB, out of a 528 MB run tree that stays gitignored. The verifier
+reads **only** these copies, never `runs/`, so a missing one is a skip rather than a silent
+fallback to a directory a reproducer does not have.
+
+| file, under `reproducibility/artifacts/` | bytes | feeds |
 |---|--:|---|
 | `parity_gate_precision/per_fallback.json` | 8,521 | Table 4 — 11 checks |
 | `binding_validation/task3_probes.json` | 4,269 | Table 2 — 3 checks |
@@ -135,28 +144,33 @@ python -c "import json,sys;d=json.load(open('reproducibility/verify_results.json
 | `gate_sensitivity/crossrow.json` | 5,863 | Table 2 — 2 checks |
 | `eval_framework_sensitivity/per_mutant.json` | 70,472 | Table 3 — 2 checks |
 
-Restore them into those exact paths — they come from the authors' run archive, not from this
-repository — and re-run. Verified: with these six files and nothing else added, a clean clone
-goes from **12/12 to 36/36**.
+`artifacts/PROVENANCE.json` records each file's source path in the run tree, its size and its
+SHA-256. The remaining 12 checks read `src/`, `configs/staging_config.yaml` and
+`manifests/index.json` directly. Deleting `crossrow.json`, for example, yields
+`33 passed, 0 failed, 3 skipped` and exit 1 — the two crossrow checks plus the invariant-16
+total that needs all three probe files.
 
-### `build_manifests.py` is destructive in a clean checkout — do not run it
+### `build_manifests.py` refuses to run without its sources
 
-It rewrites `manifests/*.json` **in place, and exits 0 even when its sources are missing.**
-Three of its four inputs are gitignored (`runs/`, `data_test/`, `data/pdfs/`). In a clean
-clone it silently replaces the shipped manifests with a degraded set — `index.json` reduced to
-a single corpus, `medical50_frozen.json` rewritten with `n_files_hashed: 0` and
-`n_full_text_without_local_file: 19` — after which the verifier reports **5 passed, 4 failed**
-against corrupted inputs that look exactly like real failures.
+Its four metadata sources and five retrieved-file directories live in `runs/`, `data/pdfs/`
+and `data_test/` — all gitignored. It now **preflights every one of them, prints what is
+absent, exits 2 and writes nothing.**
 
-Run it **only** if you hold the full run directories and the local PDF store. Otherwise the
-shipped manifests are the artifact; treat them as read-only. If you ran it by accident:
+It used to skip the missing ones and exit 0, overwriting the shipped manifests from what
+survived: `index.json` reduced to a single corpus, `medical50_frozen.json` rewritten with
+`n_files_hashed: 0` and `n_full_text_without_local_file: 19`. The verifier then reported four
+apparent failures against corrupted inputs.
+
+On a clean checkout the shipped manifests **are** the artifact — treat them as read-only.
+Rebuild only on a machine holding the full run tree. If an older copy of the script already
+overwrote them:
 
 ```bash
 git checkout -- reproducibility/manifests/
 ```
 
-`verify_deterministic.py` also rewrites `verify_results.json` on every run. That is by design
-— but it means a degraded run overwrites the shipped 36/36 record. Restore it the same way:
+`verify_deterministic.py` still rewrites `verify_results.json` on every run, by design. A
+degraded run therefore overwrites the shipped record; restore it the same way:
 `git checkout -- reproducibility/verify_results.json`.
 
 ---
@@ -190,9 +204,9 @@ git grep -InE "s2k-[A-Za-z0-9]{20,}" -- .
 
 # ---- 3. deterministic probes ---------------------------------------------
 python reproducibility/verify_deterministic.py
-#   six run artifacts in place : "EXACT checks: 36 passed, 0 failed"   <- the target
-#   clean clone, artifacts absent : "EXACT checks: 12 passed, 0 failed" <- NOT a pass, see §3
-# runtime: ~0.2 s
+#   expect: "36 passed, 0 failed, 0 skipped, of 36 expected"  and exit 0
+#   any skip or failure -> INCOMPLETE verdict and a non-zero exit. §3
+# runtime: ~0.2 s, no venv, no third-party packages
 
 # ---- 4. test suites (needs the venv from §2.2) ---------------------------
 python -m pytest tests/test_pipeline.py tests/test_anchors.py -q
@@ -203,8 +217,10 @@ cd experiments/document_evidence_pipeline && python -m tests.test_pipeline_units
 #   -> 62 passed, 1 failed   in a clean checkout — EXPECTED, see below   (~3 s)
 cd ../..
 
-# ---- 5. manifests: DO NOT RUN unless you hold the run dirs ----------------
-# python reproducibility/manifests/build_manifests.py     # destructive, see §3
+# ---- 5. manifests: only on a machine holding the full run tree ------------
+# python reproducibility/manifests/build_manifests.py
+#   on a clean checkout it refuses: prints every missing source, exits 2,
+#   writes nothing. The shipped manifests are the artifact. §3
 ```
 
 ### The one expected unit-test failure in a clean checkout
@@ -438,9 +454,16 @@ trusting.
 ```
 reproducibility/
   README.md                     this file
-  verify_deterministic.py       36 EXACT checks; stdlib only; rewrites verify_results.json
-  verify_results.json           last run: 36 passed / 0 failed  (the shipped record)
+  verify_deterministic.py       36 EXACT checks; stdlib only; skips are loud; exit 0 iff 36/36
+  verify_results.json           last run: 36 passed / 0 failed / 0 skipped, ok true
   expected_results.json         EXACT and APPROXIMATE blocks with per-item tolerances
+  artifacts/                    the six shipped run outputs, 97 KB — the verifier's only inputs
+    PROVENANCE.json             source path, size and sha256 for each
+    parity_gate_precision/per_fallback.json
+    binding_validation/task3_probes.json   binding_validation/task1_verify.json
+    structural_binding/binding_probes.json
+    gate_sensitivity/crossrow.json
+    eval_framework_sensitivity/per_mutant.json
   config/frozen_config.json     every setting the five tables depend on; api_key null by construction
   environment/
     environment.json            python, model digest, bge-m3 revision, GPU, CUDA
@@ -454,7 +477,7 @@ reproducibility/
     canonical60.json            data_test8.json
     medical50_frozen.json       medical50_reacquired.json
     sources/medical50_frozen_collected_papers.json
-    build_manifests.py          DESTRUCTIVE in a clean checkout — see §3
+    build_manifests.py          refuses to run without its sources (exit 2) — see §3
   docker/Dockerfile             UNTESTED / NEVER BUILT — see §10
 ```
 
@@ -465,9 +488,9 @@ reproducibility/
 ```bash
 git clone --branch claude-code-verification <repo-url> rgp && cd rgp
 git log -1 --format=%h paper-freeze-v1                       # f3b6768
-# restore the six run artifacts of §3 into experiments/document_evidence_pipeline/runs/
-python reproducibility/verify_deterministic.py               # require 36 passed, 0 failed
+python reproducibility/verify_deterministic.py               # 36/36, exit 0
 ```
 
-Under a minute, no venv, no GPU, no network. Everything beyond that is either the test suites
-(§4) or a generation re-run (§2.3, §7.2).
+Three commands, under a minute, no venv, no GPU, no network, no manual file placement — the
+verifier's inputs ship with it. Everything beyond that is either the test suites (§4) or a
+generation re-run (§2.3, §7.2).

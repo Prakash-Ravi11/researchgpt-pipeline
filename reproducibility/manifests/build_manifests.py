@@ -8,6 +8,11 @@ Ships no PDF and no abstract text. A reproducer fetches and verifies against the
 sha256 field rather than receiving the file.
 
   python reproducibility/manifests/build_manifests.py
+
+REFUSES TO RUN when any source is missing (exit 2, nothing written). Most sources
+are gitignored, so on a clean checkout this script cannot rebuild anything -- and
+a partial rebuild would silently overwrite the shipped manifests with a degraded
+set. Run it only on a machine holding the full run tree.
 """
 from __future__ import annotations
 import hashlib, json, sys
@@ -57,12 +62,44 @@ def find_file(pid: str, dirs: list[str]) -> Path | None:
     return None
 
 
+def preflight() -> list[str]:
+    """Every reason this run would produce a degraded manifest. Empty list = safe.
+
+    Three of the four metadata sources and three of the five retrieved-file
+    directories are gitignored, so in a clean checkout they are simply absent.
+    This script used to SKIP them, exit 0, and write the survivors -- which
+    silently replaced the shipped manifests with a one-corpus index.json and a
+    medical50_frozen.json reporting n_files_hashed 0. Refusing is the only safe
+    behaviour: a partial rebuild is indistinguishable from a real result.
+    """
+    problems = []
+    for name, meta in CORPORA.items():
+        if not meta.exists():
+            problems.append(f"{name}: metadata source absent -- {meta}")
+        dirs = [d for d in RUN_DIRS[name] if (ROOT / d).is_dir()]
+        if not dirs:
+            problems.append(f"{name}: no retrieved-file directory present -- "
+                            f"none of {RUN_DIRS[name]} exists under {ROOT}")
+    return problems
+
+
 def main() -> int:
+    problems = preflight()
+    if problems:
+        print("REFUSING TO RUN -- sources missing. Nothing was written.\n")
+        for p in problems:
+            print(f"  MISSING  {p}")
+        print("\nThe corpus metadata and the retrieved PDFs live outside the repository:")
+        print("  experiments/document_evidence_pipeline/runs/  is gitignored (528 MB)")
+        print("  data/pdfs/  data_test/  are gitignored")
+        print("Rebuild only on a machine holding the full run tree. On a clean checkout the")
+        print("shipped manifests in reproducibility/manifests/ ARE the artifact -- read-only.")
+        print("If a previous run already overwrote them:  git checkout -- reproducibility/manifests/")
+        return 2
+
     index = {}
     for name, base in CORPORA.items():
         meta = base
-        if not meta.exists():
-            print(f"  SKIP {name}: {meta} absent"); continue
         papers = json.loads(meta.read_text(encoding="utf-8"))
         rows, hashed, missing = [], 0, 0
         for p in papers:

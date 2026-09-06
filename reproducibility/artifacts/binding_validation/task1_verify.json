@@ -1,0 +1,153 @@
+{
+  "rows": [
+    {
+      "paper_id": "3aeeb4d31b0dcf15d70236038e35e615b55f22b1",
+      "chunks": 100,
+      "chunk_cells": 54,
+      "n_tables": 2,
+      "tables_structured": 2,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Trajectories of human brain functional connectome matura"
+    },
+    {
+      "paper_id": "33fea4124ef008a70a6f70eb13c8c88044fbcd28",
+      "chunks": 138,
+      "chunk_cells": 119,
+      "n_tables": 7,
+      "tables_structured": 6,
+      "tables_fallback": 1,
+      "has_table_block": true,
+      "title": "Exploring fetal brain tumor glioblastoma symptom verific"
+    },
+    {
+      "paper_id": "913b6b3cb4c4f6154f405107efcafb3b59991b04",
+      "chunks": 48,
+      "chunk_cells": 0,
+      "n_tables": 0,
+      "tables_structured": 0,
+      "tables_fallback": 0,
+      "has_table_block": false,
+      "title": "Biallelic variants in the UTRN gene cause a novel form o"
+    },
+    {
+      "paper_id": "819f9eacf36cc4ca986987d525e3ed20d5808c0e",
+      "chunks": 77,
+      "chunk_cells": 400,
+      "n_tables": 5,
+      "tables_structured": 5,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Second-Trimester Placental and Thyroid Hormones Are Asso"
+    },
+    {
+      "paper_id": "7cc53dfe80d504da656765ad748b72c589a606cf",
+      "chunks": 47,
+      "chunk_cells": 170,
+      "n_tables": 1,
+      "tables_structured": 1,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Large vestibular schwannomas presenting in the late stat"
+    },
+    {
+      "paper_id": "506958c71c4bc38de1c83ec2474f65e4af6e6ea7",
+      "chunks": 52,
+      "chunk_cells": 218,
+      "n_tables": 4,
+      "tables_structured": 4,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Exposure to Perfluoroalkyl Substances During Pregnancy a"
+    },
+    {
+      "paper_id": "dd7cacac10d31e58fd9a749740520d3863f4e4bd",
+      "chunks": 14,
+      "chunk_cells": 0,
+      "n_tables": 0,
+      "tables_structured": 0,
+      "tables_fallback": 0,
+      "has_table_block": false,
+      "title": "Congenital Dislocation of the Knee: Idiopathic or Arthro"
+    },
+    {
+      "paper_id": "ec45017959a4da596ebf70887979ce191106f72e",
+      "chunks": 95,
+      "chunk_cells": 98,
+      "n_tables": 1,
+      "tables_structured": 1,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Joint profiling of cell morphology and gene expression d"
+    },
+    {
+      "paper_id": "20f7c87171080bdede407d414a4947bb93a77242",
+      "chunks": 61,
+      "chunk_cells": 0,
+      "n_tables": 0,
+      "tables_structured": 0,
+      "tables_fallback": 0,
+      "has_table_block": false,
+      "title": "Paradoxical Effects of a Cytokine and an Anticonvulsant "
+    },
+    {
+      "paper_id": "eef59dba1650350c612abb0df4ca5ca338c2dd44",
+      "chunks": 77,
+      "chunk_cells": 312,
+      "n_tables": 3,
+      "tables_structured": 3,
+      "tables_fallback": 0,
+      "has_table_block": true,
+      "title": "Mixtures of Metals and Micronutrients in Early Pregnancy"
+    },
+    {
+      "paper_id": "4e8aa13b4455455ad61c75fb340ac3a9ad9f63b1",
+      "chunks": 53,
+      "chunk_cells": 0,
+      "n_tables": 0,
+      "tables_structured": 0,
+      "tables_fallback": 0,
+      "has_table_block": false,
+      "title": "Interaction of the pre- and postnatal environment in the"
+    }
+  ],
+  "block_types": {
+    "abstract": 22,
+    "paragraph": 647,
+    "figure_caption": 48,
+    "table": 45
+  },
+  "papers_with_table_block": 7,
+  "tables": 23,
+  "tables_structured": 22,
+  "tables_fallback": 1,
+  "total_cells": 1371,
+  "stop": false,
+  "jats_ids": [
+    "3aeeb4d31b0dcf15d70236038e35e615b55f22b1",
+    "33fea4124ef008a70a6f70eb13c8c88044fbcd28",
+    "913b6b3cb4c4f6154f405107efcafb3b59991b04",
+    "819f9eacf36cc4ca986987d525e3ed20d5808c0e",
+    "7cc53dfe80d504da656765ad748b72c589a606cf",
+    "506958c71c4bc38de1c83ec2474f65e4af6e6ea7",
+    "dd7cacac10d31e58fd9a749740520d3863f4e4bd",
+    "ec45017959a4da596ebf70887979ce191106f72e",
+    "20f7c87171080bdede407d414a4947bb93a77242",
+    "eef59dba1650350c612abb0df4ca5ca338c2dd44",
+    "4e8aa13b4455455ad61c75fb340ac3a9ad9f63b1"
+  ],
+  "pdf_ids": [
+    "9879e1cce9918b9f5eb4b0a8e14494a834f91102",
+    "dddc6e8d062388504452040c446a9d2acba1c259",
+    "67d7236f524dae3bcf88b8f2726261d1acb5206b",
+    "7e5f30e77806b526fead868ef24209ccb31668ee",
+    "fdd51ec0268419dd29a990e9ac20de6fb445420a",
+    "295fc8094b39f5ae98f1d13d0875c6370b1b2fd6",
+    "c458eeae3a915a9a2039a6ef8777fdc0b43eb333",
+    "799503104ae927f9153e3b6ad61d4a6ef62f2d7f",
+    "330377dabc3f31bb19aab906ef7943a49fdc5ebb",
+    "f09cd60900e0feb84a539e9efb77b80cda899dbd",
+    "f82c20907921c1a48569bc6cb089f45de41474c8",
+    "da119f5f19f380934b6136156049dd7c216eda66"
+  ]
+}

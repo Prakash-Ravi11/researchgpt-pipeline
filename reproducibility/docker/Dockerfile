@@ -55,19 +55,20 @@ RUN pip install --no-cache-dir \
         pytest
 
 # --- source ------------------------------------------------------------------
-# Copy the working tree. Note what CANNOT be in it:
-#   * experiments/document_evidence_pipeline/runs/  is gitignored (528 MB) and
-#     absent from a clean clone. Six files under it, 97 KB total, feed 24 of the
-#     36 checks. Without them the verifier reports "12 passed, 0 failed" AND
-#     EXITS 0 -- a silent pass at one third coverage. See README §3.
+# Copy the working tree. The verifier's six inputs travel with it: they are
+# shipped in reproducibility/artifacts/ (97 KB), NOT read from
+# experiments/document_evidence_pipeline/runs/, which is gitignored (528 MB) and
+# absent from a clean clone. Nothing needs mounting for 36/36.
+#
+# Note what CANNOT be in the image:
 #   * configs/config.yaml is gitignored; it holds the live API key. It must not
 #     be baked into an image. Nothing in the deterministic path reads it.
 COPY . /repo
 
 # --- default: run the verifier ----------------------------------------------
-# Exit code 0 is NOT sufficient evidence. Require 36 passed / 0 failed. The
-# python -c line below turns the silent-pass case into a non-zero exit.
-CMD ["sh", "-c", "python reproducibility/verify_deterministic.py && python -c \"import json,sys;d=json.load(open('reproducibility/verify_results.json'));print('passed',d['passed'],'failed',d['failed']);sys.exit(0 if d['passed']==36 and d['failed']==0 else 1)\""]
+# The exit code is meaningful: 0 iff 36 passed / 0 failed / 0 skipped. A missing
+# input is reported SKIPPED by name and exits non-zero, so no wrapper is needed.
+CMD ["python", "reproducibility/verify_deterministic.py"]
 
 # =============================================================================
 #  USAGE  (all of it UNVERIFIED -- no command below has ever been run)
@@ -77,15 +78,10 @@ CMD ["sh", "-c", "python reproducibility/verify_deterministic.py && python -c \"
 #      docker build -f reproducibility/docker/Dockerfile -t rgp-repro .
 #      # build context is the REPO ROOT, not this directory
 #
-#  Run the deterministic probes. Expect 12/12 and a FAILING wrapper exit, because
-#  the six run artifacts are gitignored and therefore not in the image:
+#  Run the deterministic probes:
 #      docker run --rm rgp-repro
-#
-#  Full 36/36 requires mounting the run artifacts from a host copy of the
-#  authors' archive:
-#      docker run --rm \
-#        -v /host/path/to/runs:/repo/experiments/document_evidence_pipeline/runs:ro \
-#        rgp-repro
+#          expect: "36 passed, 0 failed, 0 skipped, of 36 expected", exit 0
+#          nothing to mount -- the six inputs ship in reproducibility/artifacts/
 #
 #  Test suites:
 #      docker run --rm rgp-repro sh -c "python -m pytest tests/test_pipeline.py tests/test_anchors.py -q"
@@ -97,9 +93,10 @@ CMD ["sh", "-c", "python reproducibility/verify_deterministic.py && python -c \"
 #          which needs a real >=20 KB PDF in pipeline/cache/ (gitignored). Mount
 #          one there for 63/63. README §4.
 #
-#  DO NOT run reproducibility/manifests/build_manifests.py in this container. Its
-#  inputs are gitignored, it exits 0 anyway, and it overwrites the shipped
-#  manifests with a degraded set. README §3.
+#  reproducibility/manifests/build_manifests.py cannot run in this container: its
+#  inputs are gitignored and absent from the image, so it refuses, prints what is
+#  missing and exits 2 without writing. The shipped manifests are the artifact.
+#  README §3.
 #
 # =============================================================================
 #  GPU-DEPENDENT RUNS -- MANUAL PATH ONLY, NO CONTAINER

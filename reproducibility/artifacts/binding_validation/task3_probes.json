@@ -1,0 +1,145 @@
+[
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_cell",
+    "claim": "10 reports a Accuracy (%) of 50 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_row_wrong_col",
+    "claim": "10 reports a Accuracy (%) of 74 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_col_wrong_row",
+    "claim": "10 reports a Accuracy (%) of 54 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_metric_wrong_condition",
+    "claim": "10 reports a Accuracy (%) of 59 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "cross_table_substitution",
+    "claim": "10 reports a Accuracy (%) of 366 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_cell",
+    "claim": "1 reports a Error (%) of 7 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "RETURNED",
+    "reason": "evidence_span_not_found_in_paper_chunks",
+    "binding_status": null,
+    "WRONG": true,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_col_wrong_row",
+    "claim": "1 reports a Error (%) of 18 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "correct_metric_wrong_condition",
+    "claim": "1 reports a Error (%) of 11 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "33fea4124e",
+    "class": "cross_table_substitution",
+    "claim": "1 reports a Error (%) of 74 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "819f9eacf3",
+    "class": "cross_table_substitution",
+    "claim": "FT4 reports a Pearson correlation a (95% CI) of 15 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "819f9eacf3",
+    "class": "cross_table_substitution",
+    "claim": "FT4 reports a Pearson correlation a (95% CI) of 95 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "819f9eacf3",
+    "class": "cross_table_substitution",
+    "claim": "FT4 reports a Summary score, 1-3 y cognition scale of 15 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  },
+  {
+    "paper_id": "819f9eacf3",
+    "class": "cross_table_substitution",
+    "claim": "GDF15, log reports a Summary score, 1-3 y cognition scale of 15 on the study cohort.",
+    "final": "ABSTAINED",
+    "want": "ABSTAINED",
+    "reason": "binding_wrong_cell",
+    "binding_status": "wrong_cell",
+    "WRONG": false,
+    "FOOLED": false
+  }
+]
