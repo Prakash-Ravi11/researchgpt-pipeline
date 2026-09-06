@@ -280,6 +280,11 @@ git grep -InE "s2k-[A-Za-z0-9]{20,}" -- .    # must return nothing
 **Tag `paper-freeze-v1` → commit `f3b6768`** ("Claim ledger: every paper claim traced to a
 number, a report, and a status").
 
+> **Resolving the tag — read this before auditing the freeze.** `paper-freeze-v1` is an
+> *annotated* tag, so `git rev-parse --short paper-freeze-v1` returns the tag **object**
+> (`61c4ef1`), not the commit. That looks like the tag was moved off `f3b6768`. It was not.
+> Confirm with `git log -1 --format=%h paper-freeze-v1` → `f3b6768`.
+
 **What it covers:** the full `src/` pipeline, `configs/`, all 12 measurement reports, every
 run directory under `experiments/document_evidence_pipeline/runs/`, and `CLAIM_LEDGER.md`.
 Every number in the five paper tables was produced at or before this commit.
