@@ -414,3 +414,70 @@ Four tables would read better as figures. Not created here.
    by aggregate deficit on a log x-axis, each marked for whether LaTeX table survival ≥ PDF's.
    `f3b06a914702` sits at 0.2 % with the "tables intact" marker, making the conservatism
    argument without prose.
+
+---
+
+## CLEAN-CHECKOUT TEST
+
+Run 2026-09-06 against `a02e090`, to establish what a reproducer actually gets from a fresh
+clone with nothing cached. Method: `git clone` into an empty temp directory, then execute the
+`reproducibility/README.md` sequence verbatim. Two independent clones — one to discover, one
+to re-validate the README as written. Machine: the development machine, Python 3.10.18,
+Windows. **No experiment was re-run and no table number was recomputed;** the deterministic
+probes only re-derive frozen artifacts.
+
+### Result
+
+| step | outcome | time |
+|---|---|--:|
+| `git clone` (2.9 MB tree, 5 MB `.git`) | clean | 1 s |
+| freeze check `git log -1 --format=%h paper-freeze-v1` → `f3b6768` | as documented; `rev-parse` returns `61c4ef1`, the tag object | < 1 s |
+| `git diff --stat paper-freeze-v1 -- src/ configs/` → 3 files, +53/−3 | as documented | < 1 s |
+| credential scan `git grep -InE "s2k-[A-Za-z0-9]{20,}"` | no output — clean | < 1 s |
+| `verify_deterministic.py`, no venv, no packages | **12 passed, 0 failed — exit 0** | 0.2 s |
+| same, with the six run artifacts restored (97 KB) | **36 passed, 0 failed** | 0.2 s |
+| `pytest tests/test_pipeline.py tests/test_anchors.py -q` | **15 passed** | 1 s |
+| `python -m tests.test_pipeline_units` | **62 passed, 1 failed** | 3 s |
+| same, with one real PDF in `pipeline/cache/` | **63 passed, 0 failed** | 3 s |
+
+Machine time end to end ≈ **2 minutes**, of which ~90 s is `pip install` for the test suites.
+The deterministic verifier itself is **0.2 s and needs no third-party package at all** —
+confirmed under a venv created with `python -m venv --without-pip`.
+
+### What needed manual intervention
+
+1. **The six run artifacts had to be copied in by hand.**
+   `experiments/document_evidence_pipeline/runs/` is gitignored
+   (`experiments/document_evidence_pipeline/.gitignore:4`) — 528 MB, 56 directories, none of
+   it in the repository. Six files totalling **97 KB** feed 24 of the 36 checks:
+   `parity_gate_precision/per_fallback.json`, `binding_validation/task3_probes.json`,
+   `binding_validation/task1_verify.json`, `structural_binding/binding_probes.json`,
+   `gate_sensitivity/crossrow.json`, `eval_framework_sensitivity/per_mutant.json`.
+   With them the clone reaches 36/36; without them it cannot.
+2. **A real PDF had to be placed in `pipeline/cache/`** to reach 63/63 on the unit suite.
+3. **Six wheels had to be installed** for the test suites — five pinned plus `pytest`, which
+   is pinned in no requirements file.
+
+### Every step that was not in the README before this test
+
+The README did not exist when the test was run; it was written from these findings, and each
+now has a section there.
+
+| finding | why it matters | README |
+|---|---|---|
+| **`verify_deterministic.py` exits 0 with its inputs missing** — a clean clone reports `12 passed, 0 failed` and returns success | the package's headline claim silently degrades to one third coverage with no failure signal. Exit code is not an acceptance criterion; `passed == 36` is | §3, with a one-line acceptance check |
+| **`build_manifests.py` is destructive in a clean checkout** — it exits 0, rewrites the shipped manifests from missing sources, reducing `index.json` to one corpus and `medical50_frozen.json` to `n_files_hashed: 0` / `n_full_text_without_local_file: 19`. The verifier then reports **5 passed, 4 failed** against corrupted inputs | `PROJECT_STATE.md` §7 lists it as routine step 3. In a clean checkout that step destroys the artifact it is meant to refresh. Recovery: `git checkout -- reproducibility/manifests/` | §3, with a do-not-run warning |
+| **`verify_deterministic.py` rewrites `verify_results.json` on every run** | a degraded run overwrites the shipped 36/36 record | §3 |
+| **the unit suite gives 62/63 in a clean checkout, deterministically** | the test prefers a real PDF from the gitignored `pipeline/cache/`; its fallback builds a synthetic PDF that PyMuPDF 1.28.2 compresses to 16,610 B, below the ≥ 20 KB pre-filter → `pdf_too_small_16610B`. A defect in the test's fallback branch, not in the pipeline, and it touches no table | §4, named so it can be distinguished from a real failure |
+| **the deterministic path needs no third-party package** | `torch` / `sentence-transformers` / `chromadb` in `requirements-repro.txt` are for a generation re-run only; both test suites pass on `requests`, `pymupdf`, `pyyaml`, `tqdm`, `numpy` and `pytest` | §2.1, §2.2 |
+| **`pytest` is in neither `requirements.txt` nor `requirements-repro.txt`** | the documented test step cannot be run from either file alone | §2.2 |
+| **the annotated-tag trap survives cloning** | `git rev-parse --short paper-freeze-v1` → `61c4ef1` in a fresh clone too; only `git log -1 --format=%h` resolves to `f3b6768` | §4 step 0 |
+
+### Effect on the tables
+
+**None.** No table number was recomputed, and the deterministic checks that could be run —
+12 in a bare clone, all 36 with the run artifacts restored — reproduced their expected values
+exactly. The findings above concern the reproduction *procedure*, not the measurements: the
+gitignored run directory and the manifest-rebuild hazard describe how the package must be
+shipped and used, and the 62/63 unit result is an artifact of a test fallback path that no
+table depends on.
