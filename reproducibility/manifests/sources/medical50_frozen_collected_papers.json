@@ -1,0 +1,3092 @@
+[
+  {
+    "paperId": "5de53b8af645b8dc44db12a03f85470e40231adc",
+    "externalIds": {
+      "DOI": "10.1109/ICDSBS69077.2026.11634810",
+      "CorpusId": 291039970
+    },
+    "title": "A Dual-Stream Hybrid Network for Joint Fetal Brain MRI Segmentation and Gestational Age Estimation",
+    "venue": "2026 International Conference on Data Science and Business Systems (ICDSBS)",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'tldr'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1109/ICDSBS69077.2026.11634810?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/ICDSBS69077.2026.11634810, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": null,
+    "authors": [
+      {
+        "authorId": "2457072871",
+        "name": "Nithish Arul"
+      },
+      {
+        "authorId": "2452578599",
+        "name": "D. Mishra"
+      },
+      {
+        "authorId": "2457072071",
+        "name": "Prakash Ravi"
+      },
+      {
+        "authorId": "2265932667",
+        "name": "N. T Y J"
+      }
+    ],
+    "abstract": "Fetal brain magnetic resonance imaging (MRI) is widely used to study prenatal brain development, including changes in cortical folding and cerebellar growth. Still, analyzing fetal MRI automatically is not easy. Compared with adult brain MRI, fetal scans are much more affected by motion during image acquisition, which makes tissue segmentation less reliable. Existing segmentation methods also struggle with missing global context, blurred tissue boundaries, and incorrect predictions near the air-tissue boundary. Another limitation is that many of these models only focus on segmentation and do not include gestational age, even though it is one of the key clinical measures used to evaluate fetal development.In this work, we introduce FetalNet, a Dual-Stream Hybrid Network designed for joint 7-class fetal brain tissue segmentation and gestational age (GA) estimation. The model uses a high-resolution local stream for fine anatomical details and a lower-resolution global stream to retain overall spatial information. We also add a topology-aware term to the loss function so that the predicted tissue regions remain more continuous and anatomically reasonable. Even with a limited amount of annotated fetal MRI data, the proposed model performs well in a low-data setting. FetalNet achieves a mean Dice score of 81.9%, compared with 78.8% for a baseline 3D U-Net, while also giving a gestational age mean absolute error of 2.6 weeks.",
+    "relevance_score": 0.5966082811355591,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "68388dd7f46aa7c837a8811f11402d04041d12b8",
+    "externalIds": {
+      "DBLP": "journals/neuroimage/ZhangZLLZZPXYZL24",
+      "DOI": "10.1016/j.neuroimage.2024.120560",
+      "CorpusId": 268065666,
+      "PubMed": "38431181"
+    },
+    "title": "A joint brain extraction and image quality assessment framework for fetal brain MRI slices",
+    "venue": "NeuroImage",
+    "year": 2024,
+    "citationCount": 11,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1016/j.neuroimage.2024.120560",
+      "status": "GOLD",
+      "license": "CCBYNC",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.neuroimage.2024.120560?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.neuroimage.2024.120560, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This work proposes a novel two-stage dual-task deep learning framework with a brain localization stage and a dual-task stage for joint brain extraction and quality assessment of fetal MRI slices that achieves very promising performance."
+    },
+    "authors": [
+      {
+        "authorId": "2303409117",
+        "name": "Wenhao Zhang"
+      },
+      {
+        "authorId": "2361533108",
+        "name": "Xin Zhang"
+      },
+      {
+        "authorId": "2256938918",
+        "name": "Ling-ling Li"
+      },
+      {
+        "authorId": "1717088074",
+        "name": "Lufan Liao"
+      },
+      {
+        "authorId": "2152339121",
+        "name": "Fenqiang Zhao"
+      },
+      {
+        "authorId": "47966414",
+        "name": "T. Zhong"
+      },
+      {
+        "authorId": "150351062",
+        "name": "Yuchen Pei"
+      },
+      {
+        "authorId": "2119193008",
+        "name": "Xiangmin Xu"
+      },
+      {
+        "authorId": "2261064791",
+        "name": "Chaoxiang Yang"
+      },
+      {
+        "authorId": "2274807250",
+        "name": "He Zhang"
+      },
+      {
+        "authorId": "2258885345",
+        "name": "Gang Li"
+      }
+    ],
+    "abstract": "Brain extraction and image quality assessment are two fundamental steps in fetal brain magnetic resonance imaging (MRI) 3D reconstruction and quantification. However, the randomness of fetal position and orientation, the variability of fetal brain morphology, maternal organs around the fetus, and the scarcity of data samples, all add excessive noise and impose a great challenge to automated brain extraction and quality assessment of fetal MRI slices. Conventionally, brain extraction and quality assessment are typically performed independently. However, both of them focus on the brain image representation, so they can be jointly optimized to ensure the network learns more effective features and avoid overfitting. To this end, we propose a novel two-stage dual-task deep learning framework with a brain localization stage and a dual-task stage for joint brain extraction and quality assessment of fetal MRI slices. Specifically, the dual-task module compactly contains a feature extraction module, a quality assessment head and a segmentation head with feature fusion for simultaneous brain extraction and quality assessment. Besides, a transformer architecture is introduced into the feature extraction module and the segmentation head. We utilize a multi-step training strategy to guarantee a stable and successful training of all modules. Finally, we validate our method by a 5-fold cross-validation and ablation study on a dataset with fetal brain MRI slices in different qualities, and perform a cross-dataset validation in addition. Experiments show that the proposed framework achieves very promising performance.",
+    "relevance_score": 0.5884101390838623,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "4425c0d2c0324c63ee77b2450aec952abaaca9c1",
+    "externalIds": {
+      "DBLP": "journals/cbm/ZhouLXGHGF24",
+      "DOI": "10.1016/j.compbiomed.2024.108111",
+      "CorpusId": 267550107,
+      "PubMed": "38382384"
+    },
+    "title": "JoCoRank: Joint correlation learning with ranking similarity regularization for imbalanced fetal brain age regression",
+    "venue": "Comput. Biol. Medicine",
+    "year": 2024,
+    "citationCount": 10,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.compbiomed.2024.108111?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.compbiomed.2024.108111, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A novel joint correlation learning with ranking similarity regularization (JoCoRank) algorithm for deep imbalanced regression of fetal brain age and the customized optimization scheme for each criterion exhibits strong robustness against outliers and imbalanced regression."
+    },
+    "authors": [
+      {
+        "authorId": "2267068324",
+        "name": "Ran Zhou"
+      },
+      {
+        "authorId": "2268439513",
+        "name": "Yang Liu"
+      },
+      {
+        "authorId": "2268396143",
+        "name": "Wei Xia"
+      },
+      {
+        "authorId": "2297157929",
+        "name": "Yu Guo"
+      },
+      {
+        "authorId": "2267155193",
+        "name": "Zhongwei Huang"
+      },
+      {
+        "authorId": "2267039860",
+        "name": "Haitao Gan"
+      },
+      {
+        "authorId": "2250338025",
+        "name": "Aaron Fenster"
+      }
+    ],
+    "abstract": "Estimating fetal brain age based on sulci by magnetic resonance imaging (MRI) is clinically crucial in determining the normal development of fetal brains. Deep learning provides a possible way for fetal brain age estimation using MRI. Previous studies have mainly emphasized optimizing individual-wise correlation criteria, such as mean square error. However, they ignored the very important global and peer-wise criterion, which are essential for learning the structured relationships among regression samples. Moreover, the imbalanced label distribution introduces an adverse bias, which impairs the reliability and interpretation of correlation estimation and the model's fairness and generalizability. In this work, we propose a novel joint correlation learning with ranking similarity regularization (JoCoRank) algorithm for deep imbalanced regression of fetal brain age. Joint correlation learning concurrently captures individual, global, and peer-level valuable relationship information, and the customized optimization scheme for each criterion exhibits strong robustness against outliers and imbalanced regression. Ranking similarity regularization is designed to calibrate the biased feature representations by aligning the sorted list of neighbors in the label space with those in the feature space. A total of 1327 MRI images from 157 healthy fetuses between 22 and 34 weeks were collected at Wuhan Children's Hospital and utilized to evaluate the performance of JoCoRank in fetal brain age estimation. JoCoRank achieved promising results with an average mean absolute error of 0.693\u00b10.064 weeks and R2 coefficient of 0.930\u00b10.019. Our fetal brain age estimation algorithm would be useful for identifying abnormalities in fetal brain development and undertaking early intervention in clinical practice.",
+    "relevance_score": 0.5679472088813782,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "cb050f04d3cedb8003a4ad45b15959f04c52889e",
+    "externalIds": {
+      "DBLP": "journals/tmi/PeiZZMLWWZWL24",
+      "DOI": "10.1109/TMI.2023.3327295",
+      "CorpusId": 264447688,
+      "PubMed": "37874705"
+    },
+    "title": "PETS-Nets: Joint Pose Estimation and Tissue Segmentation of Fetal Brains Using Anatomy-Guided Networks",
+    "venue": "IEEE Transactions on Medical Imaging",
+    "year": 2023,
+    "citationCount": 6,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'tldr'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1109/TMI.2023.3327295?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/TMI.2023.3327295, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Medicine"
+    ],
+    "tldr": null,
+    "authors": [
+      {
+        "authorId": "150351062",
+        "name": "Yuchen Pei"
+      },
+      {
+        "authorId": "2152339121",
+        "name": "Fenqiang Zhao"
+      },
+      {
+        "authorId": "47966414",
+        "name": "T. Zhong"
+      },
+      {
+        "authorId": "2261677069",
+        "name": "Laifa Ma"
+      },
+      {
+        "authorId": "1717088074",
+        "name": "Lufan Liao"
+      },
+      {
+        "authorId": "3319431",
+        "name": "Zhengwang Wu"
+      },
+      {
+        "authorId": "49680659",
+        "name": "Li Wang"
+      },
+      {
+        "authorId": "15115609",
+        "name": "He-Xiao Zhang"
+      },
+      {
+        "authorId": "2308411928",
+        "name": "Lisheng Wang"
+      },
+      {
+        "authorId": "2252436195",
+        "name": "Gang Li"
+      }
+    ],
+    "abstract": "Fetal Magnetic Resonance Imaging (MRI) is challenged by fetal movements and maternal breathing. Although fast MRI sequences allow artifact free acquisition of individual 2D slices, motion frequently occurs in the acquisition of spatially adjacent slices. Motion correction for each slice is thus critical for the reconstruction of 3D fetal brain MRI. In this paper, we propose a novel multi-task learning framework that adopts a coarse-to-fine strategy to jointly learn the pose estimation parameters for motion correction and tissue segmentation map of each slice in fetal MRI. Particularly, we design a regression-based segmentation loss as a deep supervision to learn anatomically more meaningful features for pose estimation and segmentation. In the coarse stage, a U-Net-like network learns the features shared for both tasks. In the refinement stage, to fully utilize the anatomical information, signed distance maps constructed from the coarse segmentation are introduced to guide the feature learning for both tasks. Finally, iterative incorporation of the signed distance maps further improves the performance of both regression and segmentation progressively. Experimental results of cross-validation across two different fetal datasets acquired with different scanners and imaging protocols demonstrate the effectiveness of the proposed method in reducing the pose estimation error and obtaining superior tissue segmentation results simultaneously, compared with state-of-the-art methods.",
+    "relevance_score": 0.5602887868881226,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "0ced7ffe2167e32b5478539881c7b251ed3d2253",
+    "externalIds": {
+      "DBLP": "conf/isbi/ZhangHCHLSL26",
+      "DOI": "10.1109/ISBI61048.2026.11515568",
+      "CorpusId": 288468278
+    },
+    "title": "Cortical Surface-Constrained Temporally Continuous Atlas Learning for Fetal Brain MRI",
+    "venue": "IEEE International Symposium on Biomedical Imaging",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'tldr'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1109/ISBI61048.2026.11515568?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/ISBI61048.2026.11515568, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "tldr": null,
+    "authors": [
+      {
+        "authorId": "2326278919",
+        "name": "Kai Zhang"
+      },
+      {
+        "authorId": "2070033451",
+        "name": "Dan Hu"
+      },
+      {
+        "authorId": "1988742364",
+        "name": "Jiale Cheng"
+      },
+      {
+        "authorId": "2220324117",
+        "name": "Shijie Huang"
+      },
+      {
+        "authorId": "2255744230",
+        "name": "Weili Lin"
+      },
+      {
+        "authorId": "2268042266",
+        "name": "Dinggang Shen"
+      },
+      {
+        "authorId": "2325201571",
+        "name": "Gang Li"
+      }
+    ],
+    "abstract": "Constructing a temporally continuous fetal brain atlas with anatomically realistic cortical geometry remains challenging due to rapid cortical folding during gestation. Deep learning, especially Implicit Neural Representation (INR) based methods, improves continuity but often fails to ensure cortical alignment due to the absence of explicit geometric constraints. We propose a cortical surface-constrained joint learning framework that integrates a registration network with an INR for continuous atlas representation. The registration network learns accurate deformation fields, while surface constraints guide alignment to preserve cortical topology. Through joint optimization, our method constructs a temporally continuous fetal brain atlas that captures smooth developmental transitions and preserves anatomically faithful cortical folding. Experiments on the dHCP dataset demonstrate that our method produces anatomically consistent and temporally smooth 4D atlases, achieving superior label-propagation (atlas-based) segmentation accuracy and biologically plausible developmental trajectories.",
+    "relevance_score": 0.5573680400848389,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "ece27daeba71ff069b3512229d2ee22a3b2503c7",
+    "externalIds": {
+      "MAG": "3091013920",
+      "DBLP": "conf/miccai/PeiWZZLSL20",
+      "PubMedCentral": "7912521",
+      "DOI": "10.1007/978-3-030-59861-7_39",
+      "CorpusId": 222143130,
+      "PubMed": "33644782"
+    },
+    "title": "Anatomy-Guided Convolutional Neural Network for Motion Correction in Fetal Brain MRI",
+    "venue": "MLMI@MICCAI",
+    "year": 2020,
+    "citationCount": 12,
+    "openAccessPdf": {
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7912521",
+      "status": "GREEN",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC7912521, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Experimental results indicate that the proposed method achieves superior performance in reducing the motion prediction error and obtaining satisfactory tissue segmentation results simultaneously, compared with state-of-the-art methods."
+    },
+    "authors": [
+      {
+        "authorId": "150351062",
+        "name": "Yuchen Pei"
+      },
+      {
+        "authorId": "49680659",
+        "name": "Li Wang"
+      },
+      {
+        "authorId": "50686602",
+        "name": "Fenqiang Zhao"
+      },
+      {
+        "authorId": "47966414",
+        "name": "T. Zhong"
+      },
+      {
+        "authorId": "1717088074",
+        "name": "Lufan Liao"
+      },
+      {
+        "authorId": "144986260",
+        "name": "D. Shen"
+      },
+      {
+        "authorId": "2149146066",
+        "name": "Gang Li"
+      }
+    ],
+    "abstract": "Fetal Magnetic Resonance Imaging (MRI) is challenged by the fetal movements and maternal breathing. Although fast MRI sequences allow artifact free acquisition of individual 2D slices, motion commonly occurs in between slices acquisitions. Motion correction for each slice is thus very important for reconstruction of 3D fetal brain MRI, but is highly operator-dependent and time-consuming. Approaches based on convolutional neural networks (CNNs) have achieved encouraging performance on prediction of 3D motion parameters of arbitrarily oriented 2D slices, which, however, does not capitalize on important brain structural information. To address this problem, we propose a new multi-task learning framework to jointly learn the transformation parameters and tissue segmentation map of each slice, for providing brain anatomical information to guide the mapping from 2D slices to 3D volumetric space in a coarse to fine manner. In the coarse stage, the first network learns the features shared for both regression and segmentation tasks. In the refinement stage, to fully utilize the anatomical information, distance maps constructed based on the coarse segmentation are introduced to the second network. Finally, incorporation of the signed distance maps to guide the regression and segmentation together improves the performance in both tasks. Experimental results indicate that the proposed method achieves superior performance in reducing the motion prediction error and obtaining satisfactory tissue segmentation results simultaneously, compared with state-of-the-art methods.",
+    "relevance_score": 0.5555771589279175,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "9879e1cce9918b9f5eb4b0a8e14494a834f91102",
+    "externalIds": {
+      "DBLP": "journals/corr/abs-2603-26755",
+      "ArXiv": "2603.26755",
+      "DOI": "10.48550/arXiv.2603.26755",
+      "CorpusId": 286961826
+    },
+    "title": "Domain-Guided YOLO26 with Composite BCE-Dice-Lov\u00e1sz Loss for Multi-Class Fetal Head Ultrasound Segmentation",
+    "venue": "arXiv.org",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2603.26755, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A prompt-free pipeline on top of YOLO26-Seg that jointly detects and segments three structures, Brain, Cavum Septi Pellucidi (CSP), and Lateral Ventricles (LV), in a single forward pass and ablate each component and discuss annotation-quality and class-imbalance effects on CSP and LV performance."
+    },
+    "authors": [
+      {
+        "authorId": "2355622114",
+        "name": "M. F. Nizar"
+      }
+    ],
+    "abstract": "Segmenting fetal head structures from prenatal ultrasound remains a practical bottleneck in obstetric imaging. The current state-of-the-art baseline, proposed alongside the published dataset, adapts the Segment Anything Model with per-class Dice and Lov\\'{a}sz losses but still depends on bounding-box prompts at test time. We build a prompt-free pipeline on top of YOLO26-Seg that jointly detects and segments three structures, Brain, Cavum Septi Pellucidi (CSP), and Lateral Ventricles (LV), in a single forward pass. Three modifications are central to our approach: (i) a composite BCE-Dice-Lov\\'{a}sz segmentation loss with inverse-frequency class weighting, injected into the YOLO26 training loop via runtime monkey-patching; (ii) domain-guided copy-paste augmentation that transplants minority-class structures while respecting their anatomical location relative to the brain boundary; and (iii) inter-patient stratified splitting to prevent data leakage. On 575 held-out test images, the composite loss variant reaches a mean Dice coefficient of 0.9253, exceeding the baseline (0.9012) by 2.68 percentage points, despite reporting over three foreground classes only, whereas the baseline's reported mean includes the easy background class. We further ablate each component and discuss annotation-quality and class-imbalance effects on CSP and LV performance.",
+    "relevance_score": 0.5410845279693604,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\9879e1cce9918b9f5eb4b0a8e14494a834f91102.pdf"
+  },
+  {
+    "paperId": "dddc6e8d062388504452040c446a9d2acba1c259",
+    "externalIds": {
+      "DBLP": "journals/corr/abs-2508-10680",
+      "ArXiv": "2508.10680",
+      "DOI": "10.48550/arXiv.2508.10680",
+      "CorpusId": 280650264
+    },
+    "title": "Physics-Informed Joint Multi-TE Super-Resolution with Implicit Neural Representation for Robust Fetal T2 Mapping",
+    "venue": "PIPPI@MICCAI",
+    "year": 2025,
+    "citationCount": 2,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2508.10680, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This study shows potential for reducing the number of stacks per TE in T2 mapping by leveraging anatomical redundancy, and demonstrates state-of-the-art performance on simulated fetal brain and in vivo adult datasets with fetal-like motion."
+    },
+    "authors": [
+      {
+        "authorId": "2375904420",
+        "name": "Busra Bulut"
+      },
+      {
+        "authorId": "2025103898",
+        "name": "Maik Dannecker"
+      },
+      {
+        "authorId": "145959669",
+        "name": "Thomas Sanchez"
+      },
+      {
+        "authorId": "2228436830",
+        "name": "S. Silva"
+      },
+      {
+        "authorId": "2293169286",
+        "name": "V. Zalevskyi"
+      },
+      {
+        "authorId": "2327298926",
+        "name": "Steven Jia"
+      },
+      {
+        "authorId": "2242439695",
+        "name": "Jean-Baptiste Ledoux"
+      },
+      {
+        "authorId": "2238950939",
+        "name": "G. Auzias"
+      },
+      {
+        "authorId": "117411717",
+        "name": "F. Rousseau"
+      },
+      {
+        "authorId": "2375904187",
+        "name": "J. Hutter"
+      },
+      {
+        "authorId": "2291468150",
+        "name": "Daniel Rueckert"
+      },
+      {
+        "authorId": "6466939",
+        "name": "M. Cuadra"
+      }
+    ],
+    "abstract": "T2 mapping in fetal brain MRI has the potential to improve characterization of the developing brain, especially at mid-field (0.55T), where T2 decay is slower. However, this is challenging as fetal MRI acquisition relies on multiple motion-corrupted stacks of thick slices, requiring slice-to-volume reconstruction (SVR) to estimate a high-resolution (HR) 3D volume. Currently, T2 mapping involves repeated acquisitions of these stacks at each echo time (TE), leading to long scan times and high sensitivity to motion. We tackle this challenge with a method that jointly reconstructs data across TEs, addressing severe motion. Our approach combines implicit neural representations with a physics-informed regularization that models T2 decay, enabling information sharing across TEs while preserving anatomical and quantitative T2 fidelity. We demonstrate state-of-the-art performance on simulated fetal brain and in vivo adult datasets with fetal-like motion. We also present the first in vivo fetal T2 mapping results at 0.55T. Our study shows potential for reducing the number of stacks per TE in T2 mapping by leveraging anatomical redundancy.",
+    "relevance_score": 0.5376758575439453,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\dddc6e8d062388504452040c446a9d2acba1c259.pdf"
+  },
+  {
+    "paperId": "d137301f3660eb2d943520b8d5705902ce1a26c8",
+    "externalIds": {
+      "MAG": "3089606148",
+      "PubMedCentral": "8056938",
+      "DOI": "10.1016/j.neuroscience.2020.09.053",
+      "CorpusId": 222070702,
+      "PubMed": "33010344"
+    },
+    "title": "Covariation Between Brain Function (MEG) and Structure (DTI) Differentiates Adolescents with Fetal Alcohol Spectrum Disorder (FASD) from Typically Developing Controls",
+    "venue": "Neuroscience",
+    "year": 2020,
+    "citationCount": 7,
+    "openAccessPdf": {
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8056938",
+      "status": "GREEN",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8056938, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is suggested that multimodal integration of MEG and FA provides novel associations between structure and function that may help differentiate adolescents with FASD from HC."
+    },
+    "authors": [
+      {
+        "authorId": "22239280",
+        "name": "J. Pinner"
+      },
+      {
+        "authorId": "2100972",
+        "name": "B. Coffman"
+      },
+      {
+        "authorId": "144363339",
+        "name": "J. Stephen"
+      }
+    ],
+    "abstract": "The behavioral, cognitive, and sensory difficulties experienced by individuals exposed to alcohol prenatally currently fail to provide early identification for fetal alcohol spectrum disorder (FASD). Attempting to advance this pursuit through a multivariate analysis, we collected MEG data during auditory, somatosensory, visual paradigms, DTI, and behavior in adolescents ages 12\u201321 years (FASD: N=13; HC: N=20). We assessed the relationship between brain function (MEG) and structure (FA) utilizing joint independent component analysis (jICA), and examined how this measure relates to behavior. We identified 5 components that reveal group differences in co-variation between MEG and FA. For example, component 5 (t=3.162, p=0.003, Hedges\u2019 g=1.13) contained MEG activity corresponding to all three sensory modalities, most robustly in occipital lobes, and DTI-derived cerebellar FA, underlying the role of the cerebellum in sensory processing. Further, in HCs component 5\u2019s loading factor was positively correlated with verbal ability (r=0.646, p=0.002), indicating higher covariation was associated with better verbal performance. Interestingly, this relationship is lacking in FASD (r=0.009, p=0.979). Also, component 5 loading factor negatively correlated with impulsivity (r=\u22120.527, p=0.002), indicating that stronger function-structure associations were associated with individuals with lower impulsivity. These findings suggest that multimodal integration of MEG and FA provides novel associations between structure and function that may help differentiate adolescents with FASD from HC.",
+    "relevance_score": 0.5374338030815125,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "3aeeb4d31b0dcf15d70236038e35e615b55f22b1",
+    "externalIds": {
+      "PubMedCentral": "11575827",
+      "DOI": "10.1371/journal.pbio.3002909",
+      "CorpusId": 274146115,
+      "PubMed": "39561110"
+    },
+    "title": "Trajectories of human brain functional connectome maturation across the birth transition",
+    "venue": "PLoS Biology",
+    "year": 2024,
+    "citationCount": 18,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1371/journal.pbio.3002909",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC11575827, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Fundamental aspects of early brain development are unveiled and the foundation for future work on the influence of environmental factors on this process is laid."
+    },
+    "authors": [
+      {
+        "authorId": "10805089",
+        "name": "Lanxin Ji"
+      },
+      {
+        "authorId": "2331466350",
+        "name": "Iris Menu"
+      },
+      {
+        "authorId": "2146723884",
+        "name": "Amyn Majbri"
+      },
+      {
+        "authorId": "2266868921",
+        "name": "Tanya Bhatia"
+      },
+      {
+        "authorId": "4806474",
+        "name": "C. Trentacosta"
+      },
+      {
+        "authorId": "2258211895",
+        "name": "Moriah E. Thomason"
+      }
+    ],
+    "abstract": "Understanding the sequence and timing of brain functional network development at the beginning of human life is critically important from both normative and clinical perspectives. Yet, we presently lack rigorous examination of the longitudinal emergence of human brain functional networks over the birth transition. Leveraging a large, longitudinal perinatal functional magnetic resonance imaging (fMRI) data set, this study models developmental trajectories of brain functional networks spanning 25 to 55 weeks of post-conceptual gestational age (GA). The final sample includes 126 fetal scans (GA = 31.36 \u00b1 3.83 weeks) and 58 infant scans (GA = 48.17 \u00b1 3.73 weeks) from 140 unique subjects. In this study, we document the developmental changes of resting-state functional connectivity (RSFC) over the birth transition, evident at both network and graph levels. We observe that growth patterns are regionally specific, with some areas showing minimal RSFC changes, while others exhibit a dramatic increase at birth. Examples with birth-triggered dramatic change include RSFC within the subcortical network, within the superior frontal network, within the occipital-cerebellum joint network, as well as the cross-hemisphere RSFC between the bilateral sensorimotor networks and between the bilateral temporal network. Our graph analysis further emphasized the subcortical network as the only region of the brain exhibiting a significant increase in local efficiency around birth, while a concomitant gradual increase was found in global efficiency in sensorimotor and parietal-frontal regions throughout the fetal to neonatal period. This work unveils fundamental aspects of early brain development and lays the foundation for future work on the influence of environmental factors on this process.",
+    "relevance_score": 0.5366826057434082,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "67d7236f524dae3bcf88b8f2726261d1acb5206b",
+    "externalIds": {
+      "ArXiv": "2608.03724",
+      "CorpusId": 290836613
+    },
+    "title": "Towards Reliable and Reproducible Fetal Brain Biometry: A Deep Learning Approach Using MRI",
+    "venue": "",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2608.03724, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This work introduces a straightforward pipeline for reliable biometry estimations, with efficiency, interpretability and scalability that support integration into clinical workflows and achieves comparable or improved accuracy for most measurements."
+    },
+    "authors": [
+      {
+        "authorId": "2332658915",
+        "name": "F. Maccarone"
+      },
+      {
+        "authorId": "2455489644",
+        "name": "Marina Di Stefano"
+      },
+      {
+        "authorId": "2330564275",
+        "name": "G. Longari"
+      },
+      {
+        "authorId": "2324242450",
+        "name": "Giulia Frigerio"
+      },
+      {
+        "authorId": "2324241410",
+        "name": "Gloria Rizzato"
+      },
+      {
+        "authorId": "113204308",
+        "name": "R. Prudentino"
+      },
+      {
+        "authorId": "2262210167",
+        "name": "Nivedita Agarwal"
+      },
+      {
+        "authorId": "1987210827",
+        "name": "T. Ciceri"
+      },
+      {
+        "authorId": "2318028690",
+        "name": "D. Peruzzo"
+      },
+      {
+        "authorId": "2332125288",
+        "name": "Simone Melzi"
+      }
+    ],
+    "abstract": "Fetal brain biometry is essential for quantitative assessment of brain development, supporting gestational age estimation, developmental monitoring, and detection of abnormalities. In clinical practice, measurements are manually performed, making them time-consuming and prone to variability. While automated approaches have been proposed, reproducible methods remain limited, particularly those providing anatomically interpretable landmark localization. We present a fully automated deep learning-based framework for reliable and reproducible brain biometry from 3D super-resolution-reconstructed fetal brain MRI. The proposed four-step pipeline derives biometric parameters by jointly estimating linear measurements and their corresponding anatomical landmarks. A 3D convolutional neural network is trained to regress landmark coordinates from brain segmentation label maps, followed by measurement-specific geometric optimization to refine landmark positions and compute measurements. The pipeline is evaluated on two publicly available fetal MRI datasets comprising 150 volumes (gestational age range: 20-37 weeks) acquired across different scanners and protocols, assessing five key biometric measurements across varying acquisition settings and providing a comprehensive evaluation of both measurement accuracy and landmark localization using quantitative metrics and visual assessment. Compared with the only available automated pipeline, the proposed method achieves comparable or improved accuracy for most measurements. In conclusion, we introduce a straightforward pipeline for reliable biometry estimations, with efficiency, interpretability and scalability that support integration into clinical workflows.",
+    "relevance_score": 0.5348411798477173,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf"
+  },
+  {
+    "paperId": "d0c412613711053c98292867c7ba283531e62414",
+    "externalIds": {
+      "DBLP": "journals/neuroimage/ChenSLLWSZWW22",
+      "DOI": "10.1016/j.neuroimage.2022.119700",
+      "CorpusId": 252973771,
+      "PubMed": "36270621"
+    },
+    "title": "Deciphering the developmental order and microstructural patterns of early white matter pathways in a diffusion MRI based fetal brain atlas",
+    "venue": "NeuroImage",
+    "year": 2022,
+    "citationCount": 24,
+    "openAccessPdf": {
+      "url": "https://www.sciencedirect.com/science/article/pii/S1053811922008217/pdf",
+      "status": "GOLD",
+      "license": "CCBYNCND",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.neuroimage.2022.119700?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.neuroimage.2022.119700, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine",
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is speculated that the turning point of the diffusivity trajectory may correspond to the starting point of pre-myelination, based on which, the developmental order of WM tracts can be mapped and the order was in agreement with the order of myelination from histological studies."
+    },
+    "authors": [
+      {
+        "authorId": "144313209",
+        "name": "R. Chen"
+      },
+      {
+        "authorId": "1491475250",
+        "name": "Cong Sun"
+      },
+      {
+        "authorId": "2115432642",
+        "name": "Tingting Liu"
+      },
+      {
+        "authorId": "2114121451",
+        "name": "Yuhao Liao"
+      },
+      {
+        "authorId": "2110125710",
+        "name": "Junyan Wang"
+      },
+      {
+        "authorId": "2143795968",
+        "name": "Yi Sun"
+      },
+      {
+        "authorId": "2153910902",
+        "name": "Yi Zhang"
+      },
+      {
+        "authorId": "2156713393",
+        "name": "Guangbin Wang"
+      },
+      {
+        "authorId": "2152704913",
+        "name": "Dan Wu"
+      }
+    ],
+    "abstract": "White matter (WM) of the fetal brain undergoes rapid development to form early structural connections. Diffusion magnetic resonance imaging (dMRI) has shown to be a useful tool to depict fetal brain WM in utero, and many studies have observed increasing fractional anisotropy and decreasing diffusivity in the fetal brain during the second-to-third trimester, whereas others reported non-monotonic changes. Unbiased dMRI atlases of the fetal brain are important for characterizing the developmental trajectories of WM and providing normative references for in utero diagnosis of prenatal abnormalities. To date, the sole fetal brain dMRI atlas was collected from a Caucasian/mixed population and was constructed based on the diffusion tensor model with limited spatial resolution. In this work, we proposed a fiber orientation distribution (FOD) based pipeline for generating fetal brain dMRI atlases, which showed better registration accuracy than a diffusion tensor based pipeline. Based on the FOD-based pipeline, we constructed the first Chinese fetal brain dMRI atlas using 89 dMRI scans of normal fetuses at gestational age between 24 and 38 weeks. Complex non-monotonic trends of tensor- and FOD-derived microstructural parameters in eight WM tracts were observed, which jointly pointed to different phases of microstructural development. Specifically, we speculated that the turning point of the diffusivity trajectory may correspond to the starting point of pre-myelination, based on which, the developmental order of WM tracts can be mapped and the order was in agreement with the order of myelination from histological studies. The normative atlas also provided a reference for the detection of abnormal WM development, such as that in congenital heart disease. Therefore, the established high-order fetal brain dMRI atlas depicted the spatiotemporal pattern of early WM development, and findings may help decipher the distinct microstructural events in utero.",
+    "relevance_score": 0.5232869386672974,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "80a7d49329989f8d14102cc5bfd7d37ebad4a7ba",
+    "externalIds": {
+      "DBLP": "journals/titb/WuCLLSWWWZ25",
+      "DOI": "10.1109/JBHI.2025.3586049",
+      "CorpusId": 280244975,
+      "PubMed": "40663667"
+    },
+    "title": "3D Isotropic High-Resolution Fetal Brain MRI Reconstruction From Motion Corrupted Thick Data Based on Physical-Informed Unsupervised Learning",
+    "venue": "IEEE journal of biomedical and health informatics",
+    "year": 2025,
+    "citationCount": 5,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'tldr'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1109/JBHI.2025.3586049?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/JBHI.2025.3586049, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Medicine"
+    ],
+    "tldr": null,
+    "authors": [
+      {
+        "authorId": "2125610152",
+        "name": "Jiangjie Wu"
+      },
+      {
+        "authorId": "2185006094",
+        "name": "Lixuan Chen"
+      },
+      {
+        "authorId": "2300941842",
+        "name": "Zhenghao Li"
+      },
+      {
+        "authorId": "2358809565",
+        "name": "Xin Li"
+      },
+      {
+        "authorId": "48789349",
+        "name": "Taotao Sun"
+      },
+      {
+        "authorId": "2339718250",
+        "name": "Lihui Wang"
+      },
+      {
+        "authorId": "2237742737",
+        "name": "Rongpin Wang"
+      },
+      {
+        "authorId": "2327520174",
+        "name": "Hongjiang Wei"
+      },
+      {
+        "authorId": "2312098473",
+        "name": "Yuyao Zhang"
+      }
+    ],
+    "abstract": "High-quality 3D fetal brain MRI reconstruction from motion-corrupted 2D slices is crucial for precise clinical diagnosis and advancing our understanding of fetal brain development. This necessitates reliable slice-to-volume registration (SVR) for motion correction and super-resolution reconstruction (SRR) techniques. Traditional approaches have their limitations, but deep learning (DL) offers the potential in enhancing SVR and SRR. However, most of DL methods require large-scale external 3D high-resolution (HR) training datasets, which is challenging in clinical fetal MRI. To address this issue, we propose an unsupervised iterative joint SVR and SRR DL framework for 3D isotropic HR volume reconstruction. Specifically, our method conceptualizes SVR as a function that maps a 2D slice and a 3D target volume to a rigid transformation matrix, aligning the slice to the underlying location within the target volume. This function is parameterized by a convolutional neural network, which is trained by minimizing the difference between the volume slicing at the predicted position and the actual input slice. For SRR, a decoding network embedded within a deep image prior framework, coupled with a comprehensive image degradation model, is used to produce the HR volume. The deep image prior framework offers a local consistency prior to guide the reconstruction of HR volumes. By performing a forward degradation model, the HR volume is optimized by minimizing the loss between the predicted slices and the acquired slices. Experiments on both large-magnitude motion-corrupted simulation data and clinical data have shown that our proposed method outperforms current state-of-the-art fetal brain reconstruction methods.",
+    "relevance_score": 0.5172609686851501,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "7e5f30e77806b526fead868ef24209ccb31668ee",
+    "externalIds": {
+      "DBLP": "journals/corr/abs-2601-07519",
+      "ArXiv": "2601.07519",
+      "DOI": "10.48550/arXiv.2601.07519",
+      "CorpusId": 284647375
+    },
+    "title": "Fast Multi-Stack Slice-to-Volume Reconstruction via Multi-Scale Unrolled Optimization",
+    "venue": "arXiv.org",
+    "year": 2026,
+    "citationCount": 1,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.07519, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Engineering",
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This work introduces a fast convolutional framework that fuses multiple orthogonal 2D slice stacks to recover coherent 3D structure and refines slice alignment through lightweight model-based optimization and paves the way for real-time, scanner-side volumetric feedback during MRI acquisition."
+    },
+    "authors": [
+      {
+        "authorId": "103133740",
+        "name": "Margherita Firenze"
+      },
+      {
+        "authorId": "2270221666",
+        "name": "Sean I. Young"
+      },
+      {
+        "authorId": "2307018972",
+        "name": "Clinton J. Wang"
+      },
+      {
+        "authorId": "6671178",
+        "name": "H. Yun"
+      },
+      {
+        "authorId": "2141260",
+        "name": "E. Adalsteinsson"
+      },
+      {
+        "authorId": "2261920620",
+        "name": "Kiho Im"
+      },
+      {
+        "authorId": "2256998142",
+        "name": "P. Grant"
+      },
+      {
+        "authorId": "2318063780",
+        "name": "Polina Golland"
+      }
+    ],
+    "abstract": "Fully convolutional networks have become the backbone of modern medical imaging due to their ability to learn multi-scale representations and perform end-to-end inference. Yet their potential for slice-to-volume reconstruction (SVR), the task of jointly estimating 3D anatomy and slice poses from misaligned 2D acquisitions, remains underexplored. We introduce a fast convolutional framework that fuses multiple orthogonal 2D slice stacks to recover coherent 3D structure and refines slice alignment through lightweight model-based optimization. Applied to fetal brain MRI, our approach reconstructs high-quality 3D volumes in under 10s, with 1s slice registration and accuracy on par with state-of-the-art iterative SVR pipelines, offering more than speedup. The framework uses non-rigid displacement fields to represent transformations, generalizing to other SVR problems like fetal body and placental MRI. Additionally, the fast inference time paves the way for real-time, scanner-side volumetric feedback during MRI acquisition.",
+    "relevance_score": 0.513587474822998,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\7e5f30e77806b526fead868ef24209ccb31668ee.pdf"
+  },
+  {
+    "paperId": "33fea4124ef008a70a6f70eb13c8c88044fbcd28",
+    "externalIds": {
+      "PubMedCentral": "11522281",
+      "DOI": "10.1038/s41598-024-59111-6",
+      "CorpusId": 269186579,
+      "PubMed": "38627421"
+    },
+    "title": "Exploring fetal brain tumor glioblastoma symptom verification with self organizing maps and vulnerability data analysis",
+    "venue": "Scientific Reports",
+    "year": 2024,
+    "citationCount": 10,
+    "openAccessPdf": {
+      "url": "https://www.nature.com/articles/s41598-024-59111-6.pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC11522281, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "The proposed boosted division time attribute extraction method helps to recognize the fetal images and find Brain tumor glioblastoma with feasible accuracy using image rationalization against the brain tumor glioblastoma diagnosis."
+    },
+    "authors": [
+      {
+        "authorId": "2292720887",
+        "name": "Suresh Kumar Natarajan"
+      },
+      {
+        "authorId": "2296983351",
+        "name": "J. S"
+      },
+      {
+        "authorId": "2025122321",
+        "name": "S. Mathivanan"
+      },
+      {
+        "authorId": "2274171960",
+        "name": "Hariharan Rajadurai"
+      },
+      {
+        "authorId": "2298749146",
+        "name": "B. M.B"
+      },
+      {
+        "authorId": "2257013846",
+        "name": "Mohd Asif Shah"
+      }
+    ],
+    "abstract": "Brain tumor glioblastoma is a disease that is caused for a child who has abnormal cells in the brain, which is found using MRI \u201cMagnetic Resonance Imaging\u201d brain image using a powerful magnetic field, radio waves, and a computer to produce detailed images of the body's internal structures it is a standard diagnostic tool for a wide range of medical conditions, from detecting brain and spinal cord injuries to identifying tumors and also in evaluating joint problems. This is treatable, and by enabling the factor for happening, the factor for dissolving the dead tissues. If the brain tumor glioblastoma is untreated, the child will go to death; to avoid this, the child has to treat the brain problem using the scan of MRI images. Using the neural network, brain-related difficulties have to be resolved. It is identified to make the diagnosis of glioblastoma. This research deals with the techniques of max rationalizing and min rationalizing images, and the method of boosted division time attribute extraction has been involved in diagnosing glioblastoma. The process of maximum and min rationalization is used to recognize the Brain tumor glioblastoma in the brain images for treatment efficiency. The image segment is created for image recognition. The method of boosted division time attribute extraction is used in image recognition with the help of MRI for image extraction. The proposed boosted division time attribute extraction method helps to recognize the fetal images and find Brain tumor glioblastoma with feasible accuracy using image rationalization against the brain tumor glioblastoma diagnosis. In addition, 45% of adults are affected by the tumor, 40% of children and 5% are in death situations. To reduce this ratio, in this study, the Brain tumor glioblastoma is identified and segmented to recognize the fetal images and find the Brain tumor glioblastoma diagnosis. Then the tumor grades were analyzed using the efficient method for the imaging MRI with the diagnosis result of partially high. The accuracy of the proposed TAE-PIS system is 98.12% which is higher when compared to other methods like Genetic algorithm, Convolution neural network, fuzzy-based minimum and maximum neural network and kernel-based support vector machine respectively. Experimental results show that the proposed method archives rate of 98.12% accuracy with low response time and compared with the Genetic algorithm (GA), Convolutional Neural Network (CNN), fuzzy-based minimum and maximum neural network (Fuzzy min\u2013max NN), and kernel-based support vector machine. Specifically, the proposed method achieves a substantial improvement of 80.82%, 82.13%, 85.61%, and 87.03% compared to GA, CNN, Fuzzy min\u2013max NN, and kernel-based support vector machine, respectively.",
+    "relevance_score": 0.5086331963539124,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\33fea4124ef008a70a6f70eb13c8c88044fbcd28.pdf"
+  },
+  {
+    "paperId": "fdd51ec0268419dd29a990e9ac20de6fb445420a",
+    "externalIds": {
+      "ArXiv": "2607.20136",
+      "CorpusId": 290448694
+    },
+    "title": "PRIME-SVR: Physics-infoRmed Implicit Multi-Echo Slice-to-Volume Reconstruction for Fetal T2 mapping",
+    "venue": "",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2607.20136, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Physics",
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "PRIME-SVR is presented, the first implicit neural representation (INR) framework for joint HR reconstruction from multi-echo MRI, which improves reconstruction sharpness, anatomical accuracy, and cross-TE structural consistency by 14%, and accelerates quantitative imaging by reducing the data needed for multi-TE reconstruction."
+    },
+    "authors": [
+      {
+        "authorId": "2375904420",
+        "name": "Busra Bulut"
+      },
+      {
+        "authorId": "2025103898",
+        "name": "Maik Dannecker"
+      },
+      {
+        "authorId": "145959669",
+        "name": "Thomas Sanchez"
+      },
+      {
+        "authorId": "2228436830",
+        "name": "S. Silva"
+      },
+      {
+        "authorId": "2327298926",
+        "name": "Steven Jia"
+      },
+      {
+        "authorId": "2242439695",
+        "name": "Jean-Baptiste Ledoux"
+      },
+      {
+        "authorId": "2288509316",
+        "name": "L\u00e9o Pomar"
+      },
+      {
+        "authorId": "46225926",
+        "name": "J. Sichitiu"
+      },
+      {
+        "authorId": "2258629042",
+        "name": "Yvan Gomez"
+      },
+      {
+        "authorId": "2265647393",
+        "name": "M\u00e9riam Koob"
+      },
+      {
+        "authorId": "2265646842",
+        "name": "Vincent Dunet"
+      },
+      {
+        "authorId": "24069576",
+        "name": "M. Deprez"
+      },
+      {
+        "authorId": "2238950939",
+        "name": "G. Auzias"
+      },
+      {
+        "authorId": "2326110909",
+        "name": "Fran\u00e7ois Rousseau"
+      },
+      {
+        "authorId": "2375904187",
+        "name": "J. Hutter"
+      },
+      {
+        "authorId": "2291468150",
+        "name": "Daniel Rueckert"
+      },
+      {
+        "authorId": "6466939",
+        "name": "M. Cuadra"
+      }
+    ],
+    "abstract": "Slice-to-volume reconstruction (SVR) is the standard method for obtaining high-resolution (HR) 3D fetal brain volumes from motion-corrupted 2D MRI slice stacks acquired in multiple orientations. Existing SVR methods are optimized and validated only for clinical-range echo times (TEs), limiting their use at non-clinical TEs and making them incompatible with quantitative T2 mapping, a protocol- and center-independent biomarker of fetal brain maturation requiring HR reconstructions across multiple TEs. We present PRIME-SVR, the first implicit neural representation (INR) framework for joint HR reconstruction from multi-echo MRI. A single fully connected network models a continuous function from spatial coordinates to signal intensities across TEs, while a second network estimates slice-specific acquisition degradations. Cross-TE coherence is enforced via a Bloch equation-derived regularization penalizing deviations from expected T2 decay, with adaptive weighting that strengthens coupling for degraded stacks. The method is fully self-supervised. We validate PRIME-SVR on 39 in vivo fetal acquisitions (13 subjects x 3 TEs) from two centers, two vendors, and two field strengths (1.5 T and 0.55 T). Compared to state-of-the-art SVR, PRIME-SVR improves reconstruction sharpness by 47%, anatomical accuracy by 30%, and cross-TE structural consistency by 14%. It enables reconstruction at late TEs previously inaccessible to SVR, yielding the first 0.8 mm isotropic T2 maps at 0.55 T and the first T2 maps derived from INR-based SVR. PRIME-SVR also accelerates quantitative imaging by reducing the data needed for multi-TE reconstruction, cutting acquisition from 15 to 10 minutes while keeping T2 accuracy within 1.7% in white and deep gray matter, or to 5 minutes with a mean T2 error of 2.3% for high-quality acquisitions.",
+    "relevance_score": 0.5081146359443665,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\fdd51ec0268419dd29a990e9ac20de6fb445420a.pdf"
+  },
+  {
+    "paperId": "295fc8094b39f5ae98f1d13d0875c6370b1b2fd6",
+    "externalIds": {
+      "ArXiv": "2405.13235",
+      "DBLP": "conf/miccai/RameshDYN24",
+      "DOI": "10.48550/arXiv.2405.13235",
+      "CorpusId": 269983010
+    },
+    "title": "Geometric Transformation Uncertainty for Improving 3D Fetal Brain Pose Prediction from Freehand 2D Ultrasound Videos",
+    "venue": "International Conference on Medical Image Computing and Computer-Assisted Intervention",
+    "year": 2024,
+    "citationCount": 5,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2405.13235, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Computer Science",
+      "Engineering"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "The proposed method, QAERTS, demonstrates superior pose estimation accuracy than the state-of-the-art and most of the uncertainty-based approaches, leading to 9% improvement on plane angle for localization accuracy, and 8% on normalized cross-correlation for sampled image quality."
+    },
+    "authors": [
+      {
+        "authorId": "1922339575",
+        "name": "Jayroop Ramesh"
+      },
+      {
+        "authorId": "1397074607",
+        "name": "N. Dinsdale"
+      },
+      {
+        "authorId": "2179267925",
+        "name": "INTERGROWTH-21 Consortium"
+      },
+      {
+        "authorId": "31121293",
+        "name": "P. Yeung"
+      },
+      {
+        "authorId": "2119305297",
+        "name": "A. Namburete"
+      }
+    ],
+    "abstract": "Accurately localizing two-dimensional (2D) ultrasound (US) fetal brain images in the 3D brain, using minimal computational resources, is an important task for automated US analysis of fetal growth and development. We propose an uncertainty-aware deep learning model for automated 3D plane localization in 2D fetal brain images. Specifically, a multi-head network is trained to jointly regress 3D plane pose from 2D images in terms of different geometric transformations. The model explicitly learns to predict uncertainty to allocate higher weight to inputs with low variances across different transformations to improve performance. Our proposed method, QAERTS, demonstrates superior pose estimation accuracy than the state-of-the-art and most of the uncertainty-based approaches, leading to 9% improvement on plane angle (PA) for localization accuracy, and 8% on normalized cross-correlation (NCC) for sampled image quality. QAERTS also demonstrates efficiency, containing 5$\\times$ fewer parameters than ensemble-based approach, making it advantageous in resource-constrained settings. In addition, QAERTS proves to be more robust to noise effects observed in freehand US scanning by leveraging rotational discontinuities and explicit output uncertainties.",
+    "relevance_score": 0.5064408779144287,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\295fc8094b39f5ae98f1d13d0875c6370b1b2fd6.pdf"
+  },
+  {
+    "paperId": "c458eeae3a915a9a2039a6ef8777fdc0b43eb333",
+    "externalIds": {
+      "MAG": "3096812112",
+      "PubMedCentral": "7611411",
+      "ArXiv": "2009.10549",
+      "DBLP": "journals/corr/abs-2009-10549",
+      "DOI": "10.1109/TMI.2020.3035253",
+      "CorpusId": 221836115,
+      "PubMed": "33136540"
+    },
+    "title": "CA-Net: Comprehensive Attention Convolutional Neural Networks for Explainable Medical Image Segmentation",
+    "venue": "IEEE Transactions on Medical Imaging",
+    "year": 2020,
+    "citationCount": 669,
+    "openAccessPdf": {
+      "url": "https://arxiv.org/pdf/2009.10549",
+      "status": "GREEN",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2009.10549, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine",
+      "Computer Science",
+      "Engineering"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This work makes extensive use of multiple attentions in a CNN architecture and proposes a comprehensive attention-based CNN (CA-Net) for more accurate and explainable medical image segmentation that is aware of the most important spatial positions, channels and scales at the same time."
+    },
+    "authors": [
+      {
+        "authorId": "2057263977",
+        "name": "Ran Gu"
+      },
+      {
+        "authorId": "2107886449",
+        "name": "Guotai Wang"
+      },
+      {
+        "authorId": "145147423",
+        "name": "Tao Song"
+      },
+      {
+        "authorId": "1516136186",
+        "name": "Rui Huang"
+      },
+      {
+        "authorId": "2412421597",
+        "name": "M. Aertsen"
+      },
+      {
+        "authorId": "145536094",
+        "name": "J. Deprest"
+      },
+      {
+        "authorId": "143951081",
+        "name": "S. Ourselin"
+      },
+      {
+        "authorId": "12975639",
+        "name": "T. Vercauteren"
+      },
+      {
+        "authorId": "48692127",
+        "name": "Shaoting Zhang"
+      }
+    ],
+    "abstract": "Accurate medical image segmentation is essential for diagnosis and treatment planning of diseases. Convolutional Neural Networks (CNNs) have achieved state-of-the-art performance for automatic medical image segmentation. However, they are still challenged by complicated conditions where the segmentation target has large variations of position, shape and scale, and existing CNNs have a poor explainability that limits their application to clinical decisions. In this work, we make extensive use of multiple attentions in a CNN architecture and propose a comprehensive attention-based CNN (CA-Net) for more accurate and explainable medical image segmentation that is aware of the most important spatial positions, channels and scales at the same time. In particular, we first propose a joint spatial attention module to make the network focus more on the foreground region. Then, a novel channel attention module is proposed to adaptively recalibrate channel-wise feature responses and highlight the most relevant feature channels. Also, we propose a scale attention module implicitly emphasizing the most salient feature maps among multiple scales so that the CNN is adaptive to the size of an object. Extensive experiments on skin lesion segmentation from ISIC 2018 and multi-class segmentation of fetal MRI found that our proposed CA-Net significantly improved the average segmentation Dice score from 87.77% to 92.08% for skin lesion, 84.79% to 87.08% for the placenta and 93.20% to 95.88% for the fetal brain respectively compared with U-Net. It reduced the model size to around 15 times smaller with close or even better accuracy compared with state-of-the-art DeepLabv3+. In addition, it has a much higher explainability than existing networks by visualizing the attention weight maps. Our code is available at https://github.com/HiLab-git/CA-Net.",
+    "relevance_score": 0.5053479075431824,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\c458eeae3a915a9a2039a6ef8777fdc0b43eb333.pdf"
+  },
+  {
+    "paperId": "799503104ae927f9153e3b6ad61d4a6ef62f2d7f",
+    "externalIds": {
+      "DOI": "10.24041/ejmr2023.48",
+      "CorpusId": 267090010
+    },
+    "title": "TRUE KNOT OF UMBILICAL CORD PRESENTING WITH REDUCED FETAL MOVEMENTS - CASE REPORT",
+    "venue": "Era's Journal of Medical Research",
+    "year": 2023,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.24041/ejmr2023.48",
+      "status": "GOLD",
+      "license": "CCBYSA",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.24041/ejmr2023.48?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.24041/ejmr2023.48, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A 38 year old multigravida with nonsevere pre-eclampsia with nonsevere pre-eclampsia presented at 34 weeks gestation with reduced fetal movements [RFM], and it was jointly decided to expedite delivery of the fetus."
+    },
+    "authors": [
+      {
+        "authorId": "2279856420",
+        "name": "Dr. Suman Nishad"
+      }
+    ],
+    "abstract": "A 38 year old multigravida (gravida:4, para:2+1, live:1) with nonsevere pre-eclampsia presented at 34 weeks gestation with reduced fetal movements [RFM]. Admission cardiotocography was reactive. Obstetric ultrasound showed weight on 1st centile. Dopplers showed cerebroplacental ratio of 0.9 suggestive of brain sparing. Umbilical artery pulsatility index was at 96th centile, with forward flow in diastole. In view of the persistent complaint of RFM, it was jointly decided to expedite delivery of the fetus. Per operatively, a true knot was present around 10 cms from the umbilical end with blanching proximal to the knot. The baby was delivered active, with anApgar score of 6 and 7 at 1 and 5 minutes respectively.",
+    "relevance_score": 0.5013521313667297,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "330377dabc3f31bb19aab906ef7943a49fdc5ebb",
+    "externalIds": {
+      "ArXiv": "2608.14763",
+      "CorpusId": 291171763
+    },
+    "title": "Cross-Modal Ultrasound-MRI Learning for Fetal Brain Ventricular Volumetry and Abnormality Screening",
+    "venue": "",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2608.14763, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Engineering",
+      "Computer Science"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "VIFBA, an ultrasound video-based framework for fetal brain assessment that predicts MRI-derived lateral ventricular volume, classifies VM severity, and identifies potential non-VM fetal brain abnormalities, is proposed and validated."
+    },
+    "authors": [
+      {
+        "authorId": "2108724329",
+        "name": "Yuhao Huang"
+      },
+      {
+        "authorId": "2145783477",
+        "name": "Yuanji Zhang"
+      },
+      {
+        "authorId": "2269475682",
+        "name": "Yuhuan Lu"
+      },
+      {
+        "authorId": "2280437891",
+        "name": "Dong Ni"
+      },
+      {
+        "authorId": "2458034927",
+        "name": "P. E. Grant"
+      },
+      {
+        "authorId": "2253462113",
+        "name": "Davood Karimi"
+      }
+    ],
+    "abstract": "Assessment of ventriculomegaly (VM) on fetal brain ultrasound relies primarily on measuring lateral ventricular atrial width on standard planes, which is operator-dependent and may not fully reflect the overall ventricular enlargement. Fetal brain MRI provides more reliable volumetric information but is costly and less accessible for routine use. To address these limitations, we propose VIFBA, an ultrasound video-based framework for fetal brain assessment that predicts MRI-derived lateral ventricular volume, classifies VM severity, and identifies potential non-VM fetal brain abnormalities. Our contribution is three-fold. First, we introduce a joint-embedding predictive architecture (JEPA)-inspired tube latent prediction objective that leverages spatio-temporal coherence in ultrasound videos to enhance representation learning. Second, we develop a contrastive cross-modal alignment strategy that transfers structural information from MRI to ultrasound during training, while requiring ultrasound alone at inference. Third, we augment VIFBA with a training-free vision-language model and retrieval augmentation to verify uncertain predictions and identify potential non-VM fetal brain abnormalities. We validated VIFBA on a large dataset comprising 857 cases (3,196 videos) with paired fetal brain ultrasound and MRI examinations. On held-out test data, VIFBA achieved an MAE of 0.5909 mL and Pearson correlation coefficient of 0.9907 for ventricular volume regression, 0.9400 accuracy for VM severity classification, and an F1 score of 0.7764 for multi-abnormality classification, substantially outperforming single-task baselines, video-based strong competitors, and state-of-the-art foundation models. By enabling MRI-informed volumetric assessment from routine ultrasound alone, VIFBA offers a practical and potentially broadly deployable pathway toward accurate and affordable prenatal brain screening.",
+    "relevance_score": 0.49992096424102783,
+    "has_full_text": true,
+    "pdf_source": "arxiv",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\330377dabc3f31bb19aab906ef7943a49fdc5ebb.pdf"
+  },
+  {
+    "paperId": "ab0d920d3eac53ceaa415536819be88d739e820f",
+    "externalIds": {
+      "DOI": "10.1096/fasebj.2019.33.1_supplement.452.11",
+      "CorpusId": 243020810
+    },
+    "title": "Lateral Growth in the Basicranium in Bushbabies: Role of Synchondroses and Brain Growth",
+    "venue": "The FASEB Journal",
+    "year": 2019,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1096/fasebj.2019.33.1_supplement.452.11?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1096/fasebj.2019.33.1_supplement.452.11, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is hypothesize that bilateral synchondroses of middle cranial base may be important to expansion of basicranial width during fetal growth, during which there is a relatively generalized expansion among all brain regions; postnatally, differential growth of brain regions renders bone modeling a more effective means of lateralbasicranial expansion."
+    },
+    "authors": [
+      {
+        "authorId": "1989898101",
+        "name": "Gabriel K Hughes"
+      },
+      {
+        "authorId": "1989952608",
+        "name": "Rebecca L Reynolds"
+      },
+      {
+        "authorId": "3603127",
+        "name": "C. Vinyard"
+      },
+      {
+        "authorId": "2403135",
+        "name": "V. DeLeon"
+      },
+      {
+        "authorId": "2107390124",
+        "name": "T. Smith"
+      }
+    ],
+    "abstract": "Recently, we described bilateral synchondroses (alisphenoid\u2010basisphenoid synchondrosis, ABS) within the middle cranial fossa of strepsirrhine primates (lemurs, bushbabies, lorises). These exist as growth centers in late fetal or newborn strepsirrhines, whereas in similarly\u2010aged monkeys, they are not present. It is unclear whether these joints are critical for active bilateral growth, especially with our current lack of understanding of perinatal brain growth. In the present study, two genera of bushbabies (Otolemur spp., Galago spp.) were studied using paraffin histology and computed tomographic (CT) imaging software (Amira). Endocasts of the cranial cavity were produced by manually tracing the endocranial margin of the cranial cavity of a late fetal and a one\u2010month\u2010old specimen. Both genera of bushbabies are confirmed to possess the bilateral ABS. The synchondroses were \u201cbipolar,\u201d with proliferating and hypertrophic chondrocytes at both medial and lateral sides. CT reconstructions of late fetal, newborn, and one\u2010month\u2010old Otolemur illustrate that the ABS narrows dramatically in mediolateral width, suggesting a decrease in growth rate. Endocasts suggest that contours of the late fetal brain are rounded. By comparison, the endocast of one\u2010month\u2010old suggest greater differentiation of cerebral lobes and a more rostrally projecting olfactory bulb. We hypothesize that bilateral synchondroses of middle cranial base may be important to expansion of basicranial width during fetal growth, during which there is a relatively generalized expansion among all brain regions; postnatally, differential growth of brain regions renders bone modeling a more effective means of lateral basicranial expansion. However, further investigation is required to determine if synchondroses may grow differentially among basicranial regions.",
+    "relevance_score": 0.49920177459716797,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "341bae37d67bd40b7d6637cc8811629170d1f592",
+    "externalIds": {
+      "PubMedCentral": "9928776",
+      "DOI": "10.1002/ajmg.a.63071",
+      "CorpusId": 254557874,
+      "PubMed": "36495114"
+    },
+    "title": "Fetal akinesia deformation sequence syndrome associated with recessive TTN variants",
+    "venue": "American Journal of Medical Genetics. Part A",
+    "year": 2022,
+    "citationCount": 4,
+    "openAccessPdf": {
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/9928776",
+      "status": "GREEN",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC9928776, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "FADS is solidified as an alternative phenotypic presentation associated with homozygote/compound heterozygous pathogenic variants in the TTN and the effect of recessive variants located within the fetal IC and/or N2BA isoforms in association with severe FADS is reported."
+    },
+    "authors": [
+      {
+        "authorId": "11701798",
+        "name": "Ebba Alkhunaizi"
+      },
+      {
+        "authorId": "48605713",
+        "name": "N. Martin"
+      },
+      {
+        "authorId": "6854849",
+        "name": "A. Jelin"
+      },
+      {
+        "authorId": "2126886360",
+        "name": "M. Rosner"
+      },
+      {
+        "authorId": "1392545755",
+        "name": "D. Bailey"
+      },
+      {
+        "authorId": "14203358",
+        "name": "Laurie A. Steiner"
+      },
+      {
+        "authorId": "4197527",
+        "name": "S. Lakhani"
+      },
+      {
+        "authorId": "67245260",
+        "name": "W. Ji"
+      },
+      {
+        "authorId": "4963484",
+        "name": "P. Katzman"
+      },
+      {
+        "authorId": "145493365",
+        "name": "Katherine R. Forster"
+      },
+      {
+        "authorId": "6088716",
+        "name": "O. Jarinova"
+      },
+      {
+        "authorId": "2757819",
+        "name": "P. Shannon"
+      },
+      {
+        "authorId": "46281627",
+        "name": "D. Chitayat"
+      }
+    ],
+    "abstract": "Arthrogryposis multiplex congenita (AMC) [also known as multiple joints contracture or Fetal Akinesia Deformation Sequence (FADS)] is etiologically a heterogeneous condition with an estimated incidence of approximately 1 in 3000 live births and much higher incidence when prenatally diagnosed cases are included. The condition can be acquired or secondary to fetal exposures and can also be caused by a variety of single\u2010gene disorders affecting the brain, spinal cord, peripheral nerves, neuromuscular junction, muscle, and a variety of disorders affecting the connective tissues (Niles et al., Prenatal Diagnosis, 2019; 39:720\u2013731). The introduction of next\u2010generation gene sequencing uncovered many genes and causative variants of AMC but also identified genes that cause both dominant and recessive inherited conditions with the variability of clinical manifestations depending on the genes and variants. Molecular diagnosis in these cases is not only important for prognostication but also for the determination of recurrence risk and for providing reproductive options including preimplantation and prenatal diagnosis. TTN, the largest known gene in the human genome, has been known to be associated with autosomal dominant dilated cardiomyopathy. However, homozygote and compound heterozygote pathogenic variants with recessive inheritance have rarely been reported. We report the effect of recessive variants located within the fetal IC and/or N2BA isoforms in association with severe FADS in three families. All parents were healthy obligate carriers and none of them had cardiac or skeletal muscle abnormalities. This report solidifies FADS as an alternative phenotypic presentation associated with homozygote/compound heterozygous pathogenic variants in the TTN.",
+    "relevance_score": 0.4982109069824219,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "913b6b3cb4c4f6154f405107efcafb3b59991b04",
+    "externalIds": {
+      "PubMedCentral": "12611563",
+      "DOI": "10.3389/fgene.2025.1664424",
+      "CorpusId": 282673124,
+      "PubMed": "41244983"
+    },
+    "title": "Biallelic variants in the UTRN gene cause a novel form of multiple congenital arthrogryposis",
+    "venue": "Frontiers in Genetics",
+    "year": 2025,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://public-pages-files-2025.frontiersin.org/journals/genetics/articles/10.3389/fgene.2025.1664424/pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC12611563, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Evidence is provided that rare biallelic recessive variants in UTRN cause a novel autosomal recessive multiple congenital arthrogryposis, which explains the clinical picture in the patient."
+    },
+    "authors": [
+      {
+        "authorId": "2372842096",
+        "name": "Evgeniya Melnik"
+      },
+      {
+        "authorId": "2278177030",
+        "name": "Daria Akimova"
+      },
+      {
+        "authorId": "2356938023",
+        "name": "T.V. Markova"
+      },
+      {
+        "authorId": "2334791251",
+        "name": "Eugene Tatarskiy"
+      },
+      {
+        "authorId": "2222537404",
+        "name": "A. Tvorogova"
+      },
+      {
+        "authorId": "2328725813",
+        "name": "V. Zabnenkova"
+      },
+      {
+        "authorId": "6588962",
+        "name": "V. Kenis"
+      },
+      {
+        "authorId": "81085650",
+        "name": "O. Agranovich"
+      },
+      {
+        "authorId": "2106659226",
+        "name": "M. Skoblov"
+      },
+      {
+        "authorId": "2138764437",
+        "name": "E. Dadali"
+      }
+    ],
+    "abstract": "Arthrogryposis multiplex congenita (AMC) is a large group of congenital conditions characterized by joint contractures affecting two or more body areas. A part of AMC type is caused by heterozygous pathogenic variants in genes encoding sarcomeric components of skeletal muscle fibers. Here we report a 7-year-old boy with a phenotype including AMC with dysmorphic facial features, short stature, congenital malformations of brain, colon and lacrimal canal. Trio whole-genome sequencing identified compound heterozygosity in the UTRN gene, consisting of a splicing variant in intron 57 (c.8434 + 1G>A) and a large heterozygous deletion spanning exons 3\u201351 (NM_007124.3). It is known that utrophin, the product of the UTRN gene, is an autosomal homologue and a fetal form of a protein of skeletal muscles - dystrophin. The presence of multiple malformations in the patient\u2019s phenotype is consistent with ubiquitous expression of utrophin in the embryonic period. The RNA-seq analysis revealed that the splicing variant introduces a premature termination codon, which is predicted to result in a truncated protein shorter by 615 amino acids (p.Val2786Argfs*34), and the deletion leads to transcription of a shortened RNA isoform. We suggest that these variants are hypomorphic and partially retain protein function, which explains the clinical picture in the patient. In aggregate, our findings provide evidence that rare biallelic recessive variants in UTRN cause a novel autosomal recessive multiple congenital arthrogryposis.",
+    "relevance_score": 0.49319761991500854,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\913b6b3cb4c4f6154f405107efcafb3b59991b04.pdf"
+  },
+  {
+    "paperId": "d1f8a7f02d6c500fe5c7daf0c8adf34eddcf2f7b",
+    "externalIds": {
+      "DOI": "10.17816/jowd83248",
+      "CorpusId": 243452923
+    },
+    "title": "Brefotomy case",
+    "venue": "Journal of obstetrics and women's diseases",
+    "year": 2020,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://journals.eco-vector.com/jowd/article/download/44031/29925",
+      "status": "HYBRID",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.17816/jowd83248?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.17816/jowd83248, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "In a second-bearing woman, on the 3rd day after the onset of labor, with a transverse neglected position (t 38.8; pulse 120), the author exfoliated both arms in the shoulder joint, perforated the spine in the lower cervical part, removed the lower part of the fetal body (with legs )."
+    },
+    "authors": [
+      {
+        "authorId": "2000425026",
+        "name": "N. Kakushkin"
+      }
+    ],
+    "abstract": "In a second-bearing woman, on the 3rd day after the onset of labor, with a transverse neglected position (t 38.8; pulse 120), the author exfoliated both arms in the shoulder joint, perforated the spine in the lower cervical part, removed the lower part of the fetal body (with legs ), and then, having squeezed out part of the brain through the spinal canal, removed the head.",
+    "relevance_score": 0.4913535416126251,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\d1f8a7f02d6c500fe5c7daf0c8adf34eddcf2f7b.pdf"
+  },
+  {
+    "paperId": "819f9eacf36cc4ca986987d525e3ed20d5808c0e",
+    "externalIds": {
+      "PubMedCentral": "8064052",
+      "DOI": "10.1210/jendso/bvab027",
+      "CorpusId": 233445281,
+      "PubMed": "33928202"
+    },
+    "title": "Second-Trimester Placental and Thyroid Hormones Are Associated With Cognitive Development From Ages 1 to 3 Years",
+    "venue": "Journal of the Endocrine Society",
+    "year": 2021,
+    "citationCount": 8,
+    "openAccessPdf": {
+      "url": "https://academic.oup.com/jes/article-pdf/5/5/bvab027/38051832/bvab027.pdf",
+      "status": "GOLD",
+      "license": "CCBYNCND",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8064052, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Insight was added into the thyrotropic actions of hCG in the second trimester, and into the significance of this mechanism for brain development, as well as the single and joint effects of TH and placental hormones on cognitive development and communication at ages 1 and 3 years."
+    },
+    "authors": [
+      {
+        "authorId": "39810577",
+        "name": "J. Adibi"
+      },
+      {
+        "authorId": "7990619",
+        "name": "Xiaoshuang Xun"
+      },
+      {
+        "authorId": "1410151389",
+        "name": "Yaqi Zhao"
+      },
+      {
+        "authorId": "47480636",
+        "name": "Q. Yin"
+      },
+      {
+        "authorId": "4819602",
+        "name": "K. LeWinn"
+      },
+      {
+        "authorId": "6855386",
+        "name": "N. Bush"
+      },
+      {
+        "authorId": "145914199",
+        "name": "A. Panigrahy"
+      },
+      {
+        "authorId": "2538853",
+        "name": "S. Peddada"
+      },
+      {
+        "authorId": "5386371",
+        "name": "H. Alfthan"
+      },
+      {
+        "authorId": "145342430",
+        "name": "U. Stenman"
+      },
+      {
+        "authorId": "52221094",
+        "name": "F. Tylavsky"
+      },
+      {
+        "authorId": "6676345",
+        "name": "H. Koistinen"
+      }
+    ],
+    "abstract": "Abstract Adequate maternal thyroid hormone (TH) is necessary for fetal brain development. The role of placental human chorionic gonadotropin (hCG) in ensuring the production of TH is less well understood. The objective of the study was to evaluate 1) associations of placental hCG and its subunits, and maternal TH in the second trimester, and 2) the single and joint effects of TH and placental hormones on cognitive development and communication at ages 1 and 3 years. Fifty individuals (5%) were selected from the CANDLE (Conditions Affecting Neurocognitive Development and Early Learning) pregnancy cohort in Memphis, Tennessee, with recruitment from 2006 to 2011, to equally represent male and female fetuses. Participants were 68% Black and 32% White. Hormones measured were maternal thyroid (thyrotropin [TSH] and free thyroxine [FT4]) and placental hormones (hCG, its hyperglycosylated form [hCG-h], and free - [hCG] and -subunits [hCG]) in maternal serum (17-28 weeks). The primary outcome measurement was the Bayley Scales of Infant and Toddler Development. All forms of hCG were negatively associated with FT4 and not associated with TSH. hCG was associated with cognitive development at age 1 year and jointly interacted with TSH to predict cognitive development at age 3 years. This pilot study added insight into the thyrotropic actions of hCG in the second trimester, and into the significance of this mechanism for brain development. More research is warranted to elucidate differences between hCG, hCG, and hCG-h in relation to TH regulation and child brain function.",
+    "relevance_score": 0.4876493811607361,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "7cc53dfe80d504da656765ad748b72c589a606cf",
+    "externalIds": {
+      "PubMedCentral": "10722247",
+      "DOI": "10.3389/fneur.2023.1270989",
+      "CorpusId": 265587294,
+      "PubMed": "38107637"
+    },
+    "title": "Large vestibular schwannomas presenting in the late state of pregnancy: a case report and literature review",
+    "venue": "Frontiers in Neurology",
+    "year": 2023,
+    "citationCount": 6,
+    "openAccessPdf": {
+      "url": "https://www.frontiersin.org/articles/10.3389/fneur.2023.1270989/pdf?isPublishedV2=False",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC10722247, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is concluded that a pregnant woman with a giant vestibular schwannoma and obstructive hydrocephalus who presented at 30 weeks of gestation provides a valuable experience in the latest acceptable time frame for the operation to prevent irreversible neurological impairment and premature delivery in late pregnancy."
+    },
+    "authors": [
+      {
+        "authorId": "2183393086",
+        "name": "Mingbin Bao"
+      },
+      {
+        "authorId": "151261128",
+        "name": "Yunsen He"
+      },
+      {
+        "authorId": "2202581209",
+        "name": "Ye Tao"
+      },
+      {
+        "authorId": "2269483497",
+        "name": "Li Liu"
+      },
+      {
+        "authorId": "2405433090",
+        "name": "Yuheng Li"
+      },
+      {
+        "authorId": "2116512396",
+        "name": "Yongjun Zhu"
+      },
+      {
+        "authorId": "2269444991",
+        "name": "Qinjiang Huang"
+      },
+      {
+        "authorId": "2269045120",
+        "name": "Mengjun Zhang"
+      },
+      {
+        "authorId": "2183540489",
+        "name": "Bo Wu"
+      },
+      {
+        "authorId": "2269348737",
+        "name": "Hao Wang"
+      }
+    ],
+    "abstract": "Vestibular schwannomas in pregnancy have rarely been reported, and there is a lack of in-depth discussion on the experience of management of massive acoustic neuromas in pregnancy. Herein, we present a pregnant woman with a giant vestibular schwannoma and obstructive hydrocephalus who presented at 30 weeks of gestation. She was initially misdiagnosed as having a pregnancy-related reaction of headache, dizziness, and vomiting that had occurred 2 months earlier. After observation at home, her symptoms progressed at 30 weeks of gestation, and imaging findings revealed a brain tumor in the CPA region with secondary cerebella tonsil herniation and obstructive hydrocephalus, and she was transferred to our center for treatment. Consequently, we relieved her hydrocephalus with a ventriculoperitoneal shunt (V-P shunt) and used corticosteroids to simulate fetal maturation. After 10 days, her mental condition deteriorated, and her right limb muscle strength gradually decreased until grade 0 (MMT Grading). Finally, under a joint consultation with the Department of Neurosurgery, Obstetrics, and Anesthesiology, she underwent a cesarean section under general anesthesia and first-stage tumor removal at 31 weeks of gestation. Upon discharge, the previously observed neurological deficits, which were reversible and had manifested during her gestational period, had been successfully resolved, and the fetus had been conserved. The neuroimaging confirmed the complete tumor removal, while the neuropathologic examination revealed a vestibular schwannoma. Therefore, we recommend early diagnosis and treatment for these patients, especially people with headaches, vomiting, and sudden hearing loss during pregnancy. Herein, we concluded that our cases provide a valuable experience in the latest acceptable time frame for the operation to prevent irreversible neurological impairment and premature delivery in late pregnancy.",
+    "relevance_score": 0.48582255840301514,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\7cc53dfe80d504da656765ad748b72c589a606cf.pdf"
+  },
+  {
+    "paperId": "b08d3cf27c74b8bd3e53106351adde1a2365b026",
+    "externalIds": {
+      "DOI": "10.1016/j.ajog.2026.05.007",
+      "CorpusId": 288624907,
+      "PubMed": "42173182"
+    },
+    "title": "In a Rodent Model, Low-Dose Maternal Magnesium Sulfate Achieves Comparable Neuroinflammatory Attenuation to Higher Dose.",
+    "venue": "American Journal of Obstetrics and Gynecology",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.ajog.2026.05.007?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.ajog.2026.05.007, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is suggested that a reduced Mg exposure, equivalent to a 4g loading dose in clinical practice, may be sufficient for fetal neuroprotection, and support the need for prospective clinical studies comparing reduced-duration Mg protocols."
+    },
+    "authors": [
+      {
+        "authorId": "5337596",
+        "name": "Y. Ginsberg"
+      },
+      {
+        "authorId": "2090067594",
+        "name": "Sarina Bang"
+      },
+      {
+        "authorId": "3985613",
+        "name": "Nizar Khatib"
+      },
+      {
+        "authorId": "2246273867",
+        "name": "Michael G. Ross"
+      },
+      {
+        "authorId": "5195931",
+        "name": "Y. Zipori"
+      },
+      {
+        "authorId": "2438442429",
+        "name": "Zeev Weinr"
+      },
+      {
+        "authorId": "3859487",
+        "name": "R. Beloosesky"
+      }
+    ],
+    "abstract": "BACKGROUND\nAntenatal magnesium sulfate (Mg) is recommended for fetal neuroprotection in preterm birth, yet optimal dosing remains uncertain. The American College of Obstetricians and Gynecologists (ACOG), jointly with the Society for Maternal-Fetal Medicine (SMFM), endorses three dosing regimens with up to sevenfold variation in cumulative dose (i.e., 4g, 10.5g, or 31.5g). Maternal-fetal inflammation has been associated with fetal brain injury and adverse neurodevelopmental outcomes. Emerging evidence suggests a dose-dependent Mg effect, where low doses support neuronal survival, while higher doses may adversely induce neuronal apoptosis and neurodegeneration. This study aimed to compare the effects of low- and high-dose maternal MgSO4 on fetal neuroinflammation in an established animal model of maternal inflammation.\n\n\nMETHODS\nPregnant Sprague-Dawley rats (n = 30) on gestational day 20 received intraperitoneal injections of lipopolysaccharide (LPS, 500 \u03bcg/kg) a component of gram-negative bacterial membranes used to model intrauterine infection or saline. Dams were then randomized to receive subcutaneous treatment with saline, low-dose Mg (150 mg/kg loading dose), or a high-dose protocol (150 mg/kg loading dose followed by 15 mg/kg every 20 minutes for 2 hours before and after the injection). The primary endpoint was fetal brain pro-inflammatory cytokine expression (IL-6 and TNF-\u03b1). Fetal brains and placentas were collected and assigned to one of six treatment groups. Tissues were analyzed for inflammatory cytokines (Western blot), and maternal/fetal serum was analyzed for Mg levels and cytokine concentrations (ELISA).\n\n\nRESULTS\nMaternal and fetal serum Mg levels were lowest in the saline control groups, increased with low-dose Mg, and were highest with high-dose Mg, confirming dose-dependent transplacental transfer. Fetal brain inflammatory cytokines, interleukin-6 (IL-6) and tumor necrosis factor-alpha (TNF-\u03b1), were significantly elevated following maternal inflammation compared to saline controls (IL-6: 2.06\u00b10.05 vs. 0.75\u00b10.12U; TNF-\u03b1: 2.11\u00b10.04 vs. 0.76\u00b10.12U; P < 0.05). Both low- and high-dose Mg significantly reduced fetal brain cytokine levels to near baseline (Low Mg: IL-6 0.71\u00b10.04U, TNF-\u03b1 0.75\u00b10.13U; High Mg: IL-6 0.73\u00b10.26U, TNF-\u03b1 0.74\u00b10.33U; P < 0.05), with no significant difference between the two Mg groups. Comparable cytokine reduction was observed in placental tissue.\n\n\nCONCLUSION\nIn this experimental model, low-dose maternal Mg was as effective as a higher-dose regimen in attenuating fetal brain and placental pro-inflammatory cytokine expression following LPS-induced maternal inflammation. These findings suggest that a reduced Mg exposure, equivalent to a 4g loading dose in clinical practice, may be sufficient for fetal neuroprotection, and support the need for prospective clinical studies comparing reduced-duration Mg protocols.",
+    "relevance_score": 0.4820433259010315,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "c35538a8c7a55a082c80621304b3bf8d3408c46d",
+    "externalIds": {
+      "DOI": "10.1093/brain/awae397",
+      "CorpusId": 274681119,
+      "PubMed": "39657259"
+    },
+    "title": "Deciphering the temporal transcriptional landscape of human fetal leptomeninges.",
+    "venue": "Brain : a journal of neurology",
+    "year": 2024,
+    "citationCount": 7,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1093/brain/awae397?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1093/brain/awae397, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A complex cellular heterogeneity within the developing leptomeninges was revealed, identifying distinct subpopulations of fibroblasts, immune cells, and vascular cells and the developmental trajectory of the arachnoid barrier was traced, detailing the transcriptomic shifts associated with its gradual formation."
+    },
+    "authors": [
+      {
+        "authorId": "2334895938",
+        "name": "Licheng Sun"
+      },
+      {
+        "authorId": "2334935735",
+        "name": "Ping Liu"
+      },
+      {
+        "authorId": "2301537497",
+        "name": "Jingjing Guo"
+      },
+      {
+        "authorId": "2335123755",
+        "name": "Chuantao Fang"
+      },
+      {
+        "authorId": "2321902343",
+        "name": "Li Li"
+      },
+      {
+        "authorId": "2301634425",
+        "name": "Yi Liu"
+      },
+      {
+        "authorId": "2302367839",
+        "name": "Yanfeng Tan"
+      },
+      {
+        "authorId": "2040426138",
+        "name": "Wei Zhang"
+      },
+      {
+        "authorId": "2336551976",
+        "name": "Rui Zhao"
+      },
+      {
+        "authorId": "2041594",
+        "name": "Fayong Zhang"
+      },
+      {
+        "authorId": "2301423079",
+        "name": "Jianbo Xiao"
+      },
+      {
+        "authorId": "2326093181",
+        "name": "Rui Dong"
+      },
+      {
+        "authorId": "2335153370",
+        "name": "Shaojie Ma"
+      },
+      {
+        "authorId": "2301369413",
+        "name": "Xinyu Mei"
+      },
+      {
+        "authorId": "2301360440",
+        "name": "Dashi Qi"
+      }
+    ],
+    "abstract": "The leptomeninges play a pivotal role in the central nervous system (CNS), serving both as a barrier and as a conduit for fluid and cellular transport. Despite their critical functions, our understanding of leptomeningeal development and maturation during human embryogenesis remains limited. This study seeks to bridge this gap. We conducted single-nucleus RNA sequencing on leptomeningeal tissues from eight human embryos, capturing developmental stages from early fetal to late mid-fetal phases. Our bioinformatic analyses encompassed cell type classification, identification of layer-specific markers, mapping of the arachnoid barrier maturation trajectory, and joint analyses with mouse and aged human leptomeningeal scRNA datasets. Key bioinformatic findings were validated through immunostaining in selected samples. Our study revealed a complex cellular heterogeneity within the developing leptomeninges, identifying distinct subpopulations of fibroblasts, immune cells, and vascular cells. We mapped the transcriptomic dynamics of fibroblast cell types throughout fetal brain development, highlighting a clear maturation process from early fetal to late mid-fetal stages. Comparative analysis with mouse data allowed us to distinguish human-specific layer markers while confirming several conserved markers shared between humans and mice. Joint analysis with aged human datasets identified two unique arachnoid clusters specific to aging leptomeninges. Moreover, we traced the developmental trajectory of the arachnoid barrier, detailing the transcriptomic shifts associated with its gradual formation. Notably, immune cells in early fetal stages were predominantly M2-type macrophages, underscoring a distinctive immune environment. Finally, we explored the molecular interactions between fibroblasts and other cell types, highlighting their coordinated roles in orchestrating leptomeningeal development. Together, our findings provide a comprehensive overview of the cellular and molecular landscape of the developing human leptomeninges.",
+    "relevance_score": 0.47871896624565125,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "506958c71c4bc38de1c83ec2474f65e4af6e6ea7",
+    "externalIds": {
+      "PubMedCentral": "8204808",
+      "DOI": "10.3389/fendo.2021.653095",
+      "CorpusId": 235270941,
+      "PubMed": "34140927"
+    },
+    "title": "Exposure to Perfluoroalkyl Substances During Pregnancy and Fetal BDNF Level: A Prospective Cohort Study",
+    "venue": "Frontiers in Endocrinology",
+    "year": 2021,
+    "citationCount": 26,
+    "openAccessPdf": {
+      "url": "https://www.frontiersin.org/articles/10.3389/fendo.2021.653095/pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8204808, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Prenatal exposure to PFHxS was associated with an increased BDNF level in the umbilical blood, especially in male fetuses, and the mixed exposure model showed that the joint effects of PFAS mixture were not associated with BDNF."
+    },
+    "authors": [
+      {
+        "authorId": "21609800",
+        "name": "Guoqi Yu"
+      },
+      {
+        "authorId": "2072688742",
+        "name": "Fei Luo"
+      },
+      {
+        "authorId": "48251584",
+        "name": "M. Nian"
+      },
+      {
+        "authorId": "2157269103",
+        "name": "Shuman Li"
+      },
+      {
+        "authorId": "2149124235",
+        "name": "Bingbing Liu"
+      },
+      {
+        "authorId": "1796894",
+        "name": "Liping Feng"
+      },
+      {
+        "authorId": "40210332",
+        "name": "Jun Zhang"
+      }
+    ],
+    "abstract": "Background Humans are widely exposed to environmental perfluoroalkyl substances (PFAS), which may affect fetal neurodevelopment. Brain-derived neurotrophic factor (BDNF) is an important factor in neurodevelopment, but its role in PFAS-induced neurotoxicity is unclear. We investigated the association between prenatal PFAS exposure and fetal BDNF level in the umbilical cord blood in a large prospective cohort. Methods A total of 725 pregnant women who participated in the Shanghai Birth Cohort were included. 10 PFAS were measured by high-performance liquid chromatography/tandem mass spectrometry (HPLC/MS-MS) in the plasma samples of early pregnancy. The BDNF level was determined by ELISA. The concentration of total mercury (Hg) in the umbilical cord blood was tested by cold vapor atomic absorption spectrometry (AAS) and included as a main confounder, along with other covariates. Multiple linear regression was used to explore the associations between PFAS concentrations and BDNF level. Quantile-based g-computation was applied to explore the joint and independent effects of PFAS on BDNF level. Results The mean BDNF level in the total population was 10797 (\u00b14713) pg/ml. Male fetuses had a higher level than female fetuses (P<0.001). A significant positive association was observed between PFHxS and BDNF level after adjusting for potential confounders [\u03b2=1285 (95% CI: 453, 2118, P=0.003)]. No association was observed between other PFAS congeners and BDNF level. Results of the mixed exposure model showed that the joint effects of PFAS mixture were not associated with BDNF [\u03b2=447 (95% CI: -83, 978, P=0.10)], while the positive association with PFHxS exposure remained significant after controlling for other PFAS [\u03b2=592 (95% CI: 226, 958, P=0.002)]. The above associations were more prominent in male [\u03b2=773 (95% CI: 25, 1520, P= 0.04)] than female fetuses [\u03b2=105 (95% CI: -791, 1002, P= 0.82)] for the mixed effects. Conclusions Prenatal exposure to PFHxS was associated with an increased BDNF level in the umbilical blood, especially in male fetuses.",
+    "relevance_score": 0.47821417450904846,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\506958c71c4bc38de1c83ec2474f65e4af6e6ea7.pdf"
+  },
+  {
+    "paperId": "835717fbab5f4146dceacf65d00e26cc32aebd77",
+    "externalIds": {
+      "MAG": "2951024256",
+      "DOI": "10.1002/pd.5505",
+      "CorpusId": 195189337,
+      "PubMed": "31218730"
+    },
+    "title": "Fetal arthrogryposis multiplex congenita/fetal akinesia deformation sequence (FADS)\u2014Aetiology, diagnosis, and management",
+    "venue": "Prenatal Diagnosis",
+    "year": 2019,
+    "citationCount": 52,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/pd.5505?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/pd.5505, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Complete prenatal and postnatal investigations are needed to identify an underlying aetiology and provide information regarding its prognosis and inheritance, which is critical for the obstetrical care providers and families to optimize the pregnancy management and address future reproductive plans."
+    },
+    "authors": [
+      {
+        "authorId": "5510952",
+        "name": "K. Niles"
+      },
+      {
+        "authorId": "4105067",
+        "name": "S. Blaser"
+      },
+      {
+        "authorId": "2757819",
+        "name": "P. Shannon"
+      },
+      {
+        "authorId": "46281627",
+        "name": "D. Chitayat"
+      }
+    ],
+    "abstract": "Arthrogryposis multiplex congenita (AMC) refers to an aetiologically heterogenous condition, which consists of joint contractures affecting two or more joints starting prenatally. The incidence is approximately one in 3000 live births; however, the prenatal incidence is higher, indicating a high intrauterine mortality. Over 320 genes have been implicated showing the genetic heterogeneity of the condition. AMC can be of extrinsic aetiology resulting from intrauterine crowding secondary to congenital structural uterine abnormalities (eg, bicornuate or septate uterus), uterine tumors (eg, fibroid), or multifetal pregnancy or intrinsic/primary/fetal aetiology, due to functional abnormalities in the brain, spinal cord, peripheral nerves, neuromuscular junction, muscles, bones, restrictive dermopathies, tendons and joints. Unlike many of the intrinsic/primary/fetal causes which are difficult to treat, secondary AMC can be treated by physiotherapy with good response. Primary cases may present prenatally with fetal akinesia associated with joint contractures and occasionally brain abnormalities, decreased muscle bulk, polyhydramnios, and nonvertex presentation while the secondary cases usually present with isolated contractures. Complete prenatal and postnatal investigations are needed to identify an underlying aetiology and provide information regarding its prognosis and inheritance, which is critical for the obstetrical care providers and families to optimize the pregnancy management and address future reproductive plans.",
+    "relevance_score": 0.4773068428039551,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "f09cd60900e0feb84a539e9efb77b80cda899dbd",
+    "externalIds": {
+      "MAG": "3035583515",
+      "DOI": "10.1007/s40556-020-00257-4",
+      "CorpusId": 219620516
+    },
+    "title": "First Trimester Diagnosis of Radial Ray Anomaly",
+    "venue": "Journal of Fetal Medicine",
+    "year": 2020,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://link.springer.com/content/pdf/10.1007/s40556-020-00257-4.pdf",
+      "status": "HYBRID",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s40556-020-00257-4?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s40556-020-00257-4, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Selective termination of the abnormal fetus was carried out with special permission at 28 weeks under special circumstances in view of spotting and high risk of miscarriage of normal fetus."
+    },
+    "authors": [
+      {
+        "authorId": "145550532",
+        "name": "Monica Kansal"
+      }
+    ],
+    "abstract": "24 year old Primigravida with Dichorionic Diamniotic Twin Gestation. She was complaining of intermittent spotting and came for a nuchal scan at 12 weeks 3 days. Previous scan done at 9 weeks revealed both viable embryos. Nuchal scan revealed mild CRL discordance between twins. Twin B was lagging with CRL corresponding to 11 weeks 5 days. Nuchal Translucency and Nasal Bone were normal in both fetuses. A detailed morphological survey was done for both. Twin A was normal. Twin B was anomalous. Twin B had unilateral upper limb defects with a single bone in the right forearm (Figs. 1, 2), fixed angulation deformity of the right wrist joint and absence of thumb in the right hand (Fig. 1). The findings were suggestive of Complete Radial Aplasia with Radial Club hand\u2014Type IV Radial Ray anomaly. This is frequently syndromic and is known to be associated with Trisomy 18, TAR syndrome, Holt Oram Syndrome, Robert\u2019s Syndrome and VACTERL association. Additionally, presence of megacystis and single umbilical artery was noted in the affected fetus. Combined First Trimester Screening was low risk for both the fetuses and the patient was referred to a Fetal Medicine Unit in a Tertiary Care Hospital. A follow up scan done after 10 days confirmed the findings. In addition, the \u2018\u2018Crash Sign\u2019\u2019 was found positive in the fetal brain and a hemivertebra was suspected in the fetal spine. A complex non random combination of Multiple congenital malformations was observed and a diagnosis of VACTERL syndrome was made. No Invasive testing was done. Patient was counselled and prognosticated regarding the defects. However Selective Termination of affected fetus was deferred in view of intermittent spotting. She was kept on Expectant management with follow up scans every 3\u20134 weeks. Selective termination of the abnormal fetus was carried out with special permission at 28 weeks under special circumstances in view of spotting and high risk of miscarriage of normal fetus. She delivered a healthy child at 37 weeks by Cesarean Section (Indication: Breech Presentation). The terminated fetus delivered at the same time was macerated and the prenatal diagnosis of Unilateral Radial Ray Anomaly was confirmed (Figs. 3, 4). No Karyotype abnormality was noted in the abortus postnatally.",
+    "relevance_score": 0.47679898142814636,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\f09cd60900e0feb84a539e9efb77b80cda899dbd.pdf"
+  },
+  {
+    "paperId": "5962ecda8ec0fbdda9ebadf0fd676bbf98192411",
+    "externalIds": {
+      "DOI": "10.1136/archdischild-2019-epa.389",
+      "CorpusId": 208479197
+    },
+    "title": "P34\u2005The long-term results of single-event multilevel surgery in treatment of children with spastic diplegia",
+    "venue": "Abstracts",
+    "year": 2019,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://adc.bmj.com/content/archdischild/104/Suppl_3/A169.1.full.pdf",
+      "status": "BRONZE",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1136/archdischild-2019-epa.389?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1136/archdischild-2019-epa.389, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Evaluating the long-term results of SEMLS in 19 children with spastic diplegia found it can improve the child\u2019s motor activity, eliminate the severe contractures of joints, provide adequate care for him in a relatively short period of time and save these improvements in theLong-term follow-up."
+    },
+    "authors": [
+      {
+        "authorId": "1436073834",
+        "name": "Mikhail Herasimenka"
+      },
+      {
+        "authorId": "87760630",
+        "name": "Leanid Hlazkin"
+      },
+      {
+        "authorId": "87614793",
+        "name": "M. Mikhovich"
+      },
+      {
+        "authorId": "1436073711",
+        "name": "Raman Klimau"
+      },
+      {
+        "authorId": "152574000",
+        "name": "A. Sakalouski"
+      }
+    ],
+    "abstract": "Introduction Cerebral palsy is a group of permanent disorders of the development of movement and posture, causing activity limitation, that are attributed to non-progressive disturbances that occurred in the developing fetal or infant brain. Single-Event Multilevel Surgery \u2013 SEMLS has been used by most surgeons for correction limb deformities in the past decades. The aim Of our study was to evaluate the long-term results of SEMLS, performed in the Mogilev Regional Children\u2019s hospital and in the Republican Scientific and Practical Centre for Traumatology and Orthopaedics. Materials and methods The long-term results of SEMLS in 19 children with spastic diplegia, operated in 2009\u20132016 were studied. All the patients had spastic deformities of the hips, knees and ankles on the both sides before surgery. All the patients were GMFCS IV. The mean age at time of surgery was 6,7. 138 procedures were performed. All the procedures were made simultaneously on the both sides by two teams of surgeons. Observational Gait Scale (OGS) and Edinburgh Visual Gait Score (EVGS) were used to determine the effectiveness of treatment. Results The minimal follow-up was 3 years. The mean improvement by OGS was 8,5, the minimal improvement \u2013 3, maximal \u2013 12. The mean improvement by EVGS was 10,1, the minimal improvement \u2013 6, maximal \u2013 16. All the parents noticed the improvements in child\u2019s mobility after surgery. One patient has severe valgus foot deformity and calcaneal gait after anterior Achilles tendon transfer as part of SEMLS in 2015. Six patients underwent additional surgery for correction of the secondary bone deformities later. Conclusions Brain disorders in cerebral palsy are permanent and as S.Terver said \u2013 \u2018The child with cerebral palsy becomes the adult with cerebral palsy\u2019. For the child with cerebral palsy the main goals of surgical treatment - improving the child\u2019s motor activity and elimination of severe limb deformities. SEMLS changes the whole pathological stereotype of musculoskeletal balance of extremities. It can improve the child\u2019s motor activity, eliminate the severe contractures of joints, provide adequate care for him in a relatively short period of time and save these improvements in the long-term follow-up. Care must be taken in choosing the proper method of surgical correction, especially in treatment of equinus.",
+    "relevance_score": 0.4687703251838684,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "b169db9f4b2f27513d107c32a1b144403cfcf002",
+    "externalIds": {
+      "DOI": "10.1016/j.envpol.2025.125647",
+      "CorpusId": 275347866,
+      "PubMed": "39761717"
+    },
+    "title": "Effects of prenatal exposure to multiple heavy metals on infant neurodevelopment: a multi-statistical approach.",
+    "venue": "Environmental Pollution",
+    "year": 2025,
+    "citationCount": 21,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.envpol.2025.125647?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.envpol.2025.125647, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": null
+    },
+    "authors": [
+      {
+        "authorId": "2223483449",
+        "name": "Xiruo Kou"
+      },
+      {
+        "authorId": "2338929590",
+        "name": "Meritxell Pallej\u00e0 Mill\u00e1n"
+      },
+      {
+        "authorId": "144306968",
+        "name": "J. Canals"
+      },
+      {
+        "authorId": "2293621833",
+        "name": "V. Moreno"
+      },
+      {
+        "authorId": "2237284597",
+        "name": "S. Renzetti"
+      },
+      {
+        "authorId": "3601598",
+        "name": "V. Arija"
+      }
+    ],
+    "abstract": "Prenatal exposure to heavy metals poses risks to fetal brain development, yet the joint effects of these metals remain unclear, with inconsistent findings across statistical models. This study investigates the joint effect of prenatal exposure to cadmium (Cd), nickel (Ni), mercury (Hg), and lead (Pb) on infant neurodevelopment using various statistical approaches. The study included 400 mother-infant pairs. Heavy metal levels were measured in maternal urine samples at the 12th week of gestation, and infant neurodevelopment at 40 days was evaluated by the Bayley Scales of Infant and Toddler Development. Generalized Additive Models (GAM), Multivariable Linear Regression (MLR) with restricted cubic spline (RCS), Bayesian Kernel Machine Regression (BKMR), and Weighted Quantile Sum (WQS) regression were applied to explore the associations between heavy metal exposure and neurodevelopmental outcomes. GAM revealed a significant linear relationship for Cd with cognitive scale (p = 0.045) and expressive language (p = 0.043). MLR confirmed that Cd was negatively associated with both cognitive scale (\u03b2 = -1.47, p = 0.044) and expressive language (\u03b2 = -0.32, p = 0.019) and RCS presented a non-linear association between Pb and language scale (p = 0.001). BKMR suggested a negative but non-significant association with most outcomes. WQS indicated a significant adverse effect of metal mixture on expressive language (\u03b2 = -0.26, 95% CI = -0.44, -0.07), identifying Cd and Ni as the primary contributors. Prenatal exposure to heavy metals have detrimental effects on infant neurodevelopment, especially on language development.",
+    "relevance_score": 0.4662514925003052,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "f82c20907921c1a48569bc6cb089f45de41474c8",
+    "externalIds": {
+      "DOI": "10.1007/s10571-021-01081-8",
+      "CorpusId": 232355322,
+      "PubMed": "33761054"
+    },
+    "title": "Antenatal Dexamethasone Treatment Induces Sex-dependent Upregulation of NTPDase1/CD39 and Ecto-5\u02b9-nucleotidase/CD73 in the Rat Fetal Brain",
+    "venue": "Cellular and molecular neurobiology",
+    "year": 2021,
+    "citationCount": 3,
+    "openAccessPdf": {
+      "url": "https://www.researchsquare.com/article/rs-231022/latest.pdf",
+      "status": "GREEN",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s10571-021-01081-8?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s10571-021-01081-8, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Sex-specific increase in CD39 and CD73 expression and in the corresponding enzyme activities was induced in the brain of antenatally DEX-treated fetuses, more prominently in males."
+    },
+    "authors": [
+      {
+        "authorId": "1399361048",
+        "name": "M. Manojlovi\u0107-Stojanoski"
+      },
+      {
+        "authorId": "4141058",
+        "name": "I. Lavrnja"
+      },
+      {
+        "authorId": "4583076",
+        "name": "Ivana D. Stevanovi\u0107"
+      },
+      {
+        "authorId": "32145387",
+        "name": "S. Trifunovi\u0107"
+      },
+      {
+        "authorId": "2861948",
+        "name": "N. Risti\u0107"
+      },
+      {
+        "authorId": "6086687",
+        "name": "N. Nestorovi\u0107"
+      },
+      {
+        "authorId": "145977923",
+        "name": "J. S\u00e9vigny"
+      },
+      {
+        "authorId": "108299055",
+        "name": "N. Nedeljkovic"
+      },
+      {
+        "authorId": "6516512",
+        "name": "Danijela Laketa"
+      }
+    ],
+    "abstract": "Dexamethasone (DEX) is frequently used to treat women at risk of preterm delivery, but although indispensable for the completion of organ maturation in the fetus, antenatal DEX treatment may exert adverse sex-dimorphic neurodevelopmental effects. Literature findings implicated oxidative stress in adverse effects of DEX treatment. Purinergic signaling is involved in neurodevelopment and controlled by ectonucleotidases, among which in the brain the most abundant are ectonucleoside triphosphate diphosphohydrolase 1 (NTPDase1/CD39) and ecto-5\u02b9-nucleotidase (e5\u02b9NT/CD73), which jointly dephosphorylate ATP to adenosine. They are also involved in cell adhesion and migration, processes integral to brain development. Upregulation of CD39 and CD73 after DEX treatment was reported in adult rat hippocampus. We investigated the effects of maternal DEX treatment on CD39 and CD73 expression and enzymatic activity in the rat fetal brain of both sexes, in the context of oxidative status of the brain tissue. Fetuses were obtained at embryonic day (ED) 21, from Wistar rat dams treated with 0.5 mg DEX/kg/day, at ED 16, 17, and 18, and brains were processed and used for further analysis. Sex-specific increase in CD39 and CD73 expression and in the corresponding enzyme activities was induced in the brain of antenatally DEX-treated fetuses, more prominently in males. The oxidative stress induction after antenatal DEX treatment was confirmed in both sexes, although showing a slight bias in males. Due to the involvement of purinergic system in crucial neurodevelopmental processes, future investigations are needed to determine the role of these observed changes in the adverse effects of antenatal DEX treatment.",
+    "relevance_score": 0.4662115275859833,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\f82c20907921c1a48569bc6cb089f45de41474c8.pdf"
+  },
+  {
+    "paperId": "dd7cacac10d31e58fd9a749740520d3863f4e4bd",
+    "externalIds": {
+      "PubMedCentral": "8882309",
+      "DOI": "10.7759/cureus.21684",
+      "CorpusId": 246393802,
+      "PubMed": "35237480"
+    },
+    "title": "Congenital Dislocation of the Knee: Idiopathic or Arthrogryposis?",
+    "venue": "Cureus",
+    "year": 2022,
+    "citationCount": 6,
+    "openAccessPdf": {
+      "url": "https://www.cureus.com/articles/82485-congenital-dislocation-of-the-knee-idiopathic-or-arthrogryposis.pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8882309, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This case describes a diagnostic workup with the exclusion of severe syndromic pathologies, namely arthrogryposis, and a female newborn presented a more benign disease with favorable evolution, congenital knee dislocation."
+    },
+    "authors": [
+      {
+        "authorId": "2148231894",
+        "name": "Ricardo Barreto Mota"
+      },
+      {
+        "authorId": "2151426022",
+        "name": "Nuno Rodrigues Santos"
+      },
+      {
+        "authorId": "144899979",
+        "name": "Rui C. Martins"
+      },
+      {
+        "authorId": "145846701",
+        "name": "Henrique Soares"
+      }
+    ],
+    "abstract": "Fetal akinesia associated with fixed joints is a common cause for suspicion of arthrogryposis multiplex congenita, a severe condition with heterogeneous etiology. We present the case of a rarer but more benign condition, congenital knee dislocation. The authors report the case of a 27-year-old woman medicated with levetiracetam for epilepsy whose prenatal ultrasound at 22 weeks of gestational age revealed bilateral clubfoot, permanent extension of the inferior limbs with internal knee rotation, normal amniotic fluid quantity, and fetal echocardiography. The remaining ultrasounds revealed similar results. Prenatal genetic testing revealed no pathological findings. The pregnancy was otherwise uneventful. A female newborn was delivered at 39 weeks by cesarean section, with no need for resuscitation. She presented with bilateral knee hyperextension and clubfoot, spontaneous movements, and normal mobility in all other joints. The remaining physical examination and brain and hip ultrasound on the second day of life were normal. These findings were compatible with idiopathic congenital dislocation of the knee (CDK). The patient was undergoing treatment with favorable evolution and adequate neurodevelopment, at the time of this report. This case describes a diagnostic workup with the exclusion of severe syndromic pathologies, namely arthrogryposis. Despite the initial suspicion of arthrogryposis, a condition with a poor prognosis, this infant presented a more benign disease with favorable evolution.",
+    "relevance_score": 0.4650842547416687,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\dd7cacac10d31e58fd9a749740520d3863f4e4bd.pdf"
+  },
+  {
+    "paperId": "13aad9a3e1317dfa68f37fe993413ac459a4b560",
+    "externalIds": {
+      "DOI": "10.1016/j.envint.2024.108490",
+      "CorpusId": 267599996,
+      "PubMed": "38364572"
+    },
+    "title": "Association of exposure to mixture of chemicals during pregnancy with cognitive abilities and fine motor function of children.",
+    "venue": "Environment International",
+    "year": 2024,
+    "citationCount": 15,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1016/j.envint.2024.108490",
+      "status": "GOLD",
+      "license": "CCBYNCND",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.envint.2024.108490?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.envint.2024.108490, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is concluded that exposure to chemical mixtures during pregnancy may influence neurodevelopment, impacting fine motor function of the offspring."
+    },
+    "authors": [
+      {
+        "authorId": "2283671906",
+        "name": "P. Brennan Kearns"
+      },
+      {
+        "authorId": "35747488",
+        "name": "M. A. van den Dries"
+      },
+      {
+        "authorId": "2244637359",
+        "name": "Jordi Julvez"
+      },
+      {
+        "authorId": "8146118",
+        "name": "M. Kampouri"
+      },
+      {
+        "authorId": "1402427585",
+        "name": "M\u00f3nica L\u00f3pez-Vicente"
+      },
+      {
+        "authorId": "51257679",
+        "name": "L. Maitre"
+      },
+      {
+        "authorId": "5422476",
+        "name": "C. Philippat"
+      },
+      {
+        "authorId": "118204777",
+        "name": "Line Sm\u00e5stuen Haug"
+      },
+      {
+        "authorId": "6126459",
+        "name": "M. Vafeiadi"
+      },
+      {
+        "authorId": "2258642201",
+        "name": "C. Thomsen"
+      },
+      {
+        "authorId": "2244780877",
+        "name": "Tiffany C. Yang"
+      },
+      {
+        "authorId": "3658758",
+        "name": "M. Vrijheid"
+      },
+      {
+        "authorId": "2202247732",
+        "name": "H. Tiemeier"
+      },
+      {
+        "authorId": "4471729",
+        "name": "M. Guxens"
+      }
+    ],
+    "abstract": "Chemical exposures often occur in mixtures and exposures during pregnancy may lead to adverse effects on the fetal brain, potentially reducing lower cognitive abilities and fine motor function of the child. We investigated the association of mothe\u0155s exposure to a mixture of chemicals during pregnancy (i.e., organochlorine compounds, per- and polyfluoroalkyl substances, phenols, phthalates, organophosphate pesticides) with cognitive abilties and fine motor function in their children. We studied 1097 mother-child pairs from five European cohorts participating in the Human Early Life Exposome study (HELIX). Measurement of 26 biomarkers of exposure to chemicals was performed on urine or blood samples of pregnant women (mean age 31\u00a0years). Cognitive abilities and fine motor function were assessed in their children (mean age 8\u00a0years) with a battery of computerized tests administered in person (Rave\u0144s Coloured Progressive Matrices, Attention Network Test, N-back Test, Trail Making Test, Finger Tapping Test). We estimated the joint effect of prenatal exposure to chemicals on cognitive abilities and fine motor function using the quantile-based g-computation method, adjusting for sociodemographic characteristics. A quartile increase in all the chemicals in the overall mixture was associated with worse fine motor function, specifically lower scores in the Finger Tapping Test [-8.5 points, 95\u00a0% confidence interval (CI) -13.6 to -3.4; -14.5 points, 95\u00a0% CI -22.4 to -6.6, and -18.0 points, 95\u00a0% CI -28.6 to -7.4) for the second, third and fourth quartile of the overal mixture, respectively, when compared to the first quartile]. Organochlorine compounds, phthalates, and per- and polyfluoroalkyl substances contributed most to this association. We did not find a relationship with cognitive abilities. We conclude that exposure to chemical mixtures during pregnancy may influence neurodevelopment, impacting fine motor function of the offspring.",
+    "relevance_score": 0.4636668264865875,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "250a91efe3a4e8d70269f2682504716f8ea7a5d7",
+    "externalIds": {
+      "DOI": "10.1002/pd.6637",
+      "CorpusId": 272369273,
+      "PubMed": "39228063"
+    },
+    "title": "Prenatal Phenotype of Alkuraya\u2010Ku\u010dinskas Syndrome: A\u00a0Novel Case and Systematic Literature Review",
+    "venue": "Prenatal Diagnosis",
+    "year": 2024,
+    "citationCount": 3,
+    "openAccessPdf": {
+      "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/pd.6637",
+      "status": "HYBRID",
+      "license": "CCBYNCND",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/pd.6637?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/pd.6637, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A case of two novel BLTP1 canonical splice\u2010site variants in a fetus with multiple congenital anomalies, including hydrops, a kinked brainstem, and joint contractures is presented."
+    },
+    "authors": [
+      {
+        "authorId": "1733088582",
+        "name": "S. Rice"
+      },
+      {
+        "authorId": "2258193848",
+        "name": "Dante Varotsis"
+      },
+      {
+        "authorId": "2134248375",
+        "name": "S. Wodoslawsky"
+      },
+      {
+        "authorId": "89191783",
+        "name": "E. Critchlow"
+      },
+      {
+        "authorId": "2319609974",
+        "name": "Ruby Liu"
+      },
+      {
+        "authorId": "2253465897",
+        "name": "Rodney A McLaren"
+      },
+      {
+        "authorId": "1395577253",
+        "name": "Mona M Makhamreh"
+      },
+      {
+        "authorId": "1395238427",
+        "name": "Brandy Firman"
+      },
+      {
+        "authorId": "2202726442",
+        "name": "Seth I. Berger"
+      },
+      {
+        "authorId": "1401941799",
+        "name": "H. Al-Kouatly"
+      }
+    ],
+    "abstract": "Alkuraya\u2010Ku\u010dinskas syndrome (AKS) is an autosomal recessive multisystem disorder resulting from mutations in the BLTP1 gene, formerly known as KIAA1109. Primary manifestations include brain malformations, arthrogryposis, and clubfeet. Cardiac, renal, and ophthalmologic abnormalities may also be observed, while nonimmune hydrops is rare. We present a case of two novel BLTP1 canonical splice\u2010site variants in a fetus with multiple congenital anomalies, including hydrops, a kinked brainstem, and joint contractures. A systematic literature review was conducted to describe the prenatal phenotype of AKS, which was inspired by our case. Our systematic literature review of the prenatal phenotype in 19 cases, including our additional case, demonstrated joint contractures in 90% (18/20), ventriculomegaly in 60% (12/20), brainstem dysgenesis in 50% (10/20), cerebellar hypoplasia in 50% (10/20), parenchymal thinning with lissencephalic aspect in 60% (12/20), and facial dysmorphism in 70% (14/20) of reported AKS cases. In addition to our case, hydrops was reported in two other families. AKS should be considered in fetal presentations with characteristic features, especially brainstem kinking and joint contractures. Exome sequencing, including coverage of canonical intronic splice\u2010site variants, can clarify the diagnosis.",
+    "relevance_score": 0.46144843101501465,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "05044749cbbfc8bc6154912bcbab11b50aa0d758",
+    "externalIds": {
+      "DOI": "10.1016/j.forsciint.2022.111538",
+      "CorpusId": 254440529,
+      "PubMed": "36543017"
+    },
+    "title": "Pregnancy denial and unplanned home delivery: Considerations about fetal death causes and maternal drug use imputability.",
+    "venue": "Forensic Science International",
+    "year": 2022,
+    "citationCount": 3,
+    "openAccessPdf": {
+      "url": "https://www.sciencedirect.com/science/article/am/pii/S0379073822003681",
+      "status": "BRONZE",
+      "license": "publisher-specific-oa",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.forsciint.2022.111538?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.forsciint.2022.111538, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "The reflexive pathway carried out to establish death causes and the maternal toxic consumption imputability on the cerebral malformations and fetal death are explained."
+    },
+    "authors": [
+      {
+        "authorId": "2092489181",
+        "name": "A. Blanchot"
+      },
+      {
+        "authorId": "39094590",
+        "name": "M. Antal"
+      },
+      {
+        "authorId": "36935542",
+        "name": "A. Ameline"
+      },
+      {
+        "authorId": "35485763",
+        "name": "L. Gheddar"
+      },
+      {
+        "authorId": "14935730",
+        "name": "N. Arbouche"
+      },
+      {
+        "authorId": "2212681",
+        "name": "J. Raul"
+      },
+      {
+        "authorId": "5498473",
+        "name": "P. Kintz"
+      }
+    ],
+    "abstract": "Determining fetal death causes is a complex problem for the forensic pathologist. Beyond the medico-legal context, the expert must be able to evaluate the viability of the fetus at the time of death, to eliminate in-utero fetal death and to determine if the death is related to a fetal, a maternal, a placental cause, or simply related to obstetrical complications. The authors present the case of a 21-year-old woman who unexpectedly gave birth to a fetus during a party. As pregnancy was not acknowledged by the mother (regular menstrual cycles and use of hormonal contraception), no obstetrical check-up had been performed. She would have presented violent abdominal pain and expelled a mass in the toilet. The fetus body, enclosed in the amniotic pouch, and the placenta were found in the toilet. A forensic autopsy was performed jointly by a forensic pathologist and a specialist in fetal pathology. Histological, toxicological and genetic samples were collected. Body morphometry and bone maturation indicated a gestational age of 31-32 weeks of amenorrhea. A significant asphyxia syndrome and non-specific multi-visceral congestion were noted at autopsy. Histological analysis of the fetal tissues revealed a lung and skeletal muscle maturation in accordance with the estimated term. At the brain level, there were signs of anoxia and abnormal cortical development with periventricular nodular heterotopia areas. The placenta microscopic analysis revealed acute chorioamniotitis, the probable cause of the premature fetal expulsion. Toxicological analyses revealed the presence of ecstasy (48\u00a0ng/mL) and its metabolite MDA (2\u00a0ng/mL) in fetal blood. Although negative in blood, THC-COOH tested positive in urine (9\u00a0ng/mL). The fetus was repetitively exposed to cannabis, as \u03949-THC tested positive in hair (51\u00a0pg/mg). Maternal hair analysis on 4\u00a0\u00d7\u00a03\u00a0cm evidenced a long-term use of cannabis, while results support single massive exposure to ecstasy. In this article, the authors try to explain the reflexive pathway carried out to establish death causes and the maternal toxic consumption imputability on the cerebral malformations and fetal death. This case illustrates both the interest of toxicological analyses in cases of fetal death and the importance of a collaborative work between forensic and fetal pathologists and toxicologists, which appeared critical to answer in the best conditions to the magistrates questions, as well as to the bereaved families.",
+    "relevance_score": 0.4594978094100952,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "54a3fda5749c5fd5beb9477545039519e3098bee",
+    "externalIds": {
+      "DOI": "10.1016/j.envint.2023.108070",
+      "CorpusId": 259322403,
+      "PubMed": "37399769"
+    },
+    "title": "Prenatal exposure to per- and polyfluoroalkyl substances and infant sleep disturbance: A prospective cohort study.",
+    "venue": "Environment International",
+    "year": 2023,
+    "citationCount": 12,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1016/j.envint.2023.108070",
+      "status": "GOLD",
+      "license": "CCBYNCND",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.envint.2023.108070?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.envint.2023.108070, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Prenatal exposure to PFAS was associated with longer sleep latency, increased nighttime awakenings, longer nocturnal wakefulness hours, snoring, and earlier sleep-onset time in infants aged 6-12\u00a0months, according to GEE models."
+    },
+    "authors": [
+      {
+        "authorId": "2108831741",
+        "name": "Yun Huang"
+      },
+      {
+        "authorId": "2067777130",
+        "name": "Fang Fang"
+      },
+      {
+        "authorId": "2146037915",
+        "name": "Yan Chen"
+      },
+      {
+        "authorId": "2154301957",
+        "name": "Xiaoqing He"
+      },
+      {
+        "authorId": "48772454",
+        "name": "Qian Chen"
+      },
+      {
+        "authorId": "2113635941",
+        "name": "Hui Wang"
+      },
+      {
+        "authorId": "27672597",
+        "name": "Jinchao Zhang"
+      }
+    ],
+    "abstract": "BACKGROUND\nPrenatal exposure to per- and polyfluoroalkyl substances (PFAS) may adversely affect fetal brain development, yet no study has investigated the potential association between prenatal PFAS exposure and infant sleep.\n\n\nOBJECTIVES\nTo explore the associations of prenatal PFAS exposure with infant sleep disturbances during the first year of life in a prospective cohort study.\n\n\nMETHODS\nWe recruited 4127 pregnant women from the Shanghai Birth Cohort (SBC) and followed their children from birth to 12\u00a0months old. A total of 2366 infants were included in the 6-month analyses, and 2466 infants in the 12-month analyses. Ten PFAS were quantified in blood serum collected in the first trimester. Sleep quality was measured using the Brief Infant Sleep Questionnaire. We used multiple linear regression and multinomial logistic regression to estimate the individual effects of PFAS on sleep outcomes. We utilized a quantile-based g-computation model to determine the joint effects of the PFAS mixture on infant sleep outcomes. Additionally, generalized estimating equation (GEE) models were performed to examine the longitudinal effects of PFAS exposure during pregnancy.\n\n\nRESULTS\nIn infants aged 6\u00a0months, perfluorooctane sulfonate and perfluoroheptanoic acid were associated with a more than 2-fold risk of parent-reported sleep problems as severe. Perfluorodecanoic acid was associated with an increased risk of often or almost always snoring in one-year-old infants (relative risk ratios, 1.79; 95% CI, 1.12-2.86). PFAS mixtures were positively associated with nighttime awakenings both among infants aged 6\u00a0months (\u03b2, 0.11; 95% CI, 0.04-0.19) and 12\u00a0months (\u03b2, 0.11; 95% CI, 0.05-0.18). Prenatal exposure to PFAS were associated with longer sleep latency, increased nighttime awakenings, longer nocturnal wakefulness hours, snoring, and earlier sleep-onset time in infants aged 6-12\u00a0months, according to GEE models.\n\n\nCONCLUSIONS\nOur study suggests that prenatal exposure to PFAS may increase the risk of sleep disturbance in infants.",
+    "relevance_score": 0.4582945704460144,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "759e1d65c1508e6b849857173c4a687dd06643df",
+    "externalIds": {
+      "DOI": "10.1016/j.envint.2025.109687",
+      "CorpusId": 280202412,
+      "PubMed": "40683241"
+    },
+    "title": "Prenatal exposure to per- and polyfluoroalkyl substances and childhood executive function and behavioral difficulties at age 7: evidence from the Shanghai birth cohort study.",
+    "venue": "Environment International",
+    "year": 2025,
+    "citationCount": 2,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1016/j.envint.2025.109687",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.envint.2025.109687?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.envint.2025.109687, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Prenatal PFAS exposure in 7-year-old Chinese children had compound-specific and sex-dependent impacts on executive function and behavioral outcomes, while PFUA and PFDA demonstrated inverse relationships, particularly in males."
+    },
+    "authors": [
+      {
+        "authorId": "2337389470",
+        "name": "Xiaoqing He"
+      },
+      {
+        "authorId": "2371309519",
+        "name": "Ruisi Wu"
+      },
+      {
+        "authorId": "2233560289",
+        "name": "Wen Jiang"
+      },
+      {
+        "authorId": "2251394836",
+        "name": "Ying Tian"
+      },
+      {
+        "authorId": "2267029083",
+        "name": "Jun Zhang"
+      },
+      {
+        "authorId": "2323097169",
+        "name": "Yun Huang"
+      }
+    ],
+    "abstract": "BACKGROUND\nPer- and polyfluoroalkyl substances (PFAS) are persistent environmental contaminants. Prenatal exposure during critical developmental windows may adversely affect fetal brain development. However, evidence on the impact of prenatal PFAS exposure on early school-age behavioral and executive function remains inconsistent, with particularly limited data available from high-exposure regions. This study investigated prenatal PFAS exposure and neurodevelopmental outcomes in 7-year-old children within a prospective birth cohort.\n\n\nMETHODS\nThis study analyzed data from the Shanghai Birth Cohort, which included 1,543 mother-child pairs. Maternal plasma collected during early pregnancy was tested for ten PFAS compounds. Neurodevelopmental outcomes at age 7 were assessed using the Behavior Rating Inventory of Executive Function and the Strengths and Difficulties Questionnaire. Multivariable linear regression, quantile-based g-computation, and weighted quantile sum regression evaluated individual and joint effects. Stratified analyses by sex and sensitivity analyses were conducted.\n\n\nRESULTS\nPrenatal PFOA exposure was associated with increased executive dysfunction (BRI: \u03b2\u00a0=\u00a00.80, 95\u00a0% CI [0.16, 1.43]) and behavioral problems (total difficulties: \u03b2\u00a0=\u00a00.56, 95\u00a0% CI [0.19, 0.93]). Conversely, PFUA and PFDA were associated with decreased neurodevelopmental scores. Sex-stratified analyses linked PFOA and PFHpA exposure to poorer outcomes in females, while PFNA, PFDA, and PFUA were associated with better outcomes in males. Mixture analyses found no significant joint effects. Sensitivity analyses confirmed the robustness of the findings.\n\n\nCONCLUSION\nOur study revealed that prenatal PFAS exposure in 7-year-old Chinese children had compound-specific and sex-dependent impacts on executive function and behavioral outcomes. PFOA was associated with poorer performance, while PFUA and PFDA demonstrated inverse relationships, particularly in males.",
+    "relevance_score": 0.4568036198616028,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "5cc485de45803f21b5596cfdc12b70e0e23eed7e",
+    "externalIds": {
+      "MAG": "2921621048",
+      "DOI": "10.1002/ajmg.a.61076",
+      "CorpusId": 73473946,
+      "PubMed": "30838783"
+    },
+    "title": "Neu\u2013Laxova syndrome presenting prenatally with increased nuchal translucency and cystic hygroma: The utility of exome sequencing in deciphering the diagnosis",
+    "venue": "American Journal of Medical Genetics. Part A",
+    "year": 2019,
+    "citationCount": 17,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/ajmg.a.61076?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/ajmg.a.61076, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Using exome sequencing, the underlying genetic diagnosis in three fetuses with prenatal skin edema, severe IUGR, micrognathia, renal anomalies, and arthrogryposis was identified and a homozygous c.1A>C (p.Met1?, NM_006623) variant in the PHGDH gene was identified."
+    },
+    "authors": [
+      {
+        "authorId": "34795508",
+        "name": "D. Bourque"
+      },
+      {
+        "authorId": "39774012",
+        "name": "Mireille Cloutier"
+      },
+      {
+        "authorId": "4785349",
+        "name": "K. Kernohan"
+      },
+      {
+        "authorId": "2070053",
+        "name": "E. Bareke"
+      },
+      {
+        "authorId": "3810994",
+        "name": "D. Grynspan"
+      },
+      {
+        "authorId": "114634268",
+        "name": "J. Michaud"
+      },
+      {
+        "authorId": "4107454",
+        "name": "K. Boycott"
+      }
+    ],
+    "abstract": "Neu\u2013Laxova syndrome (NLS) is a lethal autosomal recessive microcephaly syndrome associated with intrauterine growth restriction (IUGR) and multiple congenital anomalies. Clinical features include central nervous system malformations, joint contractures, ichthyosis, edema, and dysmorphic facial features. Biallelic pathogenic variants in either the PHGDH or PSAT1 genes have been shown to cause NLS. Using exome sequencing, we aimed to identify the underlying genetic diagnosis in three fetuses (from one family) with prenatal skin edema, severe IUGR, micrognathia, renal anomalies, and arthrogryposis and identified a homozygous c.1A>C (p.Met1?, NM_006623.3) variant in the PHGDH gene. Loss of the translation start codon is a novel genetic mechanism for the development of NLS. Prenatal diagnosis of NLS is challenging and few reports describe the fetal pathology. Fetal neuropathologic examination revealed: delayed brain development, congenital agenesis of the corticospinal tracts, and hypoplasia of the hippocampus, cerebellum and brainstem. Each pregnancy also showed increased nuchal translucency (NT) or cystic hygroma. While NLS is rare, it may be a cause of recurrent increased NT/cystic hygroma. This finding provides further support that cystic hygroma has many different genetic causes and that exome sequencing may shed light on the underlying genetic diagnoses in this group of prenatal patients.",
+    "relevance_score": 0.45407623052597046,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "ec45017959a4da596ebf70887979ce191106f72e",
+    "externalIds": {
+      "PubMedCentral": "12668676",
+      "DOI": "10.7554/eLife.102578",
+      "CorpusId": 266054022,
+      "PubMed": "41324988"
+    },
+    "title": "Joint profiling of cell morphology and gene expression during in vitro neurodevelopment",
+    "venue": "bioRxiv",
+    "year": 2025,
+    "citationCount": 2,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.7554/elife.102578",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC12668676, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine",
+      "Biology"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is shown that specific subtypes of iPSC-derived cortical neurons are a relevant model for a range of brain-related complex traits, including schizophrenia and bipolar disorder, highlighting the potential of multi-modal single cell phenotyping for disease modeling."
+    },
+    "authors": [
+      {
+        "authorId": "2273090278",
+        "name": "Adithi Sundaresh"
+      },
+      {
+        "authorId": "15273670",
+        "name": "D. Meistermann"
+      },
+      {
+        "authorId": "5641494",
+        "name": "Riina Lampela"
+      },
+      {
+        "authorId": "2196164207",
+        "name": "Zhiyu Yang"
+      },
+      {
+        "authorId": "10425189",
+        "name": "Rosa Woldegebriel"
+      },
+      {
+        "authorId": "8337812",
+        "name": "A. Ganna"
+      },
+      {
+        "authorId": null,
+        "name": "Pau Puigdevall Costa"
+      },
+      {
+        "authorId": "2940450",
+        "name": "H. Kilpinen"
+      }
+    ],
+    "abstract": "Differentiation of induced pluripotent stem cells (iPSC) towards neuronal lineages has enabled diverse cellular models of human neurodevelopment and related disorders. However, in vitro differentiation is a variable process that frequently leads to heterogeneous cell populations that may confound disease-relevant phenotypes. Here, we report a thorough characterization of cortical neuron differentiation from iPSCs using joint profiling of neuronal morphology and transcriptomics in single cells. We assayed 60,000 developing neurons across three timepoints with CellPainting, a high-content imaging method, and single-cell RNA-sequencing (scRNA-seq). By modeling the relationship between morphological features and gene expression within our differentiation system, we annotated image-based features with biological functions and found that while phenotypes related to cell morphology capture broader neuronal classes than scRNA-seq, they enhance our ability to quantify the biological processes that drive neuronal differentiation over time, such as mitochondrial function and cell cycle. Further, we found that while over 60% of the cells match those seen in the fetal brain, 28% represented metabolically abnormal cell states and broader neuronal classes specific to in vitro cells. Finally, we show that specific subtypes of iPSC-derived cortical neurons are a relevant model for a range of brain-related complex traits, including schizophrenia and bipolar disorder, highlighting the potential of multi-modal single cell phenotyping for disease modeling.",
+    "relevance_score": 0.45391473174095154,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "20f7c87171080bdede407d414a4947bb93a77242",
+    "externalIds": {
+      "PubMedCentral": "7686807",
+      "MAG": "3104360976",
+      "DOI": "10.3389/fncel.2020.585395",
+      "CorpusId": 226291613,
+      "PubMed": "33262691"
+    },
+    "title": "Paradoxical Effects of a Cytokine and an Anticonvulsant Strengthen the Epigenetic/Enzymatic Avenue for Autism Research",
+    "venue": "Frontiers in Cellular Neuroscience",
+    "year": 2020,
+    "citationCount": 5,
+    "openAccessPdf": {
+      "url": "https://www.frontiersin.org/articles/10.3389/fncel.2020.585395/pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC7686807, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This explanatory framework opens up prospects regarding autism prevention and treatment, strikingly in line with current advances along the gut microbiome\u2013brain axis."
+    },
+    "authors": [
+      {
+        "authorId": "2386912",
+        "name": "D. B\u00e9roule"
+      }
+    ],
+    "abstract": "Maternal exposure to the valproate short-chain fatty acid (SCFA) during pregnancy is known to possibly induce autism spectrum disorders (ASDs) in the offspring. By contrast, case studies have evidenced positive outcomes of this anticonvulsant drug in children with severe autism. Interestingly, the same paradoxical pattern applies to the IL-17a inflammatory cytokine involved in the immune system regulation. Such joint apparent contradictions can be overcome by pointing out that, among their respective signaling pathways, valproate and IL-17a share an enhancement of the \u201ctype A monoamine oxidase\u201d (MAOA) enzyme carried by the X chromosome. In the Guided Propagation (GP) model of autism, such enzymatic rise triggers a prenatal epigenetic downregulation, which, without possible X-inactivation, and when coinciding with genetic expression variants of other brain enzymes, results in the delayed onset of autistic symptoms. The underlying imbalance of synaptic monoamines, serotonin in the first place, would reflect a mismatch between the environment to which the brain metabolism was prepared during gestation and the postnatal actual surroundings. Following a prenatal exposure to molecules that significantly elicit the MAOA gene expression, a daily treatment with the same metabolic impact would tend to recreate the fetal environment and contribute to rebalance monoamines, thus allowing proper neural circuits to gradually develop, provided behavioral re-education. Given the multifaceted other players than MAOA that are involved in the regulation of serotonin levels, potential compensatory effects are surveyed, which may underlie the autism heterogeneity. This explanatory framework opens up prospects regarding autism prevention and treatment, strikingly in line with current advances along the gut microbiome\u2013brain axis.",
+    "relevance_score": 0.4528760313987732,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\20f7c87171080bdede407d414a4947bb93a77242.pdf"
+  },
+  {
+    "paperId": "eef59dba1650350c612abb0df4ca5ca338c2dd44",
+    "externalIds": {
+      "PubMedCentral": "10431487",
+      "DOI": "10.1289/EHP12016",
+      "CorpusId": 260953826,
+      "PubMed": "37585348"
+    },
+    "title": "Mixtures of Metals and Micronutrients in Early Pregnancy and Cognition in Early and Mid-Childhood: Findings from the Project Viva Cohort",
+    "venue": "Environmental Health Perspectives",
+    "year": 2023,
+    "citationCount": 20,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.1289/ehp12016",
+      "status": "GOLD",
+      "license": "public-domain",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC10431487, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Maternal circulating concentrations of several essential (Zn and Se) and nonessential (Ba and Cs) metals were associated with some domains of child cognition, and known neurotoxic metals, such as Pb, were not associated with child cognition."
+    },
+    "authors": [
+      {
+        "authorId": "2149909481",
+        "name": "R. Thilakaratne"
+      },
+      {
+        "authorId": "51308898",
+        "name": "Pi-I. D. Lin"
+      },
+      {
+        "authorId": "1398121015",
+        "name": "S. Rifas-Shiman"
+      },
+      {
+        "authorId": "2070608191",
+        "name": "R. Wright"
+      },
+      {
+        "authorId": "46897380",
+        "name": "A. Hubbard"
+      },
+      {
+        "authorId": "3362138",
+        "name": "M. Hivert"
+      },
+      {
+        "authorId": "4524289",
+        "name": "D. Bellinger"
+      },
+      {
+        "authorId": "6744832",
+        "name": "E. Oken"
+      },
+      {
+        "authorId": "2200434045",
+        "name": "Andr\u00e9s C\u00e1rdenas"
+      }
+    ],
+    "abstract": "Background: The developing fetal brain is sensitive to many environmental exposures. However, the independent and joint effects of prenatal exposure to metals and micronutrients on child cognition are not well understood. Objectives: Our aim was to evaluate associations of first-trimester (\u223c10 wk) maternal erythrocyte concentrations of mixtures of nonessential and essential metals and micronutrients with early (\u223c3 y) and mid-childhood (\u223c8 y) cognitive test scores in Project Viva, a prebirth cohort in Boston, Massachusetts, USA. Methods: We measured concentrations of five essential metals (Cu, Mg, Mn, Se, Zn) and two micronutrients (vitamin B12 and folate), together termed the \u201cnutrient mixture,\u201d as well as six nonessential metals (As, Ba, Cd, Cs, Hg, Pb), together termed the \u201cneurotoxic mixture,\u201d in first-trimester (\u223c10 wk) maternal erythrocytes (metals) or plasma (micronutrients). We assessed visual-motor function and receptive vocabulary in early childhood (\u223c3 y), and visual-motor function, visual memory, and fluid and crystallized intelligence in mid-childhood (\u223c8 y). We employed adjusted quantile g-computation and linear regression to estimate mixture and individual component associations, respectively. Results: Analyses included 900 mother\u2013child pairs (74% college graduates; 52% male children). In mixture analyses, a quartile increase in the nutrient mixture was associated with a mean difference in early childhood receptive vocabulary score of 1.58 points [95% confidence interval (CI): 0.06, 3.10], driven by Zn and Se. A quartile increase in the neurotoxic mixture was associated with a mean difference in mid-childhood visual-motor score of \u22123.01 points (95% CI: \u22125.55, \u22120.47), driven by Ba and Cs. Linear regressions supported quantile g-computation findings for mixture component contributions. Discussion: Maternal circulating concentrations of several essential (Zn and Se) and nonessential (Ba and Cs) metals were associated with some domains of child cognition. In this folate-replete cohort, first-trimester circulating concentrations of known neurotoxic metals, such as Pb, were not associated with child cognition. https://doi.org/10.1289/EHP12016",
+    "relevance_score": 0.45010530948638916,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "ceec783dd5a7544e6332ad6b428fcb1f0b86aa92",
+    "externalIds": {
+      "PubMedCentral": "11789001",
+      "DOI": "10.1097/HP.0000000000001710",
+      "CorpusId": 259249425,
+      "PubMed": "37358430"
+    },
+    "title": "Fetal and Maternal Atomic Bomb Survivor Dosimetry using the J45 Pregnant Female Phantom Series: Considerations of the Kneeling and Lying Posture with Comparisons to the DS02 System",
+    "venue": "Health Physics",
+    "year": 2023,
+    "citationCount": 2,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC11789001, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "This study presents the J45 pregnant female phantoms in both a \u201ckneeling\u201d and \u201clying\u201d posture and assess the dosimetric impact of these more anatomically realistic survivor models in comparison to current organ doses given by the DS02 system."
+    },
+    "authors": [
+      {
+        "authorId": "1395873098",
+        "name": "S. Domal"
+      },
+      {
+        "authorId": "2436514240",
+        "name": "Camilo M. Correa"
+      },
+      {
+        "authorId": "83320939",
+        "name": "Colin J. Paulbeck"
+      },
+      {
+        "authorId": "2505309",
+        "name": "K. Griffin"
+      },
+      {
+        "authorId": "47225071",
+        "name": "Tatsuhiko Sato"
+      },
+      {
+        "authorId": "3542852",
+        "name": "S. Funamoto"
+      },
+      {
+        "authorId": "4416041",
+        "name": "H. Cullings"
+      },
+      {
+        "authorId": "114247063",
+        "name": "S. Egbert"
+      },
+      {
+        "authorId": "1508015482",
+        "name": "A. Endo"
+      },
+      {
+        "authorId": "34783433",
+        "name": "N. Hertel"
+      },
+      {
+        "authorId": "47499726",
+        "name": "Choonsik Lee"
+      },
+      {
+        "authorId": "144759077",
+        "name": "W. Bolch"
+      }
+    ],
+    "abstract": "Abstract Organ dosimetry data of the atomic bomb survivors and the resulting cancer risk models derived from these data are currently assessed within the DS02 dosimetry system developed through the Joint US\u2013Japan Dosimetry Working Group. In DS02, the anatomical survivor models are limited to three hermaphroditic stylized phantoms\u2014an adult (55 kg), a child (19.8 kg), and an infant (9.7 kg)\u2014that were originally designed for the preceding DS86 dosimetry system. As such, organ doses needed for assessment of in-utero cancer risks to the fetus have continued to rely upon the use of the uterine wall in the adult non-pregnant stylized phantom as the dose surrogate for all fetal organs regardless of gestational age. To address these limitations, the Radiation Effects Research Foundation (RERF) Working Group on Organ Dose (WGOD) has established the J45 (Japan 1945) series of high-resolution voxel phantoms, which were derived from the UF/NCI series of hybrid phantoms and scaled to match mid-1940s Japanese body morphometries. The series includes male and female phantoms\u2014newborn to adult\u2014and four pregnant female phantoms at gestational ages of 8, 15, 25, and 38 wk post-conception. In previous studies, we have reported organ dose differences between those reported by the DS02 system and those computed by the WGOD using 3D Monte Carlo radiation transport simulations of atomic bomb gamma-ray and neutron fields for the J45 phantoms series in their traditional \u201cstanding\u201d posture, with some variations in their facing direction relative to the bomb hypocenter. In this present study, we present the J45 pregnant female phantoms in both a \u201ckneeling\u201d and \u201clying\u201d posture and assess the dosimetric impact of these more anatomically realistic survivor models in comparison to current organ doses given by the DS02 system. For the kneeling phantoms facing the bomb hypocenter, organ doses from bomb source photon spectra were shown to be overestimated by the DS02 system by up to a factor of 1.45 for certain fetal organs and up to a factor of 1.17 for maternal organs. For lying phantoms with their feet in the direction of the hypocenter, fetal organ doses from bomb source photon spectra were underestimated by the DS02 system by factors as low as 0.77, while maternal organ doses were overestimated by up to a factor of 1.38. Organs doses from neutron contributions to the radiation fields exhibited an increasing overestimation by the DS02 stylized phantoms as gestational age increased. These discrepancies are most evident in fetal organs that are more posterior within the mother\u2019s womb, such as the fetal brain. Further analysis revealed that comparison of these postures to the original standing posture indicate significant dose differences for both maternal and fetal organ doses depending on the type of irradiation. Results from this study highlight the degree to which the existing DS02 system can differ from organ dosimetry based upon 3D radiation transport simulations using more anatomically realistic models of those survivors exposed during pregnancy.",
+    "relevance_score": 0.4465130567550659,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "da119f5f19f380934b6136156049dd7c216eda66",
+    "externalIds": {
+      "PubMedCentral": "13522052",
+      "DOI": "10.1007/s11259-026-11476-x",
+      "CorpusId": 291377392,
+      "PubMed": "42658331"
+    },
+    "title": "Fetal pneumonia and polyarthritis associated with Ureaplasma diversum infection in an aborted beef cattle fetus in Brazil",
+    "venue": "Veterinary research communications",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://link.springer.com/content/pdf/10.1007/s11259-026-11476-x.pdf",
+      "status": "HYBRID",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC13522052, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Findings expand the pathological spectrum of U. diversum infection in bovine fetuses, particularly regarding osteoarticular involvement, and emphasize the diagnostic value of systematic joint evaluation combined with molecular testing in bovine abortion investigations."
+    },
+    "authors": [
+      {
+        "authorId": "2452396990",
+        "name": "Let\u00edcia Perri Almeida Luciano"
+      },
+      {
+        "authorId": null,
+        "name": "Roger Fernando Neves da Silva"
+      },
+      {
+        "authorId": null,
+        "name": "Wuglenya Daislla Martins da Silva"
+      },
+      {
+        "authorId": "2463014560",
+        "name": "\u00cd. G. dos Santos"
+      },
+      {
+        "authorId": "2459700216",
+        "name": "Bruna Souza Serrano"
+      },
+      {
+        "authorId": "2438079944",
+        "name": "Gabriela Viana Castilho Bichara"
+      },
+      {
+        "authorId": "2459828886",
+        "name": "Maria Sinara Matos"
+      },
+      {
+        "authorId": "2460068954",
+        "name": "Fabricio Andrade Gomes"
+      },
+      {
+        "authorId": "2398419334",
+        "name": "Natali\u00ea Ecker"
+      },
+      {
+        "authorId": "2337670328",
+        "name": "T. B. S. Magalh\u00e3es"
+      },
+      {
+        "authorId": null,
+        "name": "Marcos de Almeida Souza"
+      },
+      {
+        "authorId": null,
+        "name": "Daniel Moura de Aguiar"
+      },
+      {
+        "authorId": "2299760973",
+        "name": "C. A. Pescador"
+      }
+    ],
+    "abstract": "Ureaplasma diversum is an opportunistic bovine pathogen associated with reproductive disorders, including infertility, granular vulvovaginitis, placentitis, and abortion; however, detailed descriptions of fetal osteoarticular lesions remain exceptionally uncommon. This report describes the gross, histopathological, and molecular findings of a bovine abortion associated with U. diversum infection presenting with concurrent pulmonary and articular lesions, representing an uncommon manifestation in bovine fetuses in Brazil. An approximately six-month-old Angus fetus was submitted for complete postmortem examination following abortion. Tissue samples were collected for histopathology and molecular investigation of major infectious agents associated with bovine reproductive failure. Gross examination revealed bilateral coxofemoral joint lesions characterized by articular cartilage irregularity and erosions. Histologically, the lungs exhibited moderate multifocal pyogranulomatous pneumonia with prominent bronchus-associated lymphoid tissue (BALT) hyperplasia. The coxofemoral joints showed severe multifocal subacute erosive fibrinonecrotizing arthritis with proliferative lymphoplasmacytic synovitis and secondary osteonecrosis. Histologically, fibrovascular pannus formation, cartilage necrosis, and extension of the lesion into the subchondral bone were observed. Quantitative PCR detected U. diversum DNA in brain, spleen, thymus, liver, and kidney, whereas the paraffin-embedded coxofemoral joint sample tested negative. Molecular assays for other major abortifacient pathogens, including bovine viral diarrhea virus (types 1, 2, and 3), bovine herpesvirus 1 and 6, Leptospira spp., Brucella abortus, Mycoplasma bovis, and Neospora caninum were negative. The exclusion of other common infectious causes, combined with the molecular confirmation of U. diversum and the characteristic inflammatory lesions, support an etiological association between U. diversum infection and the abortion. These findings expand the pathological spectrum of U. diversum infection in bovine fetuses, particularly regarding osteoarticular involvement, and emphasize the diagnostic value of systematic joint evaluation combined with molecular testing in bovine abortion investigations.",
+    "relevance_score": 0.4449545741081238,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\da119f5f19f380934b6136156049dd7c216eda66.pdf"
+  },
+  {
+    "paperId": "4e8aa13b4455455ad61c75fb340ac3a9ad9f63b1",
+    "externalIds": {
+      "PubMedCentral": "10444676",
+      "DOI": "10.1007/s44192-023-00042-5",
+      "CorpusId": 261051896,
+      "PubMed": "37980629"
+    },
+    "title": "Interaction of the pre- and postnatal environment in the maternal immune activation model",
+    "venue": "Discover Mental Health",
+    "year": 2023,
+    "citationCount": 11,
+    "openAccessPdf": {
+      "url": "https://link.springer.com/content/pdf/10.1007/s44192-023-00042-5.pdf",
+      "status": "GOLD",
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC10444676, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Current information on the interaction between the prenatal and postnatal maternal environments in the modulation of offspring development and their relevance for the pathophysiology of the maternal immune activation model is reviewed."
+    },
+    "authors": [
+      {
+        "authorId": "84009972",
+        "name": "Anna Gundacker"
+      },
+      {
+        "authorId": null,
+        "name": "Laura Cuenca Rico"
+      },
+      {
+        "authorId": "2183860275",
+        "name": "Peter Stoehrmann"
+      },
+      {
+        "authorId": "2232823429",
+        "name": "Katharina E. Tillmann"
+      },
+      {
+        "authorId": "1398978716",
+        "name": "Ulrike Weber-Stadlbauer"
+      },
+      {
+        "authorId": "143694589",
+        "name": "Daniela D. Pollak"
+      }
+    ],
+    "abstract": "Adverse influences during pregnancy are associated with a range of unfavorable outcomes for the developing offspring. Maternal psychosocial stress, exposure to infections and nutritional imbalances are known risk factors for neurodevelopmental derangements and according psychiatric and neurological manifestations later in offspring life. In this context, the maternal immune activation (MIA) model has been extensively used in preclinical research to study how stimulation of the maternal immune system during gestation derails the tightly coordinated sequence of fetal neurodevelopment. The ensuing consequence of MIA for offspring brain structure and function are majorly manifested in behavioral and cognitive abnormalities, phenotypically presenting during the periods of adolescence and adulthood. These observations have been interpreted within the framework of the \u201cdouble-hit-hypothesis\u201d suggesting that an elevated risk for neurodevelopmental disorders results from an individual being subjected to two adverse environmental influences at distinct periods of life, jointly leading to the emergence of pathology. The early postnatal period, during which the caregiving parent is the major determinant of the newborn\u00b4s environment, constitutes a window of vulnerability to external stimuli. Considering that MIA not only affects the developing fetus, but also impinges on the mother\u00b4s brain, which is in a state of heightened malleability during pregnancy, the impact of MIA on maternal brain function and behavior postpartum may importantly contribute to the detrimental consequences for her progeny. Here we review current information on the interaction between the prenatal and postnatal maternal environments in the modulation of offspring development and their relevance for the pathophysiology of the MIA model.",
+    "relevance_score": 0.44231998920440674,
+    "has_full_text": true,
+    "pdf_source": "semantic_scholar",
+    "representation_type": "pdf",
+    "pdf_path": "data\\pdfs\\4e8aa13b4455455ad61c75fb340ac3a9ad9f63b1.pdf"
+  },
+  {
+    "paperId": "7987eb49466ff44322c16404fda2688949c714f5",
+    "externalIds": {
+      "MAG": "3048817838",
+      "DOI": "10.5455/im.85205",
+      "CorpusId": 226679103
+    },
+    "title": "Curling up in end stage dementia. Bodys shift anatomy in retrogenesis",
+    "venue": "",
+    "year": 2020,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.5455/im.85205?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.5455/im.85205, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It seems that apart from the disorganized brain function and degenerative mechanisms of AD, a gradual but severe re-structure of the anatomic human body figure takes place, resembling an embryo in a womb."
+    },
+    "authors": [
+      {
+        "authorId": "50746516",
+        "name": "E. Mavrommatis"
+      }
+    ],
+    "abstract": "To the Editor, There is no dementia disease progression case in which during the end-stage body does not curl up towards the fetal position. Patients with advanced dementia (AD) have been observed to demonstrate various clinical features reminiscent of children. AD late stages manifest a cluster of symptoms like an increase in emotional needs, fears, hallucinations, tremors and anxieties, combined with anatomic changes of the entire body and simultaneous progressive biomechanical shutdown [1]. Reisberg and his colleagues studied AD and based on behavioral, neurological and neuropathological findings proposed the \"retrogenesis\" model [2]. Patients lose their cognitive skills and movement abilities in a kind of reverse order than they learned them, while emotional needs and anxiety are being increased [3]. Paratonia has emerged as an infantile stabilization reflex, rang of motion declines and patients demonstrate hypertonia, with the inability to relax muscles during muscle tone assessment and resistance during passive movement [4]. In end-stage AD, patients don\u2019t move for long periods during the day, while they sleep a lot. Leg and arm muscles are not stretched, become tighten and joints renter locked or frozen in place. Knees remain bent and turning presents a difficulty. Patients become bedridden, head and shoulders shift forwards, chest cage curling inwards and spine shifting from the normal S-curve to a C-position [1,2]. Malnutrition, vitamins and minerals deficiency further affect an organism's condition [5]. It seems that apart from the disorganized brain function and degenerative mechanisms of AD, a gradual but severe re-structure of the anatomic human body figure takes place, resembling an embryo in a womb. AD increasing prevalence with a simultaneously aging of the global population, increase the need for both clinicians and caregivers to comprehend the real needs of demented patients and provide health care that is humane and palliative.",
+    "relevance_score": 0.4401557147502899,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "e8d91be033b87124d563e8e843b0f69d8d553fea",
+    "externalIds": {
+      "DOI": "10.1093/schbul/sbae044",
+      "CorpusId": 269145336,
+      "PubMed": "38616054"
+    },
+    "title": "Shared Genetic Determinants of Schizophrenia and Autism Spectrum Disorder Implicate Opposite Risk Patterns: A Genome-Wide Analysis of Common Variants.",
+    "venue": "Schizophrenia bulletin",
+    "year": 2024,
+    "citationCount": 23,
+    "openAccessPdf": {
+      "url": "https://academic.oup.com/schizophreniabulletin/advance-article-pdf/doi/10.1093/schbul/sbae044/57232401/sbae044.pdf",
+      "status": "BRONZE",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1093/schbul/sbae044?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1093/schbul/sbae044, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": [
+      "Medicine"
+    ],
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "The findings support a shared genetic basis for SCZ and ASD and suggest a common genetic variant, rs2696609, located in the Chr17q21.31 locus, may exert differential risk regulation on SCZ and ASD by altering brain structure."
+    },
+    "authors": [
+      {
+        "authorId": "2144839846",
+        "name": "Yu Chen"
+      },
+      {
+        "authorId": "2274094552",
+        "name": "Wenqiang Li"
+      },
+      {
+        "authorId": "32719136",
+        "name": "L. Lv"
+      },
+      {
+        "authorId": "2255072215",
+        "name": "Weihua Yue"
+      }
+    ],
+    "abstract": "BACKGROUND AND HYPOTHESIS\nThe synaptic pruning hypothesis posits that schizophrenia (SCZ) and autism spectrum disorder (ASD) may represent opposite ends of neurodevelopmental disorders: individuals with ASD exhibit an overabundance of synapses and connections while SCZ was characterized by excessive pruning of synapses and a reduction. Given the strong genetic predisposition of both disorders, we propose a shared genetic component, with certain loci having differential regulatory impacts.\n\n\nSTUDY DESIGN\nGenome-Wide single nucleotide polymorphism (SNP) data of European descent from SCZ (N cases\u2005=\u200553\u00a0386, N controls\u2005=\u200577\u00a0258) and ASD (N cases\u2005=\u200518\u00a0381, N controls\u2005=\u200527\u00a0969) were analyzed. We used genetic correlation, bivariate causal mixture model, conditional false discovery rate method, colocalization, Transcriptome-Wide Association Study (TWAS), and Phenome-Wide Association Study (PheWAS) to investigate the genetic overlap and gene expression pattern.\n\n\nSTUDY RESULTS\nWe found a positive genetic correlation between SCZ and ASD (rg\u2005=\u2005.26, SE\u2005=\u20050.01, P\u2005=\u20057.87e-14), with 11 genomic loci jointly influencing both conditions (conjFDR <0.05). Functional analysis highlights a significant enrichment of shared genes during early to mid-fetal developmental stages. A notable genetic region on chromosome 17q21.31 (lead SNP rs2696609) showed strong evidence of colocalization (PP.H4.abf\u2005=\u20050.85). This SNP rs2696609 is linked to many imaging-derived brain phenotypes. TWAS indicated opposing gene expression patterns (primarily pseudogenes and long noncoding RNAs [lncRNAs]) for ASD and SCZ in the 17q21.31 region and some genes (LRRC37A4P, LINC02210, and DND1P1) exhibit considerable variation in the cerebellum across the lifespan.\n\n\nCONCLUSIONS\nOur findings support a shared genetic basis for SCZ and ASD. A common genetic variant, rs2696609, located in the Chr17q21.31 locus, may exert differential risk regulation on SCZ and ASD by altering brain structure. Future studies should focus on the role of pseudogenes, lncRNAs, and cerebellum in synaptic pruning and neurodevelopmental disorders.",
+    "relevance_score": 0.43954360485076904,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  },
+  {
+    "paperId": "9c807680d43067892892b9b7677791a480a0e67c",
+    "externalIds": {
+      "DOI": "10.21608/mjcu.2021.203296",
+      "CorpusId": 244153154
+    },
+    "title": "Effect of Backward Treadmill Training on Genurecurvatum in Cerebral Palsied Children",
+    "venue": "The Medical journal of Cairo University",
+    "year": 2021,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "https://doi.org/10.21608/mjcu.2021.203296",
+      "status": "BRONZE",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.21608/mjcu.2021.203296?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.21608/mjcu.2021.203296, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "fieldsOfStudy": null,
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "Backward treadmill training with a specifically designed physical therapy program considered to be a safe, easy to use and very effective physical Therapy program on genurecurvatum in cerebral palsied children is shown."
+    },
+    "authors": [
+      {
+        "authorId": "2140684710",
+        "name": "R. A. K. M. HEBATALLAH M. KAMAL, Ph.D."
+      },
+      {
+        "authorId": "2140674442",
+        "name": "A. E. E. B. P. HASSAN M. EL BARBARY, M.D."
+      }
+    ],
+    "abstract": "Background: Cerebral palsy (CP) is described as a group of disorders of the development of movement and posture, causing activity limitation that are attributed to non-progressive disturbances that occurred in the developing fetal or infant brain. Many patients with CP walk with a knee recurvatum pattern. A recurvatum gait can also be quite disabling and has been reported to cause proximal tibial deformity. Knee recurvatum has been described to occur in 8% to 40% of patients with CP. Aim of Study: To determine effect of backward treadmill training on genurecurvatum in cerebral palsied children. Subjects: Thirty ambulant cerebral palsied children were selected by simple random way for this study from outpatient clinic of Al Shohadaa Central Hospital. Their ages ranged from 4-8 years. Their knee hyperextension ranged from 10 to 20 degrees in X-ray. No other knee deformities, surgical intervention or fractures. They were assigned randomly into two groups equal in number, each group consisted of 15 children; Group A: They received backward treadmill gait training exercise for thirty minutes for three times per week over three successive months with a specifically designed physical therapy program for one hour for each child, three times weekly, over three months. Group B: They received only the same designed physical therapy program given to group A. Material and Methods: All children's baseline data (radiological evaluation) were collected before and after treatments. Results: There was a statistically high significant decrease in the mean value of knee joint angle of both groups (A and B) where (p-value <0.0001) measured by X ray and this high significant reduction is in favor of group (A). Conclusion: This article shows that backward treadmill training with a specifically designed physical therapy program considered to be a safe, easy to use and very effective physical therapy program on genurecurvatum in cerebral palsied children. Correspondence to: Dr. Ramy A. Khidr, Physiotherapist in Al Shohadaa Central Hospital at Al Monufia Governorate, Egypt",
+    "relevance_score": 0.43793147802352905,
+    "has_full_text": false,
+    "pdf_source": null,
+    "representation_type": null
+  }
+]

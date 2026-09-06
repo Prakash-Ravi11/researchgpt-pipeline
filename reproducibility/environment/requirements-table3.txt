@@ -1,0 +1,12 @@
+# Table 3 ONLY (evaluation-framework comparison).
+# Deliberately NOT in requirements.txt: ragas pulls langchain + langgraph +
+# openai + datasets (~40 packages) and pins langchain-core hard. Installing it
+# alongside the pipeline downgrades langchain-core and breaks langgraph, and none
+# of Tables 1/2/4/5 import it. Install into a SEPARATE venv, or accept the
+# resolver conflict warnings -- they affect langgraph only, which nothing here uses.
+
+ragas==0.2.15
+langchain==0.3.27
+langchain-core==0.3.79
+langchain-community==0.3.31
+langchain-ollama==0.2.3

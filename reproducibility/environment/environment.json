@@ -1,0 +1,33 @@
+{
+  "python": "3.10.18",
+  "platform": "Windows 10",
+  "generation_model": {
+    "name": "qwen2.5:7b",
+    "served_by": "Ollama",
+    "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+    "size_bytes": 4683087332,
+    "quantization": "Q4_K_M",
+    "pull": "ollama pull qwen2.5:7b",
+    "verify": "curl -s localhost:11434/api/tags | jq -r '.models[]|select(.name==\"qwen2.5:7b\").digest'",
+    "note": "Weights are NOT shipped. Pin is the digest above; a reproducer pulls at runtime and compares."
+  },
+  "embedding_model": {
+    "name": "BAAI/bge-m3",
+    "revision": "5617a9f61b028005a4858fdac845db406aefb181",
+    "loaded_via": "sentence-transformers",
+    "device": "cuda",
+    "max_seq_length_set_by_harnesses": 256,
+    "note": "Weights are NOT shipped. Pull from the HF hub at runtime.",
+    "resolved_from": "~/.cache/huggingface/hub/models--BAAI--bge-m3/refs/main",
+    "pin_usage": "SentenceTransformer('BAAI/bge-m3', revision='5617a9f61b028005a4858fdac845db406aefb181'). The frozen harnesses call it WITHOUT a revision, i.e. they resolved refs/main at run time to this commit. A reproducer should pass the revision explicitly; if HF main has since moved, an unpinned run will silently use different weights."
+  },
+  "gpu": {
+    "reported": "NVIDIA GeForce RTX 3050 6GB Laptop GPU, 581.86, 6144 MiB",
+    "vram_total_mib": 6144,
+    "ASSUMPTION": "6 GB VRAM is a load-bearing assumption, not a footnote. qwen2.5:7b loads at ~5.0 GB; with an embedding model resident and desktop apps holding ~1.6 GB it spills to CPU and is evicted between papers. Post-freeze commit 6ae3d55 frees the embedder before Stage 4 for this reason (122.8 -> 39.1 s/paper). On <6 GB expect CPU spill; on >=12 GB expect faster wall-clock and identical field values."
+  },
+  "cuda": {
+    "torch_build": "2.11.0+cu128",
+    "driver": "581.86"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "canonical60": {
+    "n_papers": 60,
+    "n_full_text": 34,
+    "n_files_hashed": 34,
+    "n_full_text_without_local_file": 0,
+    "identifier_coverage": {
+      "doi": 55,
+      "arxiv": 24,
+      "pmcid": 2
+    },
+    "representation": {
+      "pdf": 32,
+      "abstract": 26,
+      "jats_xml": 2
+    },
+    "accepted_source": {
+      "None": 26,
+      "arxiv": 24,
+      "semantic_scholar": 7,
+      "europepmc": 2,
+      "openalex": 1
+    }
+  },
+  "data_test8": {
+    "n_papers": 8,
+    "n_full_text": 7,
+    "n_files_hashed": 7,
+    "n_full_text_without_local_file": 0,
+    "identifier_coverage": {
+      "doi": 8,
+      "arxiv": 8,
+      "pmcid": 0
+    },
+    "representation": {
+      "pdf": 7,
+      "abstract": 1
+    },
+    "accepted_source": {
+      "arxiv": 7,
+      "None": 1
+    }
+  },
+  "medical50_frozen": {
+    "n_papers": 50,
+    "n_full_text": 19,
+    "n_files_hashed": 19,
+    "n_full_text_without_local_file": 0,
+    "identifier_coverage": {
+      "doi": 47,
+      "arxiv": 8,
+      "pmcid": 17
+    },
+    "representation": {
+      "abstract": 31,
+      "pdf": 19
+    },
+    "accepted_source": {
+      "None": 31,
+      "semantic_scholar": 12,
+      "arxiv": 7
+    }
+  },
+  "medical50_reacquired": {
+    "n_papers": 50,
+    "n_full_text": 23,
+    "n_files_hashed": 23,
+    "n_full_text_without_local_file": 0,
+    "identifier_coverage": {
+      "doi": 47,
+      "arxiv": 8,
+      "pmcid": 17
+    },
+    "representation": {
+      "abstract": 27,
+      "pdf": 12,
+      "jats_xml": 11
+    },
+    "accepted_source": {
+      "None": 27,
+      "europepmc": 11,
+      "arxiv": 8,
+      "semantic_scholar": 4
+    }
+  }
+}

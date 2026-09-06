@@ -1,0 +1,65 @@
+{
+  "_source": "Definitions are frozen in the harnesses; this file restates them so a reproducer does not have to read code to know what was mutated.",
+  "anchor_rule": {
+    "regex": "\\d+\\.\\d+|\b\\d{2,}\b",
+    "module": "src/evidence/anchors.py :: NUMERIC_ANCHOR_RE",
+    "meaning": "a decimal, or an integer of at least 2 digits; single digits never anchor",
+    "shared_by": [
+      "the Stage-5 gate",
+      "gate_sensitivity (Test 2)",
+      "latex_parity",
+      "every measurement harness"
+    ],
+    "consequence": "single-digit quantitative claims are unreachable by construction -- a known, reported sensitivity limit, not a bug."
+  },
+  "mutation_classes_test2": {
+    "numeric_perturbation": {
+      "expected": "ABSTAINED",
+      "definition": "replace one result number with a different one GUARANTEED absent from every chunk of that paper (up to 40 candidate draws)"
+    },
+    "paraphrase_rule": {
+      "expected": "RETURNED",
+      "definition": "deterministic synonym / voice / clause-order rewrite of a result SENTENCE; kept only if it preserves every number and every metric token"
+    },
+    "paraphrase_llm": {
+      "expected": "RETURNED",
+      "definition": "qwen2.5:7b paraphrase at seed 42 instructed to keep every number and metric name; guarded by a post-hoc check that the numbers survived",
+      "determinism": "APPROXIMATE -- this class is the LLM-dependent part of Matrix C"
+    },
+    "fabrication": {
+      "expected": "ABSTAINED",
+      "definition": "a synthetic OWN-claim sentence asserting a metric value absent from the paper"
+    },
+    "support_deletion_primary": {
+      "expected": "ABSTAINED",
+      "definition": "remove the single chunk that primarily grounds the claim",
+      "known_weakness": "the value often recurs in another chunk, so both the gate (11/24) and the evaluation framework (2/24) mostly fail to flag it"
+    },
+    "support_deletion_full": {
+      "expected": "ABSTAINED",
+      "definition": "remove EVERY chunk containing any of the claim's numbers"
+    },
+    "cross_row_structural": {
+      "expected": "ABSTAINED",
+      "definition": "bind row A's label plus a real column-metric token to row B's number, from a genuine multi-row result-table chunk",
+      "control_required": "see the positive control in Table 3 -- the raw detection rate is not interpretable without it"
+    }
+  },
+  "adversarial_binding_probe_classes": {
+    "_all_four_constructed_from_real_table_cells": true,
+    "correct_row_wrong_col": "the subject's own row, but the value taken from a different column",
+    "correct_col_wrong_row": "the claimed metric's column, but the value taken from a different row (cross-row)",
+    "correct_metric_wrong_condition": "the right metric, attributed to a different experimental condition/row",
+    "cross_table_substitution": "a numeric value lifted from a different table in the same paper",
+    "positive_control": "correct_cell -- the subject's own row AND column; must be RETURNED for the adversarial results to mean anything",
+    "acceptance_definition": "an adversarial probe is ACCEPTED iff its FINAL outcome is RETURNED, regardless of which internal binding route produced it (invariant 16)"
+  },
+  "criterion_J": {
+    "statement": "a parity-gate fallback is JUSTIFIED iff pdf_survival(all) > latex_survival(all)",
+    "otherwise": "OVER-TRIGGERED -- the aggregate tied or favoured LaTeX and a sub-split fired alone",
+    "rationale": "derived from the rule latex_parity.py states: every numeric value the PDF path preserves must also survive the LaTeX path",
+    "pre_registered_at": "eeab489",
+    "pre_registration_is_verifiable": "that commit contains the criterion and NO measurement; the numbers landed in the following commit",
+    "descriptive_not_criterion": "the absolute occurrence deficit is reported alongside to expose conservatism; no case is reclassified on it"
+  }
+}

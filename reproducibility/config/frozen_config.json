@@ -1,0 +1,73 @@
+{
+  "_comment": "Single source of truth for every setting the five EXPERIMENT_MATRIX tables depend on. Values read from the frozen tree at tag paper-freeze-v1. NO SECRET IS PRESENT: collection.api_key is null here; the live key lives only in configs/config.yaml, which is gitignored and is NOT shipped.",
+  "determinism": {
+    "llm_temperature": 0,
+    "llm_seed": 42,
+    "system_seed": 42,
+    "ollama_concurrency": "extract_paper_fields forces max_workers=1 whenever a seed is set -- concurrent Ollama requests get non-deterministic slot/prompt-cache assignment. Do not raise it."
+  },
+  "stage4_extraction": {
+    "model": "qwen2.5:7b",
+    "EXTRACTION_PROMPT_VERSION": "2026-09-03.numpredict-deadline",
+    "EXTRACTION_OUTPUT_RESERVATION": 768,
+    "EXTRACTION_DEADLINE_SECONDS": 240,
+    "max_context_words": 2500,
+    "num_ctx": "estimate_num_ctx(user_content, output_reservation=RESERVATION), clamped [2048, 8192]",
+    "reservation_note": "4096 was measured corpus-wide and NOT adopted (LATEX_ACQUISITION_REPORT Phase 5x, decision KEEP OFF). Production stays 768."
+  },
+  "stage3_selection": {
+    "mode": "content_aware",
+    "max_passages": 10,
+    "token_budget_chars": 9000,
+    "production_default": "legacy (configs/config.yaml has no selection block)",
+    "fallback": "content_aware silently falls back to legacy when the chunk schema has no block_type. Runs labelled content_aware on legacy chunks are PARTLY legacy."
+  },
+  "embedding": {
+    "model": "BAAI/bge-m3",
+    "device": "cuda",
+    "max_seq_length": 256
+  },
+  "evidence_grounding": {
+    "enabled": "true in configs/staging_config.yaml ONLY; false in production",
+    "latex_ingestion_enabled": false,
+    "latex_parity_tolerance": 0.0,
+    "DEFAULT_PARITY_TOLERANCE": 0.0
+  },
+  "anchor_rule": {
+    "NUMERIC_ANCHOR_RE": "\\d+\\.\\d+|\\b\\d{2,}\\b",
+    "meaning": "a decimal, or an integer of >=2 digits. Single digits never anchor a result.",
+    "single_source_of_truth": "src/evidence/anchors.py -- gate, Test 2 and every harness import it."
+  },
+  "table3_ragas": {
+    "framework": "RAGAS",
+    "version": "0.2.15",
+    "metric": "Faithfulness",
+    "judge_llm": "qwen2.5:7b via Ollama",
+    "judge_params": {
+      "temperature": 0,
+      "seed": 42,
+      "num_ctx": 8192
+    },
+    "embedder": "BAAI/bge-m3",
+    "context_selection": "top-8 chunks by cosine similarity to the PRE-mutation claim; drop_chunk_ids removed from the pool first for support-deletion mutants",
+    "detection_threshold": 0.5,
+    "secondary_marker": 1.0,
+    "criterion": "should-REJECT detected iff faithfulness < 0.5; should-ACCEPT passed iff >= 0.5. Fixed before results were inspected. NaN never counts as a detection."
+  },
+  "parity_gate": {
+    "rule": "fall back when latex_survival + tolerance < pdf_survival on ANY split",
+    "splits": [
+      "all",
+      "table",
+      "prose",
+      "caption"
+    ],
+    "tolerance": 0.0,
+    "criterion_J": "JUSTIFIED iff pdf_survival(all) > latex_survival(all)",
+    "criterion_J_preregistered_at": "eeab489"
+  },
+  "collection": {
+    "api_key": null,
+    "_note": "REDACTED BY CONSTRUCTION -- never populate this file."
+  }
+}

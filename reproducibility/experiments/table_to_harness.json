@@ -1,0 +1,80 @@
+{
+  "_note": "table -> harness -> run directory. Only scripts that produced a number in EXPERIMENT_MATRIX.md are listed.",
+  "table1_representation_fidelity": {
+    "harnesses": [
+      "experiments/document_evidence_pipeline/extraction_fidelity.py",
+      "experiments/document_evidence_pipeline/latex_ingestion_measure.py"
+    ],
+    "run_dirs": [
+      "runs/extraction_fidelity",
+      "runs/latex_ingestion",
+      "runs/prodab-20260902T004416Z/canonical/pdfs (inputs)"
+    ],
+    "corpus": "canonical60 (23 arXiv PDF-LaTeX pairs)"
+  },
+  "table2_mutation_sensitivity": {
+    "harnesses": [
+      "experiments/document_evidence_pipeline/gate_sensitivity.py",
+      "experiments/document_evidence_pipeline/binding_validation_measure.py",
+      "experiments/document_evidence_pipeline/structural_binding_measure.py",
+      "experiments/document_evidence_pipeline/binding_validation_invariants.py"
+    ],
+    "run_dirs": [
+      "runs/gate_sensitivity",
+      "runs/binding_validation",
+      "runs/structural_binding"
+    ],
+    "corpora": [
+      "canonical60",
+      "data_test8",
+      "medical50"
+    ]
+  },
+  "table3_evaluation_framework": {
+    "harnesses": [
+      "experiments/document_evidence_pipeline/eval_framework_sensitivity.py",
+      "experiments/document_evidence_pipeline/eval_framework_control.py"
+    ],
+    "run_dirs": [
+      "runs/eval_framework_sensitivity",
+      "runs/gate_sensitivity (mutant source)"
+    ],
+    "corpora": [
+      "canonical60",
+      "data_test8",
+      "medical50"
+    ]
+  },
+  "table4_parity_gate": {
+    "harnesses": [
+      "experiments/document_evidence_pipeline/parity_gate_precision.py"
+    ],
+    "run_dirs": [
+      "runs/parity_gate_precision",
+      "runs/latex_ingestion (frozen input)"
+    ],
+    "corpus": "canonical60 (12 fallbacks)",
+    "criterion_J_preregistered_at": "eeab489"
+  },
+  "table5_crossdomain_and_selection": {
+    "harnesses": [
+      "experiments/document_evidence_pipeline/binding_validation_measure.py",
+      "experiments/document_evidence_pipeline/medical_selector_control.py",
+      "experiments/document_evidence_pipeline/medical_rechunk.py",
+      "experiments/document_evidence_pipeline/medical_rechunk_measure.py",
+      "experiments/document_evidence_pipeline/medical_reacquire_measure.py",
+      "experiments/document_evidence_pipeline/staging_run.py (invariants)"
+    ],
+    "run_dirs": [
+      "runs/binding_validation",
+      "runs/medical_selector_control",
+      "runs/medical_rechunk",
+      "runs/medical_reacquire",
+      "runs/structural_binding"
+    ],
+    "corpora": [
+      "canonical60",
+      "medical50"
+    ]
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "corpus": "data_test8",
+  "n_papers": 8,
+  "n_full_text": 7,
+  "n_files_hashed": 7,
+  "n_full_text_without_local_file": 0,
+  "identifier_coverage": {
+    "doi": 8,
+    "arxiv": 8,
+    "pmcid": 0
+  },
+  "representation": {
+    "pdf": 7,
+    "abstract": 1
+  },
+  "accepted_source": {
+    "arxiv": 7,
+    "None": 1
+  },
+  "retrieved_file_locations": [
+    "data_test/pdfs",
+    "experiments/document_evidence_pipeline/runs/secondcorpus-datatest/pdfs"
+  ],
+  "note_tldr": "Collected with `tldr` in semantic_scholar.FIELDS. That field was dropped post-freeze; nothing in src/ consumes it, so no result changes, but a fresh collection will lack it. Not a discrepancy.",
+  "papers": [
+    {
+      "paper_id": "e9ed347f829b6270a74df9f3a6b20e29361549c8",
+      "doi": "10.48550/arXiv.2508.15361",
+      "arxiv": "2508.15361",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/e9ed347f829b6270a74df9f3a6b20e29361549c8.pdf",
+      "sha256": "9ff6454b571dffe2bf7c5e4c40af5f3d0b9ad3c383b7f3c252645ec335826067"
+    },
+    {
+      "paper_id": "068ff3def994d1424832e1f56ed72ef8245a42f0",
+      "doi": "10.1109/TAI.2025.3569516",
+      "arxiv": "2402.09880",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/068ff3def994d1424832e1f56ed72ef8245a42f0.pdf",
+      "sha256": "9d72e41292ec51dbcf0c207f6ba12efced79aa12448fba7acae9094df3542eed"
+    },
+    {
+      "paper_id": "ef62f95c16f668f031d649799cbd79081c6d2b0f",
+      "doi": "10.48550/arXiv.2405.00332",
+      "arxiv": "2405.00332",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/ef62f95c16f668f031d649799cbd79081c6d2b0f.pdf",
+      "sha256": "c8d45dd92db7fd763c9c53c5d9f89ae8dd3498ebd4cae89a5c325a1261ac11f1"
+    },
+    {
+      "paper_id": "e0702a22e0841c54ab865b4996d7b07af192a3e1",
+      "doi": "10.48550/arXiv.2401.10529",
+      "arxiv": "2401.10529",
+      "pmcid": null,
+      "acquisition_status": "NO_ACCESSIBLE_FULL_TEXT",
+      "representation_type": "abstract",
+      "accepted_source": null,
+      "retrieved_file": null,
+      "sha256": null
+    },
+    {
+      "paper_id": "3e95793c68c22a7b891973588cf66ce61c503e30",
+      "doi": "10.48550/arXiv.2412.15238",
+      "arxiv": "2412.15238",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/3e95793c68c22a7b891973588cf66ce61c503e30.pdf",
+      "sha256": "f209219b309e6e1f64522c67e877fffecb6d70d37cf9f889ef49ed43c9626660"
+    },
+    {
+      "paper_id": "4fd7dfbb3400ce60cdedfb679185c35f41bdde62",
+      "doi": "10.48550/arXiv.2503.10497",
+      "arxiv": "2503.10497",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/4fd7dfbb3400ce60cdedfb679185c35f41bdde62.pdf",
+      "sha256": "b171ff829bfbb567974812dfebb860a63df7f756daf5662c7a1b659df76833bd"
+    },
+    {
+      "paper_id": "8d6411e337502f7fe0bfa59d486803a73d2c1192",
+      "doi": "10.48550/arXiv.2501.11651",
+      "arxiv": "2501.11651",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/8d6411e337502f7fe0bfa59d486803a73d2c1192.pdf",
+      "sha256": "ee7b97f76daa785f855ca27fe92332b9c33dd5fa909fb4d05e95fa8ac1d75c70"
+    },
+    {
+      "paper_id": "95d638e7705ec561382268405bc488df4c26c7f7",
+      "doi": "10.48550/arXiv.2503.16252",
+      "arxiv": "2503.16252",
+      "pmcid": null,
+      "acquisition_status": "FULL_TEXT",
+      "representation_type": "pdf",
+      "accepted_source": "arxiv",
+      "retrieved_file": "data_test/pdfs/95d638e7705ec561382268405bc488df4c26c7f7.pdf",
+      "sha256": "5529c466a64aad85ec979980b59e3932fcbda2cd0d2d4fa47a9affa6be6db915"
+    }
+  ]
+}

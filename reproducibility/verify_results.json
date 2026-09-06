@@ -1,0 +1,264 @@
+{
+  "passed": 36,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "anchor regex unchanged",
+      "expected": "\\d+\\.\\d+|\\b\\d{2,}\\b",
+      "got": "\\d+\\.\\d+|\\b\\d{2,}\\b",
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "EXTRACTION_OUTPUT_RESERVATION",
+      "expected": 768,
+      "got": 768,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "DEFAULT_PARITY_TOLERANCE",
+      "expected": 0.0,
+      "got": 0.0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "latex_ingestion_enabled stays false",
+      "expected": true,
+      "got": true,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "fallbacks measured",
+      "expected": 12,
+      "got": 12,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "justified",
+      "expected": 12,
+      "got": 12,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "over-triggered",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "prose fired",
+      "expected": 12,
+      "got": 12,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "table fired",
+      "expected": 4,
+      "got": 4,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "caption fired",
+      "expected": 1,
+      "got": 1,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "deficit < 2%",
+      "expected": 4,
+      "got": 4,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "deficit >= 20%",
+      "expected": 4,
+      "got": 4,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "latex table survival >= pdf",
+      "expected": 8,
+      "got": 8,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "f3b06a914702 table survival 1.000/1.000",
+      "expected": [
+        1.0,
+        1.0
+      ],
+      "got": [
+        1.0,
+        1.0
+      ],
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "f3b06a914702 discarded anyway",
+      "expected": "JUSTIFIED",
+      "got": "JUSTIFIED",
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical probes",
+      "expected": 13,
+      "got": 13,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "adversarial acceptances (any route)",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "caught via wrong_cell",
+      "expected": 12,
+      "got": 12,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "canonical probes",
+      "expected": 16,
+      "got": 16,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "canonical adversarial acceptances",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "crossrow probes",
+      "expected": 8,
+      "got": 8,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "crossrow acceptances",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "invariant-16 suite total",
+      "expected": 37,
+      "got": 37,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical JATS structured cells",
+      "expected": 1371,
+      "got": 1371,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical JATS papers",
+      "expected": 11,
+      "got": 11,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "tables parsed to cells",
+      "expected": 22,
+      "got": 22,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "evaluation-framework cases",
+      "expected": 106,
+      "got": 106,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "unscored cases",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "canonical60 papers",
+      "expected": 60,
+      "got": 60,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "data_test8 papers",
+      "expected": 8,
+      "got": 8,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical50_frozen full-text",
+      "expected": 19,
+      "got": 19,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical50_reacquired full-text",
+      "expected": 23,
+      "got": 23,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "canonical60: every full-text file hashed",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "data_test8: every full-text file hashed",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical50_frozen: every full-text file hashed",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "medical50_reacquired: every full-text file hashed",
+      "expected": 0,
+      "got": 0,
+      "tolerance": 0,
+      "status": "PASS"
+    }
+  ]
+}

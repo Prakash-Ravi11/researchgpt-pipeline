@@ -1,0 +1,159 @@
+{
+  "_how_to_read": "EXACT items are deterministic given the frozen inputs: string matching, anchor counting, parity arithmetic and the gate's decision logic contain no sampling. They must reproduce bit-identically; any difference is a real failure. APPROXIMATE items sit downstream of qwen2.5:7b generation. Even at temperature 0 and seed 42, Ollama output varies with model digest, quantisation, context length, GPU vs CPU placement and llama.cpp build, so they carry a tolerance. A reproducer must not treat an APPROXIMATE deviation inside tolerance as a failure, nor an EXACT deviation of any size as acceptable.",
+  "EXACT": {
+    "table1_anchor_counts": {
+      "all": 6530,
+      "table": 5405,
+      "prose": 965,
+      "caption": 160,
+      "tolerance": 0,
+      "why": "counted by NUMERIC_ANCHOR_RE over fixed LaTeX/JATS sources"
+    },
+    "table1_pdf_path_pooled": {
+      "vb_lax_all": 0.986,
+      "vb_strict_all": 0.699,
+      "bindable_all": 0.168,
+      "bindable_table": 0.089,
+      "vb_lax_table": 0.987,
+      "tolerance": 0.001,
+      "why": "substring matching over frozen chunks; tolerance is display rounding only"
+    },
+    "table1_latex_after_parity": {
+      "vb_lax_all": 0.981,
+      "vb_lax_table": 0.983,
+      "tolerance": 0.001
+    },
+    "table4_parity_precision": {
+      "justified": 12,
+      "over_triggered": 0,
+      "precision": 1.0,
+      "tolerance": 0,
+      "why": "Criterion J is arithmetic over frozen survival numbers"
+    },
+    "table4_splits_fired": {
+      "prose": 12,
+      "table": 4,
+      "caption": 1,
+      "tolerance": 0
+    },
+    "table4_conservatism": {
+      "deficit_lt_2pct": 4,
+      "deficit_lt_5pct": 5,
+      "deficit_ge_20pct": 4,
+      "latex_table_ge_pdf": 8,
+      "tolerance": 0
+    },
+    "table4_f3b06a914702": {
+      "table_anchors_preserved": "1522/1522",
+      "prose_lost": "3 of 71",
+      "aggregate_deficit": 0.002,
+      "verdict": "JUSTIFIED",
+      "tolerance": 0
+    },
+    "table2_probe_outcomes_postF1": {
+      "medical_probes": 13,
+      "adversarial_acceptances": 0,
+      "caught_via_wrong_cell": "12 of 13",
+      "tolerance": 0,
+      "why": "probes are fixed strings; the gate is deterministic"
+    },
+    "table2_invariant16_suite": {
+      "probes": 37,
+      "adversarial": 30,
+      "acceptances": 0,
+      "tolerance": 0
+    },
+    "table5a_bound_rate": {
+      "canonical": "0 of 5",
+      "medical": "0 of 2",
+      "tolerance": 0
+    },
+    "table5a_structural_cells_medical": {
+      "value": 1371,
+      "tolerance": 0,
+      "why": "JATS parse of fixed XML"
+    },
+    "table3_case_count": {
+      "cases": 106,
+      "unscored": 0,
+      "tolerance": 0,
+      "why": "the mutation suite is fixed; only the SCORES are approximate"
+    },
+    "table3_positive_control": {
+      "controls_accepted": "2 of 8",
+      "structural_same_control": {
+        "canonical": "1 of 5",
+        "medical": "0 of 2"
+      },
+      "tolerance": 0,
+      "why": "CAUTION: the control outcome depends on judge scores and is only EXACT if the judge reproduces. Verify the judge digest first; if it differs, treat as APPROXIMATE."
+    }
+  },
+  "APPROXIMATE": {
+    "table2_matrix_C": {
+      "n_positives": 5,
+      "TP": 4,
+      "FN": 1,
+      "sensitivity": 0.8,
+      "specificity": 0.78,
+      "tolerance_counts": 1,
+      "tolerance_rate": 0.2,
+      "why": "positives include paraphrase_llm mutants whose text qwen generates. One mutant flipping moves sensitivity by 0.20 at n=5 -- the denominator is the fragility."
+    },
+    "table2_matrix_A": {
+      "sensitivity": 0.103,
+      "tolerance_rate": 0.05
+    },
+    "table2_matrix_B": {
+      "sensitivity": 0.8,
+      "tolerance_rate": 0.2
+    },
+    "table3_framework_detection": {
+      "lt_0_5": "31/67",
+      "strict_lt_1_0": "44/67",
+      "numeric_perturbation_lt_0_5": "6/19",
+      "numeric_perturbation_strict": "18/19",
+      "tolerance_counts": 3,
+      "why": "every value is a RAGAS Faithfulness score from a 7B judge; claim decomposition varies run to run. The QUALITATIVE finding (strict >> threshold on numeric perturbation) is the reproducible part, not the exact counts."
+    },
+    "table3_structural_detection": {
+      "value": "54/67",
+      "tolerance_counts": 0,
+      "why": "structural side is deterministic; listed here only to sit beside its comparator"
+    },
+    "table5b_selector_isolated": {
+      "metrics_pp": 16,
+      "results_pp": 26,
+      "metrics_counts": "11/19 -> 14/19",
+      "results_counts": "8/19 -> 13/19",
+      "tolerance_pp": 6,
+      "tolerance_counts": 1,
+      "why": "field coverage is whatever qwen emits. DOCUMENTED INSTANCE: the confounded figure was +27/+31 in MEDICAL_RECHUNK and +26/+32 in MEDICAL_SELECTOR_CONTROL -- identical endpoint counts, ~1pp apart from rounding. Expect that magnitude."
+    },
+    "table5b_routing": {
+      "metrics_pp": 11,
+      "results_pp": 5,
+      "tolerance_pp": 6
+    },
+    "table5b_arm_counts": {
+      "arm1": {
+        "metrics": "9/19",
+        "results": "7/19"
+      },
+      "arm2": {
+        "metrics": "11/19",
+        "results": "8/19"
+      },
+      "arm3": {
+        "metrics": "14/19",
+        "results": "13/19"
+      },
+      "tolerance_counts": 1
+    },
+    "wall_clock": {
+      "extraction_s_per_paper": 39.1,
+      "tolerance_s": 90,
+      "why": "hardware-bound. 122.8 s/paper pre-fix on the same machine; anything in that band is placement, not correctness."
+    }
+  }
+}

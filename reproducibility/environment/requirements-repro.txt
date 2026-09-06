@@ -1,0 +1,16 @@
+# Pinned to exactly what the five EXPERIMENT_MATRIX tables need.
+# Generated from the machine that produced the frozen runs.
+
+# --- core ---
+requests==2.34.2
+pyyaml==6.0.3
+tqdm==4.70.0
+numpy==2.2.6
+
+# --- stage2 ---
+pymupdf==1.28.2
+
+# --- stage3 ---
+torch==2.11.0+cu128
+sentence-transformers==5.7.0
+chromadb==1.5.9
