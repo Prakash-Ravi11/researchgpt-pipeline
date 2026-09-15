@@ -212,7 +212,12 @@ def _load_bge(name: str, device: str):
 def stage_arm(args, out_root: Path):
     import run_arm  # noqa: PLC0415
     sys.argv = ["run_arm.py", "--arm", args.arm, "--config", args.config,
-                "--corpus", args.corpus, "--out", str(out_root / args.arm)]
+                "--corpus", args.corpus, "--out", str(out_root / args.arm),
+                "--ollama-url", args.ollama_url]
+    if args.with_extraction:
+        sys.argv.append("--with-extraction")
+    if args.extraction_only:
+        sys.argv.append("--extraction-only")
     code = run_arm.main()
     if code:
         print(f"arm {args.arm} did not complete (exit {code})")
@@ -298,6 +303,7 @@ def main():
     ap.add_argument("--batch-size", type=int, default=8)
     ap.add_argument("--with-embedding", action="store_true")
     ap.add_argument("--with-extraction", action="store_true")
+    ap.add_argument("--extraction-only", action="store_true")
     ap.add_argument("--ollama-url", default="http://localhost:11434")
     ap.add_argument("--force-reacquire", action="store_true")
     args = ap.parse_args()
