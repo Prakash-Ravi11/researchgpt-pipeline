@@ -1,0 +1,22 @@
+{
+  "experiment_id": "EXP-LATEX-01",
+  "arm": "control",
+  "role": "CONTROL \u2014 PDF-only pipeline (Part 4)",
+  "env": {
+    "RQ_LATEX_CHUNKING": "0",
+    "RQ_TABLE_ATOMIC": "0"
+  },
+  "config_file": "configs/staging_config.yaml",
+  "held_constant": [
+    "canonical 60-paper corpus",
+    "retrieval questions / eval queries",
+    "embedding model BAAI/bge-m3",
+    "retrieval parameters",
+    "CHUNK_WORDS=220, CHUNK_OVERLAP=40",
+    "EXTRACTION_OUTPUT_RESERVATION=768",
+    "llm qwen2.5:7b, temperature 0, seed 42",
+    "selection mode content_aware, max_passages 10",
+    "evaluation code and metric definitions"
+  ],
+  "independent_variable": "RQ_LATEX_CHUNKING (LaTeX-aware structural ingestion) and RQ_TABLE_ATOMIC (atomic tabular chunking)"
+}

@@ -1,0 +1,393 @@
+{
+  "experiment_id": "EXP-LATEX-01",
+  "title": "LaTeX-aware structural ingestion and atomic tabular chunking",
+  "status": "SCAFFOLDED \u2014 NO ARM EXECUTED",
+  "status_detail": "Implementation, tests, harness, statistics and gates are complete and verified. Neither the control nor the treatment arm has been run: the audit environment has no GPU, no torch/sentence-transformers/chromadb/pymupdf, no Ollama, and the canonical corpus is gitignored and absent. No metric value in this repository is a result of EXP-LATEX-01.",
+  "primary_hypothesis": "LaTeX-aware ingestion improves structural fidelity (table binding, anchor delivery, equation preservation, structured evidence extraction) while maintaining numeric fidelity, provenance, attribution, abstention and deterministic behaviour.",
+  "secondary_hypothesis": "Atomic treatment of LaTeX tabular environments prevents chunk splitting from destroying table structure.",
+  "arms": {
+    "control": {
+      "role": "CONTROL \u2014 PDF-only pipeline (Part 4)",
+      "flags": {
+        "RQ_LATEX_CHUNKING": "0",
+        "RQ_TABLE_ATOMIC": "0"
+      }
+    },
+    "latex": {
+      "role": "TREATMENT \u2014 LaTeX-aware + atomic tables (Part 4)",
+      "flags": {
+        "RQ_LATEX_CHUNKING": "1",
+        "RQ_TABLE_ATOMIC": "1"
+      }
+    },
+    "atomic": {
+      "role": "FACTORIAL \u2014 atomic tables alone, isolates the secondary hypothesis from LaTeX ingestion",
+      "flags": {
+        "RQ_LATEX_CHUNKING": "0",
+        "RQ_TABLE_ATOMIC": "1"
+      }
+    },
+    "latex_only": {
+      "role": "FACTORIAL \u2014 LaTeX ingestion alone; reproduces the Phase-4/5x configuration that measured negative",
+      "flags": {
+        "RQ_LATEX_CHUNKING": "1",
+        "RQ_TABLE_ATOMIC": "0"
+      }
+    }
+  },
+  "design_note": "The protocol specifies a 2-arm design (control vs latex). Because the two flags are independently switchable, a 2-arm design cannot attribute an observed effect to either one. The 'atomic' and 'latex_only' arms make it a 2x2 factorial; 'latex_only' reproduces the configuration already measured as negative in Phase 4b / Phase 5x.",
+  "prior_result_warning": "The primary question has already been measured twice on this corpus and answered negatively: see LATEX_ACQUISITION_REPORT.md (Phase 4b MEASURE 2, Phase 5x reservation-4096). Table binding on the retained LaTeX subset reached 0.142 (gt-wt) / 0.241 (macro), against a Part-15 primary gate of 0.60.",
+  "metrics": [
+    {
+      "key": "acquisition_full_text",
+      "label": "Full-text acquisition",
+      "group": "A. Acquisition",
+      "kind": "binary",
+      "higher_is_better": true,
+      "gate": null,
+      "note": "per paper: FULL_TEXT reached"
+    },
+    {
+      "key": "acquisition_source_ok",
+      "label": "Source resolution success",
+      "group": "A. Acquisition",
+      "kind": "binary",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "table_binding_rate",
+      "label": "Table binding (all table values)",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": ">= 0.089 (must not fall below baseline)",
+      "note": ""
+    },
+    {
+      "key": "table_binding_latex_eligible",
+      "label": "Table binding, LaTeX-eligible subset",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": ">= 0.60 (PRIMARY)",
+      "note": ""
+    },
+    {
+      "key": "table_completeness",
+      "label": "Table completeness (cells parsed / cells present)",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "row_col_preserved",
+      "label": "Row/column relation preserved",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "figure_association",
+      "label": "Figure-caption association",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "semantic_figures",
+      "label": "Semantic figures identified",
+      "group": "B. Structural",
+      "kind": "count",
+      "higher_is_better": true,
+      "gate": null,
+      "note": "NOT the embedded image-object count \u2014 see Part 18"
+    },
+    {
+      "key": "image_objects",
+      "label": "Embedded image objects",
+      "group": "B. Structural",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": null,
+      "note": "reported for contrast, not as a quality metric"
+    },
+    {
+      "key": "equation_preservation",
+      "label": "Equation preservation",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "anchor_delivery",
+      "label": "Section/anchor delivery",
+      "group": "B. Structural",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": ">= 0.167",
+      "note": ""
+    },
+    {
+      "key": "numeric_survival_lax",
+      "label": "Numeric survival (verbatim-lax)",
+      "group": "C. Numeric",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": ">= 0.980",
+      "note": ""
+    },
+    {
+      "key": "numeric_survival_strict",
+      "label": "Numeric survival (verbatim-strict)",
+      "group": "C. Numeric",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "evidence_recall",
+      "label": "Evidence recall",
+      "group": "D. Evidence",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "evidence_fields_nonempty",
+      "label": "Non-empty extracted fields / paper",
+      "group": "D. Evidence",
+      "kind": "continuous",
+      "higher_is_better": true,
+      "gate": null,
+      "note": "the Phase-4 headline regression metric (9.91 -> 5.82)"
+    },
+    {
+      "key": "provenance_valid",
+      "label": "Provenance validity",
+      "group": "E. Provenance",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": "== 1.00",
+      "note": ""
+    },
+    {
+      "key": "wrong_paper_attrib",
+      "label": "Wrong-paper attributions",
+      "group": "F. Attribution",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": "== 0",
+      "note": ""
+    },
+    {
+      "key": "false_own_paper",
+      "label": "False OWN_PAPER attributions",
+      "group": "F. Attribution",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": "== 0",
+      "note": ""
+    },
+    {
+      "key": "abstention_correct",
+      "label": "Abstention correctness",
+      "group": "G. Abstention",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": "== 1.00",
+      "note": ""
+    },
+    {
+      "key": "false_confident",
+      "label": "False confident answers",
+      "group": "G. Abstention",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": "== 0",
+      "note": ""
+    },
+    {
+      "key": "recall_at_10",
+      "label": "Recall@10",
+      "group": "H. Retrieval",
+      "kind": "proportion",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "mrr",
+      "label": "MRR",
+      "group": "H. Retrieval",
+      "kind": "continuous",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "ndcg_at_10",
+      "label": "nDCG@10",
+      "group": "H. Retrieval",
+      "kind": "continuous",
+      "higher_is_better": true,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "runtime_total_s",
+      "label": "Total runtime (s)",
+      "group": "I. Runtime",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": "<= +50% vs control",
+      "note": ""
+    },
+    {
+      "key": "runtime_parse_s",
+      "label": "Parsing runtime (s)",
+      "group": "I. Runtime",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "runtime_embed_s",
+      "label": "Embedding runtime (s)",
+      "group": "I. Runtime",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "runtime_index_s",
+      "label": "Indexing runtime (s)",
+      "group": "I. Runtime",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "peak_vram_mib",
+      "label": "Peak VRAM (MiB)",
+      "group": "J. Resources",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": "<= 5632 MiB (5.5 GB) preferred",
+      "note": ""
+    },
+    {
+      "key": "peak_ram_mib",
+      "label": "Peak RAM (MiB)",
+      "group": "J. Resources",
+      "kind": "continuous",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "n_chunks",
+      "label": "Chunks per paper",
+      "group": "K. Chunking",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "n_table_chunks",
+      "label": "Table chunks per paper",
+      "group": "K. Chunking",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    },
+    {
+      "key": "tables_split",
+      "label": "Tables split across chunks",
+      "group": "K. Chunking",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": null,
+      "note": "the secondary hypothesis predicts 0 in the atomic arms"
+    },
+    {
+      "key": "tables_oversized",
+      "label": "Atomic tables above the chunk budget",
+      "group": "K. Chunking",
+      "kind": "count",
+      "higher_is_better": false,
+      "gate": null,
+      "note": ""
+    }
+  ],
+  "confirmatory_family": [
+    "table_binding_latex_eligible",
+    "table_binding_rate",
+    "numeric_survival_lax",
+    "anchor_delivery",
+    "evidence_fields_nonempty",
+    "runtime_total_s"
+  ],
+  "multiple_comparisons": "Holm-Bonferroni across the confirmatory family only",
+  "output_root": "runs/exp-latex-01",
+  "canonical_dirs_protected": [
+    "runs",
+    "data",
+    "data/processed",
+    "data/chroma_db",
+    "data/pdfs",
+    "data/raw_metadata",
+    "data/figures",
+    "data_test",
+    "experiments/document_evidence_pipeline/runs"
+  ],
+  "environment_at_scaffold_time": {
+    "python": "3.11.15 (main, Mar  3 2026, 09:26:23) [GCC 13.3.0]",
+    "python_version": "3.11.15",
+    "platform": "Linux-6.18.44-fc-v33-x86_64-with-glibc2.39",
+    "machine": "x86_64",
+    "processor": "x86_64",
+    "cpu_count": 4,
+    "gpu": {
+      "nvidia_smi_present": false,
+      "torch": "unavailable (ModuleNotFoundError)"
+    },
+    "packages": {
+      "torch": "unavailable (ModuleNotFoundError)",
+      "sentence_transformers": "unavailable (ModuleNotFoundError)",
+      "transformers": "unavailable (ModuleNotFoundError)",
+      "chromadb": "unavailable (ModuleNotFoundError)",
+      "pymupdf": "unavailable (ModuleNotFoundError)",
+      "fitz": "unavailable (ModuleNotFoundError)",
+      "numpy": "unavailable (ModuleNotFoundError)",
+      "scipy": "unavailable (ModuleNotFoundError)",
+      "FlagEmbedding": "unavailable (ModuleNotFoundError)",
+      "requests": "2.33.1",
+      "yaml": "6.0.1"
+    },
+    "git": {
+      "commit": "acb89d8e993e795918282ad1fcf1c38bf356d9cf",
+      "branch": "claude/busy-rubin-q2j212",
+      "describe": "acb89d8-dirty",
+      "status_porcelain": "M src/config.py\n M src/evidence/chunker.py\n M src/evidence/latex_tables.py\n?? experiments/EXP-LATEX-01/\n?? runs/\n?? src/evidence/flags.py\n?? tests/test_table_atomic.py",
+      "tags": "unavailable"
+    },
+    "env_flags": {}
+  }
+}

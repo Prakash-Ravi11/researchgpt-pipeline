@@ -11,3 +11,7 @@ node_modules/
 data/processed/
 data/raw_metadata/
 .github/modernize/
+
+# EXP-LATEX-01 experimental output (regenerable; see docs/experiments/EXP-LATEX-01.md)
+runs/exp-latex-01/*
+!runs/exp-latex-01/README.md
