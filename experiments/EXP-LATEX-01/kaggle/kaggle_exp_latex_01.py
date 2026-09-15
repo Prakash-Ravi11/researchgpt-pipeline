@@ -28,6 +28,7 @@ Notes for the Kaggle session
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import subprocess
@@ -218,6 +219,49 @@ def stage_arm(args, out_root: Path):
     return code
 
 
+def stage_acquire(args, out_root: Path):
+    """Stage 1 on Kaggle: seed the canonical 60 identities, then re-acquire.
+
+    Uses the repository's own five-source resolver (`re_acquire_corpus`) — no new
+    acquisition logic here. The seed is paper IDENTITIES only, hashed, extracted
+    read-only from the frozen P1 artifact; PDFs/LaTeX are fetched fresh, so the
+    acquisition outcome measured here is THIS run's, not the frozen one's.
+    """
+    import shutil  # noqa: PLC0415
+    from src.config import load_config  # noqa: PLC0415
+    from src.collection.semantic_scholar import re_acquire_corpus  # noqa: PLC0415
+
+    seed = EXP / "corpus" / "canonical_60.json"
+    meta = json.loads((EXP / "corpus" / "canonical_60.manifest.json").read_text())
+    digest = hashlib.sha256(seed.read_bytes()).hexdigest()
+    if digest != meta["sha256_canonical_60_json"]:
+        raise SystemExit(f"corpus seed hash mismatch: {digest} != "
+                         f"{meta['sha256_canonical_60_json']} — refusing to run "
+                         f"an experiment on an unverified corpus.")
+    cfg = load_config(args.config)
+    meta_dir = Path(cfg["paths"]["raw_metadata_dir"])
+    meta_dir.mkdir(parents=True, exist_ok=True)
+    target = meta_dir / "collected_papers.json"
+    if target.exists() and not args.force_reacquire:
+        print(f"{target} exists; pass --force-reacquire to overwrite")
+    else:
+        shutil.copyfile(seed, target)
+    papers = re_acquire_corpus(cfg)
+    got = sum(1 for p_ in papers if p_.get("has_full_text"))
+    rec = {"corpus": meta, "seed_sha256": digest,
+           "acquired_full_text_this_run": got, "n_papers": len(papers),
+           "frozen_any_source_full_text": meta["frozen_any_source_full_text"],
+           "note": "acquired_full_text_this_run is MEASURED here; the frozen "
+                   "figure is historical and is carried only for comparison.",
+           "timestamp_utc": datetime.now(timezone.utc).isoformat()}
+    d = guard.assert_experiment_output(out_root / "manifests")
+    d.mkdir(parents=True, exist_ok=True)
+    (d / "corpus_acquisition.json").write_text(json.dumps(rec, indent=2, default=str))
+    print(f"full text this run: {got}/{len(papers)}  "
+          f"(frozen historical: {meta['frozen_any_source_full_text']}/60)")
+    print(f"corpus manifest -> {target}")
+
+
 def stage_env(args, out_root: Path):
     env = environment.capture(REPO)
     env["ollama_available"] = ollama_available(args.ollama_url)
@@ -244,10 +288,10 @@ def stage_analyze(args, out_root: Path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--stage", required=True,
-                    choices=["env", "benchmark", "arm", "analyze"])
+                    choices=["env", "acquire", "benchmark", "arm", "analyze"])
     ap.add_argument("--arm", default="control")
     ap.add_argument("--config", default="configs/staging_config.yaml")
-    ap.add_argument("--corpus", default="data/processed/collected_papers.json")
+    ap.add_argument("--corpus", default="data/raw_metadata/collected_papers.json")
     ap.add_argument("--out", default=guard.EXPERIMENT_ROOT)
     ap.add_argument("--embed-model", default="BAAI/bge-m3")
     ap.add_argument("--device", default="cuda")
@@ -255,12 +299,14 @@ def main():
     ap.add_argument("--with-embedding", action="store_true")
     ap.add_argument("--with-extraction", action="store_true")
     ap.add_argument("--ollama-url", default="http://localhost:11434")
+    ap.add_argument("--force-reacquire", action="store_true")
     args = ap.parse_args()
 
     out_root = Path(guard.assert_experiment_output(args.out))
     guard.ensure_tree(out_root)
-    return {"env": stage_env, "benchmark": stage_benchmark,
-            "arm": stage_arm, "analyze": stage_analyze}[args.stage](args, out_root) or 0
+    return {"env": stage_env, "acquire": stage_acquire,
+            "benchmark": stage_benchmark, "arm": stage_arm,
+            "analyze": stage_analyze}[args.stage](args, out_root) or 0
 
 
 if __name__ == "__main__":

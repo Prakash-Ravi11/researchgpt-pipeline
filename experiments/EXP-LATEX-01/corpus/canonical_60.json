@@ -1,0 +1,831 @@
+[
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "282662259",
+      "DOI": "10.51584/ijrias.2025.1010000014"
+    },
+    "has_full_text": false,
+    "paperId": "ef1e4a1671918fbed15a7a0e3996fe3dbd8bffc4",
+    "title": "A Scalable Retrieval-Augmented Generation Pipeline for Domain-Specific Knowledge Applications"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2503.18174",
+      "CorpusId": "277272473",
+      "DBLP": "journals/corr/abs-2503-18174",
+      "DOI": "10.1145/3726302.3730166"
+    },
+    "has_full_text": false,
+    "paperId": "2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd",
+    "title": "GINGER: Grounded Information Nugget-Based Generation of Responses"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2506.22210",
+      "CorpusId": "280012073",
+      "DBLP": "journals/corr/abs-2506-22210",
+      "DOI": "10.48550/arXiv.2506.22210"
+    },
+    "has_full_text": false,
+    "paperId": "4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1",
+    "title": "UiS-IAI@LiveRAG: Retrieval-Augmented Information Nugget-Based Generation of Responses"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "282824171",
+      "DOI": "10.1109/MERCon67903.2025.11217080"
+    },
+    "has_full_text": false,
+    "paperId": "c1e75f6f1819ef2b0ebad2f9f4b290cc7c4a3b65",
+    "title": "Advancing Retrieval-Augmented Generation for Financial Question Answering"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2411.07396",
+      "CorpusId": "273969566",
+      "DBLP": "journals/corr/abs-2411-07396",
+      "DOI": "10.48550/arXiv.2411.07396"
+    },
+    "has_full_text": false,
+    "paperId": "f3b06a91470232d1587b194e2bc82fa9a50f3c9f",
+    "title": "Toward Optimal Search and Retrieval for RAG"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286016832",
+      "DOI": "10.1109/ICTAACS69003.2025.11399325"
+    },
+    "has_full_text": false,
+    "paperId": "18ded60eea5012332f14e542be7282525cda2632",
+    "title": "Towards Optimized Retrieval-Augmented Generation: A Comprehensive Survey"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289396195",
+      "DOI": "10.1109/ICICI68867.2026.11565018"
+    },
+    "has_full_text": false,
+    "paperId": "311229078564290247ffc51e884ec065e4560b3d",
+    "title": "A Multi-Agent Orchestrated RAG System for Intelligent Information Retrieval"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2401.08406",
+      "CorpusId": "267027552",
+      "DBLP": "journals/corr/abs-2401-08406",
+      "DOI": "10.48550/arXiv.2401.08406"
+    },
+    "has_full_text": false,
+    "paperId": "fef0393e997ec51b184e39c712be63197d99fd46",
+    "title": "RAG vs Fine-tuning: Pipelines, Tradeoffs, and a Case Study on Agriculture"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "285315703",
+      "DBLP": "conf/siot/MattosAGMOBNCCO25",
+      "DOI": "10.1109/SIoT68426.2025.11368805"
+    },
+    "has_full_text": false,
+    "paperId": "db6965ad1807185b1b771397d66b5e660941b71b",
+    "title": "Enhancing Retrieval-Augmented Generation through Modular Optimization: Evaluation Across the RAG Pipeline"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2608.08340",
+      "CorpusId": "290990834"
+    },
+    "has_full_text": false,
+    "paperId": "eaec7401af70c7c80370d056fa847ed267a10ca6",
+    "title": "OpRAG: A Resource-Deterministic Runtime for GPU-Backed Multi-Stage RAG Workflows"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2608.26091",
+      "CorpusId": "291371151"
+    },
+    "has_full_text": false,
+    "paperId": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+    "title": "PlanSightRAG: A Visual-First Multimodal RAG for Automating Question Answering and Compliance Checking for Civil Standard Plans"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2507.06956",
+      "CorpusId": "280078903",
+      "DBLP": "journals/corr/abs-2507-06956",
+      "DOI": "10.48550/arXiv.2507.06956"
+    },
+    "has_full_text": false,
+    "paperId": "e0efa866a1e464e65e3a217fd67d6c18bc422302",
+    "title": "Investigating the Robustness of Retrieval-Augmented Generation at the Query Level"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2506.06339",
+      "CorpusId": "279251737",
+      "DBLP": "journals/corr/abs-2506-06339",
+      "DOI": "10.48550/arXiv.2506.06339"
+    },
+    "has_full_text": false,
+    "paperId": "db78acdc12fda41813ab97cd7d0dd1f300e70fe6",
+    "title": "Optimizing RAG Pipelines for Arabic: A Systematic Analysis of Core Components"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2608.04137",
+      "CorpusId": "290842514"
+    },
+    "has_full_text": false,
+    "paperId": "93db4f9a329da15f5aa6ba6cf7fdc3903eefa89e",
+    "title": "An Approach for Embedding-Guided Function Reuse Detection in Embedded C Software"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "290939222",
+      "DOI": "10.5753/pesquisanuvem.2026.22215"
+    },
+    "has_full_text": false,
+    "paperId": "1016250721201821285c39eba5ab77eddf80812e",
+    "title": "Muitas Classes Desbalanceadas? Escale na Nuvem! Um Relato de Uso da AWS para Classifica\u00e7\u00e3o de Texto com RAG-labels"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "288080125",
+      "DOI": "10.1109/ICICCS67901.2026.11502902"
+    },
+    "has_full_text": false,
+    "paperId": "7aa47391a0ea982b14ae1847097e48e6b8da18a2",
+    "title": "Generative AI-Powered Rag Pipelines for Intelligent Cloud Operations and Knowledge Retrieval"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289797482",
+      "DBLP": "conf/semeval/DutraCSSFO26",
+      "DOI": "10.18653/v1/2026.semeval-1.349"
+    },
+    "has_full_text": false,
+    "paperId": "e6f1d66c34b525dc480ced9902cf46419b6a37fa",
+    "title": "NLP-CEIA-UFG at SemEval-2026 Task 8: Iterative Retrieval with Notes-Guided Query Refinement for Multi-Turn RAG"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2605.15467",
+      "CorpusId": "288392578",
+      "DBLP": "journals/corr/abs-2605-15467",
+      "DOI": "10.63317/2xwjn5f2urna"
+    },
+    "has_full_text": false,
+    "paperId": "be7c4dc39030508deb495c9f689526ca1b4289cf",
+    "title": "Retrieval-Augmented Large Language Models for Schema-Constrained Clinical Information Extraction"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "288200326",
+      "DOI": "10.47392/irjaeh.2026.0460"
+    },
+    "has_full_text": false,
+    "paperId": "78797b71788ba1c852407d6010e8454f7b95f0b5",
+    "title": "AI-Based Monitoring Of Mental Health and Work Performance"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "287545224",
+      "DOI": "10.1109/ICVADV67766.2026.11470472"
+    },
+    "has_full_text": false,
+    "paperId": "6252ba2dd02e77a40ea31c8f58a607a0bfcd7d40",
+    "title": "GRAIL-RAG: A Multi-Layer Guardrails Architecture with Session-Aware Memory and Multi-Stage Retrieval for Document-Grounded QA"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "285731549",
+      "DOI": "10.1109/PuneCon67554.2025.11379254"
+    },
+    "has_full_text": false,
+    "paperId": "b1632c72effb47064cc7a9046bc0a83be07ad0d6",
+    "title": "Evaluating Lexical, Dense, and Hybrid Retrieval Pipelines for RAG"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "283049202",
+      "DOI": "10.1200/CCI-25-00220",
+      "PubMed": "41237352"
+    },
+    "has_full_text": false,
+    "paperId": "377a89466c1b1384204648f8c15c835be738ac0c",
+    "title": "RadOncRAG: A Novel Retrieval-Augmented Generation Framework Improves Large Language Model Benchmark Performance in Radiation Oncology."
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289514176",
+      "DBLP": "conf/lats/JoynerD26",
+      "DOI": "10.1145/3774398.3811595"
+    },
+    "has_full_text": false,
+    "paperId": "cf203b38643215071f87b0ded580887d13222c77",
+    "title": "Multistage Modeling from Application Signals to Downstream Success: Predicting Admission, Matriculation, and Retention"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289819737",
+      "DBLP": "conf/semeval/PrasadTKMK26",
+      "DOI": "10.18653/v1/2026.semeval-1.261"
+    },
+    "has_full_text": false,
+    "paperId": "c093b845f68ee02f440f80ec911220395ba5f904",
+    "title": "Clutch or Cry at SemEval-2026 Task 12: Offline Retrieval-Augmented Generation with Frozen DeBERTa for Abductive Event Reasoning"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2506.04838",
+      "CorpusId": "279244874",
+      "DBLP": "conf/IEEEscc/SauraJIBS25",
+      "DOI": "10.1109/SSE67621.2025.00018"
+    },
+    "has_full_text": false,
+    "paperId": "68f93a5921c1c6bbc5e0032f87366e46a06fded0",
+    "title": "On Automating Security Policies with Contemporary LLMs (Short Paper)"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2512.12938",
+      "CorpusId": "283896032",
+      "DBLP": "journals/corr/abs-2512-12938",
+      "DOI": "10.48550/arXiv.2512.12938"
+    },
+    "has_full_text": false,
+    "paperId": "d3b5f3c050b4e155c80620a0c1f831ee5fdb73ce",
+    "title": "SPAR: Session-based Pipeline for Adaptive Retrieval on Legacy File Systems"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "282274112",
+      "DOI": "10.1109/MIUCC66482.2025.11196859"
+    },
+    "has_full_text": false,
+    "paperId": "9feadf3ce9890a69a1dfe3225b616013335f9608",
+    "title": "Can Large Language Models Perform Retrieval-Augmented Generation as Multi-Hop Reasoning Over Knowledge Graphs?"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2601.15457",
+      "CorpusId": "284934963",
+      "DBLP": "journals/corr/abs-2601-15457",
+      "DOI": "10.48550/arXiv.2601.15457"
+    },
+    "has_full_text": false,
+    "paperId": "f3d7e0165df8da3fad6cbfb776e0371c31d68c48",
+    "title": "Chunking, Retrieval, and Re-ranking: An Empirical Evaluation of RAG Architectures for Policy Document Question Answering"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2509.16369",
+      "CorpusId": "281420374",
+      "DBLP": "journals/corr/abs-2509-16369",
+      "DOI": "10.48550/arXiv.2509.16369"
+    },
+    "has_full_text": false,
+    "paperId": "141276ba659da6e5aca1d3499713104eb3ca3c78",
+    "title": "Enhancing Financial RAG with Agentic AI and Multi-HyDE: A Novel Approach to Knowledge Retrieval and Hallucination Reduction"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": true,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286768137",
+      "DOI": "10.1038/s41598-026-41007-2",
+      "PubMed": "41872242",
+      "PubMedCentral": "13018575"
+    },
+    "has_full_text": false,
+    "paperId": "0549e2e9e6bec759723fded85a49c2c076b6a978",
+    "title": "A hybrid pipeline for carotid artery segmentation using YOLOv11n and contour models"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "288703179",
+      "DOI": "10.1109/ICKECS70176.2026.11527997"
+    },
+    "has_full_text": false,
+    "paperId": "2a717e6277c0312fc268f2ba6e137b087bbd04f6",
+    "title": "LUCID: An Explainable Multi-Stage Framework for Lung CT Image Analysis and Clinical Outcome Interpretation"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "290649844",
+      "DOI": "10.1109/ICCBI68589.2026.11619898"
+    },
+    "has_full_text": false,
+    "paperId": "19e3ad7235d53625b669d97ea99d1162de99ff1a",
+    "title": "PEARL: Performance-Efficient Agentic Retrieval-Augmented Generation Through Learned Orchestration"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "279761663",
+      "DOI": "10.54941/ahfe1006454"
+    },
+    "has_full_text": false,
+    "paperId": "9507a252f657bdda60048a424ece503cacac0226",
+    "title": "MetaBPL: Fault Detection in Business Logic Systems"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "274137777",
+      "DOI": "10.1101/2024.11.18.24317510"
+    },
+    "has_full_text": false,
+    "paperId": "938908bc82d5c37b1df2c76d4fbdbdf2075e50de",
+    "title": "Advancing Question-Answering in Ophthalmology with Retrieval Augmented Generations (RAG): Benchmarking Open-source and Proprietary Large Language Models"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2510.00261",
+      "CorpusId": "281706040",
+      "DBLP": "journals/corr/abs-2510-00261",
+      "DOI": "10.48550/arXiv.2510.00261"
+    },
+    "has_full_text": false,
+    "paperId": "ddb170b2eeb8f645b63915992196b0bcfbf3f46b",
+    "title": "Retrieval-Augmented Generation for Electrocardiogram-Language Models"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2504.07738",
+      "CorpusId": "277667522",
+      "DBLP": "journals/corr/abs-2504-07738",
+      "DOI": "10.1109/TPS.2026.3681118"
+    },
+    "has_full_text": false,
+    "paperId": "81e060664f2446a3c2b8f6597c5ccf0984e744d5",
+    "title": "Automated Construction of a Knowledge Graph of Nuclear Fusion Energy for Effective Elicitation and Retrieval of Information"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2603.12396",
+      "CorpusId": "286517822",
+      "DBLP": "conf/acl/SharmaZGZCZDMRL26",
+      "DOI": "10.48550/arXiv.2603.12396"
+    },
+    "has_full_text": false,
+    "paperId": "a9b2a3fd6070b35eb74611255bee4f581d1274a9",
+    "title": "Test-Time Strategies for More Efficient and Accurate Agentic RAG"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "210301683",
+      "DOI": "10.2118/196979-ms",
+      "MAG": "2979045948"
+    },
+    "has_full_text": false,
+    "paperId": "5ce51877fcad85ee39c518b3e1cfab13d902af5f",
+    "title": "Towards Field Testing of the Flowback Technology for Multistage-Fractured Horizontal Wells: Modeling-Based Design and Practical Implications"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "288628784",
+      "DOI": "10.31659/0044-4472-2026-4-66-74"
+    },
+    "has_full_text": false,
+    "paperId": "ce4ee10f8476b4d65d51c764f6edf4b9132dbfee",
+    "title": "Neural-Network (Large-Language-Model-Based) Approach to Local Cost Estimates"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "285372455",
+      "DOI": "10.5753/erigo.2025.17152"
+    },
+    "has_full_text": false,
+    "paperId": "ac8fffa1a4ae940d0810a52af515f572bfda183d",
+    "title": "Uma Arquitetura de RAG com Busca Sem\u00e2ntica e Filtros Estruturados para Perguntas e Respostas no Dom\u00ednio Jur\u00eddico"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "276186688",
+      "DOI": "10.1109/COMNETSAT63286.2024.10862750"
+    },
+    "has_full_text": false,
+    "paperId": "5a905c4e23d268c24de1cae2ff2618bb6464a800",
+    "title": "Carolinian Chatbot: End-to-End Question-Answer Pipeline on the University of San Carlos Policies, Procedures, and Guidelines Via Retrieval Augmented Generation"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "280975614",
+      "DOI": "10.1109/ACCESS65134.2025.11135582"
+    },
+    "has_full_text": false,
+    "paperId": "976fdb1e99f147fc696a6d9df8362f646fde01a3",
+    "title": "Analysing Code-Based Retrieval Augmented Generation Methods for Knowledge Retention"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2605.03344",
+      "CorpusId": "287963354",
+      "DBLP": "journals/corr/abs-2605-03344",
+      "DOI": "10.48550/arXiv.2605.03344"
+    },
+    "has_full_text": false,
+    "paperId": "cf099b7cd7e8d567efbcf748d30e616b683a2f2b",
+    "title": "RAG over Thinking Traces Can Improve Reasoning Tasks"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "282285562",
+      "DOI": "10.4043/36203-ms"
+    },
+    "has_full_text": false,
+    "paperId": "6e864397fd3aaa71524f7d388c0845ee6248b752",
+    "title": "Retrieval-Augmented Generation for Drilling and Completion Knowledge Management"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2508.02872",
+      "CorpusId": "280527203",
+      "DBLP": "journals/corr/abs-2508-02872",
+      "DOI": "10.48550/arXiv.2508.02872"
+    },
+    "has_full_text": false,
+    "paperId": "96285d75a5258dbbb883b31e23ff292605fa6f5a",
+    "title": "Highlight & Summarize: RAG without the jailbreaks"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2604.22661",
+      "CorpusId": "287774200",
+      "DBLP": "journals/corr/abs-2604-22661",
+      "DOI": "10.1145/3805712.3808571"
+    },
+    "has_full_text": false,
+    "paperId": "4d6e977f0e5c096f334fab7b50e3e72b1979ebe9",
+    "title": "Can QPP Choose the Right Query variant? Evaluating Query Variant Selection for RAG Pipelines"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289491440",
+      "DOI": "10.1109/EngiTek68245.2025.11567629"
+    },
+    "has_full_text": false,
+    "paperId": "2c5d1cec95971e2d3a85dba2abdd56c6a60aff49",
+    "title": "Zero-Shot Retrieval Augmented Generation for Arabic Trivia Question Answering"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "288820522",
+      "DOI": "10.5753/cibse.2026.42438"
+    },
+    "has_full_text": false,
+    "paperId": "a6ecdf69703d98cc3e05176a930276d4480d7ced",
+    "title": "Engineering Inferential Composition Control for Federated RAG in Data Spaces"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2507.07695",
+      "CorpusId": "280284452",
+      "DBLP": "conf/iconip/MarkondapatnaikuniSCE25",
+      "DOI": "10.48550/arXiv.2507.07695"
+    },
+    "has_full_text": false,
+    "paperId": "a6d08e12d2ef4936f9a65279e73627d4f861145e",
+    "title": "KeyKnowledgeRAG (K^2RAG): An Enhanced RAG method for improved LLM question-answering capabilities"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2504.00698",
+      "CorpusId": "277467379"
+    },
+    "has_full_text": false,
+    "paperId": "f1f07a37d4cd44daab987ff19c0bcd185910f50c",
+    "title": "Command A: An Enterprise-Ready Large Language Model"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286012925",
+      "DOI": "10.1109/CICT67193.2025.11399068"
+    },
+    "has_full_text": false,
+    "paperId": "8d690971ac7cdc6512383ae041efb5de90eacdd9",
+    "title": "WIReTT: Whisper, IndicTrans2 and RAG Enhanced Transcription and Translation for Knowledge Access Pipeline in Kannada Education"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": true,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "281261980",
+      "DOI": "10.1167/tvst.14.9.18",
+      "PubMed": "40938068",
+      "PubMedCentral": "12439504"
+    },
+    "has_full_text": false,
+    "paperId": "f42ad6e24897246e3cc55746c34f153f6bfcdc76",
+    "title": "Advancing Question-Answering in Ophthalmology With Retrieval-Augmented Generation: Benchmarking Open-Source and Proprietary Large Language Models"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286014194",
+      "DOI": "10.1109/IITCEE67948.2026.11394480"
+    },
+    "has_full_text": false,
+    "paperId": "a36f58f9c276b3afb2b239a3015463351fbdfa34",
+    "title": "Classical RAG for Semantic Search & Quantum Modules for Research Evaluation"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286031579",
+      "DBLP": "journals/tc/BratterudDFGJSMGI26",
+      "DOI": "10.1109/TC.2026.3667821"
+    },
+    "has_full_text": false,
+    "paperId": "780ff4fe14d26365a81030d0c84be3d293b909d4",
+    "title": "No Atomics, No Problem. Developing a RAG Pipeline for Shared CXL Memory"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "284723157",
+      "DOI": "10.1109/FIE63693.2025.11328668"
+    },
+    "has_full_text": false,
+    "paperId": "bd9fa2701c705a6b1647bcf8a699d6a65fd0e562",
+    "title": "Lightweight LLM for Accurate & Accessible Automated Course Support in Student Forums"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "274371618",
+      "DOI": "10.1109/ASYU62119.2024.10756977"
+    },
+    "has_full_text": false,
+    "paperId": "102cc45c506725c5ad2c2ae91b1a2d0e3489e4b6",
+    "title": "Enhancing RAG Pipeline Performance with Translation-Based Embedding Strategies for Non-English Documents"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "289886999",
+      "DOI": "10.5753/eradrs.2026.21493"
+    },
+    "has_full_text": false,
+    "paperId": "ae2768758f9928d50eebd4c945f47ff51e0e6f3b",
+    "title": "An\u00e1lise de Efici\u00eancia Computacional em Sistemas RAG com Busca Vetorial: Um Estudo de Caso no ProbY"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2509.20707",
+      "CorpusId": "281525497",
+      "DBLP": "journals/corr/abs-2509-20707",
+      "DOI": "10.48550/arXiv.2509.20707"
+    },
+    "has_full_text": false,
+    "paperId": "69b02cfebf3cb23711c9a261748e3de2f4442aed",
+    "title": "An Automated Retrieval-Augmented Generation LLaMA-4 109B-based System for Evaluating Radiotherapy Treatment Plans"
+  },
+  {
+    "_frozen_any_source_full_text": true,
+    "_frozen_baseline_full_text": true,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "ArXiv": "2607.29058",
+      "CorpusId": "290781866"
+    },
+    "has_full_text": false,
+    "paperId": "6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d",
+    "title": "Evidence-Grounded Constraint Checking in Construction Documents"
+  },
+  {
+    "_frozen_any_source_full_text": false,
+    "_frozen_baseline_full_text": false,
+    "_frozen_jats_available": false,
+    "abstract": null,
+    "externalIds": {
+      "CorpusId": "286015131",
+      "DOI": "10.1109/IITCEE67948.2026.11394602"
+    },
+    "has_full_text": false,
+    "paperId": "cc6ee3fedc28f747f3931821594f3bfdbe57f8ba",
+    "title": "Fusing Deterministic Caching and RAG-Enhanced LLM Inference for On-Device Conversational Command Execution"
+  }
+]

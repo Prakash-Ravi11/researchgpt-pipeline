@@ -310,3 +310,99 @@ Run on Kaggle T4×2 with the corpus attached, in this order: `env` → `benchmar
 `analyze` → `gates`. Start with `atomic` versus `control`: it is the cheapest
 arm, it needs no arXiv e-print fetching, and it is the only comparison whose
 outcome is genuinely unknown.
+
+---
+
+## Research Memory / Critical Decisions
+
+Durable facts only. Updated 2026-09-15, commit `3d8b6fa` + this change.
+
+### Experiment status
+
+**EXP-LATEX-01 HAS NOT EXECUTED.** No arm, no benchmark, no Kaggle run. Every
+EXP-LATEX-01 metric anywhere in this repository is **NOT MEASURED**. The only
+things verified are implementation properties (tests, differential checks),
+which are **not** experimental results.
+
+Blockers, re-confirmed 2026-09-15 with exact causes:
+
+| Blocker | Evidence |
+|---|---|
+| No third-party deps | PyPI read-timeout; `pip install pymupdf` fails. torch, sentence-transformers, chromadb, pymupdf, numpy, scipy all absent. |
+| No corpus content | arXiv blocked by network policy — `arxiv.org:443` returns **403 to CONNECT** (proxy `recentRelayFailures`). PDFs/LaTeX cannot be fetched here. |
+| No GPU | `nvidia-smi` absent; CPU-only would make runtime and VRAM metrics meaningless. |
+| No extractor | Ollama absent, so Stage 4 cannot run → evidence/provenance/attribution/abstention families unmeasurable. |
+
+### Corpus provenance (new, and it removes a dependency)
+
+The canonical 60-paper **identities** were recovered from the committed frozen
+artifact `experiments/document_evidence_pipeline/runs/20260901T150624Z-acq-2272d1/acquisition_results.json`
+and are now pinned at `experiments/EXP-LATEX-01/corpus/canonical_60.json`
+(sha256 `c057fb9d…b7f35a`, recorded in `canonical_60.manifest.json` and verified
+at run time before any arm starts).
+
+Cross-validation against the frozen reports — all four match exactly: 60 papers,
+31 baseline full-text, 34 any-source full-text, 24 with an arXiv ID, 2 JATS.
+
+Consequence: **Kaggle no longer needs a private corpus dataset.** Stage 1
+re-acquires content through the repository's existing five-source resolver.
+The acquisition rate that run produces is a *new measurement*; the frozen 34/60
+is historical and must never be reported as this experiment's result.
+
+### Bugs found and fixed
+
+* **Nested-tabular silent truncation** (`src/evidence/latex_tables.py`).
+  `_TABULAR_RE` closed on the same environment name, so a nested `tabular` made
+  it stop at the inner `\end{tabular}`: rows after that point vanished from both
+  the structured cells and `raw_text` while `parse_status` still said
+  `"parsed"`. Fixed via `_true_env_body`; such tables are now
+  `fallback_pdf` / `nested_tabular`. Differential test: 226 identical / 74 differ
+  (all nested) / 0 unexpected over 300 generated tables.
+  **Reproducibility consequence: the LaTeX arm is no longer byte-identical to
+  Phase 4's. Phase-4 numbers are NOT this experiment's control.**
+* **No table atomicity existed.** `chunker.py` split every block at
+  `CHUNK_WORDS=220`, tables included. Effect on a 160-row table: 22 chunks → 1.
+
+### Canonical metric corrections
+
+| Figure in circulation | Correct status |
+|---|---|
+| Provenance 146/146 | superseded → **150/150** (`FINAL_REPORT.md:86` states the transition) |
+| Abstention 81/81 | superseded → **78/78** (run of record) |
+| "Tests 91/91" | **not a test count.** 91/91 is a provenance-valid rate from an earlier phase, later 108/108. Real suite sizes: 15/15 + 42/42. |
+| Provenance = 100 % | true only in the **value-presence** sense, not support identity (`FINAL_REPORT.md` §N.10). Must carry that qualification wherever quoted. |
+
+### Freeze and verification state
+
+* `git tag -l` is **empty** — no `paper-freeze` object, no `main` branch. The
+  freeze is documentary (the reports + `CLAIM_LEDGER.md`), not cryptographic.
+* The repository has **no CI**: no `.github/`, no workflows. Every "15/15",
+  "42/42", "12/12 invariants PASS" was produced by a human running a script
+  locally and pasting the output into Markdown. This is the mechanism by which
+  91/91 drifted from a provenance rate into a test-count slot.
+* `results/canonical_metrics.json` **deliberately does not exist.** It will be
+  created only when a run produces real measurements; creating it now could only
+  be populated with historical or fabricated values.
+
+### Decisions affecting future experiments
+
+1. **Run `atomic` vs `control` before `latex`.** The LaTeX question was measured
+   twice (Phase 4b, 5x) and is negative — 0.142/0.241 table binding against a
+   0.60 gate, +47 % runtime, 96 % VRAM. `atomic` is the only never-measured cell.
+2. **2×2 factorial, not 2 arms.** The two flags are independently switchable, so
+   a 2-arm design cannot attribute an effect to either.
+3. `RQ_TABLE_ATOMIC` applies to **every** `table` block, not only LaTeX ones, so
+   JATS and PDF tables are affected too. Analysis must stratify by representation.
+4. Atomic chunks are flagged `table_oversized` / `table_over_embed_soft_limit`
+   but **never split**. Whether they exceed BGE-M3's 8192-token window is
+   **unmeasured** — it needs the real tokenizer, not the word-count proxy.
+5. Defaults stay OFF after any merge until re-measured.
+
+### Reproducibility requirements for a valid run
+
+Same corpus manifest hash, same BGE-M3, same retrieval settings, same
+`CHUNK_WORDS=220` / `CHUNK_OVERLAP=40` / `EXTRACTION_OUTPUT_RESERVATION=768`,
+qwen2.5:7b at temperature 0 / seed 42, `content_aware@10`. Record commit SHA,
+corpus hash, Python/PyTorch/CUDA/GPU/driver, dependency versions and timestamp —
+`experiments/EXP-LATEX-01/environment.py` captures all of it. Both arms must run
+on the same hardware; historical RTX 3050 figures are not a control.
