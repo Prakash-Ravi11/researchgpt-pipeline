@@ -1,0 +1,13 @@
+{
+  "corpus_id": "canonical-60",
+  "corpus_version": "frozen-20260901T150624Z-acq-2272d1",
+  "n_papers": 60,
+  "sha256_canonical_60_json": "c057fb9de74ad6c25a6474130d79dbd391e8426f273dd34ac069bc5766b7f35a",
+  "derived_from": "experiments/document_evidence_pipeline/runs/20260901T150624Z-acq-2272d1/acquisition_results.json",
+  "derived_from_sha256": "155c0ba775177c44660bc34d23dcf90f8a2c2525aa826493a698feac8454ac56",
+  "with_arxiv_id": 24,
+  "frozen_baseline_full_text": 31,
+  "frozen_any_source_full_text": 34,
+  "frozen_jats_available": 2,
+  "note": "Paper IDENTITIES only, extracted read-only from the frozen P1 acquisition artifact. The _frozen_* fields are that run's historical outcome, carried for comparison; they are NOT this experiment's measurements and must not be reported as such. PDFs/LaTeX are not included and must be re-acquired by Stage 1."
+}

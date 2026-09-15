@@ -155,6 +155,54 @@ def _tabular_raw_text(env_body: str) -> str:
     return _numeric_verbatim(re.sub(r"(?<!\\)%.*", "", env_body))
 
 
+# --- nested grid detection (EXP-LATEX-01) -------------------------------------
+
+#: Environments that carry their own `&` / `\\` grid. One of these opening inside
+#: a tabular body means the row/column split below is not trustworthy. Nesting is
+#: tracked across the whole family, not per environment name, because
+#: `array` inside `tabular` corrupts the row split just as `tabular` does.
+_GRID_ENVS = ("tabular\\*", "tabular", "tabularx", "array", "longtable")
+_GRID_ALT = "|".join(_GRID_ENVS)
+
+_ANY_GRID_BEGIN = re.compile(r"\\begin\s*\{(?:" + _GRID_ALT + r")\}")
+_ANY_GRID_END = re.compile(r"\\end\s*\{(?:" + _GRID_ALT + r")\}")
+
+
+def _true_env_body(s: str, body_start: int) -> tuple[str, int, int]:
+    """Body of the grid environment opened before `body_start`, nesting-aware.
+
+    ``_TABULAR_RE`` is non-greedy and keys its closer on the SAME environment
+    name, so ``\\begin{tabular} ... \\begin{tabular} ... \\end{tabular} ...
+    \\end{tabular}`` makes it stop at the INNER ``\\end`` — the tail of the outer
+    table (whole rows, and their numbers) is then invisible to both the cell
+    parser and ``raw_text``. This walks begin/end pairs across the whole grid
+    family and returns the body up to the *matching* closer.
+
+    Returns ``(body, end_index, n_nested_opens)``. ``n_nested_opens`` > 0 means a
+    grid environment opened inside this one; the caller must not trust a plain
+    ``&``/``\\\\`` split of the result.
+    """
+    depth = 1
+    nested = 0
+    i = body_start
+    n = len(s)
+    while i < n:
+        mb = _ANY_GRID_BEGIN.search(s, i)
+        me = _ANY_GRID_END.search(s, i)
+        if me is None:
+            break                                   # unterminated — caller falls back
+        if mb is not None and mb.start() < me.start():
+            depth += 1
+            nested += 1
+            i = mb.end()
+            continue
+        depth -= 1
+        if depth == 0:
+            return s[body_start:me.start()], me.end(), nested
+        i = me.end()
+    return s[body_start:], n, nested
+
+
 def _split_top(s: str, sep: str) -> list[str]:
     """Split on `sep` at brace depth 0, honouring \\escapes."""
     out, buf, depth, i = [], [], 0, 0
@@ -268,9 +316,23 @@ def parse_latex_tables(latex: str, paper_id: str, source: str) -> list[dict[str,
     idx = 0
 
     def emit_from(env_body: str, colspec: str, caption: str, section: str, tid: str,
-                  ) -> dict[str, Any]:
+                  nested: int = 0) -> dict[str, Any]:
         notes: list[str] = []
         raw = _tabular_raw_text(env_body)     # PARITY: full verbatim cell content, always
+        if nested:
+            # A grid environment opened inside this one. `&` and `\\` now belong
+            # to two different tables, so any row/column split here would invent
+            # structure — the pre-EXP-LATEX-01 parser did exactly that and
+            # reported parse_status="parsed" while dropping the rows after the
+            # inner \end{tabular}. Declare the structural failure and ship every
+            # value through raw_text, which spans the WHOLE outer environment.
+            return structured_table(
+                table_id=tid, paper_id=paper_id, source=source,
+                representation="latex", section=section, caption=caption,
+                cells=[], parse_status="fallback_pdf", raw_text=raw,
+                fallback="nested_tabular",
+                notes=[f"{nested} nested grid environment(s); "
+                       f"structural split refused, raw_text carries all values"])
         try:
             rows = _rows(env_body)
         except Exception as exc:  # noqa: BLE001
@@ -345,8 +407,9 @@ def parse_latex_tables(latex: str, paper_id: str, source: str) -> list[dict[str,
                 fallback="no_tabular_env_in_float",
                 raw_text=_numeric_verbatim(body_wo_cap)))
             continue
-        seen_spans.append((fm.start() + tm.start(), fm.start() + tm.end()))
-        tables.append(emit_from(tm.group("body"), tm.group("colspec"), caption, section, tid))
+        body, body_end, nested = _true_env_body(fbody, tm.start("body"))
+        seen_spans.append((fm.start() + tm.start(), fm.start() + body_end))
+        tables.append(emit_from(body, tm.group("colspec"), caption, section, tid, nested))
 
     # 2) bare tabular/longtable not inside a float
     for tm in _TABULAR_RE.finditer(latex):
@@ -355,6 +418,8 @@ def parse_latex_tables(latex: str, paper_id: str, source: str) -> list[dict[str,
         idx += 1
         section = _section_at(tm.start(), secmap)
         tid = f"{paper_id}:tab{idx}"
-        tables.append(emit_from(tm.group("body"), tm.group("colspec"), "", section, tid))
+        body, body_end, nested = _true_env_body(latex, tm.start("body"))
+        seen_spans.append((tm.start(), body_end))
+        tables.append(emit_from(body, tm.group("colspec"), "", section, tid, nested))
 
     return tables
