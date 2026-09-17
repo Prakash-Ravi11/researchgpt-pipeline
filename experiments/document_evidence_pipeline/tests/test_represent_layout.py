@@ -106,14 +106,22 @@ def _table_block(blocks):
     return tb[0]
 
 
-def _mk_table_block(grid, caption="Table 1: Results.", backend="pymupdf_tables"):
+def _mk_table_block(grid, caption="Table 1: Results.", backend="pymupdf_tables",
+                    collapse_header_ws=False):
     """Drive _attach directly with a known grid — the real gate and the real
     cell builder, without rendering a PDF."""
     b = {"block_id": f"{PID}:0", "paper_id": PID, "source": SRC, "representation": "pdf",
          "section": "results", "subsection": None, "page_or_node": "p1",
          "block_type": "table", "char_start": 0, "char_end": len(caption), "text": caption}
-    _attach(b, grid, "find_tables", PID, SRC, backend)
+    _attach(b, grid, "find_tables", PID, SRC, backend, collapse_header_ws=collapse_header_ws)
     return b
+
+
+# ---- experiment 2 fixture: the real ae2768758f99 table shape ----------------
+AE_GRID = [["Componente", "Volume", "Custo", "Tempo\n(sem cache)", "Tempo\n(com cache)"],
+           ["Embeddings", "1.2M", "R$ 40", "75", "19"],
+           ["Busca vetorial", "800k", "R$ 12", "23", "18"],
+           ["Geração de texto", "300k", "R$ 90", "10", "9"]]
 
 
 # ------------------------------------------------------------------- tests --
@@ -297,6 +305,57 @@ def test_xhtml_escapes_backend_text():
                              representation="pdf_layout")
     assert st["caption"] == 'Cap "x" & <y>'
     assert _triples(st["cells"]) == {("<script>", "A<b>", "1 & 2")}
+
+
+# ------------------------------------------------------- experiment 2 units --
+# Single variable: a newline in a HEADER cell no longer rejects the table; the
+# header is whitespace-collapsed instead. Every other rule must be unmoved.
+
+def test_e2_control_header_newline_still_rejects():
+    """collapse_header_ws=False must reproduce section 9 exactly."""
+    b = _mk_table_block(AE_GRID, collapse_header_ws=False)
+    assert b["table_cells"] == []
+    assert b["table_fallback"] == "quality_gate:newline_in_header:col3"
+    assert b["rows_before_gate"] == 3 and b["rows_after_gate"] == 0
+
+
+def test_e2_treatment_header_newline_normalised_table_survives():
+    """The ae2768758f99 shape: 3x5, two wrapped headers. Must survive, with
+    header semantics preserved and all three data rows kept."""
+    b = _mk_table_block(AE_GRID, collapse_header_ws=True)
+    assert b["table_parse_status"] == "parsed"
+    assert b["rows_before_gate"] == 3 and b["rows_after_gate"] == 3
+    assert b["column_headers"] == ["Componente", "Volume", "Custo",
+                                   "Tempo (sem cache)", "Tempo (com cache)"]
+    assert b["raw_column_headers"][3] == "Tempo\n(sem cache)"   # before/after audit
+    assert ("Embeddings", "Tempo (sem cache)", "75") in _triples(b["table_cells"])
+    assert not any("\n" in c["column_header"] for c in b["table_cells"])
+
+
+def test_e2_treatment_overlong_header_still_rejected_by_frozen_length_rule():
+    """The second affected table: col1 is a 150-char sentence. Once the newline
+    check no longer fires, the FROZEN 40-char rule must still reject it."""
+    long_q = ("What is the main concern of blowing dust from excessively tilled fallow "
+              "fields in the low\nprecipitation wheat production region?")
+    grid = [["Reference Question", long_q], ["Model A", "0.81"], ["Model B", "0.77"]]
+    b = _mk_table_block(grid, collapse_header_ws=True)
+    assert b["table_cells"] == []
+    assert b["table_fallback"].startswith("quality_gate:header_too_long:col1")
+
+
+def test_e2_treatment_leaves_row_label_newline_rule_frozen():
+    grid = [["Method", "Acc\nuracy"], ["Ours", "0.9"], ["wrapped\nlabel", "0.8"], ["BERT", "0.7"]]
+    b = _mk_table_block(grid, collapse_header_ws=True)
+    assert b["column_headers"] == ["Method", "Acc uracy"]      # header normalised
+    assert b["drop_reasons"] == {"newline_in_row_label": 1}    # row rule unmoved
+    assert b["rows_after_gate"] == 2
+
+
+def test_e2_treatment_leaves_empty_header_rule_frozen():
+    grid = [["Method", "   \n  ", "F1"], ["Ours", "0.9", "0.8"], ["BERT", "0.7", "0.6"]]
+    b = _mk_table_block(grid, collapse_header_ws=True)
+    assert b["table_cells"] == []
+    assert b["table_fallback"].startswith("quality_gate:empty_header_cell:col1")
 
 
 def test_unknown_backend_rejected():

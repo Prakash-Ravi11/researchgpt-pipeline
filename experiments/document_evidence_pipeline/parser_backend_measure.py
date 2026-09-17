@@ -46,6 +46,13 @@ FROZEN_CHUNKS = DATA_ROOT / "runs" / "latex_ingestion" / "processed" / "chunks.j
 
 OUT = HERE / "runs" / "parser_backend"
 ARMS = ("current", "pymupdf_tables", "pymupdf4llm")
+# Experiment 2: same backend + configuration, header-newline rejection replaced
+# by whitespace collapse. The ONLY difference from the "pymupdf4llm" arm.
+ARM_SPECS = {"current": (None, False), "pymupdf_tables": ("pymupdf_tables", False),
+             "pymupdf4llm": ("pymupdf4llm", False),
+             "pymupdf4llm_hdrnorm": ("pymupdf4llm", True)}
+E2_ARM = "pymupdf4llm_hdrnorm"
+OUT_E2 = OUT / "results_hdrnorm.json"
 STRUCT = {"latex", "jats_xml"}
 _NUM = re.compile(r"\d")
 # A MISSED numbered heading: PyMuPDF emitted "3.1\nLayout Detection Models" as
@@ -113,6 +120,12 @@ def _stale_section_blocks(blocks: list[dict]) -> int:
     return n
 
 
+def _n_metric_columns(headers: list[str]) -> int:
+    """Columns classify_table would count as metric-named (same rule)."""
+    from src.evidence.gate import _col_matches_metric, _METRIC_TOKENS
+    return sum(1 for h in (headers or []) if _col_matches_metric(h, _METRIC_TOKENS))
+
+
 def _ablation_trigger(caption: str, headers: list[str], rows: list[str]) -> str | None:
     """A3/V3: distinguish a caption-driven ablation call from one fired solely by
     row_has_ablation (which borderless '-' cells can trip)."""
@@ -137,10 +150,12 @@ def run_one(paper_id: str, arm: str) -> dict:
                  "wall_seconds": None, "peak_rss_mb": None}
     t0 = time.perf_counter()
     try:
-        if arm == "current":
+        backend, collapse = ARM_SPECS[arm]
+        if backend is None:
             blocks = blocks_from_pdf(data, paper_id, "canonical")
         else:
-            blocks = blocks_from_pdf_layout(data, paper_id, "canonical", arm)
+            blocks = blocks_from_pdf_layout(data, paper_id, "canonical", backend,
+                                            collapse_header_ws=collapse)
         chunks = chunk_document({"paper_id": paper_id, "representation": "pdf",
                                  "blocks": blocks})
         m = meta.get(paper_id, {})
@@ -181,6 +196,8 @@ def run_one(paper_id: str, arm: str) -> dict:
             "table_type_after": b.get("table_type_after"),
             "table_type_flipped": (b.get("table_type_before") is not None
                                    and b.get("table_type_before") != b.get("table_type_after")),
+            "raw_column_headers": b.get("raw_column_headers") or [],
+            "n_metric_columns": _n_metric_columns(headers),
             "ablation_trigger": _ablation_trigger(cap, headers, rows),
             "caption_collision": captions[cap] > 1,
         })
@@ -335,6 +352,129 @@ def main() -> int:
     return 0
 
 
+def main_experiment2() -> int:
+    """Experiment 2 — header-newline normalization, one variable.
+
+    CONTROL is the section-9 recorded `pymupdf4llm` result, read from
+    results.json. It is NOT recomputed and NOT redefined.
+    """
+    reps, cache, meta, pdf_ids = _load_inputs()
+    ctrl_path = OUT / "results.json"
+    if not ctrl_path.exists():
+        _fail(f"missing section-9 control artifact: {ctrl_path}")
+    ctrl_all = json.loads(ctrl_path.read_text(encoding="utf-8"))
+    ctrl = ctrl_all["results"]["pymupdf4llm"]
+    if ctrl_all["papers"] != pdf_ids:
+        _fail("control artifact covers a different paper set than this run")
+
+    print(f"EXPERIMENT 2 — header-newline normalization")
+    print(f"  control  : section-9 recorded pymupdf4llm arm ({ctrl_path.name}, not recomputed)")
+    print(f"  treatment: {E2_ARM}  = pymupdf4llm + collapse_header_ws")
+    print(f"  papers   : {len(pdf_ids)}   processes: {len(pdf_ids)}\n")
+
+    t0 = time.perf_counter()
+    treat = {}
+    for i, pid in enumerate(pdf_ids, 1):
+        r = _spawn(pid, E2_ARM)
+        treat[pid] = r
+        c = ctrl[pid]
+        d_cells = (r.get("n_cells") or 0) - (c.get("n_cells") or 0)
+        flag = "" if r.get("parse_ok") else f"  ERROR {str(r.get('error'))[:70]}"
+        print(f"  {i:2}/{len(pdf_ids)} {pid[:12]}  cells {c.get('n_cells'):>4} -> "
+              f"{r.get('n_cells', '-'):>4} ({d_cells:+})  {r.get('wall_seconds')}s{flag}")
+    wall = time.perf_counter() - t0
+
+    payload = {"experiment": "header_newline_normalization",
+               "control_source": str(ctrl_path), "control_arm": "pymupdf4llm",
+               "treatment_arm": E2_ARM, "papers": pdf_ids,
+               "total_wall_seconds": round(wall, 1),
+               "control": ctrl, "treatment": treat}
+    OUT_E2.write_text(json.dumps(payload, indent=2, default=str), encoding="utf-8")
+    _summarise_e2(payload)
+    print(f"\nwrote {OUT_E2}   wall {wall:.1f}s")
+    return 0
+
+
+def _summarise_e2(payload) -> None:
+    ctrl, treat, ids = payload["control"], payload["treatment"], payload["papers"]
+
+    def tot(src, key):
+        return sum((src[p] or {}).get(key, 0) or 0 for p in ids)
+
+    print("\n== corpus-wide effect ==")
+    print(f"  {'metric':34}{'control':>10}{'treatment':>11}{'delta':>8}")
+    for key, label in (("n_table_blocks", "table_blocks"),
+                       ("n_tables_with_grid", "post_gate_cell_tables"),
+                       ("n_tables_fallback_pdf", "tables fallback_pdf"),
+                       ("n_cells", "attached cells"),
+                       ("n_rows_dropped", "rows dropped"),
+                       ("n_returned_metrics", "RETURNED metrics"),
+                       ("n_returned_results", "RETURNED results")):
+        c, t = tot(ctrl, key), tot(treat, key)
+        print(f"  {label:34}{c:>10}{t:>11}{t - c:>+8}")
+
+    def grid_returns(src):
+        return sum(1 for p in ids for x in (src[p].get("tables") or [])
+                   if (x.get("fallback") or "") != "no_grid_from_backend")
+    print(f"  {'backend_grid_returns':34}{grid_returns(ctrl):>10}{grid_returns(treat):>11}"
+          f"{grid_returns(treat) - grid_returns(ctrl):>+8}")
+
+    print("\n== primary outcomes: claim binding statuses ==")
+    cc = Counter(x["binding_status"] for p in ids for x in (ctrl[p].get("claims") or []))
+    tc = Counter(x["binding_status"] for p in ids for x in (treat[p].get("claims") or []))
+    for k in sorted(set(cc) | set(tc) | {"bound"}):
+        print(f"  {k:20}{cc.get(k, 0):>10}{tc.get(k, 0):>11}{tc.get(k, 0) - cc.get(k, 0):>+8}")
+
+    print("\n== departure buckets (D6a) ==")
+    for label, src in (("control", ctrl), ("treatment", treat)):
+        b = Counter(x["bucket"] for p in ids for x in (src[p].get("claims") or []))
+        print(f"  {label:10} {dict(b)}")
+
+    print("\n== per-claim transitions vs the section-9 control ==")
+    n = 0
+    for p in ids:
+        base = {(x["field"], x["value"]): x for x in (ctrl[p].get("claims") or [])}
+        for x in (treat[p].get("claims") or []):
+            b = base.get((x["field"], x["value"]))
+            if b and b["binding_status"] == x["binding_status"] and b["final"] == x["final"]:
+                continue
+            n += 1
+            print(f"  {p[:12]} {b['binding_status'] if b else 'ABSENT'} -> {x['binding_status']}"
+                  f"  {b['final'] if b else '-'} -> {x['final']}   reason={x['abstain_reason']}")
+            print(f"     {x['value'][:100]!r}")
+    if not n:
+        print("  NONE — no claim changed binding status or verdict")
+
+    print("\n== tables whose gate outcome changed ==")
+    for p in ids:
+        cb = {x["block_id"]: x for x in (ctrl[p].get("tables") or [])}
+        for x in (treat[p].get("tables") or []):
+            b = cb.get(x["block_id"])
+            if not b or (b["fallback"] == x["fallback"] and b["n_cells"] == x["n_cells"]):
+                continue
+            print(f"  {p[:12]} block {x['block_id'].split(':')[-1]:>4}  "
+                  f"{b['fallback']!r} -> {x['fallback']!r}")
+            print(f"     cells {b['n_cells']} -> {x['n_cells']}   rows "
+                  f"{b['rows_before_gate']}->{b['rows_after_gate']} to "
+                  f"{x['rows_before_gate']}->{x['rows_after_gate']}   "
+                  f"type {b['table_type_before']}->{b['table_type_after']} to "
+                  f"{x['table_type_before']}->{x['table_type_after']}")
+            print(f"     metric cols {b.get('n_metric_columns')} -> {x.get('n_metric_columns')}")
+            print(f"     raw headers : {x.get('raw_column_headers')}")
+            print(f"     norm headers: {x.get('column_headers')}")
+
+    print("\n== safety ==")
+    for label, src in (("control", ctrl), ("treatment", treat)):
+        ret = Counter(x["binding_status"] for p in ids for x in (src[p].get("claims") or [])
+                      if x["final"] == "RETURNED")
+        wc = sum(1 for p in ids for x in (src[p].get("claims") or [])
+                 if x["binding_status"] == "wrong_cell" and x["final"] == "RETURNED")
+        po = sum(1 for p in ids for x in (src[p].get("claims") or [])
+                 if x["binding_status"] == "pdf_only" and x["final"] == "RETURNED")
+        print(f"  {label:10} RETURNED by status={dict(ret)}  "
+              f"inv14 cross-row acceptances={wc}  returned-from-pdf_only={po}")
+
+
 def _claims_flipped(results, pdf_ids) -> list[dict]:
     """Every claim whose verdict or binding status differs from `current`, listed
     individually with its value and reason. Never summarised away."""
@@ -441,10 +581,11 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--worker", action="store_true")
     ap.add_argument("--paper")
-    ap.add_argument("--arm", choices=ARMS)
+    ap.add_argument("--arm", choices=sorted(ARM_SPECS))
+    ap.add_argument("--experiment2", action="store_true")
     a = ap.parse_args()
     if a.worker:
         print("@@JSON@@")
         print(json.dumps(run_one(a.paper, a.arm), default=str))
         raise SystemExit(0)
-    raise SystemExit(main())
+    raise SystemExit(main_experiment2() if a.experiment2 else main())

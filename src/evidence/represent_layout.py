@@ -33,7 +33,7 @@ TABLE_EXTRA_KEYS = frozenset({
     "table_cells", "table_parse_status", "table_fallback", "table_caption",
     "layout_backend", "rows_before_gate", "rows_after_gate", "n_rows_dropped",
     "drop_reasons", "table_type_before", "table_type_after",
-    "column_headers", "row_labels",
+    "column_headers", "raw_column_headers", "row_labels",
 })
 
 BACKENDS = ("pymupdf_tables", "pymupdf4llm")
@@ -127,7 +127,13 @@ def _strip(tag: str) -> str:
 # Pre-registered quality gate
 # --------------------------------------------------------------------------
 
-def _reject_header(header: list[str]) -> str | None:
+def _collapse_ws(s: str) -> str:
+    """Intra-cell whitespace -> single spaces. 'Tempo\\n(sem cache)' becomes
+    'Tempo (sem cache)'. Semantic content preserved; only layout wrapping goes."""
+    return " ".join((s or "").split())
+
+
+def _reject_header(header: list[str], collapse_header_ws: bool = False) -> str | None:
     """Whole-table rejection (§1.2). Returns a reason, or None to keep.
 
     The FIRST header cell may be empty: it is the row-label corner, and
@@ -140,7 +146,11 @@ def _reject_header(header: list[str]) -> str | None:
     for i, h in enumerate(header):
         if i and not (h or "").strip():
             return f"empty_header_cell:col{i}"
-        if "\n" in (h or ""):
+        # EXPERIMENT 2, the single variable: with collapse_header_ws the newline
+        # no longer rejects the table — the header is normalised instead (done by
+        # the caller, before this check). Every other rule is unchanged, and an
+        # over-long header still fails below on its NORMALISED length.
+        if not collapse_header_ws and "\n" in (h or ""):
             return f"newline_in_header:col{i}"
         if len(h or "") > MAX_COL_HEADER_CHARS:
             return f"header_too_long:col{i}:{len(h)}"
@@ -159,7 +169,7 @@ def _row_drop_reason(row_label: str) -> str | None:
     return None
 
 
-def _gate_grid(grid: list[list[str]]) -> dict[str, Any]:
+def _gate_grid(grid: list[list[str]], collapse_header_ws: bool = False) -> dict[str, Any]:
     """Apply the pre-registered gate to a raw grid.
 
     Returns {"header", "rows", "reject", "drop_reasons", "rows_before", "rows_after"}.
@@ -172,12 +182,14 @@ def _gate_grid(grid: list[list[str]]) -> dict[str, Any]:
     """
     if not grid or len(grid) < 1 + MIN_DATA_ROWS:
         return {"header": [], "rows": [], "reject": f"too_few_data_rows:{max(0, len(grid) - 1)}",
-                "drop_reasons": {}, "rows_before": max(0, len(grid) - 1), "rows_after": 0}
-    header, body = grid[0], grid[1:]
-    rej = _reject_header(header)
+                "drop_reasons": {}, "rows_before": max(0, len(grid) - 1), "rows_after": 0,
+                "raw_header": list(grid[0]) if grid else []}
+    raw_header, body = list(grid[0]), grid[1:]
+    header = [_collapse_ws(h) for h in raw_header] if collapse_header_ws else raw_header
+    rej = _reject_header(header, collapse_header_ws)
     if rej:
         return {"header": header, "rows": [], "reject": rej, "drop_reasons": {},
-                "rows_before": len(body), "rows_after": 0}
+                "rows_before": len(body), "rows_after": 0, "raw_header": raw_header}
     kept: list[list[str]] = []
     drops: dict[str, int] = {}
     for row in body:
@@ -188,7 +200,7 @@ def _gate_grid(grid: list[list[str]]) -> dict[str, Any]:
         else:
             kept.append(row)
     return {"header": header, "rows": kept, "reject": None, "drop_reasons": drops,
-            "rows_before": len(body), "rows_after": len(kept)}
+            "rows_before": len(body), "rows_after": len(kept), "raw_header": raw_header}
 
 
 def _grid_to_xhtml(header: list[str], rows: list[list[str]], caption: str) -> str:
@@ -282,13 +294,18 @@ def _tier2_page_markdown(data: bytes, doc) -> dict[int, str]:
 # --------------------------------------------------------------------------
 
 def blocks_from_pdf_layout(data: bytes, paper_id: str, source: str,
-                           backend: str) -> list[dict[str, Any]]:
+                           backend: str, *,
+                           collapse_header_ws: bool = False) -> list[dict[str, Any]]:
     """`blocks_from_pdf` blocks + structured `table_cells` on table blocks.
 
     backend:
       "pymupdf_tables" — tier 1 (page.find_tables) only, else fallback_pdf.
       "pymupdf4llm"    — tier 1, then tier 2 (markdown pipe tables), else
                          fallback_pdf. Tiering is decided PER TABLE.
+
+    collapse_header_ws is EXPERIMENT 2's single variable. False reproduces the
+    section-9 behaviour exactly: a newline in a header cell rejects the table.
+    True normalises intra-cell header whitespace instead. Nothing else changes.
     """
     if backend not in BACKENDS:
         raise ValueError(f"backend must be one of {BACKENDS}, got {backend!r}")
@@ -336,14 +353,16 @@ def blocks_from_pdf_layout(data: bytes, paper_id: str, source: str,
             elif backend == "pymupdf4llm" and i < len(t2.get(pno, [])):
                 grid, tier = t2[pno][i], "pymupdf4llm"
             used[pno] = i + 1
-            _attach(b, grid, tier, paper_id, source, backend, page_errors.get(pno))
+            _attach(b, grid, tier, paper_id, source, backend, page_errors.get(pno),
+                    collapse_header_ws=collapse_header_ws)
     finally:
         doc.close()
     return blocks
 
 
 def _attach(b: dict[str, Any], grid, tier: str | None, paper_id: str, source: str,
-            backend: str, page_error: str | None = None) -> None:
+            backend: str, page_error: str | None = None, *,
+            collapse_header_ws: bool = False) -> None:
     """Attach cells + every recording key to one table block."""
     caption = (b.get("text") or "").splitlines()[0].strip() if b.get("text") else ""
     section = b.get("section")
@@ -356,6 +375,7 @@ def _attach(b: dict[str, Any], grid, tier: str | None, paper_id: str, source: st
     b["rows_before_gate"] = 0
     b["rows_after_gate"] = 0
     b["column_headers"] = []
+    b["raw_column_headers"] = []
     b["row_labels"] = []
     b["table_type_before"] = None
     b["table_type_after"] = None
@@ -367,7 +387,7 @@ def _attach(b: dict[str, Any], grid, tier: str | None, paper_id: str, source: st
         return
 
     g = _norm(grid)
-    gated = _gate_grid(g)
+    gated = _gate_grid(g, collapse_header_ws)
     b["rows_before_gate"] = gated["rows_before"]
     b["rows_after_gate"] = gated["rows_after"]
     b["drop_reasons"] = gated["drop_reasons"]
@@ -384,6 +404,7 @@ def _attach(b: dict[str, Any], grid, tier: str | None, paper_id: str, source: st
         b["table_parse_status"] = "fallback_pdf"
         b["table_fallback"] = f"quality_gate:{gated['reject']}"
         b["column_headers"] = gated["header"]
+        b["raw_column_headers"] = gated.get("raw_header") or []
         return
 
     xhtml = _grid_to_xhtml(gated["header"], gated["rows"], caption)
@@ -393,5 +414,6 @@ def _attach(b: dict[str, Any], grid, tier: str | None, paper_id: str, source: st
     b["table_parse_status"] = st["parse_status"]
     b["table_fallback"] = st["fallback"] or (f"tier:{tier}" if st["cells"] else None)
     b["column_headers"] = gated["header"]
+    b["raw_column_headers"] = gated.get("raw_header") or []
     b["row_labels"] = sorted({c["row_label"] for c in st["cells"]})
     b["table_type_after"] = _classify(caption, gated["header"], b["row_labels"])
