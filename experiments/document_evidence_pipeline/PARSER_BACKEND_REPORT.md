@@ -456,6 +456,222 @@ plainly in a paper rather than leaving implicit.
 
 ---
 
+# 12. Diagnostic — why 9 claims stayed `pdf_only` under `pymupdf4llm`
+
+Artifact-only analysis of `runs/parser_backend/results.json`. No corpus rerun, no
+production code changed, no new pre-registration.
+
+`pymupdf_tables: 0 cells corpus-wide; all 14 movable claims remained pdf_only.`
+
+Everything below concerns the `pymupdf4llm` arm only.
+
+## 12.1 Decision rule, stated before the result
+
+Fixed, applied mechanically, not modified after observation:
+
+> `parser-side ceiling : categories 1+2+3 >= 7 of 9`
+> `gate-side ceiling   : categories 1+2+3 <= 3 of 9`
+> `mixed / inconclusive: otherwise`
+
+This is a feasibility / corpus-ceiling diagnosis, **not** a general scientific
+accuracy rate.
+
+## 12.2 Two corrections to the diagnostic's framing
+
+**The population is 9 claims across 4 papers, not 9 papers.** The brief refers
+throughout to "the 9 papers" and sets the rule "of 9". The artifact gives:
+
+| paper | `pdf_only` claims under `pymupdf4llm` |
+|---|---|
+| `1016250721201821285c39eba5ab77eddf80812e` | 1 |
+| `68f93a5921c1c6bbc5e0032f87366e46a06fded0` | 2 |
+| `78797b71788ba1c852407d6010e8454f7b95f0b5` | 2 |
+| `ae2768758f9928d50eebd4c945f47ff51e0e6f3b` | 4 |
+| **total** | **9 claims / 4 papers** |
+
+Categories are paper-level (rule C), so the two denominators differ. The rule is
+applied below at **both** unit levels rather than my picking one. They agree.
+
+**There is no claim ID in the artifact schema.** Claims are keyed by
+`(field, value)`; that pair is used as the identifier throughout.
+
+## 12.3 Per-paper records
+
+### `1016250721201821285c39eba5ab77eddf80812e` — **CATEGORY 1: NO_TABLES_DETECTED**
+
+- movable claim (1): `[results]` *"RAG-Fuse achieved the best Macro-F1 scores
+  across all datasets, with up to 37% improveme…"* — ABSTAINED,
+  `unverifiable_binding`
+- table blocks: **0**; detected grids: 0; cells: 0
+- tables: none — no block typed `table` in the shared block stream
+- `control_caption_only_table_block: false`
+- anomaly: none
+
+### `68f93a5921c1c6bbc5e0032f87366e46a06fded0` — **CATEGORY 3: QUALITY_GATE_DROPPED_ALL_ROWS**
+
+Tie-break applied: one table reached `FIND_TABLES_EMPTY`, two reached the quality
+gate; the paper takes the furthest stage.
+
+- movable claims (2):
+  - `[results]` *"RAG outperformed the baseline in all models tested, with an
+    average improvement of 22% i…"* — ABSTAINED, `unverifiable_binding`
+  - `[results]` *"The largest model (Llama-3-70b) showed a 37% increase in
+    F1-score when using RAG."* — ABSTAINED, `unverifiable_binding`
+- table blocks: 3; detected grids: 0; cells: 0; rows dropped: 0
+- `control_caption_only_table_block: true` (3 blocks)
+
+| table id | page | furthest stage | rows before → after | cells | artifact evidence |
+|---|---|---|---|---|---|
+| `:95` | p4 | `FIND_TABLES_EMPTY` | 0 → 0 | 0 | `fallback='no_grid_from_backend'`; caption `'Table 1 and Table 2 illustrate two example tasks, show-'` |
+| `:118` | p6 | `QUALITY_GATE_DROPPED_ALL_ROWS` | 1 → 0 | 0 | `fallback='quality_gate:too_few_data_rows:1'` |
+| `:126` | p6 | `QUALITY_GATE_DROPPED_ALL_ROWS` | 1 → 0 | 0 | `fallback='quality_gate:too_few_data_rows:1'` |
+
+Block `:95` is a **false table block**: its text is a prose sentence beginning
+"Table 1 and Table 2 illustrate…", which `blocks_from_pdf` types as a table
+because the first line starts with `"table "`. There is no grid to find. Tables
+`:118` and `:126` are qualitative RAG-vs-non-RAG example tables with a single
+data row; `MIN_DATA_ROWS = 2` rejected them as designed.
+
+- anomaly: none
+
+### `78797b71788ba1c852407d6010e8454f7b95f0b5` — **CATEGORY 1: NO_TABLES_DETECTED**
+
+- movable claims (2):
+  - `[results]` *"The system achieved 72.69% accuracy on emotion recognition
+    with 216 test samples."* — ABSTAINED, `unverifiable_binding`
+  - `[results]` *"It demonstrated practical low-latency inference behavior and
+    passed 20 focused privacy t…"* — ABSTAINED, `unverifiable_binding`
+- table blocks: **0**; detected grids: 0; cells: 0
+- tables: none
+- `control_caption_only_table_block: false`
+- anomaly: none
+
+### `ae2768758f9928d50eebd4c945f47ff51e0e6f3b` — **CATEGORY 3: QUALITY_GATE_DROPPED_ALL_ROWS**
+
+This paper holds **4 of the 9** claims — the largest single block in the
+population.
+
+- movable claims (4), all ABSTAINED `unverifiable_binding`:
+  - *"A etapa de geração de embeddings apresentou redução de aproximadamente 75%
+    na latência c…"*
+  - *"A busca vetorial teve redução de cerca de 23%."*
+  - *"A geração de respostas teve redução de 10%."*
+  - *"A etapa de geração de texto representa mais de 85% da latência total da
+    requisição, enqu…"*
+- table blocks: 1; detected grids: 0; cells: 0; rows dropped: 0
+- `control_caption_only_table_block: true` (1 block)
+
+| table id | page | furthest stage | rows before → after | cells | artifact evidence |
+|---|---|---|---|---|---|
+| `:19` | p3 | `QUALITY_GATE_DROPPED_ALL_ROWS` | **3 → 0** | 0 | `fallback='quality_gate:newline_in_header:col3'` |
+
+Caption: `'Table 1. Métricas de performance e custo por componente da arq…'`
+Headers: `['Componente', 'Volume', 'Custo', 'Tempo\n(sem cache)', 'Tempo\n(com cache)']`
+
+**The backend extracted this table correctly and my own pre-registered gate
+destroyed it.** Three data rows, five columns, clean row labels. Rejected because
+columns 3 and 4 are legitimate two-line headers — *"Tempo (sem cache)"* / *"Tempo
+(com cache)"*, wrapped across lines by the PDF layout — and rule 1.2(3) rejects
+any header cell containing a newline.
+
+The rule's rationale was that an embedded newline signals a merged or wrapped
+cell. That diagnosis was right; the remedy was wrong. Collapsing intra-cell
+whitespace to a space would have preserved the table intact.
+
+Per amendment A4 the threshold is **not** changed now. Recorded as a finding and
+as the single highest-value candidate for a second pre-registered run: it alone
+governs 4 of the 9 remaining claims.
+
+- anomaly: none
+
+## 12.4 Category counts
+
+By **claim** (n = 9, the rule's stated denominator):
+
+| category | claims |
+|---|---|
+| 1 `NO_TABLES_DETECTED` | **3** |
+| 2 `FIND_TABLES_EMPTY` | **0** |
+| 3 `QUALITY_GATE_DROPPED_ALL_ROWS` | **6** |
+| `UNRESOLVED` | **0** |
+| total | 9 ✓ |
+
+By **paper** (n = 4, the level at which categories are assigned):
+
+| category | papers |
+|---|---|
+| 1 `NO_TABLES_DETECTED` | 2 |
+| 2 `FIND_TABLES_EMPTY` | 0 |
+| 3 `QUALITY_GATE_DROPPED_ALL_ROWS` | 2 |
+| `UNRESOLVED` | 0 |
+| total | 4 ✓ |
+
+`CATEGORY_1 + CATEGORY_2 + CATEGORY_3 + UNRESOLVED = 9` holds.
+
+`UNRESOLVED = 0`, so the rule-G budget is not engaged and the artifact schema was
+sufficient for this diagnostic: `table_fallback`, `rows_before_gate`,
+`rows_after_gate` and `n_cells` distinguish all three stages per table.
+
+## 12.5 `NO_METRIC_COLUMN` consistency check
+
+**Count: 0 — as predicted.**
+
+All four papers record `n_cells = 0` and `n_tables_with_grid = 0`, consistent
+with `pdf_only` firing at gate.py:434 only when `paper_table_cells(chunks)` is
+empty. No paper shows surviving cells while recorded `pdf_only`.
+
+## 12.6 Anomalies
+
+**None.** No paper was excluded from the categories or the 9-claim total.
+
+## 12.7 Corpus reconciliation
+
+| check | result |
+|---|---|
+| `sum(per-paper gridded tables) == 92` | **True** (92) |
+| `sum(per-paper attached cells) == 2187` | **True** (2187) |
+| summed at table level instead | 92 and 2187 — identical |
+
+Both reconcile exactly, and at the same artifact level: `n_tables_with_grid` is
+defined per paper as `count(tables where n_cells > 0)`, and the per-table sum
+gives the same figure.
+
+**Definitional caveat, since "gridded" can mislead.** The 92 counts tables that
+*ended with surviving cells*, not tables for which the backend returned a grid.
+Of the 160 table blocks in this arm:
+
+- 18 — backend returned nothing (`no_grid_from_backend`)
+- **142 — backend returned a grid**
+- of those 142, **50 were killed by the quality gate**, leaving **92**
+
+So the backend's own extraction rate is 142/160 (89%), and the reported 92 is
+after my gate removed 50. Both numbers are correct; they answer different
+questions, and section 3's "tables with a grid" row means the post-gate one.
+
+## 12.8 Rule applied
+
+Categories 1+2+3 = **9 of 9** claims (and **4 of 4** papers). Threshold for a
+parser-side ceiling is `>= 7 of 9`.
+
+**Conclusion: `parser-side ceiling`.**
+
+Both unit levels give the same verdict, so the 9-claims/4-papers discrepancy in
+12.2 does not affect it.
+
+Every one of the 9 remaining `pdf_only` claims is blocked before the gate's
+metric-column logic is ever consulted: 3 because no table block exists at all, 6
+because every candidate table lost all of its cells — 2 to a genuine single-row
+qualitative table, 4 to my own newline-in-header rule rejecting a correctly
+extracted table.
+
+This concerns only the 9 claims that stayed `pdf_only`. It does **not** overturn
+section 4: the 2 claims that did reach `wrong_cell` failed on the gate's subject
+matching with correct cells in hand. The corpus ceiling is parser-side; the
+ceiling on claims that get past the parser is gate-side. Both are real, and they
+bind on different claims.
+
+---
+
 ## Appendix — discrepancies found against the brief, before any code
 
 Preserved from the pre-registration commit `6a27b6c`. These changed the design.
