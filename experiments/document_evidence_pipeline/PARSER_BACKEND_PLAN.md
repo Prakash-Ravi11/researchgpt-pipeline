@@ -310,3 +310,144 @@ UNMEASURED rather than run.
 
 Total wall time is measured and reported, so the runtime figure in the report is
 observed rather than estimated.
+
+---
+
+# Experiment 2 — header-newline normalization
+
+Pre-registered before corpus execution. One controlled run against the same
+frozen canonical corpus and the same `pymupdf4llm` configuration.
+
+## 2.0 Correction to the section-12 interpretation, which motivates this run
+
+The "parser-side ceiling" label from the section-12 diagnostic was **an artifact
+of the pre-registered category rule**, and is withdrawn as an interpretation.
+
+The rule summed categories 1+2+3 and called the total "parser-side". But
+category 2 (`FIND_TABLES_EMPTY`) was **zero**, and category 3
+(`QUALITY_GATE_DROPPED_ALL_ROWS`) was **6 of 9 claims** — tables where a
+structured grid *did* exist and was discarded by the experimental quality gate.
+Lumping gate suppression together with table unavailability and labelling the sum
+"parser-side" obscured the dominant cause.
+
+The three causes must be distinguished:
+
+| cause | claims | detail |
+|---|---|---|
+| **parser / table availability** | 3 | 2 papers with no table block at all |
+| **quality-gate suppression** | 6 | 2 papers; grids existed and were discarded — 4 claims by the newline-in-header rule, 2 by `too_few_data_rows` on genuinely single-row qualitative tables |
+| **downstream binding failure** | (separate population) | the 2 `wrong_cell` + 3 `not_bindable` claims of section 4 |
+
+The measurements in sections 3-12 stand unchanged; only the label is corrected.
+
+**Section 9 did not demonstrate that layout-aware parsing does not help.** It
+demonstrated that under *this* quality-gate configuration nothing bound. The
+dominant single blocker among the untouched claims was a rule I wrote, not the
+parser.
+
+## 2.1 Hypothesis
+
+> Legitimate intra-cell line wrapping in table headers is being incorrectly
+> rejected by the quality gate. Collapsing header whitespace may allow correctly
+> parsed tables to reach structural binding.
+
+## 2.2 Prediction
+
+> The known 3x5 table containing `Tempo\n(sem cache)`
+> (`ae2768758f9928d50eebd4c945f47ff51e0e6f3b`, table block `:19`, page 3) will
+> survive the quality gate, making the associated four movable claims
+> measurable.
+
+**"4 claims become measurable" is the prediction. It is NOT a prediction that
+four claims will bind or return.** Success is not defined as "four claims became
+measurable"; the outcomes in 2.4 are reported as they fall.
+
+Secondary prediction, stated so the frozen rules can be seen to still bind: the
+**second** affected table (`fef0393e997e`, block `:406`) will **still be
+rejected**. Its header `col1` is a 150-character reference question, so once the
+newline check no longer fires, the frozen `MAX_COL_HEADER_CHARS = 40` rule
+rejects it as `header_too_long`.
+
+## 2.3 The single variable
+
+| | control (section 9, recorded) | treatment |
+|---|---|---|
+| header cell contains a newline | **reject the whole table** | **do not reject**; collapse intra-cell whitespace (`Tempo\n(sem cache)` -> `Tempo (sem cache)`), preserving semantic content |
+
+Collapse is applied to header cells before the remaining header checks, so a
+header that is only whitespace still fails the frozen non-empty rule, and an
+over-long header still fails the frozen length rule.
+
+**Frozen, unchanged:** row-label newline rejection; row-label length limits;
+header non-empty rules; column-count checks; `MIN_DATA_ROWS` / `MIN_COLUMNS`;
+colspan handling; value-field newline behaviour; `_SUBJECT_RE`; `_OWN_ROW`;
+`classify_table`; structural binding; grounding; claim extraction; parser and
+backend; `pymupdf4llm` configuration (`table_strategy="text"`); subprocess
+isolation; corpus; every threshold; adversarial evaluation; every other
+quality-gate rule.
+
+Implemented as a new arm label `pymupdf4llm_hdrnorm` = the `pymupdf4llm` backend
+plus `collapse_header_ws=True`. The section-9 code path is left intact and
+reproducible; the flag defaults to the section-9 behaviour.
+
+## 2.4 Primary outcomes
+
+Counted over the same numeric metrics/results claim population:
+
+1. claims reaching genuine `bound`
+2. claims reaching `RETURNED`
+3. claims reaching `wrong_cell`
+4. claims reaching `not_bindable`
+5. claims remaining `pdf_only`
+
+Plus all transitions relative to the section-9 baseline, and all five departure
+buckets of D6(a).
+
+## 2.5 Safety, unchanged
+
+- Invariant 14: 0 cross-row acceptances (no RETURNED claim with `wrong_cell`).
+- Invariant 15 (parenthetical reading): nothing RETURNED from a `pdf_only` or
+  `wrong_cell` binding.
+- Any newly introduced `wrong_cell` binding or rejection is listed individually.
+- The `structural_binding_measure.py` adversarial probe suite runs on LaTeX/JATS
+  structured papers and is **not affected** by this change, which touches only
+  PDF-path header handling. It is not re-run; that is stated rather than implied.
+- No safety criterion is weakened.
+
+## 2.6 Comparison
+
+CONTROL = the section-9 recorded `pymupdf4llm` result, read from
+`runs/parser_backend/results.json`. **Not recomputed, not redefined.**
+TREATMENT = identical run with only the header-newline behaviour replaced.
+
+## 2.7 Naming, fixed
+
+`table_blocks = 160` — total table blocks entering the backend population.
+`backend_grid_returns = 142` — grids returned by the backend before the gate.
+`post_gate_cell_tables = 92` — tables surviving the gate with attached cells.
+
+`92` is never called "backend grid output".
+
+## 2.8 A limit of the section-9 artifact, stated in advance
+
+`_reject_header` returns on the **first** failing rule, so the section-9 record
+shows only that first reason. Whether a table was rejected *solely* because of a
+header newline is therefore **not knowable from the control artifact** — it is
+knowable only from whether that table survives the treatment run. The count of
+"tables previously rejected solely because of header newline" is reported after
+the run, from the treatment outcome, not asserted from the control.
+
+## 2.9 Interpretation, fixed in advance
+
+The four known claims are not assumed to bind. Any of these may occur and is
+reported as it falls:
+
+- **A.** several become `bound` and/or `RETURNED`
+- **B.** they reach structural binding and become `not_bindable`
+- **C.** they reach structural binding and become `wrong_cell`
+- **D.** they are blocked by another unchanged quality or classification rule
+
+If they reach structural binding and fail there, the exact downstream mechanism
+is identified.
+
+Neither F1 nor F2 is implemented in this run.
