@@ -217,8 +217,21 @@ def _norm(grid) -> list[list[str]]:
     return [[("" if c is None else str(c)) for c in row] for row in (grid or [])]
 
 
-def _tier1_grids(page) -> list[list[list[str]]]:
-    """page.find_tables() — ruling-line tables."""
+def _tier1_grids(page, *, allow_contaminated: bool = False) -> list[list[list[str]]]:
+    """page.find_tables() — ruling-line tables.
+
+    Guarded: once pymupdf4llm has run in this process, find_tables returns
+    phantom text-clustered grids with corrupted values, so a tier-1 call after
+    that point is not measuring what it claims. Raising here is the amendment-A
+    (ii) enforcement — a violation stops the run instead of silently corrupting
+    an arm. `allow_contaminated=True` is for the test that pins the leak itself.
+    """
+    if _PYMUPDF4LLM_INVOKED and not allow_contaminated:
+        raise RuntimeError(
+            "find_tables() called after pymupdf4llm ran in this process: tier-1 "
+            "results would be contaminated (phantom grids, values like '0 811\\n.'). "
+            "Run one paper per process, and all tier-1 calls before any tier-2 call."
+        )
     out = []
     for t in page.find_tables().tables:
         g = _norm(t.extract())
@@ -292,11 +305,17 @@ def blocks_from_pdf_layout(data: bytes, paper_id: str, source: str,
     doc = pymupdf.open(stream=data, filetype="pdf")
     try:
         # grids per 1-based page, per tier
+        # Amendment A(ii): EVERY tier-1 decision for this paper is taken and
+        # cached before any tier-2 call, because to_markdown poisons find_tables
+        # for the rest of the process. _tier1_grids asserts this itself.
         t1: dict[int, list] = {}
         page_errors: dict[int, str] = {}
         for pno, page in enumerate(doc, start=1):
             try:
                 t1[pno] = _tier1_grids(page)
+            except RuntimeError:
+                raise                   # contamination is a harness bug, not a
+                                        # page-level data problem: stop the run
             except Exception as e:      # recorded on that page's table blocks,
                 t1[pno] = []            # never swallowed
                 page_errors[pno] = f"tier1_page_error:{type(e).__name__}:{e}"

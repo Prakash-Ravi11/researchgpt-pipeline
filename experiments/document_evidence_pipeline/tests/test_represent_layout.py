@@ -339,7 +339,7 @@ def test_12_pymupdf4llm_leaks_global_state_into_find_tables():
 
     def tier1():
         d = pymupdf.open(stream=data, filetype="pdf")
-        g = _tier1_grids(d[0])
+        g = _tier1_grids(d[0], allow_contaminated=True)   # measuring the leak itself
         d.close()
         return g
 
@@ -348,3 +348,21 @@ def test_12_pymupdf4llm_leaks_global_state_into_find_tables():
     assert contaminated, "expected the leak: find_tables now sees a phantom grid"
     values = [c for row in contaminated[0][1:] for c in row[1:]]
     assert any("\n" in v for v in values), f"expected corrupted values, got {values}"
+
+
+def test_13_tier1_refuses_to_run_once_contaminated():
+    """Amendment A(ii): an unordered tier-1 call must RAISE, not corrupt."""
+    data = _borderless_pdf()
+    doc = pymupdf.open(stream=data, filetype="pdf")
+    assert pymupdf4llm_invoked(), "test ordering broken: test_2 must run before this"
+    with pytest.raises(RuntimeError, match="contaminated"):
+        _tier1_grids(doc[0])
+    doc.close()
+
+
+def test_14_second_paper_in_a_contaminated_process_raises():
+    """The across-paper case amendment A names: paper 2's tier-1 calls would run
+    after paper 1's to_markdown. The run must stop rather than report a
+    corrupted arm."""
+    with pytest.raises(RuntimeError, match="one paper per process"):
+        blocks_from_pdf_layout(_ruled_pdf(), PID, SRC, "pymupdf_tables")

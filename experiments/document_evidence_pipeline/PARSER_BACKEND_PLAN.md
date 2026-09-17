@@ -211,3 +211,102 @@ the arms differ and the tiering is still per-table:
 Both arms reuse `blocks_from_pdf`'s block stream verbatim and only *add*
 `table_cells` to table-typed blocks, so chunk text stays byte-identical across
 all three arms. That is what makes P2 a valid wiring check.
+
+---
+
+# Amendments to the measurement design (A-F)
+
+Committed before the measurement runs.
+
+## A — within-paper contamination: option (ii), with enforcement
+
+**Chosen: (ii), enforced ordering.**
+
+Every tier-1 (`find_tables`) decision for a paper is taken and cached **before**
+any tier-2 (`to_markdown`) call, and `_tier1_grids` now raises `RuntimeError` if
+`pymupdf4llm_invoked()` is already true. A violation stops the run instead of
+silently corrupting an arm.
+
+Why (ii) over (i):
+
+- The ordering (i) would buy is **already what the code does** within a paper —
+  the tier-1 loop completes over all pages before `_tier2_page_markdown` is
+  called even once. (i) would add process starts without changing a single
+  decision.
+- (i) costs 21 x 4 x 2 = 168 executions against 63 for (ii), and per amendment F
+  every `pymupdf4llm` process start loads the ONNX layout model. (i) pays that
+  toll to enforce an ordering that an `assert` enforces for free.
+- The assert converts an incidental property into a checked invariant, which is
+  the actual gap — the ordering was correct but unguarded.
+
+Combined with **one paper per process**, the across-paper case in A is also
+closed: paper 2's tier-1 calls can no longer follow paper 1's `to_markdown`,
+and if they ever did, the run stops.
+
+`_tier1_grids(..., allow_contaminated=True)` exists solely for the test that
+pins the leak; nothing in the measurement path passes it.
+
+## B — the (a)/(b)/(c) question, answered as a finding
+
+**Before this amendment the answer was (c) within a paper and (b) across
+papers.**
+
+- Within one `blocks_from_pdf_layout` call: **(c), already ordered safely.** All
+  tier-1 calls precede the single tier-2 call, by construction of the function.
+- Across papers in one process: **(b), unguarded and actually wrong.** Paper 2's
+  `find_tables` calls would have run after paper 1's `to_markdown`, returning
+  phantom grids with corrupted values, and nothing would have complained.
+- Worse, the tier-1 call site sat inside `except Exception`, so had the guard
+  existed it would have been **swallowed and recorded as a per-page parse
+  error** — an arm silently degraded and logged as ordinary data trouble.
+
+After this amendment: **(a), asserted at runtime**, with `RuntimeError`
+re-raised past the page-level handler. Two regression tests cover it
+(`test_13`, `test_14`).
+
+This is reported in the results write-up as a finding, not only as a fix.
+
+## C — multiple comparisons
+
+Recorded verbatim, and repeated in the report:
+
+> This run SELECTS a candidate, it does not validate one. No arm may be reported
+> as "the" backend on the strength of this run. Confirmation requires a second,
+> separately pre-registered run on the selected arm.
+
+Three candidate arms are evaluated against one threshold on 14 movable claims.
+With that many comparisons and that little data, the arm that scores best is the
+arm that got luckiest as readily as the arm that is best.
+
+## D — P1 is evaluated per arm
+
+Each arm passes or fails **independently**; no aggregate verdict is reported.
+All four outcomes are stated:
+
+| arm | tesseract | outcome |
+|---|---|---|
+| `pymupdf_tables` | off (native) | measured |
+| `pymupdf4llm` | off (native) | measured |
+| `pymupdf_tables` | on | UNMEASURED — not installed, per A6 |
+| `pymupdf4llm` | on | UNMEASURED — not installed, per A6 |
+
+`current` is the control and is reported alongside as the baseline, not as a
+fourth candidate.
+
+## E — retained from the original brief
+
+Unchanged and binding: failures recorded as `null` plus the exception string and
+never swallowed; no number written that was not computed; `UNMEASURED` stated
+wherever it applies; the section-12 report section order; and **STOP after the
+report** — no wiring into `build_document()`, no config flag, no
+`requirements.txt` change, no merge.
+
+## F — expected cost
+
+63 subprocess executions (21 papers x 3 arms), of which the 21 `pymupdf4llm`
+ones each load the ONNX layout model. The brief's estimate of 84+ assumes four
+configurations; there are three, because the two with-tesseract arms are
+UNMEASURED rather than run.
+
+Total wall time is measured and reported, so the runtime figure in the report is
+observed rather than estimated.
