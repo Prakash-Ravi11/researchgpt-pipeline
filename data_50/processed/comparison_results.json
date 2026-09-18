@@ -1,0 +1,32 @@
+{
+  "total_papers": 50,
+  "total_unvetted_claims": 443,
+  "baseline_raw_datasets": 165,
+  "baseline_raw_metrics": 184,
+  "baseline_raw_results": 94,
+  "baseline_provenance_rate": 0.0,
+  "baseline_provenance_ci95": [
+    0.0,
+    0.9
+  ],
+  "grounded_verified_datasets": 126,
+  "grounded_verified_metrics": 44,
+  "grounded_verified_results": 1,
+  "grounded_provenance_valid": 211,
+  "grounded_provenance_checked": 211,
+  "grounded_provenance_rate": 1.0,
+  "grounded_provenance_ci95": [
+    98.2,
+    100.0
+  ],
+  "own_paper_attributed": 45,
+  "cited_competitor_claims_blocked": 11,
+  "ambiguous_claims_abstained": 29,
+  "hallucinations_caught": 272,
+  "out_of_bounds_values_blocked": 0,
+  "statistical_tests": {
+    "provenance_fisher_p_value": 7.403607914204733e-178,
+    "hallucination_fisher_p_value": 2.1475847203255323e-55,
+    "attribution_fisher_p_value": 0.04004557443899368
+  }
+}

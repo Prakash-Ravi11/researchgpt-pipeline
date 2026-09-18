@@ -1,0 +1,22 @@
+% Table ready for inclusion in research paper (Track A: Scientific RAG Reliability)
+\begin{table}[t]
+\centering
+\small
+\caption{Empirical Comparison: Ungated Baseline (Standard RAG) vs. Grounded Evidence Pipeline (ResearchGPT) across $N=50$ Full-Text Papers. 95\% Wilson score confidence intervals reported in brackets. $^{***}p < 0.001$.}
+\label{tab:evidence_comparison}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Reliability Metric} & \textbf{Ungated Baseline} & \textbf{ResearchGPT (Ours)} & \textbf{Significance ($p$)} \\
+\midrule
+Full-Text Analyzed Papers & 50 & 50 & -- \\
+Provenance Verifiability (Page/Span) & 0.0\% [0.0\%--0.9\%] & \textbf{100.0\%} [98.2\%--100.0\%] & $< 10^{-15***}$ \\
+Fabricated / Hallucinated Claims Filtered & 0 (56.8\% allowed) & \textbf{272} (0.0\% allowed) & $< 10^{-15***}$ \\
+False Competitor Claims Filtered & 0 (11 passed) & \textbf{11} (0 passed) & $0.0400$ \\
+Ambiguous / Unverified Claims Filtered & 0 (29 passed) & \textbf{29} (0 passed) & -- \\
+\midrule
+Verified Datasets Retained & 165 (unvetted) & \textbf{126} (grounded) & -- \\
+Verified Metrics Retained & 184 (unvetted) & \textbf{44} (grounded) & -- \\
+Verified Results Retained & 94 (unvetted) & \textbf{1} (grounded) & -- \\
+\bottomrule
+\end{tabular}
+\end{table}

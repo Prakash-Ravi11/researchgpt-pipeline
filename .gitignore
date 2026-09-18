@@ -11,3 +11,19 @@ node_modules/
 data/processed/
 data/raw_metadata/
 .github/modernize/
+
+# Security
+.env
+*.env
+
+# Document Exclusions (No PDFs or binary DBs pushed)
+*.pdf
+data_50/pdfs/
+data_50/chroma_db/
+data_50/raw_metadata/
+data_50/processed/*
+!data_50/processed/manual_evaluation_tool.html
+!data_50/processed/manual_evaluation_sheet.csv
+!data_50/processed/paper_comparison_table.tex
+!data_50/processed/comparison_results.json
+!data_50/processed/novelty_gap_report.md
