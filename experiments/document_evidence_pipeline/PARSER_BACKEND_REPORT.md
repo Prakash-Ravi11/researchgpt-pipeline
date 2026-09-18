@@ -672,6 +672,262 @@ bind on different claims.
 
 ---
 
+# 13. Experiment 2 — header-newline normalization
+
+Pre-registered in `PARSER_BACKEND_PLAN.md` (commit `d808b05`) before corpus
+execution. One controlled run, one variable.
+
+## 13.0 Correction to the section-12 interpretation, before the new result
+
+The **"parser-side ceiling" label is withdrawn.** It was an artifact of my own
+pre-registered category rule, which summed categories 1+2+3 and called the total
+"parser-side". But category 2 (`FIND_TABLES_EMPTY`) was **zero**, and category 3
+(`QUALITY_GATE_DROPPED_ALL_ROWS`) was **6 of 9 claims** — tables where a
+structured grid existed and the experimental quality gate discarded it.
+
+The three causes, separated:
+
+| cause | claims |
+|---|---|
+| parser / table availability | 3 (2 papers with no table block at all) |
+| **quality-gate suppression** | **6** (4 by the newline-in-header rule, 2 by `too_few_data_rows` on genuine single-row qualitative tables) |
+| downstream binding failure | separate population: the 2 `wrong_cell` + 3 `not_bindable` of section 4 |
+
+Every measurement in sections 3–12 stands. Only the label changes.
+
+**Section 9 did not demonstrate that layout-aware parsing does not help.** It
+demonstrated that under *that* quality-gate configuration nothing bound, and the
+dominant single blocker among the untouched claims was a rule I wrote.
+
+## 13.1 Design
+
+CONTROL = the section-9 recorded `pymupdf4llm` result, read from
+`runs/parser_backend/results.json`. Not recomputed, not redefined.
+TREATMENT = arm `pymupdf4llm_hdrnorm`: identical corpus, backend and
+configuration, with **only** header-newline rejection replaced by intra-cell
+whitespace collapse.
+
+Single-variable property verified before the run: `ae2768758f99` re-run through
+the new code with the flag **off** reproduced the frozen artifact exactly —
+every recorded field and every per-table record identical, including
+`binding_status_counts` and `n_stale_section_blocks`.
+
+Fixed naming: `table_blocks = 160`, `backend_grid_returns = 142`,
+`post_gate_cell_tables = 92` (control) / **93** (treatment).
+
+## 13.2 Corpus-wide effect
+
+| | control | treatment | delta |
+|---|---|---|---|
+| `table_blocks` | 160 | 160 | +0 |
+| `backend_grid_returns` | 142 | 142 | +0 |
+| `post_gate_cell_tables` | 92 | **93** | **+1** |
+| attached cells | 2187 | **2199** | **+12** |
+| rows dropped | 45 | 45 | +0 |
+| RETURNED metrics | 3 | 3 | **+0** |
+| RETURNED results | 1 | 1 | **+0** |
+
+As requested, itemised:
+
+- tables previously rejected **solely** because of a header newline: **1**
+- tables surviving after normalization: **1**
+- additional cells: **+12**
+- additional claims reaching `structural_bind`: **+4**
+- newly `bound`: **0**
+- newly `RETURNED`: **0**
+- newly `wrong_cell`: **0**
+- newly `not_bindable`: **+4**
+- remaining `pdf_only`: **5**
+
+The section-2.8 caveat paid off. Two tables were *recorded* as
+`newline_in_header`, but only one was rejected **solely** for that reason. The
+other also violated the frozen length rule — invisible in the control, because
+`_reject_header` returns on the first failing rule, and revealed only by the
+treatment.
+
+## 13.3 Primary outcomes
+
+| binding status | control | treatment | delta |
+|---|---|---|---|
+| **`bound`** | **0** | **0** | **+0** |
+| `RETURNED` (total) | 4 | 4 | +0 |
+| `wrong_cell` | 2 | 2 | +0 |
+| `not_bindable` | 3 | **7** | **+4** |
+| `pdf_only` | 9 | **5** | **−4** |
+| `no_binding_call` | 8 | 8 | +0 |
+
+Departure buckets (D6a):
+
+```
+control    {pdf_only 9, no_binding_call 5, not_bindable 2,
+            no_binding_call_returned 3, wrong_cell 2, not_bindable_returned 1}
+treatment  {pdf_only 5, no_binding_call 5, not_bindable 6,
+            no_binding_call_returned 3, wrong_cell 2, not_bindable_returned 1}
+```
+
+All four transitions, and there are no others:
+
+| paper | from | to | verdict | final reason |
+|---|---|---|---|---|
+| `ae2768758f99` | `pdf_only` | `not_bindable` | ABSTAINED → ABSTAINED | `ownership_unverified` |
+| `ae2768758f99` | `pdf_only` | `not_bindable` | ABSTAINED → ABSTAINED | `ownership_unverified` |
+| `ae2768758f99` | `pdf_only` | `not_bindable` | ABSTAINED → ABSTAINED | `ownership_unverified` |
+| `ae2768758f99` | `pdf_only` | `not_bindable` | ABSTAINED → ABSTAINED | `ownership_unverified` |
+
+**The prediction held: the four claims became measurable.** They did not bind.
+The outcome is **case B** — they reached structural binding and became
+`not_bindable`.
+
+## 13.4 Before/after table audit
+
+### `ae2768758f99` block `:19` — the predicted table
+
+| | control | treatment |
+|---|---|---|
+| original header values | `['Componente', 'Volume', 'Custo', 'Tempo\n(sem cache)', 'Tempo\n(com cache)']` | same |
+| normalized header values | — (rejected) | `['Componente', 'Volume', 'Custo', 'Tempo (sem cache)', 'Tempo (com cache)']` |
+| gate outcome | `quality_gate:newline_in_header:col3` | `tier:find_tables` (survives) |
+| `rows_before_gate` | 3 | 3 |
+| `rows_after_gate` | **0** | **3** |
+| surviving cell count | **0** | **12** |
+| `table_type_before` | `other` | `other` |
+| `table_type_after` | `None` (rejected) | `other` |
+| metric columns detected | not recorded | **0** |
+| claims entering `structural_bind` | 0 | **4** |
+| binding outcome | `pdf_only` | `not_bindable` |
+| final gate outcome | ABSTAINED `unverifiable_binding` | ABSTAINED `ownership_unverified` |
+
+Semantics preserved: `Tempo\n(sem cache)` → `Tempo (sem cache)`. All three data
+rows kept, no row dropped.
+
+### `fef0393e997e` block `:406` — the secondary prediction
+
+| | control | treatment |
+|---|---|---|
+| original header `col1` | 160-char reference question containing a newline | same |
+| normalized header `col1` | — | same text, newline collapsed, **160 chars** |
+| gate outcome | `quality_gate:newline_in_header:col1` | `quality_gate:header_too_long:col1:160` |
+| `rows_before_gate` / `after` | 10 / 0 | 10 / 0 |
+| surviving cell count | 0 | 0 |
+| `table_type_before` / `after` | `results` / `None` | `results` / `None` |
+| claims entering `structural_bind` | 0 | 0 |
+
+**The frozen 40-char rule still binds.** This table is not a table — `col1` is a
+question, not a column header — and the frozen rule rejects it correctly once
+the newline check stops firing first.
+
+No other table in the corpus changed outcome: exactly 2 tables differ, both
+above.
+
+## 13.5 The exact downstream mechanism (case B)
+
+`not_bindable` is `structural_bind` case 2, gate.py:455 — *"claimed metric
+matches no table column in this paper"*. The cause is measured, not inferred:
+
+```
+header                tokens   matches _METRIC_TOKENS
+'Componente'          []       False
+'Volume'              []       False
+'Custo'               []       False
+'Tempo (sem cache)'   []       False
+'Tempo (com cache)'   []       False
+
+claim                                                    tokens
+'...redução de aproximadamente 75% na latência...'       []
+'A busca vetorial teve redução de cerca de 23%.'         []
+'A geração de respostas teve redução de 10%.'            []
+'...mais de 85% da latência total da requisição...'      []
+```
+
+**`_METRIC_TOKENS` is an English-only vocabulary and this paper is in
+Portuguese.** `latency` is in the vocabulary; `tempo` and `latência` are not. The
+claims say *latência*, the headers say *Tempo*.
+
+Both sides yield zero metric tokens, and in `structural_bind`:
+
+```python
+metric_columns = [c for c in cells if metric_toks and _col_matches_metric(...)]
+```
+
+With `metric_toks` empty this list is empty **regardless of how many cells
+exist**. The 12 newly attached cells are never compared against anything. The
+claim exits at case 2 before any cell is examined.
+
+This is precisely the **RESIDUAL GAP** that `structural_bind`'s own docstring
+already declares — *"a claim whose metric phrase contains no recognised metric
+word AT ALL … still evades binding via case 2"*. What is new is that it is a
+**language** gap, not merely a vocabulary-coverage gap: no claim in a
+non-English paper can bind, whatever the parser does.
+
+**A second, independent language blocker follows it.** Having fallen through to
+grounding and attribution, all four abstained `ownership_unverified`.
+`attribute.py`'s own-reference cues are English-only regexes —
+`\b(we|our|us|ours)\b`, `\bthis (paper|work|study|…)\b`, `\bthe proposed\b` — and
+a Portuguese sentence matches none of them.
+
+**And a third sits behind both.** The table classifies as `table_type = "other"`
+(0 metric columns, so `classify_table`'s default branch cannot return
+`results`). Had a claim bound, gate.py:539 would have withheld it as
+`bound_to_other_table`.
+
+Three sequential blockers, none of them a parser problem, and none fixable by
+better table extraction.
+
+## 13.6 Safety — unchanged
+
+| | control | treatment |
+|---|---|---|
+| RETURNED by binding status | `{no_binding_call: 3, not_bindable: 1}` | `{no_binding_call: 3, not_bindable: 1}` |
+| invariant 14, cross-row acceptances | **0** | **0** |
+| RETURNED from a `pdf_only` binding | **0** | **0** |
+| newly introduced `wrong_cell` bindings or rejections | — | **0** |
+
+No safety criterion was weakened, and no new wrong-cell outcome was created.
+
+Adversarial false rejects: the two identified in section 4 are unchanged, and no
+new ones appeared. The `structural_binding_measure.py` adversarial probe suite
+runs on LaTeX/JATS structured papers and is untouched by this change, which
+affects only PDF-path header handling; it was **not** re-run, and that is stated
+rather than implied.
+
+## 13.7 A runtime anomaly, reported not repaired
+
+The driver recorded **35,244.3 s** total wall. That figure is not usable as a
+runtime measurement: one worker, `fef0393e997e`, recorded **34,755 s** (9.7 h)
+against 122.5 s for the same paper in section 9 — a 284x outlier, while every
+other paper ran *faster* than in section 9 (ratios 0.4-0.9, on an otherwise idle
+machine).
+
+**It does not reproduce.** Re-running that single paper on the treatment arm:
+**147.3 s**, peak RSS 369 MB, and outcomes byte-identical to the recorded run.
+The stall was environmental — the run spanned an overnight period — and affected
+timing only, not any measured outcome.
+
+Representative treatment-arm runtime: **477.4 s** for the other 20 papers, or
+**~625 s** substituting the reproduced 147.3 s, against 798.6 s for the same arm
+in section 9. The recorded 35,244.3 s is left in the artifact unaltered.
+
+## 13.8 Conclusion
+
+The pre-registered hypothesis was **confirmed at the level it predicted and no
+further**. Legitimate intra-cell header wrapping *was* causing a correctly
+parsed table to be discarded; normalizing the header recovered it exactly as
+predicted — one table, 12 cells, three rows, semantics intact — and made four
+movable claims measurable.
+
+It produced **no additional binding, no additional returned evidence, and no
+additional risk**. `bound` remains 0 across the whole corpus.
+
+The quality-gate rule was a real defect and is now demonstrated to be one. It was
+not, however, what was standing between this corpus and genuine evidence binding.
+For these four claims, three further blockers sit behind it, and all three are
+the gate's English-only vocabulary meeting a Portuguese paper.
+
+Neither F1 nor F2 was implemented. `gate.py`, `_SUBJECT_RE`, `_OWN_ROW`,
+`classify_table` and `build_document()` are unmodified.
+
+---
+
 ## Appendix — discrepancies found against the brief, before any code
 
 Preserved from the pre-registration commit `6a27b6c`. These changed the design.
