@@ -11,3 +11,18 @@ node_modules/
 data/processed/
 data/raw_metadata/
 .github/modernize/
+
+# Backend secrets — service-role key and JWT secret. Never commit.
+backend/.env
+backend/.env.*
+!backend/.env.example
+.env
+.env.local
+
+# Launcher scratch: start-researchiq.bat writes service logs, the pid file and
+# its generated config probe here. Never commit; never put secrets in it.
+.run/
+
+# Per-user runtime stores, same class as data/pdfs/ and data/chroma_db/ above.
+data/user_pdfs/
+data/chroma_users/
