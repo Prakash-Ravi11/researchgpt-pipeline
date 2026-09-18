@@ -26,3 +26,6 @@ backend/.env.*
 # Per-user runtime stores, same class as data/pdfs/ and data/chroma_db/ above.
 data/user_pdfs/
 data/chroma_users/
+
+# Vite build output (web/ lives on ui/researchiq; its own .gitignore is not on this branch).
+web/dist/
