@@ -59,3 +59,19 @@ preferentially — where results sections live.
 
 NOT FIXED. Raising or reallocating that budget is a separate intervention with its own
 pre-registration; it was not touched in Phase 5.
+
+## 2026-09-21 · Phase 6 · two one-line portability fixes, found read-only, not applied
+
+Phase 6 was a read-only audit; both of these are one-liners and both are left undone per
+that constraint. Full context in /PHASE6_PORTABILITY_AUDIT.md section C.
+
+1. `openpyxl` is imported at `src/reporting/corpus_table.py:110-112` and is absent from
+   `requirements.txt`. The XLSX export path raises ModuleNotFoundError on a fresh install.
+   Fix: add `openpyxl` to requirements.txt.
+
+2. `experiments/document_evidence_pipeline/diag_0549e2e9.py:246` hardcodes
+   `Path("C:/Users/Praka/AppData/Local/Temp/claude/...")`, a machine-specific scratch
+   directory. It is the ONLY absolute path in any .py file in the repo.
+   Fix: parameterise it or make it relative.
+
+NOT FIXED.
