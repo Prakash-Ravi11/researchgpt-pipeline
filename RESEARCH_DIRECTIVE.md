@@ -123,3 +123,23 @@ is visible.
 Human labels are Prakash's to make. You may emit suggested labels, always
 marked "machine-assisted, unvalidated". Never present your own labels as
 ground truth or as the basis of a reported rate without that marking.
+
+## Product mode (from Phase 7)
+The measurement programme (Phases 0-6) is closed. From Phase 7 the goal is a
+product that runs correctly on machines other than the development machine.
+Phase gates, stop conditions, anti-loop rules and evidence rules apply
+unchanged.
+
+In product mode a phase may permit edits to src/, configs/ and root files —
+only the edits that phase lists. Everything on the forbidden list stays
+forbidden unless a phase names it.
+
+Any edit to src/ must leave behaviour on the development machine (GPU and
+Ollama present, same config) unchanged unless the phase says otherwise.
+Verify with deterministic checks — resolved config values, resolved device —
+not with a full pipeline run and not by diffing LLM output.
+
+Frozen results: n_results=50 at src/summarization/retrieval_aware.py
+(commit 2c7d0a9) stays in every branch and every merge. The malformed
+fraction is 31.0% (1,209 / 3,900), cleaned n = 2,691; Phase 4's 29.9%
+figure is superseded per FINDINGS.md.
