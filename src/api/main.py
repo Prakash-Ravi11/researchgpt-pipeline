@@ -7,7 +7,9 @@ Run:
 Then open http://localhost:8000 in a browser.
 """
 import copy
+import logging
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 
@@ -17,7 +19,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from src.api.data import load_corpus
-from src.config import load_config
+from src.config import EXAMPLE_CONFIG, MISSING_CONFIG_MESSAGE, load_config
+from src.preflight import check_ollama_from_config
 from src.orchestration.jobs import get_job
 from src.orchestration.pipeline import run_search_pipeline, run_upload_pipeline
 from src.processing.pdf_parser import clean_text, extract_pdf_text
@@ -27,8 +30,17 @@ from src.synthesis.gap_analysis import compare_against_corpus
 app = FastAPI(title="ResearchGPT Catalog")
 
 CONFIG_PATH = "configs/config.yaml"
-with open(CONFIG_PATH, encoding="utf-8") as f:
-    _config = load_config(CONFIG_PATH)
+if not Path(CONFIG_PATH).exists():
+    print(MISSING_CONFIG_MESSAGE.format(path=CONFIG_PATH, example=EXAMPLE_CONFIG))
+    sys.exit(1)
+_config = load_config(CONFIG_PATH)
+
+# Startup preflight: the API still starts when Ollama is unavailable, so the
+# catalog remains browsable. Extraction endpoints will fail until it is fixed;
+# GET /health reports the live status.
+_preflight = check_ollama_from_config(_config)
+if not _preflight['ok']:
+    logging.getLogger(__name__).warning(_preflight['message'])
 
 _corpus = load_corpus(_config["paths"])
 _raw_papers_by_id = {}  # paper_id -> raw Stage 1 record (has pdf_path) — populated by _reload_corpus
@@ -83,6 +95,14 @@ def _build_search_config(payload: SearchRequest) -> dict:
     if payload.num_clusters is not None:
         cfg.setdefault("categorization", {})["num_clusters"] = payload.num_clusters
     return cfg
+
+
+@app.get("/health")
+def health():
+    """Liveness plus the Ollama preflight, re-checked on each call."""
+    pre = check_ollama_from_config(_config)
+    return {"ok": pre["ok"], "ollama_reachable": pre["ollama_reachable"],
+            "model_present": pre["model_present"], "message": pre["message"]}
 
 
 @app.get("/api/papers")

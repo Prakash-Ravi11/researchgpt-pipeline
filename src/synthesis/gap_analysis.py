@@ -29,6 +29,7 @@ import numpy as np
 import yaml
 
 from src.summarization.summarize import _stringify, call_ollama_json, embed_method_texts, prime_ollama_cache
+from src.config import resolve_device
 
 NOVELTY_SYSTEM_PROMPT = """You are assessing the novelty of a paper against a corpus of related work. You are given \
 the target paper's summary and method, plus the summaries and methods of its most similar existing papers in the \
@@ -114,7 +115,7 @@ def compare_against_corpus(uploaded_extraction: dict, config: dict, top_k: int =
     corpus_embeddings = embed_method_texts(extractions, emb_cfg["model"], emb_cfg["device"])
 
     from sentence_transformers import SentenceTransformer
-    model = SentenceTransformer(emb_cfg["model"], device=emb_cfg["device"])
+    model = SentenceTransformer(emb_cfg["model"], device=resolve_device(emb_cfg["device"]))
     model.max_seq_length = 256
     uploaded_text = _stringify(uploaded_extraction.get("method") or uploaded_extraction.get("summary", ""))
     uploaded_vec = model.encode([uploaded_text], normalize_embeddings=True, convert_to_numpy=True)[0]

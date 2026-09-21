@@ -1,0 +1,18 @@
+# Exact versions of every DIRECT dependency, as installed on the development
+# machine. Generated, not hand-edited. torch is pinned to its BASE version --
+# the local build tag (e.g. +cu128) is deliberately omitted so this file works
+# for both CPU and CUDA installs. See README.md for the two install commands.
+#   pip install -r requirements.lock
+requests==2.34.2
+sentence-transformers==5.7.0
+pyyaml==6.0.3
+tqdm==4.70.0
+pymupdf==1.28.2
+chromadb==1.5.9
+scikit-learn==1.7.2
+numpy==2.2.6
+fastapi==0.141.1
+uvicorn==0.52.3
+openpyxl==3.1.5
+python-multipart==0.0.32
+torch==2.11.0  # base version; see README for the CPU vs CUDA install

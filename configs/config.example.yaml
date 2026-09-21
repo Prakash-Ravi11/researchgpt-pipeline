@@ -1,0 +1,69 @@
+# Example configuration. Copy to configs/config.yaml and fill in.
+#   cp configs/config.example.yaml configs/config.yaml
+# configs/config.yaml is gitignored; this example is tracked.
+# Secret fields are blank here -- never commit a filled copy.
+collection:
+  api_key: ""  # prefer S2_API_KEY for local secret storage
+  domain_query: "domain-generalizable medical image segmentation"
+  fields_of_study: ["Computer Science", "Medicine"]
+  year_range: [2019, 2026]
+  candidate_pool_size: 100      # one authenticated API page; enough to rank a 50-paper corpus
+  target_corpus_size: 50
+  relevance_threshold: 0.55     # cosine sim between query embedding and abstract embedding
+
+processing:
+  chunk_size: 800                # words per chunk (approx — not exact token count)
+  chunk_overlap: 100
+
+embedding:
+  model: "BAAI/bge-m3"
+  device: "cuda"                # confirmed working with torch cu128 build
+
+# retrieval: NOT IMPLEMENTED
+#   No source file reads config["retrieval"]. There is no hybrid retrieval, no
+#   BM25, and no cross-encoder reranker anywhere in the pipeline. Stage 3 / the
+#   retrieval-aware context selector (src/summarization/retrieval_aware.py) does
+#   BGE-M3 dense cosine queries against ChromaDB only. The block below described
+#   a component that does not run and has been removed. If hybrid/reranking is
+#   ever built, re-add it here and wire src/retrieval/ (currently non-existent).
+
+paths:
+  raw_metadata_dir: "data/raw_metadata"
+  pdf_dir: "data/pdfs"
+  processed_dir: "data/processed"
+  chroma_dir: "data/chroma_db"
+  figures_dir: "data/figures"
+
+llm:
+  provider: "ollama"
+  model: "qwen2.5:7b"
+  base_url: "http://localhost:11434"
+  max_context_words: 2500
+  temperature: 0.2
+  timeout_seconds: 300
+  # Determinism (Phase 1): the code now threads an optional `seed` into Ollama
+  # options and defaults temperature to greedy when unset. To make PRODUCTION
+  # runs byte-reproducible, set `temperature: 0` and add `seed: 42` here — this
+  # also forces Stage-4 extraction to run single-worker (see extract_paper_fields),
+  # roughly doubling Stage-4 wall-clock. Deferred to Phase 5 per CONSTRAINTS
+  # ("production config not modified until Phase 5"). Enabled in staging_config.yaml.
+
+summarization:
+  context_selection: "retrieval_aware"
+
+system:
+  seed: 42
+  collection_name: "researchgpt_papers"
+  
+categorization:
+  num_clusters: 2
+
+evidence_grounding:
+  # Master switch for the FINAL_REPORT.md sec-O production integration:
+  #   Stage 1  multi-source acquisition (arXiv/S2 + OpenAlex + Europe PMC JATS)
+  #            with deterministic identity + content validation and a 40 MB cap
+  #   Stage 2  provenance-bearing blocks + chunking (section / page / xml-node)
+  #   Stage 5  evidence gate: verbatim span + attribution + abstention over
+  #            extracted Dataset/Metric/Result; rewrites paper_summaries.json
+  # false = exact legacy six-stage behaviour, nothing new runs.
+  enabled: false

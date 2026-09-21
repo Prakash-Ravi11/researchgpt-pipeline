@@ -39,6 +39,7 @@ import numpy as np
 import requests
 import yaml
 from tqdm import tqdm
+from src.config import resolve_device
 
 EXTRACTION_SYSTEM_PROMPT = """You are extracting structured information from an academic paper for a literature review, \
 at the depth a PhD-level researcher would expect and cite directly in their own writing — not a one-line gloss. \
@@ -1032,7 +1033,7 @@ def embed_method_texts(extractions: dict, model_name: str, device: str) -> dict[
     """
     from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(model_name, device=device)
+    model = SentenceTransformer(model_name, device=resolve_device(device))
     model.max_seq_length = 384  # combined field is longer than method alone — raised from 256
 
     paper_ids = list(extractions.keys())
@@ -1068,7 +1069,7 @@ def embed_topic_texts(extractions: dict, model_name: str, device: str) -> dict[s
     """
     from sentence_transformers import SentenceTransformer
 
-    model = SentenceTransformer(model_name, device=device)
+    model = SentenceTransformer(model_name, device=resolve_device(device))
     model.max_seq_length = 384
 
     paper_ids = list(extractions.keys())

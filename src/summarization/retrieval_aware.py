@@ -29,6 +29,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 from src.evidence.anchors import find_anchors
+from src.config import resolve_device
 
 # Fallback queries for papers where content-derived query extraction finds
 # nothing (e.g. legacy chunks with no section/heading structure).
@@ -286,7 +287,7 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
     for c in all_chunks:
         by_paper[c["paper_id"]].append(c)
 
-    model = SentenceTransformer(emb_cfg["model"], device=emb_cfg["device"])
+    model = SentenceTransformer(emb_cfg["model"], device=resolve_device(emb_cfg["device"]))
     model.max_seq_length = 256
     generic_vecs = model.encode(_GENERIC_QUERIES, normalize_embeddings=True)
 

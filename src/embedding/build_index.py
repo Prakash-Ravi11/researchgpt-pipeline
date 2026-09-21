@@ -24,6 +24,7 @@ from pathlib import Path
 
 import yaml
 from tqdm import tqdm
+from src.config import resolve_device
 
 # ChromaDB's client-side add() has an internal max batch size (depends on
 # version, ~5000+); 178 chunks is nowhere near it, but we batch anyway so this
@@ -45,6 +46,8 @@ def load_chunks(processed_dir: str) -> list[dict]:
 def load_model(model_name: str, device: str):
     """Load bge-m3 once, tuned for short-ish chunks on limited VRAM."""
     from sentence_transformers import SentenceTransformer
+
+    device = resolve_device(device)
 
     model = SentenceTransformer(model_name, device=device)
 

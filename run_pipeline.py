@@ -12,9 +12,11 @@ Stops immediately if any stage fails, rather than continuing on broken data.
 """
 import argparse
 import sys
+from pathlib import Path
 
 from src.collection.semantic_scholar import run_collection, re_acquire_corpus
-from src.config import load_config
+from src.config import EXAMPLE_CONFIG, MISSING_CONFIG_MESSAGE, load_config
+from src.preflight import check_ollama_from_config
 from src.processing.pdf_parser import run_processing
 from src.embedding.build_index import run_embedding
 from src.summarization.summarize import run_summarization
@@ -60,6 +62,16 @@ if __name__ == "__main__":
     parser.add_argument("--config", default="configs/config.yaml")
     args = parser.parse_args()
 
+    if not Path(args.config).exists():
+        print(MISSING_CONFIG_MESSAGE.format(path=args.config, example=EXAMPLE_CONFIG))
+        sys.exit(1)
+
     cfg = load_config(args.config)
+
+    preflight = check_ollama_from_config(cfg)
+    if not preflight["ok"]:
+        print(preflight["message"])
+        sys.exit(1)
+
     success = run_all(cfg, args.config)
     sys.exit(0 if success else 1)

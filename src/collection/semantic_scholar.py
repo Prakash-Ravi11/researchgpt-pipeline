@@ -16,7 +16,7 @@ from pathlib import Path
 import requests
 from tqdm import tqdm
 
-from src.config import load_config
+from src.config import load_config, resolve_device
 
 SEARCH_URL = "https://api.semanticscholar.org/graph/v1/paper/search"
 # NOTE: `tldr` is deliberately NOT requested. It is an ML-generated field served by a
@@ -153,7 +153,7 @@ def rerank_by_relevance(query: str, papers: list[dict], model_name: str,
     scoreable = [p for p in papers if p.get("abstract")]
     print(f"{len(papers) - len(scoreable)} papers dropped (no abstract available)")
 
-    model = SentenceTransformer(model_name, device=device)
+    model = SentenceTransformer(model_name, device=resolve_device(device))
     query_vec = model.encode([query], normalize_embeddings=True)[0]
     abstracts = [p["abstract"] for p in scoreable]
     abstract_vecs = model.encode(abstracts, normalize_embeddings=True, show_progress_bar=True)
