@@ -250,7 +250,7 @@ def _select_content_aware(paper_chunks, collection, model, paper_id, cfg, max_wo
 def _select_legacy(paper_chunks, collection, query_vecs, paper_id, max_words):
     selected_ids = set()
     for qv in query_vecs:
-        res = collection.query(query_embeddings=[qv.tolist()], n_results=3,
+        res = collection.query(query_embeddings=[qv.tolist()], n_results=50,
                                where={"paper_id": paper_id})
         for cid in res["ids"][0]:
             selected_ids.add(cid)
