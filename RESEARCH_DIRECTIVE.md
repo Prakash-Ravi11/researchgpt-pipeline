@@ -86,3 +86,40 @@ FOUND: <3-6 bullets, each with file:line>
 UNCERTAIN: <what you are not sure about>
 NEXT PHASE WOULD BE: <one line>
 Awaiting "proceed".
+
+## Attribution rule
+Attribute every failure to the EARLIEST stage at which the required evidence
+becomes unavailable or incorrect. Never infer the stage from the final model
+error alone — attribution rests on the identity and availability of the correct
+evidence at each stage (chunk id, retrieval rank, whether it entered the
+delivered set). "The answer was wrong" is not evidence of where it went wrong.
+
+## Two separate questions, two separate fields
+Never merge these into one enum.
+  outcome:     SUPPORTED | WRONG | UNSUPPORTED | UNCERTAIN
+  failed_at:   ACQUISITION | REPRESENTATION | EVIDENCE_SELECTION |
+               EXTRACTION | EVIDENCE_BINDING | NOT_DIAGNOSABLE
+
+EVIDENCE_SELECTION always carries a subcategory — query | ranking | budget |
+policy. Do not use the bare parent. Phase 2 showed the retriever ranks
+correctly (R@10 0.940) while the selection policy discards the result
+(delivery 0.071); collapsing these destroys that finding.
+
+NOT_DIAGNOSABLE carries a reason — artifacts_missing | evidence_ambiguous.
+
+## Verification discipline
+Every automatic decision records verification_method (exact | normalized |
+semantic | structural | manual) and verification_confidence (high | medium |
+low). Report coverage separately from accuracy. Never emit a single pooled
+accuracy number.
+
+## Kappa commitment — decided in advance, not after seeing results
+We report Cohen's kappa. Therefore every category we report kappa for gets
+>=50 human-labelled items. Categories under 50 are reported as raw agreement
+and labelled "pilot, n<50". Fixed now; does not change once the distribution
+is visible.
+
+## Labelling authority
+Human labels are Prakash's to make. You may emit suggested labels, always
+marked "machine-assisted, unvalidated". Never present your own labels as
+ground truth or as the basis of a reported rate without that marking.
