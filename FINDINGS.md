@@ -75,3 +75,43 @@ that constraint. Full context in /PHASE6_PORTABILITY_AUDIT.md section C.
    Fix: parameterise it or make it relative.
 
 NOT FIXED.
+
+## 2026-09-21 · Phase 7 Step A · estimate_num_ctx undershoots and Ollama silently truncates
+
+Measured, not inferred. Feeds Phase 8. NOT FIXED — Step A observes only, and this phase
+is forbidden from changing num_ctx.
+
+Every Ollama call in src/ passes an explicit options.num_ctx (built unconditionally at
+src/summarization/summarize.py:423), so Ollama's own default never applies. The
+production extraction path sizes it with estimate_num_ctx (summarize.py:324-336), which
+assumes 1.4 tokens/word and clamps to [2048, 8192].
+
+On Phase 5 development paper 1016250721... at n_results=50 (93 chunks, 2,500 assembled
+words, 2,520-word user_content):
+
+    call 1, num_ctx=5120 (what production sends)   prompt_eval_count = 2,562
+    call 2, num_ctx=8192 (same prompt)             prompt_eval_count = 6,096
+
+3,534 tokens - 58% of the prompt - never reached the model. The paper is Portuguese and
+tokenises at ~2.0 tokens/word, so the 1.4 factor undershoots badly and Ollama drops the
+overflow without error.
+
+n=1, and a non-English paper: this establishes the failure mode is reachable on production
+settings, not how often it fires. Two further facts for whoever sizes this properly:
+  - estimate_num_ctx is clamped at max_ctx=8192 while qwen2.5:7b declares 32768.
+  - prompt_eval_count is recorded NOWHERE in src/ or any run artifact, so the historical
+    rate cannot be recovered - it would need new instrumentation.
+
+## 2026-09-21 · Phase 7 · doctor.py em-dash is mojibake on a cp1252 console
+
+scripts/doctor.py's CPU-mode WARN line contains an em-dash, which renders as a
+replacement character on a Windows console using cp1252 (observed in the fresh clone).
+Cosmetic, one character. Step C did not fail, so per this phase's constraint it is
+recorded here rather than fixed in code.
+
+## 2026-09-21 · Phase 7 · correction to PHASE6_PORTABILITY_AUDIT.md A2
+
+Phase 6 listed inspect_corpus.py as an entrypoint with "no __main__ guard found - invoked
+as a script but has no guarded entrypoint". It has no argparse and no __main__ at all: it
+is a helper module, not a script. README.md states this. Phase 6's artifact is left
+unmodified.

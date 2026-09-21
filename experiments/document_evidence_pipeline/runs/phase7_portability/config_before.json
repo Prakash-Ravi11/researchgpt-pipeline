@@ -1,0 +1,58 @@
+{
+ "resolved_config": {
+  "categorization": {
+   "num_clusters": 2
+  },
+  "collection": {
+   "api_key": "<redacted>",
+   "candidate_pool_size": 100,
+   "domain_query": "domain-generalizable medical image segmentation",
+   "fields_of_study": [
+    "Computer Science",
+    "Medicine"
+   ],
+   "relevance_threshold": 0.55,
+   "target_corpus_size": 50,
+   "year_range": [
+    2019,
+    2026
+   ]
+  },
+  "embedding": {
+   "device": "cuda",
+   "model": "BAAI/bge-m3"
+  },
+  "evidence_grounding": {
+   "enabled": false
+  },
+  "llm": {
+   "base_url": "http://localhost:11434",
+   "max_context_words": 2500,
+   "model": "qwen2.5:7b",
+   "provider": "ollama",
+   "temperature": 0.2,
+   "timeout_seconds": 300
+  },
+  "paths": {
+   "chroma_dir": "data/chroma_db",
+   "figures_dir": "data/figures",
+   "pdf_dir": "data/pdfs",
+   "processed_dir": "data/processed",
+   "raw_metadata_dir": "data/raw_metadata"
+  },
+  "processing": {
+   "chunk_overlap": 100,
+   "chunk_size": 800
+  },
+  "summarization": {
+   "context_selection": "retrieval_aware"
+  },
+  "system": {
+   "collection_name": "researchgpt_papers",
+   "seed": 42
+  }
+ },
+ "secret_fields": {
+  "collection.api_key": "non-empty"
+ }
+}
