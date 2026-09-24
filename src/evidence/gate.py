@@ -465,8 +465,23 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
         # "82.1" DOES match inside "82.1 ± 0.3".
         return bool(re.search(r"(?<![\d.])" + re.escape(n) + r"(?![\d])", s))
 
+    scored_mode = _disambiguation_policy() == "scored"
+
     for n in nums:
         col_hits = [c for c in metric_columns if _has(n, c.get("value", ""))]
+        if scored_mode and col_hits:
+            # R4: choose among EXACTLY the candidates legacy would have taken
+            # index 0 of. Nothing else differs -- _bound is the same constructor,
+            # so verification downstream is the same path.
+            pick, det = _r4_select(col_hits, cells, metric_toks, value or "")
+            if pick is not None:
+                out = _bound(n, pick)
+                out["r4"] = det
+                return out
+            return {"structured": True, "status": "ABSTAIN_AMBIGUOUS", "number": n,
+                    "reason": "scored disambiguation found no unique candidate with "
+                              "score >= 1",
+                    "r4": det}
         if col_hits:
             # ---- case 3: value at the (subject-row, metric-column) cell -> bound
             on_row = [c for c in col_hits if _row_matches_subject(c.get("row_label", ""), subject)]
@@ -481,6 +496,16 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
         # ---- case 5b: value not in the metric's column, but IS in some other cell
         #      (wrong column / cross-table) -> REJECT
         elsewhere = [c for c in cells if _has(n, c.get("value", ""))]
+        if scored_mode and elsewhere:
+            pick, det = _r4_select(elsewhere, cells, metric_toks, value or "")
+            if pick is not None:
+                out = _bound(n, pick)
+                out["r4"] = det
+                return out
+            return {"structured": True, "status": "ABSTAIN_AMBIGUOUS", "number": n,
+                    "reason": "scored disambiguation found no unique candidate with "
+                              "score >= 1 among cross-column candidates",
+                    "r4": det}
         if elsewhere:
             c = elsewhere[0]
             return {"structured": True, "status": "wrong_cell", "number": n,
@@ -506,6 +531,103 @@ def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 60
 
 
 _OWNERSHIP_POLICIES = ("block", "warn")
+_DISAMBIG_POLICIES = ("legacy", "scored")
+
+# R4 — scored disambiguation among value-matching candidate cells.
+# `legacy` (default) is unchanged: the first candidate in document order wins.
+# `scored` changes ONLY which of those same candidates is chosen. Candidate
+# generation, the value matcher, the metric matcher and verification are untouched.
+_R4_STOPWORDS = frozenset({
+    "the", "and", "for", "with", "from", "that", "this", "these", "those", "our",
+    "ours", "was", "were", "are", "its", "has", "have", "had", "all", "any",
+    "per", "than", "then", "when", "which", "while", "into", "over", "under",
+    "using", "used", "use", "both", "each", "more", "most", "less", "least",
+    "also", "such", "only", "same", "other", "others", "across", "between",
+    "results", "result", "table", "tables", "model", "models", "method",
+    "methods", "test", "set", "data", "dataset", "datasets", "total", "overall",
+    "average", "mean", "score", "scores", "value", "values", "not", "but",
+})
+_R4_TABLE_MENTION_RE = re.compile(r"\b(?:tables?|tab\.)\s*([IVXLC]+|\d+)", re.I)
+_R4_LABEL_RE = re.compile(r"\b(?:table|tab\.)\s*([IVXLC]+|\d+)", re.I)
+
+
+def _disambiguation_policy() -> str:
+    """`legacy` (default) or `scored`. RGPT_DISAMBIGUATION_POLICY wins, then the
+    config flag `evidence_grounding.disambiguation_policy`."""
+    env = os.environ.get("RGPT_DISAMBIGUATION_POLICY", "").strip().lower()
+    if env in _DISAMBIG_POLICIES:
+        return env
+    cfg = Path(__file__).resolve().parents[2] / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "disambiguation_policy":
+                v = val.split("#")[0].strip().lower()
+                if v in _DISAMBIG_POLICIES:
+                    return v
+    except OSError:
+        pass
+    return "legacy"
+
+
+def _r4_label(text: str) -> str:
+    """The numeral of a 'Table N' label in `text`, upper-cased, or ''."""
+    m = _R4_LABEL_RE.search(text or "")
+    return (m.group(1) or "").upper() if m else ""
+
+
+def _r4_row_token_hit(row_label: str, claim: str) -> bool:
+    """True if a row-label token of >= 3 chars, not a stopword, occurs in the claim."""
+    cl = (claim or "").lower()
+    for tok in _WORD.findall((row_label or "").lower()):
+        if len(tok) >= 3 and tok not in _R4_STOPWORDS and tok in cl:
+            return True
+    return False
+
+
+def _r4_score(cell: dict[str, Any], metric_toks: set[str], claim: str) -> int:
+    s = 0
+    if _col_matches_metric(cell.get("column_header", ""), metric_toks):
+        s += 1
+    if _r4_row_token_hit(str(cell.get("row_label", "")), claim):
+        s += 1
+    return s
+
+
+def _r4_restrict(cands: list[dict[str, Any]], all_cells: list[dict[str, Any]],
+                 claim: str) -> list[dict[str, Any]]:
+    """Table-mention restriction. Applies only when the claim names exactly one
+    label AND exactly one table in the paper carries that label; otherwise the
+    candidate list is returned unchanged."""
+    mentions = {m.group(1).upper() for m in _R4_TABLE_MENTION_RE.finditer(claim or "")}
+    if len(mentions) != 1:
+        return cands
+    want = next(iter(mentions))
+    caps = {c.get("caption", "") for c in all_cells}
+    matching = {cap for cap in caps if _r4_label(cap) == want}
+    if len(matching) != 1:
+        return cands
+    cap = next(iter(matching))
+    restricted = [c for c in cands if c.get("caption", "") == cap]
+    return restricted or cands
+
+
+def _r4_select(cands: list[dict[str, Any]], all_cells: list[dict[str, Any]],
+               metric_toks: set[str], claim: str) -> tuple[dict[str, Any] | None, dict]:
+    """(chosen cell or None, detail). None means ABSTAIN_AMBIGUOUS.
+
+    Operates on exactly the candidate list legacy would have taken index 0 of.
+    """
+    pool = _r4_restrict(cands, all_cells, claim)
+    scored = [(_r4_score(c, metric_toks, claim), c) for c in pool]
+    top = max((s for s, _c in scored), default=0)
+    winners = [c for s, c in scored if s == top]
+    detail = {"n_candidates": len(cands), "n_after_restriction": len(pool),
+              "top_score": top, "n_winners": len(winners),
+              "restricted": len(pool) != len(cands)}
+    if top >= 1 and len(winners) == 1:
+        return winners[0], detail
+    return None, detail
 
 
 def _ownership_policy() -> str:

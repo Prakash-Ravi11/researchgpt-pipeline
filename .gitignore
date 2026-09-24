@@ -22,3 +22,7 @@ out/ownership_warn/trace.jsonl
 out/ownership_warn/results.json
 out/binding_breakdown/trace.jsonl
 out/binding_breakdown/results.json
+out/disambig_legacy/trace.jsonl
+out/disambig_legacy/results.json
+out/disambig_scored/trace.jsonl
+out/disambig_scored/results.json

@@ -1,0 +1,140 @@
+kind,paper_id,claim_id,claim_sentence,metric,bound_cell_value,row_label,column_header_path,table_caption,page,score,h1_flag,f1_flag,legacy_status,scored_status,human_label
+new_scored_binding,fef0393e997ec51b184e39c712be63197d99fd46,c7ee6d368165ccc0,"In the baseline scenario, GPT-4 emerged as the top
+performer when integrated with RAG, securing a score of 80%.",score,80%_±_4%,GPT-4,Table 18: Accuracy of base and fine-tuned models with and without RAG. > **+RAG**,Table 18: Accuracy of base and fine-tuned models with and without RAG.,p26,1,False,False,wrong_cell,bound,
+legacy_binding,e6f1d66c34b525dc480ced9902cf46419b6a37fa,61b0295c4eefbcd5,"Our retrieval
+performance (nDCG@5 = 0.4502) is competitive,
+falling only 0.03 points below the organizer base-
+line.",ndcg,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p3,1,False,False,bound,bound,
+legacy_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,d16bc6dfedb601b6,"The adopted ColNomic-
+3B retriever reaches 92.69% Recall@5, which is 55.90 pp
+above the strongest text retriever (BGE-M3 + OCR,
+36.79%) and 69.58 pp above the strongest hybrid
+baseline (VisionRAG (Pyramid, RRF), 23.11%).",recall,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p12,2,True,False,bound,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,e50feec83522353e,"Local Vision: The comparison be-
+tween CLIP and ColPali reveals a stark “granularity
+gap.” CLIP, which compresses an entire document page
+into a single global vector, achieved Recall@5 of only
+1.89%, confirming that global embeddings fail to resolve
+the fine-grained details of engineering schematics.",recall,1.89%,CLIP ViT-B/32 [20],Table 4 > Recall@5,Table 4,p11,2,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,f7bc7cb507298c11,"Accuracy: The binary-quantization
+variant (HPC-ColPali) compresses the visual index by
+16.0× (477.74 MB to 29.86 MB) and retains 65.09%
+Recall@5—within 11.79 pp of full-precision ColPali.",accuracy|precision|recall,65.09%,HPC-ColPali (Binary Quantized),Table 4 > Recall@5,Table 4,p12,2,False,False,wrong_cell,bound,
+new_scored_binding,e6f1d66c34b525dc480ced9902cf46419b6a37fa,e212deda3d5b46bf,"We achieve nDCG@5 of 0.4502 (rank 17/38,
+Subtask A) and HM = 0.3774 (rank 24/29, Sub-
+task C).",ndcg,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p1,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,e44cb0c2fc31e350,"Retrieval ceiling for text-centric baselines:
+The strongest modern text retriever evaluated against
+the 1,898-page index is BGE-M3 + OCR at 36.79%
+Recall@5, the upper bound of what an OCR-then-
+embed pipeline can deliver here, even after replacing
+legacy baselines with 2024–2025 state-of-the-art en-
+coders.",recall,36.79%,BGE-M3 + OCR [46],Table 4 > Recall@5,Table 4,p12,2,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,4dab8bf76db4a05b,"A first scale-up
+run with the original textual d/2 threshold confirms
+the pilot’s failure mode at scale: 88/100 = 88% verdict
+accuracy, with all 12 misses concentrated in the 𝑁=5
+pier subset (13/25 at 𝑁=5; perfect 25/25 at 𝑁=2, 3, 4).",accuracy,88.84,Hallucination Rate,Table 7 > Zero-shot Recall@5 (%),Table 7,p16,1,True,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,bb2a2db1b08fec21,"Tile-level Recall@5 (82.08%) exceeds full-page Re-
+call@5 (76.89%) by 5.19 pp, consistent with the hypoth-
+esis that high-DPI tiling preserves the fine-grained line
+work and annotation density that 200 DPI page-level
+rasterization loses.",recall,82.08,Tile-level (400 DPI),Table 16 > R@5 (%),Table 16,p20,1,False,False,wrong_cell,bound,
+new_scored_binding,fef0393e997ec51b184e39c712be63197d99fd46,070c50d7c422a97e,"When it came to the fine-tuned models, GPT-4 displayed exceptional performance, securing an
+accuracy of 86% with RAG and 81% without RAG.",accuracy,86%_±_2%,GPT-4,Table 18: Accuracy of base and fine-tuned models with and without RAG. > **+RAG**,Table 18: Accuracy of base and fine-tuned models with and without RAG.,p26,1,False,False,wrong_cell,bound,
+legacy_binding,e6f1d66c34b525dc480ced9902cf46419b6a37fa,891a4c3e0c11f159,"Our retrieval performance is competitive
+(nDCG@5 = 0.4502), but the generation score
+(HM = 0.3774) is limited by an over-conservative
+Answerability Classifier that routes 69.8% of AN-.",ndcg|score,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p5,1,False,False,bound,bound,
+new_scored_binding,be7c4dc39030508deb495c9f689526ca1b4289cf,8362518e00c27611,"Our best configuration uses GPT-5.2 with full schema, RAG, and a second-pass auditing,
+achieving 80.36% F1 score.",f1|score,**80.36**,GPT-5.2,Table 2: Performance (%) across Llama 4 and GPT-5.2 with schema/RAG configurations. Values are > _F_1 **score**,Table 2: Performance (%) across Llama 4 and GPT-5.2 with schema/RAG configurations. Values are,p1,2,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,aea97bc5af7a089f,"On the choice of retriever: Several 2025–2026
+retrievers outperform zero-shot ColPali on this benchma-
+rk—-Nemotron-ColEmbed-8B reaches 95.28% Recall@5.",recall,95.28%,Nemotron-ColEmbed-8B [43],Table 4 > Recall@5,Table 4,p11,2,False,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,43a474425de19291,"Setting the search recall@10 to 0.7 only results in a 2-3% drop in gold
+document recall with respect to using exhaustive search (Table 3).",recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p6,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,44f1038e0f06348b,"All four
+categories reach ≥87% Recall@5, with Dimensional
+Accuracy as the strongest (95.37%); Logical Reason-
+ing, historically the hardest category for patch-level
+retrievers (it asks the agent to infer a rule from a
+note or table rather than match a page-unique numeric
+anchor), remains the (mildly) weakest at 87.64% but is
+now within 8 pp of the best—a substantial narrowing
+relative to PaliGemma-class backbones.",accuracy|match|recall,87.64,Logical Reasoning,Table 7 > Zero-shot Recall@5 (%),Table 7,p13,2,True,False,wrong_cell,bound,
+new_scored_binding,fef0393e997ec51b184e39c712be63197d99fd46,a206213b3379585d,"GPT-4+RAG tends to provide the most succinct responses, with a score of 3.2 out of 5, though we
+do not see this improvement with fine-tuned GPT-4+RAG.",score,3.2,GPT-4,"Table 19: Succinctness of base and fine-tuned models with and without RAG, on a scale from 1 (verbose) to 5 (succinct). > **+RAG**","Table 19: Succinctness of base and fine-tuned models with and without RAG, on a scale from 1 (verbose) to 5 (succinct).",p26,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,368749712a0df1de,"Standard retrieval (rel.@5)
+—
+83.3%
+Verdict acc.",acc,83.3%,Standard retrieval (rel.@5),Table 14 > Real plans,Table 14,p19,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,392985e015c9e416,"The 16-query
+pilot set comprises: 12 queries drawn from the suc-
+cess/failure case studies in Section 6 (steel-stake spac-
+ing, MDC depth, stake-spacing table, wire-tie loca-
+tion, plus-symbol convention, diaphragm identification,
+edge-drain trench width, V-mesh end-strip height, scar-
+ification depth, drainage fabric layout, contour ditch
+placement) and 4 additional dimensional-accuracy and
+visual-interpretation queries from the primary bench-
+mark.",accuracy,16,Visual,Table 1 > _𝑁_,Table 1,p29,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,110196e7796515c2,"DOT corpus (298 pages, 93 verified pairs) at 91.40%
+Recall@5 over the combined 1, 898+298-page index—
+essentially matching in-distribution performance (over-
+all 91.47%) on an agency never seen during indexing,
+drafting, or training (the 298-page Michigan-only pool
+yields a higher 93.55%, but that smaller candidate set
+is not directly comparable to the joint-index agency
+numbers; Appendix D).",recall,298,Michigan-only,Table A.4 > # Candidates,Table A.4,p19,1,True,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,228ddf3d9fbec8a1,"The planner
+produces more steps than necessary, averaging 8.6
+steps compared with the minimum of 2, representing a
+latency-vs-accuracy trade-off: it ensures comprehensive
+visual auditing across all standard plan components
+at the expense of sequential VLM passes.",accuracy|latency,∼8_._6 sequential steps,Agentic audit / query,Table A.8 > Notes,Table A.8,p16,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,2a9d163dafda236a,"The patch-level representation trans-
+fers zero-shot to an unseen sixth agency at 91.40%
+Recall@5 over the joint index, essentially matching in-
+distribution performance (91.47%).",recall,**91.40**,"Joint (1_,_898+298)",Table A.4 > R@5,Table A.4,p21,1,False,False,wrong_cell,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,91fff026a5f675b4,"Pages are treated as independent visual units; OCR
+is intentionally excluded since the text-baseline results
+in Section 5.1 (Table 4) confirm label fragmentation
+in their geometric context(for example, the strongest
+modern text retriever BGE-M3 + OCR plateaus at
+36.79% Recall@5 against ColNomic’s 92.69% on the
+424-pair test split).",recall,36.79%,BGE-M3 + OCR [46],Table 4 > Recall@5,Table 4,p4,2,False,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,be7431b685c60e01,"For each query, we sampled a subset of the gold documents so that the
+average gold recall across all queries in a dataset reached the target, and populated the rest of the 10
+documents with the nearest non-gold neighbors.",recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p5,1,False,False,wrong_cell,bound,
+legacy_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,13b712b6f92ecaa6,"ColNomic’s 92.69% Recall@5 sits 55.90 pp
+above the strongest text retriever and 69.58 pp above
+the strongest hybrid, indicating that the information
+loss occurs at the OCR step itself rather than at the
+embedder.",loss|recall,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p12,1,False,False,bound,bound,
+new_scored_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,06f6ba283cead660,"[50], with text embedded by MiniLM, so only the page-
+to-text step varies—also collapse on engineering draw-
+ings (0.47%, 7.31%, and 0.00% Recall@5).",recall,"75.00 [50.0, 93.8]<br>81.25",Hallucination,Table 1 > Recall@5 (%)<br>Ju,Table 1,p12,1,True,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,efb99b6b382eea28,Search Recall@10.,recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p7,1,False,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,ea88793edc1b8c89,"ANN Search Recall@10
+Doc.",recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p6,1,False,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,40072c4abc96832c,"above for k = 10 documents in the prompt, and simply bin the queries depending on the retriever
+recall (i.e.",recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p5,1,False,False,wrong_cell,bound,
+new_scored_binding,f3b06a91470232d1587b194e2bc82fa9a50f3c9f,141a3a20ed69a19d,"Recall@10
+Mean
+95% CI.",recall,6.859 - 10.063,20,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers > **ation Recall**,Table 15: Correctness and citation quality on QAMPARI achieved with LLaMA with various numbers,p7,1,False,False,wrong_cell,bound,
+legacy_binding,413a184de4b1c752466fbfca3cd3b1f039f99d48,fd86d6291dbd61e3,Recall@5: 92.69%.,recall,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p2,1,False,False,bound,bound,
+new_scored_binding,141276ba659da6e5aca1d3499713104eb3ca3c78,6fadfb99900f2b96,"Cosine Similarity
+0.5981
+0.5765
+Recall
+0.2462
+0.2910
+Factual Correctness
+0.1738
+0.2291
+Faithfulness
+0.8103
+0.8754
+ROUGE score
+0.0346
+0.0349.",faithfulness|recall|rouge|score,**0.5981**,Cosine Similarity,"Table 8: Evaluation metrics comparing different parsers, > **Method 1**","Table 8: Evaluation metrics comparing different parsers,",p14,1,True,False,wrong_cell,bound,

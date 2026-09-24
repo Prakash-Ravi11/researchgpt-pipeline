@@ -89,3 +89,9 @@ evidence_grounding:
   # Binding is decided earlier (gate.py:525-546), so this changes no binding.
   # RGPT_OWNERSHIP_POLICY overrides it for a single run.
   ownership_policy: block
+  # R4: how the binder picks among candidate cells that all match the claim's
+  # value. `legacy` (default) takes the first in document order, unchanged.
+  # `scored` picks by metric-header + row-token score and abstains on a tie or a
+  # zero top score. Candidate generation and verification are identical either way.
+  # RGPT_DISAMBIGUATION_POLICY overrides it for a single run.
+  disambiguation_policy: legacy

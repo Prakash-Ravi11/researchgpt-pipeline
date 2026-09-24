@@ -1,0 +1,801 @@
+paper_id,matchable,claim_text,extracted_metric,numeric_values,where
+141276ba659da6e5aca1d3499713104eb3ca3c78,False,"10:
+A generates a sub-query qsub and
+selects a tool t ∈T.",,10,[]
+141276ba659da6e5aca1d3499713104eb3ca3c78,False,"The Multi-HyDE retriever,
+selects the top K1 = 10 chunks, while the BM25
+retriever fetches the top K2 = 15 chunks.",,10|15,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"Extensive experiments on the TREC RAG’24 dataset
+evaluated with the AutoNuggetizer framework demonstrate that
+GINGER achieves state-of-the-art performance on this benchmark.",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"We evaluate our system on the augmented generation task within
+the recently launched Retrieval-Augmented Generation track at Text
+REtrieval Conference (TREC RAG’24).",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"We report on official evalu-
+ation results based on AutoNuggatizer [30] evaluation framework
+piloted in this track for variants of our pipeline submitted to TREC
+RAG’24.",,30|24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"(2) Extensive experimental evaluation of the
+proposed approach on the TREC RAG’24 augmented generation task
+using the AutoNuggetizer framework.",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"TREC RAG’24
+The RAG track at TREC has been launched in
+2024 with a focus on combining retrieval methods for finding rel-
+evant information within large corpora with LLMs to enhance the
+ability of systems to produce relevant, accurate, and contextually
+appropriate content [30].",,24|2024|30,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"A trend toward retrieval context curation is evident in TREC
+RAG’24 submissions.",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"Dataset
+We base our evaluation on the Augmented Generation task
+of TREC RAG’24 [30] comprising 301 queries.",,24|30|301,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"TREC Evaluation
+We use the AutoNuggetizer framework pro-
+posed for RAG evaluation and validated during TREC RAG’24 [30].",,24|30,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"Automatic evaluation with Au-
+toNuggetizer shows that GINGER outperforms two strong baselines
+and performs comparably to top TREC RAG’24 submissions.",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"How does GINGER perform in comparison to other systems sub-
+mitted to TREC RAG’24?",,24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"arXiv:2302.07842 [cs.CL]
+[24]
+Dor Muhlgay, Ori Ram, Inbal Magar, Yoav Levine, Nir Ratner, Yonatan Belinkov, Omri Abend,
+Kevin Leyton-Brown, Amnon Shashua, and Yoav Shoham.",,2302.07842|24,[]
+2009dbb5f2903221c2452ecde1d9b5be2fb5fcfd,False,"In Proceedings of the 2024 Conference of the North American Chapter of the Associa-
+tion for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)
+(NAACL-HLT ’24).",,2024|24,[]
+413a184de4b1c752466fbfca3cd3b1f039f99d48,False,"PDF Corpus
+5 DOTs: WY, CA, AZ, CO, FL
+(1,898 pages) + MI held-out.",,898,[]
+413a184de4b1c752466fbfca3cd3b1f039f99d48,False,"(1,898 pages).",,898,[]
+413a184de4b1c752466fbfca3cd3b1f039f99d48,False,"Crucially, the project plans are not added
+to the retrieval index: they are the proposed design
+being audited, while the Retriever continues to query
+the unchanged 1,898-page standard-plan index.",,898,[]
+413a184de4b1c752466fbfca3cd3b1f039f99d48,False,"The full-page retrieval latency distri-
+bution over the 1,898-page five-DOT index is tightly
+concentrated around the median (101 ms) with a heavy
+right tail (p99 = 103.71 ms) driven by cold-cache
+query encoding on the first queries of each run.",latency,898|101|103.71,[]
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,False,"On a cross-
+document door and glazing task with three specification
+conflicts, page-RAG is correct in 7 of 20 trials and region-
+RAG in only 1 of 20.",,20|20,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"If the reimbursement includes a $10 thresh-
+old adjustment, the system will automatically generate
+a voucher code for accounting purposes.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"For example, as shown in
+Figure 2, if the attacker wants the system to output “You won
+a $10 voucher”, they could try to persuade the highlighter to
+highlight only specific words from the retrieved document.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"For example, by simply setting
+min_words = 5, it is impossible for the attacker to highlight
+the sentence “You won a a $10 voucher” in Figure 2, which in
+turn makes the same attack virtually impossible to succeed.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"During data analysis, we observed 10 mislabeled
+instances in this split, which we corrected manually.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"MTBench Chat Bot Response Quality
+evaluates responses on a 1–10 scale.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"Around 10% of questions in the RepliQA dataset cannot be
+answered based on the provided document.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,that neighbors would set their clocks by his daily walks”.10.,,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"10
+Conclusion.",,10,[]
+96285d75a5258dbbb883b31e23ff292605fa6f5a,False,"We report the full results from the 1-to-1 comparison between
+pipelines in Table 9, and the question guesses of H&S Two
+Steps on RepliQA Table 10.",,10,[]
+be7c4dc39030508deb495c9f689526ca1b4289cf,False,"In contrast, with GPT-5.2 (Ope-
+nAI, 2025), RAG yields the best performance with
+full schema, and a second-pass auditing provides
+additional gains.1.",,5.2|2025,[]
+be7c4dc39030508deb495c9f689526ca1b4289cf,False,"We vary the number
+of retrieved exemplars with k ∈{3, 5, 10, 20, 30, 50}
+and analyze its effect.",,10|20|30|50,[]
+be7c4dc39030508deb495c9f689526ca1b4289cf,False,"Finally, adding a
+second-pass auditing stage on top of the best GPT-
+5.2 configuration yields a small additional gain.",,5.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A is an agent-optimised and multilingual-capable model,
+with support for 23 languages of global business, and a novel hybrid architecture balancing efficiency with top
+of the range performance.",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"As part of this focus, our models also excel in the multilingual setting, supporting 23
+key languages of global business: English, French, Spanish, Italian, German, Portuguese, Japanese, Korean,
+Arabic, Chinese, Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indonesian, Ukrainian, Romanian,
+Gre",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,Llama 3.3 70B.,,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A models are trained on multilingual data (also see Section 3.3.3.1) from various sources including
+publicly available text and code data from the web, a collection of synthetic datasets generated internally,
+instruction-tuning datasets obtained from human annotators, and high quality data s",,3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Training is carried out for one epoch with a batch size of 1024 with a cosine learning rate schedule
+with a peak of 4 × 10−5.",rate,1024|10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"This stage uses a smaller batch size of 16, and a lower maximum learning
+rate of 3×10−6.",rate,16|10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Our internal reward model scores 92.7% on RewardBench (Lambert et al., 2024), and achieves an average
+score of 72.3% on RMB (Zhou et al., 2024).",score,92.7|2024|72.3|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3
+Capabilities.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.1
+Instruction-Following.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.1.1
+Data collection.",,3.3|1.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.1.2
+Iterative Reward-based Sample Refinement.",,3.3|1.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.1.3
+Preambles.",,3.3|1.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.1.4
+Model training.",,3.3|1.4,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.2
+Retrieval Augmented Generation, Tool Use and Agents.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.2.1
+Agentic Tool-Use.",,3.3|2.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.2.2
+Data and Training.",,3.3|2.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.3
+Multilingual.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"By incorporating solid multilingual
+capabilities in 23 languages, Command A enables businesses and individuals to reach a broader audience,
+fostering inclusivity and accessibility.",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.3.1
+Data Mixture.",,3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We focus our data mixture on 23 languages: English, French, Spanish, Italian, German, Portuguese, Japanese,
+Korean, Arabic, Chinese, Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indonesian, Ukrainian, Roma-
+nian, Greek, Hindi, Hebrew, and Persian.",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.3.2
+Multilingual Data Annotation.",,3.3|3.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.3.3
+Training.",,3.3|3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.4.1
+Data.",,3.3|4.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We quantify performance using the propor-
+tion of unit tests passed in our code execution sandbox, where a reward of 1.0 indicates 100% test success
+and 0.2 represents 20% test success.",,1.0|100|0.2|20,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.4.2
+Training.",,3.3|4.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"To mitigate variance in initialisation,
+learning trajectory, and performance on small evaluation datasets we use linear merging over the top k
+seeds (Izmailov et al., 2018; Team et al., 2024; Yadav et al., 2024; Aakanksha et al., 2024; Khalifa et al.,
+2025) where k is typically 2 or 3.",,2018|2024|2024|2024|2025,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.5
+Math and Reasoning.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.5.1
+Data.",,3.3|5.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.5.2
+Training.",,3.3|5.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.6
+Long Context.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We sample from our long-context pretraining dataset and prompt Command R+ Refresh
+to generate question-answer pairs based on randomly selected fragments within 8,192 tokens (Xiong et al.,
+2024).",,192|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.7
+Safety.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.7.1
+Data.",,3.3|7.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.3.7.2
+Training.",,3.3|7.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"3.4.3.3
+Merging is cheap, evaluation is expensive.",,3.4|3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Multilingual (§4.3)
+MMMLU; NTREX; FLoReS; MGSM; mArenaHard (LLM-as-a-Judge); Language
+Confusion Benchmark; Al-Qasida; INCLUDE 44; mTauBench.",,4.3|44,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A supports 23 key languages of global business: English, French, Spanish, Italian, German, Por-
+tuguese, Japanese, Korean, Arabic, Chinese, Russian, Polish, Turkish, Vietnamese, Dutch, Czech, Indone-
+sian, Ukrainian, Romanian, Greek, Hindi, Hebrew, and Persian.",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We
+further evaluate Command A’s understanding of regional contexts through INCLUDE (Romanou et al.,
+2025), a large-scale region-specific evaluation suite in 44 languages.",,2025|44,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"This threshold equates
+to 75% agreement with humans (Kocmi et al., 2024): humans will agree with automatic metric on 3 out of
+4 pairwise system comparisons that have a difference of 1.67 COMET-20.",,75|2024|1.67|20,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Further academic results (MGSM
+and INCLUDE-44) are in Appendix B.2.",,44,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"To evaluate more general and diverse capabilities, we ran an LLM-as-judge arena-like evaluation of responses
+to mArenaHard, a dataset of 500 challenging queries from Chatbot Arena, originally in English, translated
+into 23 languages (Dang et al., 2024).",,500|23|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"As shown in Table 8, Command A is preferred across all 23 languages
+versus Llama 3.3 70B Instruct, Llama 3.1 405B Instruct, and DeepSeek V3.",,23|3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A outperforms the Llama 3.3 70B Instruct and Llama 3.1 405B Instruct across
+all evaluated languages.",,3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+78.9
+81.2
+77.3
+81.4
+78.7
+72.8
+76.4
+81.6
+76.1
+84.0
+81.9
+81.6
+74.9
+84.9
+84.6
+78.8
+79.9
+76.7
+77.0
+69.7
+79.0
+80.0
+82.6
+74.4.",,3.3|78.9|81.2|77.3|81.4|78.7|72.8|76.4|81.6|76.1|84.0|81.9|81.6|74.9|84.9|84.6|78.8|79.9|76.7|77.0|69.7|79.0|80.0|82.6|74.4,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"ES
+44
+44
+12.",,44|44|12,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+93.0
+98.2
+95.5
+94.8
+93.5
+94.6
+84.2
+94.9
+93.2
+93.4
+89.6
+93.7
+93.6
+92.2
+90.3
+Command R+ Refresh
+95.5
+94.8
+98.2
+97.2
+97.2
+96.5
+89.0
+97.5
+96.2
+94.7
+91.6
+96.9
+97.8
+98.3
+90.6
+Qwen 2.5 72B Instruct Turbo
+93.0
+96.4
+94.0
+94.3
+93.7
+94.1
+86.6
+94.0
+91.3
+93.0
+87.9
+95.8
+95.4
+95.7
+89.2
+Claude 3.7 Sonnet
+",,93.0|98.2|95.5|94.8|93.5|94.6|84.2|94.9|93.2|93.4|89.6|93.7|93.6|92.2|90.3|95.5|94.8|98.2|97.2|97.2|96.5|89.0|97.5|96.2|94.7|91.6|96.9|97.8|98.3|90.6|2.5|93.0|96.4|94.0|94.3|93.7|94.1|86.6|94.0|91.3|93.0|87.9|95.8|95.4|95.7|89.2|3.7|91.8|94.5|95.5|93.2|94.2|93.6|78.9|94.0|93.6|93.9|84.1|95.9|92.6|95.3|86.2|3.3|91.3|90.5|94.7|92.9|93.0|98.2|92.1|93.3|83.3|78.9|91.2|95.0|92.9|95.9|86.5|1.5|90.6|91.7|94.4|94.5|92.0|93.5|82.9|93.3|86.1|90.6|86.7|93.4|94.8|95.6|79.1|90.6|94.9|93.8|94.2|93.5|92.2|82.6|92.8|85.5|91.5|85.3|92.9|92.3|91.8|84.3|88.9|92.2|91.0|94.9|91.7|91.9|80.9|90.4|85.3|87.4|87.0|87.9|90.7|88.0|85.5|75.9|85.3|64.7|83.4|78.3|86.9|65.0|69.6|82.6|76.1|75.2|75.6|69.3|73.1|77.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+24.2
+33.5
+Gemini 1.5 Pro
+19.3
+26.4
+GPT-4o
+15.8
+24.7
+Claude 3.7 Sonnet
+8.5
+23.1
+DeepSeek V3
+15.7
+15.7
+Llama 3.3 70B Instruct
+15.2
+8.3
+Qwen 2.5 72B Instruct Turbo
+9.9
+9.6
+Mistral Large 2
+6.9
+7.9
+Command R+ Refresh
+1.9
+6.1.",,24.2|33.5|1.5|19.3|26.4|15.8|24.7|3.7|8.5|23.1|15.7|15.7|3.3|15.2|8.3|2.5|9.9|9.6|6.9|7.9|1.9|6.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We evaluate Command
+A on our own human translated version of τ-bench (Yao et al., 2024).4 As shown in Table 9, Command A
+outperforms other widely-adopted LLMs agentic solutions such as Mistral Large 2 and Gemini 1.5 Pro, while
+being competitive with GPT-4o.",,2024|1.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We measure Command A’s sensitivity to regional dialect in Table 11, which shows ADI2 scores over mono-
+lingual and crosslingual prompts in 4 Arabic dialects (Egyptian, Saudi, Syrian, Moroccan) from Robinson
+et al.",sensitivity,11,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+86.0 / 81.0
+32.9
+46.9 / 41.9
+47.8
+75.5
+3.2
+46.2
+85.6.",,3.3|86.0|81.0|32.9|46.9|41.9|47.8|75.5|3.2|46.2|85.6,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"DeepSeek V3
+90.0
+33.5
+50.0 / 48.6
+61.5
+83.5
+15.2
+63.3
+92.2.",,90.0|33.5|50.0|48.6|61.5|83.5|15.2|63.3|92.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command R7B
+3.6
+2.7
+Command R Refresh
+11.6
+1.8
+Command R+ Refresh
+17.0
+2.2
+Llama 3.3 70B Instruct
+29.4
+8.4
+Mistral Large 2
+30.0
+16.0
+Qwen 2.5 72B Instruct
+33.0
+8.0
+Llama 3.1 405B Instruct
+33.4
+13.8
+DeepSeek V3
+42.0 / 45.8
+49.6 / 51.6.",,3.6|2.7|11.6|1.8|17.0|2.2|3.3|29.4|8.4|30.0|16.0|2.5|33.0|8.0|3.1|33.4|13.8|42.0|45.8|49.6|51.6,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"For Python generation, we
+report on MBPP+ (Austin et al., 2021; Liu et al., 2024c), LiveCodeBench (Jain et al., 2024, Version 5
+10/24-2/25), BigCodeBench (Zhuo et al., 2024, Instruct), and RepoQA (Liu et al., 2024b, 32K context length,
+threshold 0.8).",,2021|2024|10|24|25|2024|0.8,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We also extend our earlier uncontaminated
+Python benchmark, Less Basic Python Problems (Matton et al., 2024, LBPP), with parallel versions in
+C++, Java, Javascript, Go and Rust for uncontaminated generation evaluation across enterprise-critical
+programming languages.5.",,2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+81.1
+84.8
+58.0
+45.9
+41.3
+48.0
+43.3
+50.0
+46.7.",,3.3|81.1|84.8|58.0|45.9|41.3|48.0|43.3|50.0|46.7,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"For BigCodeBench and LBPP, we simulate the unit-test split by using 3 unit tests for execution feedback
+and all remaining tests for final evaluation.6 Table 12 shows how using Command A as an agent easily
+surpasses direct code generation across all datasets—achieving a pass@1 gain over Command A of ",,12|5.9|14.3|12.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"7The current best model is GPT-4o-2024-05-13 with 51.1 pass@1 https://bigcode-bench.github.io/
+8aider.chat/2024/12/21/polyglot.html.",,2024|05|13|51.1|2024|12|21,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,Llama 3.3 70B Instruct.,,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Absolute safety evaluation tests models with potentially
+eliciting prompts from the categories of our core safety behaviour (§3.3.7), and then computes the rate of
+unsafe content in the model output, using an LLM-as-a-judge setup.",rate,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Relative safety is more challenging, so we rely on a jury of LLM evaluators (Verga et al., 2024),
+which achieves human agreement scores of 77.7% and Cohen’s Kappa of 0.55 in relative safety evaluations.",kappa,2024|77.7|0.55,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Some core safety behaviour is consistent
+across all contexts (§3.3.7.1), but much of it varies between different deployments.",,3.3|7.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Therefore, we evaluate the model’s ability to accurately condition
+on different safety instructions, under our two safety modes: contextual and strict (§3.3.7.1).",,3.3|7.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Qwen 2.5 72B
+GPT-4o
+Llama 3.3 70B.",,2.5|3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"0
+20
+40
+60
+80
+100.",,20|40|60|80|100,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"0
+20
+40
+60
+80
+100.",,20|40|60|80|100,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A,
+Llama 3.3 70B Instruct, and Mistral Large 2 all exhibit minimal racial bias, each failing a median of 1% of
+invariance tests, while Claude 3.5 Sonnet has the lowest, at 0%.",,3.3|3.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,Llama 3.3 70B.,,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Additionally, it attains an
+absolute safety score of 70.4%, ranking third among large models, closely following Claude 3.5 Sonnet and
+Qwen 2.5 72B Instruct (Table 16).",score,70.4|3.5|2.5|16,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"It excels at avoiding violence and hate speech, with a 89.7% safe response
+rate, and performs well in areas such as not generating CSEA (87.5%) and not promoting misinformation
+(67.9%) (Figure 15).",rate,89.7|87.5|67.9|15,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"While Command R7B shows lower overall performance, it still maintains a notable
+presence in certain categories, such as avoiding violence and hate speech (76.3%) and not promoting CSEA
+(67.0%) (Figure 16).",,76.3|67.0|16,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,Llama 3.3 70B.,,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+49.5
+70.4
+67.9
+61.2
+87.5
+63.1
+89.7
+Claude 3.5 Sonnet
+26.4
+80.0
+76.9
+90.4
+98.5
+94.4
+93.1
+DeepSeek V3
+23.7
+49.7
+50.0
+37.0
+74.1
+34.8
+74.0
+GPT-4o
+26.6
+65.6
+76.9
+69.9
+33.7
+95.5
+84.4
+Llama 3.1 405B
+15.9
+41.8
+42.3
+28.8
+63.0
+34.3
+62.2
+Llama 3.3 70B
+14.9
+40.5
+50.0
+42.5
+63.0
+6.7
+61.8
+Mistral Large 2",,49.5|70.4|67.9|61.2|87.5|63.1|89.7|3.5|26.4|80.0|76.9|90.4|98.5|94.4|93.1|23.7|49.7|50.0|37.0|74.1|34.8|74.0|26.6|65.6|76.9|69.9|33.7|95.5|84.4|3.1|15.9|41.8|42.3|28.8|63.0|34.3|62.2|3.3|14.9|40.5|50.0|42.5|63.0|6.7|61.8|22.0|45.7|57.7|37.0|74.8|8.0|71.0|2.5|32.4|71.4|61.5|60.3|86.3|91.6|90.0|16.3|30.2|42.3|21.9|45.9|5.1|47.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A shows refusal rates under 3%, which is considerably better than other closed-source models,
+namely Claude 3.5 Sonnet and GPT-4o; and marginally better than open-access models such as Llama 3.3.",,3.5|3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+1.1
+0.0
+1.1
+7.1
+Claude 3.5 Sonnet
+3.6
+0.0
+3.6
+4.1
+DeepSeek V3
+0.8
+0.0
+0.8
+1.2
+GPT-4o
+5.6
+0.0
+5.6
+7.1
+Llama 3.1 405B
+1.2
+0.0
+1.2
+2.4
+Llama 3.3 70B
+1.2
+0.0
+1.2
+3.5
+Mistral Large 2
+0.8
+0.0
+0.8
+2.4
+Qwen 2.5 72B
+0.4
+0.0
+0.4
+1.2
+Command R+ Refresh
+3.6
+1.2
+4.8
+5.3.",,1.1|0.0|1.1|7.1|3.5|3.6|0.0|3.6|4.1|0.8|0.0|0.8|1.2|5.6|0.0|5.6|7.1|3.1|1.2|0.0|1.2|2.4|3.3|1.2|0.0|1.2|3.5|0.8|0.0|0.8|2.4|2.5|0.4|0.0|0.4|1.2|3.6|1.2|4.8|5.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command R+ Refresh
+Llama 3.3 70B
+Llama 3.1 405B
+DeepSeek V3
+Mistral Large
+Command A.",,3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Our generative enterprise
+benchmark consists of 22 tasks covering use cases including chat and meeting summarisation, information
+extraction, and FAQ generation.",,22,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"These tasks
+often involve user queries on long document snippets that can exceed 10,000 tokens.",,10|000,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+65.2.",,3.3|65.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+4.45
+4.78
+4.61.",,3.3|4.45|4.78|4.61,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+95
+87.",,3.3|95|87,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.1 405B Instruct
+94
+90.",,3.1|94|90,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Gemma 2 9B
+90
+90.",,90|90,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"RULER comprises 13 distinct tasks,
+including retrieval, question-answering, multi-hop tracing and aggregation tasks.",,13,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+97.2
+96.9
+96.7
+95.9
+93.3
+90.0
+84.6
+95.0
+93.9
+96.1.",,97.2|96.9|96.7|95.9|93.3|90.0|84.6|95.0|93.9|96.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"GPT-4o(11-20)
+97.0
+92.1
+89.0
+88.8
+88.4
+-
+-
+-
+-
+-.",,11|20|97.0|92.1|89.0|88.8|88.4,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Claude 3.5 Sonnet (10-22)
+96.5
+96.0
+95.7
+95.0
+95.2
+93.8
+-
+95.4
+95.0
+95.8.",,3.5|10|22|96.5|96.0|95.7|95.0|95.2|93.8|95.4|95.0|95.8,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"GPT-4o(11-20)
+46.0
+42.9
+52.1
+35.3
+52.1
+42.2.",,11|20|46.0|42.9|52.1|35.3|52.1|42.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Claude 3.5 Sonnet (10-22)
+40.7
+44.9
+41.3
+31.6
+45.8
+38.6.",,3.5|10|22|40.7|44.9|41.3|31.6|45.8|38.6,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,Tables 21 and 22 highlight Command A’s exceptional long-context capabilities.,,21|22,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"For instance, at an 8k sequence length, Command A requires only 75%
+of the KV cache memory used by Llama 3.3 70B Instruct, 23.8% of that used by Llama 3.1 405B Instruct,
+and 45.5% of that used by Mistral Large.",,75|3.3|23.8|3.1|45.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Figure 13, we show Command A win rates against GPT-4o (1120) according to a pool of
+LLM judges at each phase of the CoPG/SRPO ping-pong.",,13|1120,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,10Roughly 10-20x lower than was used for the main SFT training.,,10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We use the TogetherAI endpoints for
+Llama 3.3 and DeepSeek V3.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Annotators strongly prefer Command A over Llama 3.3 70B Instruct for all subsets, including code.",,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"21353–21370, Miami, Florida, USA, November 2024.",,21353|21370|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2024.emnlp-main.1190.,,2024|1190,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"578–628, Singapore, December 2023.",,578|628|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2023.wmt-1.51.,,10.18653|2023|1.51,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Proceedings of the 41st International Conference
+on Machine Learning, ICML’24.",,24,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Transactions of the
+Association for Computational Linguistics, 9:346–361, 2021.",,346|361|2021,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Transactions of the Association for Computational
+Linguistics, 10:522–538, 2022.",,10|522|538|2022,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2406.19188, 2024.",,2406.19188|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2401.14196, 2024.",,2401.14196|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv
+preprint arXiv:2105.09938, 2021.",,2105.09938|2021,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2311.11944, 2023.",,2311.11944|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2403.07974, 2024.",,2403.07974|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"4110–4124, Online, June
+2021.",,4110|4124|2021,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2021.naacl-main.324.,,10.18653|2021|324,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"URL
+https://aclanthology.org/2021.naacl-main.324.",,2021|324,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Proceedings of the national academy of sciences, 114(13):3521–3526, 2017.",,114|13|3521|3526|2017,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"doi: 10.186
+53/v1/2024.acl-long.110.",,10.186|53|2024|110,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2024.acl-long.110.,,2024|110,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Proceedings of the 37th International Conference on Neural Information Processing Sys-
+tems, NIPS ’23, Red Hook, NY, USA, 2023a.",,23,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2023.acl-long.134.,,10.18653|2023|134,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2023.acl-long.134.,,2023|134,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"6653–
+6677, Miami, Florida, USA, November 2024.",,6653|6677|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"URL https:
+//aclanthology.org/2024.emnlp-main.380.",,2024|380,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"International Conference on Neural Information Processing Systems, NIPS ’22, Red Hook, NY, USA, 2022.",,22|2022,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"13215–13223, Miami, Florida, USA, November
+2024.",,13215|13223|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"URL https://aclanthology.org/2024.findings-e
+mnlp.772.",,2024|772,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2308.07124, 2023.",,2308.07124|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"13025–13048, Bangkok, Thailand, August 2024.",,13025|13048|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2024.findings-acl.772.,,10.18653|2024|772,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"URL https://aclanthology.o
+rg/2024.findings-acl.772.",,2024|772,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Advances in Neural
+Information Processing Systems, 36, 2024.",,36|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv
+preprint arXiv:2311.12022, 2023.",,2311.12022|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2412.04193, 2024.",,2412.04193|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Kevin Duh, Helena
+Gomez, and Steven Bethard (eds.), Proceedings of the 2024 Conference of the North American Chapter of
+the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers),
+pp.",,2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"5377–5400, Mexico City, Mexico, June 2024.",,5377|5400|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"doi: 10.18653
+/v1/2024.naacl-long.301.",,10.18653|2024|301,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2024.naacl-long.301.,,2024|301,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2110.08207, 2021.",,2110.08207|2021,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2402.03300, 2024.",,2402.03300|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Proceedings of the 34th
+International Conference on Neural Information Processing Systems, NIPS ’20, Red Hook, NY, USA, 2020.",,20|2020,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2023.wassa-1.4.,,10.18653|2023|1.4,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Gemma 2: Improving open
+language models at a practical size, 2024.",,2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"org/abs/2408.00118, 1(3), 2024.",,2408.00118|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint
+arXiv:2410.01560, 2024.",,2410.01560|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"15894–15939, Bangkok, Thailand, August 2024.",,15894|15939|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,doi: 10.18653/v1/2024.acl-long.845.,,10.18653|2024|845,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2024.acl-long.845.,,2024|845,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2404.18796, 2024.",,2404.18796|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2109.01652,
+2021.",,2109.01652|2021,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2312.02120, 2023.",,2312.02120|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"PMLR, 17–23 Jul 2022.",,17|23|2022,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Kevin Duh, Helena Gomez, and Steven
+Bethard (eds.), Proceedings of the 2024 Conference of the North American Chapter of the Association
+for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers), pp.",,2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"4643–4663,
+Mexico City, Mexico, June 2024.",,4643|4663|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"doi: 10.18653/v1/2024.naacl
+-long.260.",,10.18653|2024|260,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,URL https://aclanthology.org/2024.naacl-long.260.,,2024|260,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2410.03617, 2024.",,2410.03617|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"In Proceedings of the 41st International Conference on
+Machine Learning, ICML’24.",,24,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2305.10425, 2023.",,2305.10425|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"arXiv preprint arXiv:2311.07911,
+2023.",,2311.07911|2023,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,We employ all SFT datasets as mentioned in Section 3.3.3.1.,,3.3|3.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"To train
+the model, we use the Adam optimiser with a peak learning rate of 2.5 × 10−5, cosine decay to 1.25 × 10−5,
+β1 = 0.9, β2 = 0.95 and a weight decay of 0.1.",rate,2.5|10|1.25|10|0.9|0.95|0.1,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We use DPO with the Adam optimiser, a peak learning rate of 1.25 × 10−5 decaying to 1.25 × 10−6, β = 0.2
+and use SFT regularisation with the same data mixture we used in the SFT stage.",rate,1.25|10|1.25|10|0.2,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+90.1
+92.0
+92.4
+85.1⋆
+87.1
+94.0
+90.0.",,90.1|92.0|92.4|85.1|87.1|94.0|90.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Llama 3.3 70B Instruct
+91.5
+92.8
+91.6
+90.0
+89.6
+95.2
+90.0.",,3.3|91.5|92.8|91.6|90.0|89.6|95.2|90.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Mistral Large 2
+90.1
+90.0
+90.4
+85.9
+90.3
+92.8
+91.5.",,90.1|90.0|90.4|85.9|90.3|92.8|91.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Gemini 2.0 Flash
+90.0
+90.8
+92.8
+83.1
+87.1
+95.2
+90.8.",,2.0|90.0|90.8|92.8|83.1|87.1|95.2|90.8,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"This expert is trained using Adam optimisation, a learning
+rate peak of 5×10−5, cosine decay to 5×10−6, beta values (β1 = 0.9, β2 = 0.95), weight decay factor of 0.1,
+and gradient norm clipping at peak 1.0.",rate,10|10|0.9|0.95|0.1|1.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Our regularisation is inspired by similar code expert training such
+as Qwen 2.5 Coder (Hui et al., 2024).",,2.5|2024,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We use a constant learning rate of 2 × 10−6, a
+regularisation parameter β of 0.06, and otherwise match the hyperparameters used for SFT.",match|rate,10|0.06,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,• Llama 3.3 70B Instruct: https://github.com/meta-llama/llama-models/blob/main/models/lla.,,3.3,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"• Llama 3.3 70B Instruct and Llama 3.1 405B Instruct: https://github.com/meta-llama/llama-mod
+els/blob/main/models/llama3_3/MODEL_CARD.md
+• Qwen 2.5 72B Instruct: From Hui et al.",,3.3|3.1|2.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We train using the Adam optimiser with peak learning rate of 2.5×10−5, cosine
+decay to 2.5 × 10−6, β1 = 0.9, β2 = 0.95, weight decay of 0.01, and gradient norm clipping peak at 1.0.",rate,2.5|10|2.5|10|0.9|0.95|0.01|1.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We train using CoPG with the Adam optimiser, using a learning rate of 2×10−6 with
+no decay, β1 = 0.9, β2 = 0.95, and gradient norm clipping peak at 1.0.",rate,10|0.9|0.95|1.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Training is conducted using the Adam optimiser with a peak learning rate of 2.5 × 10−5, cosine decay to
+2.5 × 10−6, β1 = 0.9, β2 = 0.95, weight decay of 0.01, and gradient norm clipping peak at 1.0.",rate,2.5|10|2.5|10|0.9|0.95|0.01|1.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Command A
+8.3
+75.4
+10.2
+87.5
+Claude 3.5 Sonnet
+10.1
+82.5
+10.4
+89.6
+DeepSeek V3
+3.6
+66.6
+1.7
+68.7
+GPT-4o
+21.3
+77.8
+10.4
+86.9
+Llama 3.1 405B
+5.9
+70.3
+5.8
+80.5
+Llama 3.3 70B
+3.6
+60.9
+4.0
+67.9
+Mistral Large Latest
+8.9
+70.6
+8.7
+81.1
+Qwen 2.5 72B
+10.1
+72.2
+1.2
+78.3
+Command R+ Refresh
+8.9
+61.8
+12.7
+70.0.",,8.3|75.4|10.2|87.5|3.5|10.1|82.5|10.4|89.6|3.6|66.6|1.7|68.7|21.3|77.8|10.4|86.9|3.1|5.9|70.3|5.8|80.5|3.3|3.6|60.9|4.0|67.9|8.9|70.6|8.7|81.1|2.5|10.1|72.2|1.2|78.3|8.9|61.8|12.7|70.0,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Claude 3.5 Sonnet
+DeepSeek V3
+GPT-4o
+Llama 3.1 405B
+Llama 3.3 70B
+Mistral Large Latest
+Qwen 2.5 72B
+Command R+
+Command A.",,3.5|3.1|3.3|2.5,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"During the SFT stage, we train the safety expert using the Adam optimiser with
+β1 = 0.9, β2 = 0.95, and a peak learning rate of 10−4 decayed to 10−5 with a cosine schedule.",rate,0.9|0.95|10|10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"Gradient norm
+is clipped to 1, and weight decay is weighted by 10−3.",,10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"We train the Safety expert using the same hyper-parameters as above, except
+the peak learning rate is 10−6 decayed to 10−7.",rate,10|10,[]
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,False,"• IFEval (Zhou et al., 2023) measures instruction-following ability across 25 types of verifiable instruc-
+tions (e.g.",,2023|25,[]
+fef0393e997ec51b184e39c712be63197d99fd46,False,We provide two examples in Tables 10 and 11.,,10|11,[]
+fef0393e997ec51b184e39c712be63197d99fd46,False,"Nature Computational Science, 3(1):1–11, 2023.",,11|2023,[]

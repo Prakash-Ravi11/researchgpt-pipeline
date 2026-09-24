@@ -1,0 +1,201 @@
+{
+ "legacy_arm": "disambig_legacy",
+ "scored_arm": "disambig_scored",
+ "claim_rows": 2218,
+ "legacy_bound": 5,
+ "scored_bound": 31,
+ "scored_abstain_ambiguous": 43,
+ "legacy_wrong_cell": 69,
+ "scored_wrong_cell": 0,
+ "legacy_status_counts": {
+  "pdf_only": 189,
+  "no_binding_call": 464,
+  "not_a_table_claim": 33,
+  "not_bindable": 1458,
+  "wrong_cell": 69,
+  "bound": 5
+ },
+ "scored_status_counts": {
+  "pdf_only": 189,
+  "no_binding_call": 464,
+  "not_a_table_claim": 33,
+  "not_bindable": 1458,
+  "bound": 31,
+  "ABSTAIN_AMBIGUOUS": 43
+ },
+ "multi_candidate_claims": 65,
+ "isolation_pass": false,
+ "isolation_exceptions": [
+  {
+   "claim_id": "799f403556eba6c7",
+   "paper_id": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "ABSTAIN_AMBIGUOUS",
+    "ABSTAINED",
+    "ATTRIBUTED_TO_CITED_WORK"
+   ],
+   "claim_text": "• Judge Accuracy: An LLM-as-judge score [42]\nwhere a local Qwen2.5-VL-72B judge compares\nthe model’s predicted answer against the ground\ntruth and assigns a binary score (0 or 1)."
+  },
+  {
+   "claim_id": "aea97bc5af7a089f",
+   "paper_id": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "ABSTAINED",
+    "OWNERSHIP_UNVERIFIED"
+   ],
+   "claim_text": "On the choice of retriever: Several 2025–2026\nretrievers outperform zero-shot ColPali on this benchma-\nrk—-Nemotron-ColEmbed-8B reaches 95.28% Recall@5."
+  },
+  {
+   "claim_id": "228ddf3d9fbec8a1",
+   "paper_id": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "ABSTAINED",
+    "BOUND_TO_OTHER_TABLE"
+   ],
+   "claim_text": "The planner\nproduces more steps than necessary, averaging 8.6\nsteps compared with the minimum of 2, representing a\nlatency-vs-accuracy trade-off: it ensures comprehensive\nvisual auditing across all st"
+  },
+  {
+   "claim_id": "368749712a0df1de",
+   "paper_id": "413a184de4b1c752466fbfca3cd3b1f039f99d48",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "ABSTAINED",
+    "BOUND_TO_OTHER_TABLE"
+   ],
+   "claim_text": "Standard retrieval (rel.@5)\n—\n83.3%\nVerdict acc."
+  },
+  {
+   "claim_id": "8362518e00c27611",
+   "paper_id": "be7c4dc39030508deb495c9f689526ca1b4289cf",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "RETURNED",
+    "RETURNED"
+   ],
+   "claim_text": "Our best configuration uses GPT-5.2 with full schema, RAG, and a second-pass auditing,\nachieving 80.36% F1 score."
+  },
+  {
+   "claim_id": "fbd39790b1162795",
+   "paper_id": "f1f07a37d4cd44daab987ff19c0bcd185910f50c",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "ABSTAIN_AMBIGUOUS",
+    "RETURNED",
+    "RETURNED"
+   ],
+   "claim_text": "We linearly anneal the learning rate from 2.5 × 10−4 to 1 × 10−6 for 50,000 steps in BF16 precision with\npurposely curated high quality datasets."
+  },
+  {
+   "claim_id": "c7ee6d368165ccc0",
+   "paper_id": "fef0393e997ec51b184e39c712be63197d99fd46",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "ABSTAINED",
+    "BOUND_TO_ABLATION_TABLE"
+   ],
+   "claim_text": "In the baseline scenario, GPT-4 emerged as the top\nperformer when integrated with RAG, securing a score of 80%."
+  },
+  {
+   "claim_id": "a206213b3379585d",
+   "paper_id": "fef0393e997ec51b184e39c712be63197d99fd46",
+   "reached_cell_selection": true,
+   "n_value_matching": 1,
+   "legacy": [
+    "wrong_cell",
+    "ABSTAINED",
+    "BINDING_WRONG_CELL"
+   ],
+   "scored": [
+    "bound",
+    "ABSTAINED",
+    "BOUND_TO_ABLATION_TABLE"
+   ],
+   "claim_text": "GPT-4+RAG tends to provide the most succinct responses, with a score of 3.2 out of 5, though we\ndo not see this improvement with fine-tuned GPT-4+RAG."
+  }
+ ],
+ "isolation_exception_count": 8,
+ "transition_table": {
+  "WRONG_CELL -> BOUND": 20,
+  "WRONG_CELL -> ABSTAIN_AMBIGUOUS": 41,
+  "BOUND -> BOUND same cell": 4
+ },
+ "transition_by_h1": {
+  "WRONG_CELL -> BOUND | h1=True": 5,
+  "WRONG_CELL -> ABSTAIN_AMBIGUOUS | h1=False": 28,
+  "BOUND -> BOUND same cell | h1=False": 3,
+  "WRONG_CELL -> BOUND | h1=False": 15,
+  "WRONG_CELL -> ABSTAIN_AMBIGUOUS | h1=True": 13,
+  "BOUND -> BOUND same cell | h1=True": 1
+ },
+ "transition_by_f1": {
+  "WRONG_CELL -> BOUND | f1=False": 20,
+  "WRONG_CELL -> ABSTAIN_AMBIGUOUS | f1=False": 41,
+  "BOUND -> BOUND same cell | f1=False": 4
+ },
+ "h1_total": 358,
+ "h1_by_binding_status": {
+  "no_binding_call": 26,
+  "not_bindable": 308,
+  "bound": 6,
+  "ABSTAIN_AMBIGUOUS": 13,
+  "pdf_only": 5
+ },
+ "labeling_rows": 31,
+ "labeling_by_kind": {
+  "new_scored_binding": 26,
+  "legacy_binding": 5
+ },
+ "labeling_h1_flagged": 6,
+ "labeling_f1_flagged": 0,
+ "labeling_eligible_excl_h1_f1": 25
+}

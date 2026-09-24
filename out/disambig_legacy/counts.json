@@ -1,0 +1,24 @@
+{
+ "papers": 21,
+ "parse_ok": 21,
+ "table_blocks": 160,
+ "backend_grid_returns": 142,
+ "post_gate_cell_tables": 92,
+ "fallback_pdf_tables": 68,
+ "attached_cells": 2187,
+ "rows_dropped": 45,
+ "returned_metrics": 0,
+ "returned_results": 597,
+ "successful_bindings": 5,
+ "binding_status_counts": {
+  "pdf_only": 189,
+  "no_binding_call": 464,
+  "not_a_table_claim": 33,
+  "not_bindable": 1458,
+  "wrong_cell": 69,
+  "bound": 5
+ },
+ "claims_total": 2218,
+ "claims_entering_binder": 1754,
+ "wall_seconds": 806.8
+}

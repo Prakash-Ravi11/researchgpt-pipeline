@@ -1,0 +1,377 @@
+paper_id,claim_id,binding_status,claim_sentence,numeric_span,chosen_cell_id,bound_cell_value,row_header,column_header_path,table_caption,page,value_matching_cells,value_occurrences_in_paper,claim_table_mention,bound_table_label,mention_matches_bound_table,ownership_flag,f1_bibliography_heuristic,sign_match,human_label
+413a184de4b1c752466fbfca3cd3b1f039f99d48,537dc4ed49a71dfe,wrong_cell,"The same Qwen2.5-VL-72B + CoT + per-
+drawing thresholds recipe reaches 50/50 = 100%
+verdict accuracy (25/25 compliant + 25/25 non-
+compliant, with no archetype falling below 10/10).",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p16,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,caa554e42b43b81e,wrong_cell,"The agentic Planner–Auditor–Synthesizer com-
+pliance pipeline, armed with per-drawing pre-resolved
+rule thresholds, reaches 100% verdict accuracy on a
+500-drawing single-doc CAD test set and on a 100-
+drawing multi-plan set (𝑁∈{2, 3, 4, 5} standards per
+design), with both the compliant and non-compliant
+directions perfect.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p21,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,3fb7f4d600764bdb,wrong_cell,"Complementarily, a lightweight
+Apache-2.0 visual reranker (MonoQwen2-VL) applied
+to ColPali’s top-20 lifts Recall@5 from 76.89% to
+85.14% (Table 5)—recovering most of the gap to the
+stronger retrievers while keeping the stack fully open
+and deployable.",20,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3,"20.1 [13.4, 26.9]",DSE-Qwen2-2B,Table A.2 > Caltrans,Table A.2,p11,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3=20.1 [13.4, 26.9]@DSE-Qwen2-2B/Caltrans|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r8c2=11.3 [3.8, 20.8]@Pix2Struct-decode + MiniLM/WYDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c2=34.0 [20.8, 47.2]@OCR + MiniLM/WYDOT",3,Table 5,,false,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,cd02542f7199d214,wrong_cell,"The pipeline achieves 500/500
+= 100% verdict accuracy (250/250 compliant +
+250/250 non-compliant) without per-archetype tuning
+or additional supervision.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p16,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,be7431b685c60e01,wrong_cell,"For each query, we sampled a subset of the gold documents so that the
+average gold recall across all queries in a dataset reached the target, and populated the rest of the 10
+documents with the nearest non-gold neighbors.",10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p5,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,2cb8fc1789530d0c,wrong_cell,"Hallucination Rate
+484
+88.84
+Dimensional Accuracy
+1,015
+95.37
+Visual Interpretation
+1,400
+92.71
+Logical Reasoning
+1,157
+87.64.",484,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c6,484,Hallucination Rate,Table 2 > Total,Table 2,p13,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c6=484@Hallucination Rate/Total|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r1c1=484@Hallucination Rate/_𝑁_,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e44cb0c2fc31e350,wrong_cell,"Retrieval ceiling for text-centric baselines:
+The strongest modern text retriever evaluated against
+the 1,898-page index is BGE-M3 + OCR at 36.79%
+Recall@5, the upper bound of what an OCR-then-
+embed pipeline can deliver here, even after replacing
+legacy baselines with 2024–2025 state-of-the-art en-
+coders.",36.79,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r7c3,36.79%,BGE-M3 + OCR [46],Table 4 > Recall@5,Table 4,p12,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r7c3=36.79%@BGE-M3 + OCR [46]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c1=36.79 [32.3, 41.5]@BGE-M3 + OCR/Overall (%)",2,,Table 4,no_mention,,False,True,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,61b0295c4eefbcd5,bound,"Our retrieval
+performance (nDCG@5 = 0.4502) is competitive,
+falling only 0.03 points below the organizer base-
+line.",0.4502,,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p3,e6f1d66c34b525dc480ced9902cf46419b6a37fa:0#r3c1=0.4502@NLP-CEIA-UFG (ours)/**nDCG@5**,1,,Table 1,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,ea88793edc1b8c89,wrong_cell,"ANN Search Recall@10
+Doc.",10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p6,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e8b96dd4f3ea490b,wrong_cell,"On the 4,056-pair five-DOT benchmark, whose 424-
+pair page-disjoint test split runs against the full 1,898-
+page joint index, the adopted ColNomic-3B retriever
+reaches 92.69% Recall@5—55.90 pp above the strongest
+text retriever (BGE-M3 + OCR) and 69.58 pp above
+the strongest hybrid baseline (VisionRAG (Pyramid,
+RRF)).",056,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r5c6,"**4,056**",**Total**,Table 2 > Total,Table 2,p21,"413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r5c6=**4,056**@**Total**/Total|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c1=**4,056**@**Overall**/_𝑁_|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c1=**4,056**@**Overall**/_𝑁_",3,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,799f403556eba6c7,wrong_cell,"• Judge Accuracy: An LLM-as-judge score [42]
+where a local Qwen2.5-VL-72B judge compares
+the model’s predicted answer against the ground
+truth and assigns a binary score (0 or 1).",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p11,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,d16bc6dfedb601b6,bound,"The adopted ColNomic-
+3B retriever reaches 92.69% Recall@5, which is 55.90 pp
+above the strongest text retriever (BGE-M3 + OCR,
+36.79%) and 69.58 pp above the strongest hybrid
+baseline (VisionRAG (Pyramid, RRF), 23.11%).",92.69,,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p12,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r8c3=92.69%@ColNomic-3B (Ours, adopted) [38]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r1c2=92.69@ColNomic-3B (zero-shot)/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r2c2=92.69 ( 0.00 )@ColNomic-3B + head-LoRA, gentle/5-DOT test R@5 (%)",3,,Table 4,no_mention,,False,True,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,fbd39790b1162795,wrong_cell,"We linearly anneal the learning rate from 2.5 × 10−4 to 1 × 10−6 for 50,000 steps in BF16 precision with
+purposely curated high quality datasets.",50,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r2c1,50.4,GPT-4o,Table 23: Win rate of human-annotated pairwise evaluation between Command A and different competitor > **Com**,Table 23: Win rate of human-annotated pairwise evaluation between Command A and different competitor,p5,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r2c1=50.4@GPT-4o/**Com**,1,,Table 23,no_mention,,False,True,
+fef0393e997ec51b184e39c712be63197d99fd46,a206213b3379585d,wrong_cell,"GPT-4+RAG tends to provide the most succinct responses, with a score of 3.2 out of 5, though we
+do not see this improvement with fine-tuned GPT-4+RAG.",3.2,fef0393e997ec51b184e39c712be63197d99fd46:17#r3c3,80%_±_4%,GPT-4,Table 18: Accuracy of base and fine-tuned models with and without RAG. > **+RAG**,Table 18: Accuracy of base and fine-tuned models with and without RAG.,p26,fef0393e997ec51b184e39c712be63197d99fd46:18#r3c3=3.2@GPT-4/**+RAG**,1,,Table 18,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,91fff026a5f675b4,wrong_cell,"Pages are treated as independent visual units; OCR
+is intentionally excluded since the text-baseline results
+in Section 5.1 (Table 4) confirm label fragmentation
+in their geometric context(for example, the strongest
+modern text retriever BGE-M3 + OCR plateaus at
+36.79% Recall@5 against ColNomic’s 92.69% on the
+424-pair test split).",36.79,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r7c3,36.79%,BGE-M3 + OCR [46],Table 4 > Recall@5,Table 4,p4,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r7c3=36.79%@BGE-M3 + OCR [46]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c1=36.79 [32.3, 41.5]@BGE-M3 + OCR/Overall (%)",2,Table 4,Table 4,true,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,4fab97726553098c,wrong_cell,"On this human-
+curated set—retrieving over the 237-page WYDOT-
+only slice of the index—the system attains 91.03% Re-
+call@5 (95% bootstrap CI [84.6, 96.2]) and, with the
+same local Qwen2.5-VL-7B answerer and Qwen2.5-VL-
+72B judge used throughout, 80.77% end-to-end judge
+accuracy (CI [71.8, 89.7]); the per-category breakdown.",91.03,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r5c2,"**91.03 [84.6, 96.2]**<br>**80.77 **",**Overall**,Table 1 > Recall@5 (%)<br>Ju,Table 1,p9,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r5c2=**91.03 [84.6, 96.2]**<br>**80.77 **@**Overall**/Recall@5 (%)<br>Ju",1,,Table 1,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,43a474425de19291,wrong_cell,"Setting the search recall@10 to 0.7 only results in a 2-3% drop in gold
+document recall with respect to using exhaustive search (Table 3).",10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p6,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,Table 3,Table 2,false,,False,True,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,891a4c3e0c11f159,bound,"Our retrieval performance is competitive
+(nDCG@5 = 0.4502), but the generation score
+(HM = 0.3774) is limited by an over-conservative
+Answerability Classifier that routes 69.8% of AN-.",0.4502,,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p5,e6f1d66c34b525dc480ced9902cf46419b6a37fa:0#r3c1=0.4502@NLP-CEIA-UFG (ours)/**nDCG@5**,1,,Table 1,no_mention,,False,True,
+141276ba659da6e5aca1d3499713104eb3ca3c78,6fadfb99900f2b96,wrong_cell,"Cosine Similarity
+0.5981
+0.5765
+Recall
+0.2462
+0.2910
+Factual Correctness
+0.1738
+0.2291
+Faithfulness
+0.8103
+0.8754
+ROUGE score
+0.0346
+0.0349.",0.5981,141276ba659da6e5aca1d3499713104eb3ca3c78:7#r1c1,**0.5981**,Cosine Similarity,"Table 8: Evaluation metrics comparing different parsers, > **Method 1**","Table 8: Evaluation metrics comparing different parsers,",p14,141276ba659da6e5aca1d3499713104eb3ca3c78:7#r1c1=**0.5981**@Cosine Similarity/**Method 1**,1,,Table 8,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,06f9f7fea1d383f5,wrong_cell,"On the 424-pair test split,
+tile-level retrieval lifts judge accuracy from 64.23%
+(full-page) to 68.77% (tile-level)—a +4.53 pp gain (Ta-
+ble 17)—well below the pre-declared 20 pp threshold;
+the retrieval-level gain is similar (76.89% →82.08%.",424,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r5c1,**78**,**Overall**,Table 1 > _𝑁_,Table 1,p20,413a184de4b1c752466fbfca3cd3b1f039f99d48:19#r5c1=**424**@**Overall**/_𝑁_,1,,Table 1,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,efb99b6b382eea28,wrong_cell,Search Recall@10.,10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p7,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,a8665750ccd293bb,wrong_cell,"For clarity, three Recall@5 figures recur
+in this paper and each is reported against a distinct
+evaluation set: 91.47% on the full 4,056-pair bench-
+mark (this section, our headline zero-shot number),
+92.69% on the 424-pair page-disjoint test split (the
+controlled baseline comparison of Table 4 and the rank
+metrics), and 91.03% on the human-curated 78-pair
+WYDOT anchor set (Section 4.1, Figure 1); the held-
+out Michigan transfer is 91.40% over the joint index.",91.47,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2,**91.47**,**Overall**,Table 6 > Zero-shot Recall@5 (%),Table 6,p13,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c2=**91.47**@**Overall**/Zero-shot Recall@5 (%),2,Table 4,Table 6,false,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,392985e015c9e416,wrong_cell,"The 16-query
+pilot set comprises: 12 queries drawn from the suc-
+cess/failure case studies in Section 6 (steel-stake spac-
+ing, MDC depth, stake-spacing table, wire-tie loca-
+tion, plus-symbol convention, diaphragm identification,
+edge-drain trench width, V-mesh end-strip height, scar-
+ification depth, drainage fabric layout, contour ditch
+placement) and 4 additional dimensional-accuracy and
+visual-interpretation queries from the primary bench-
+mark.",16,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c1,16,Visual,Table 1 > _𝑁_,Table 1,p29,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c1=16@Visual/_𝑁_|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c1=16@Hallucination/_𝑁_|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r8c2=60.85 (_−_16_._04)@ColPali + full-LM LoRA/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r8c5=16.1 [3.2, 29.0]@Pix2Struct-decode + MiniLM/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c5=16.1 [3.2, 29.0]@OCR + MiniLM/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c5=16.1 [3.2, 29.0]@VisionRAG (Pyramid, RRF)/CDOT",6,,Table 1,no_mention,,False,True,
+fef0393e997ec51b184e39c712be63197d99fd46,c7ee6d368165ccc0,wrong_cell,"In the baseline scenario, GPT-4 emerged as the top
+performer when integrated with RAG, securing a score of 80%.",80,fef0393e997ec51b184e39c712be63197d99fd46:17#r3c3,80%_±_4%,GPT-4,Table 18: Accuracy of base and fine-tuned models with and without RAG. > **+RAG**,Table 18: Accuracy of base and fine-tuned models with and without RAG.,p26,fef0393e997ec51b184e39c712be63197d99fd46:17#r3c3=80%_±_4%@GPT-4/**+RAG**,1,,Table 18,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e2ac00c6c5bb5fff,wrong_cell,"Result: ColNomic retrieves a correct-section specifi-
+cation sheet at 80.0% Recall@1 and 100.0% Re-
+call@5 among 1,913 candidates, the VLM extracts
+the correct numeric limit (including resolving symbolic
+𝑑/2) at 100%, and the end-to-end verdict accuracy with
+self-grounded thresholds reaches 100%—matching the
+injected-threshold ceiling (Table 13).",80.0,413a184de4b1c752466fbfca3cd3b1f039f99d48:12#r2c2,80.0,"+1,898 plan pages",Table 13 > R@1,Table 13,p17,"413a184de4b1c752466fbfca3cd3b1f039f99d48:12#r2c2=80.0@+1,898 plan pages/R@1",1,Table 13,Table 13,true,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,368749712a0df1de,wrong_cell,"Standard retrieval (rel.@5)
+—
+83.3%
+Verdict acc.",83.3,413a184de4b1c752466fbfca3cd3b1f039f99d48:13#r1c2,83.3%,Standard retrieval (rel.@5),Table 14 > Real plans,Table 14,p19,413a184de4b1c752466fbfca3cd3b1f039f99d48:13#r1c2=83.3%@Standard retrieval (rel.@5)/Real plans,1,,Table 14,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,4572471c7d68771a,wrong_cell,"Category
+𝑁
+R@1
+R@5
+MRR
+nDCG@10.",10,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5,10,comp_05,Table A.5 > Steps,Table A.5,p26,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5=10@comp_05/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r7c5=10@comp_07/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r2c1=_≈_0_._10 s (p50)@Retrieval / query/Cost,3,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,f25449efa5773d47,wrong_cell,"Retrieving the Governing Threshold
+The 100% verdict accuracy in Section 5.7 is ob-
+tained when the auditor is handed the pre-resolved
+numeric threshold.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p17,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,8da66c66795aa7fe,wrong_cell,"We
+replace manual authoring with an iterative procedure:
+for each target page and each of four reasoning cat-
+egories (Dimensional Accuracy, Visual Interpretation,
+Logical Reasoning, Hallucination Rate), a drafter VLM
+(Qwen2.5-VL-72B or Llama-3.2-90B-Vision in 4-bit
+NF4) writes a question conditioned on the page image,
+ColPali retrieves over the 1,898-page index, and if the
+target page is outside top-5 the drafter rephrases with
+a page-specific anchor (a plan ID, a labeled value, or
+a quoted note phrase).",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p9,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e3527e05f2018a60,wrong_cell,"Across three LoRA con-
+figurations, domain adaptation on the 3,211-pair in-
+domain training set does not improve Recall@5 on the
+5-DOT test split and significantly degrades unseen-
+agency transfer (Table 15).",15,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c1,15,Hallucination Rate,Table 2 > WYDOT,Table 2,p19,"413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c1=15@Hallucination Rate/WYDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r1c2=1/5@Qwen2.5-VL-7B (plain)/Non-compliant|413a184de4b1c752466fbfca3cd3b1f039f99d48:12#r1c1=15@Spec only/Cand.|413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c2=_≈_15@Tile-level (400 DPI)/Tiles/Page|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c4=28.3 [15.2, 41.3]@VisionRAG (Pyramid, RRF)/AZDOT",5,Table 15,Table 2,false,,False,True,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,e212deda3d5b46bf,wrong_cell,"We achieve nDCG@5 of 0.4502 (rank 17/38,
+Subtask A) and HM = 0.3774 (rank 24/29, Sub-
+task C).",0.4502,e6f1d66c34b525dc480ced9902cf46419b6a37fa:0#r3c1,0.4502,NLP-CEIA-UFG (ours),Table 1: Subtask A results (rank 17/38). > **nDCG@5**,Table 1: Subtask A results (rank 17/38).,p1,e6f1d66c34b525dc480ced9902cf46419b6a37fa:0#r3c1=0.4502@NLP-CEIA-UFG (ours)/**nDCG@5**,1,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,44f1038e0f06348b,wrong_cell,"All four
+categories reach ≥87% Recall@5, with Dimensional
+Accuracy as the strongest (95.37%); Logical Reason-
+ing, historically the hardest category for patch-level
+retrievers (it asks the agent to infer a rule from a
+note or table rather than match a page-unique numeric
+anchor), remains the (mildly) weakest at 87.64% but is
+now within 8 pp of the best—a substantial narrowing
+relative to PaliGemma-class backbones.",87,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2,"87.50 [68.8, 100.0]<br>68.75",Visual,Table 1 > Recall@5 (%)<br>Ju,Table 1,p13,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c3=[43.8, 87.5]@Visual/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r2c4=87@Dimensional Accuracy/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r4c3=87.26%@ColQwen2.5-v0.2 [7]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r4c2=87.64@Logical Reasoning/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r1c1=87.26 [84.0, 90.3]@ColQwen2.5-v0.2/Overall (%)",8,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,c0a8083fea21255d,wrong_cell,"Zero-shot Recall@5 is 91.47% over the full 4,056-
+pair benchmark—a deliberately demanding evaluation:
+the benchmark is two orders of magnitude larger than
+prior engineering-plan QA sets, spans five agencies
+with heterogeneous drafting conventions, and is gener-
+ated by an adversarial refine-loop that explicitly seeks
+page-distinguishing anchors.",91.47,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2,**91.47**,**Overall**,Table 6 > Zero-shot Recall@5 (%),Table 6,p13,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c2=**91.47**@**Overall**/Zero-shot Recall@5 (%),2,,Table 6,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,9bd1047776e8ec44,wrong_cell,"• Recall@5 (Retrieval Hit): The percentage of
+queries for which the correct standard-plan page
+appears in the Top-5 retrieved results [41].",41,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c5,"25.8 [9.7, 41.9]",DSE-Qwen2-2B,Table A.2 > CDOT,Table A.2,p10,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c5=25.8 [9.7, 41.9]@DSE-Qwen2-2B/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c1=36.79 [32.3, 41.5]@BGE-M3 + OCR/Overall (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c5=41.9 [25.8, 58.1]@BGE-M3 + OCR/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c4=28.3 [15.2, 41.3]@VisionRAG (Pyramid, RRF)/AZDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r12c5=41.9 [25.8, 58.1]@HPC-ColPali (BQ)/CDOT",5,,,no_mention,,False,True,
+fef0393e997ec51b184e39c712be63197d99fd46,070c50d7c422a97e,wrong_cell,"When it came to the fine-tuned models, GPT-4 displayed exceptional performance, securing an
+accuracy of 86% with RAG and 81% without RAG.",86,fef0393e997ec51b184e39c712be63197d99fd46:17#r3c3,80%_±_4%,GPT-4,Table 18: Accuracy of base and fine-tuned models with and without RAG. > **+RAG**,Table 18: Accuracy of base and fine-tuned models with and without RAG.,p26,fef0393e997ec51b184e39c712be63197d99fd46:17#r5c3=86%_±_2%@GPT-4/**+RAG**,1,,Table 18,no_mention,,False,True,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,53eefb256ffc6c70,wrong_cell,"For our final model, we manage
+an absolute improvement of more than seven percentage points in win rate on the general subset (43.2 →
+50.4), 10 points on reasoning (41.4 →51.4), and almost 17 points (30.0 →46.8) on code.",50.4,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r2c1,50.4,GPT-4o,Table 23: Win rate of human-annotated pairwise evaluation between Command A and different competitor > **Com**,Table 23: Win rate of human-annotated pairwise evaluation between Command A and different competitor,p38,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r2c1=50.4@GPT-4o/**Com**,1,,Table 23,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,b28651abdeb64f79,wrong_cell,"judge recipe that reaches 100% on the synthetic set—
+Qwen2.5-VL-72B with CoT and the governing rule
+supplied—the model reads the proposed value off the
+real sheet and reaches 100% verdict accuracy, cor-
+rectly judging even the rotated slope-ratio callouts.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p18,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,48cc5b0f608c4fa8,wrong_cell,"To test H2, we pre-declare three thresholds: ≥90%
+verdict accuracy on the CAD-generated single-doc com-
+pliance set (Section 5.7), ≥90% false-positive avoid-
+ance on a PASS set, and ≥60% sensitivity on a
+FAIL set.",90,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r5c2,90.29,CDOT,Table 6 > Zero-shot Recall@5 (%),Table 6,p14,"413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r5c2=90.29@CDOT/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:10#r3c3=90%@_𝑛_=10 multi-plan (pilot)/Overall|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r8c3=75.27 (_−_12_._90)@ColPali + full-LM LoRA/Michigan R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r1c1=87.26 [84.0, 90.3]@ColQwen2.5-v0.2/Overall (%)",4,,Table 6,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,c07de397f12c5176,wrong_cell,"On the 8-query PASS set, the agentic pipeline
+reaches 100% verdict accuracy.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p14,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,40072c4abc96832c,wrong_cell,"above for k = 10 documents in the prompt, and simply bin the queries depending on the retriever
+recall (i.e.",10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p5,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,1c48f87e8c94a716,wrong_cell,"We evaluate the
+verdict accuracy of five judge configurations on the
+𝑛=10 single-doc CAD set: (a) Qwen2.5-VL-7B with
+a plain JSON verdict prompt, (b) Qwen2.5-VL-7B
+with chain-of-thought (CoT) reasoning, (c) Qwen2.5-
+VL-72B (4-bit NF4) with the same plain prompt,
+(d) Qwen2.5-VL-72B with CoT plus per-drawing pre-
+resolved rule thresholds injected into the prompt (e.g.,
+for a 30” beam, 𝑠max=𝑑/2=15”), and (e) the same
+72B-CoT-thresholds judge wrapped inside the multi-
+agent Planner–Auditor–Synthesizer pipeline.",10,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5,10,comp_05,Table A.5 > Steps,Table A.5,p15,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5=10@comp_05/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r7c5=10@comp_07/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r2c1=_≈_0_._10 s (p50)@Retrieval / query/Cost,3,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,dcffde4606c2f2ce,wrong_cell,"This pipeline reaches 76.4% verdict accuracy, but
+the per-archetype breakdown is the informative part:
+it scores 100% where the governing value is a clean
+horizontal leader-line label (culvert cover, inlet grate
+opening) and collapses to ≈50% where the dimension
+is rendered as rotated vertical text (guardrail footing
+depth, sign-post anchor embedment) or sits among
+distractor values (rebar stirrup spacing).",76.4,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r6c3,**76.4**,**Overall**,Table 12 > OCR acc,Table 12,p17,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r6c3=**76.4**@**Overall**/OCR acc,1,,Table 12,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,228ddf3d9fbec8a1,wrong_cell,"The planner
+produces more steps than necessary, averaging 8.6
+steps compared with the minimum of 2, representing a
+latency-vs-accuracy trade-off: it ensures comprehensive
+visual auditing across all standard plan components
+at the expense of sequential VLM passes.",8.6,413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r5c2,∼8_._6 sequential steps,Agentic audit / query,Table A.8 > Notes,Table A.8,p16,413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r5c2=∼8_._6 sequential steps@Agentic audit / query/Notes,1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e50feec83522353e,wrong_cell,"Local Vision: The comparison be-
+tween CLIP and ColPali reveals a stark “granularity
+gap.” CLIP, which compresses an entire document page
+into a single global vector, achieved Recall@5 of only
+1.89%, confirming that global embeddings fail to resolve
+the fine-grained details of engineering schematics.",1.89,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r9c3,1.89%,CLIP ViT-B/32 [20],Table 4 > Recall@5,Table 4,p11,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r9c3=1.89%@CLIP ViT-B/32 [20]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c1=1.89 [0.7, 3.3]@CLIP ViT-B/32/Overall (%)",2,,Table 4,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,5d6c604940586b81,wrong_cell,"The 8-query PASS set is
+small and measures only false-positive avoidance (it
+contains no FAIL cases); its 100% accuracy clears
+the pre-declared 90% false-positive threshold, while
+the pre-declared ≥90% verdict accuracy on the CAD-
+generated set is met (Section 5.7).",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p14,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+be7c4dc39030508deb495c9f689526ca1b4289cf,8362518e00c27611,wrong_cell,"Our best configuration uses GPT-5.2 with full schema, RAG, and a second-pass auditing,
+achieving 80.36% F1 score.",5.2,be7c4dc39030508deb495c9f689526ca1b4289cf:1#r5c4,77.32,GPT-5.2,Table 2: Performance (%) across Llama 4 and GPT-5.2 with schema/RAG configurations. Values are > _F_1 **score**,Table 2: Performance (%) across Llama 4 and GPT-5.2 with schema/RAG configurations. Values are,p1,,0,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,fd86d6291dbd61e3,bound,Recall@5: 92.69%.,92.69,,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p2,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r8c3=92.69%@ColNomic-3B (Ours, adopted) [38]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r1c2=92.69@ColNomic-3B (zero-shot)/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r2c2=92.69 ( 0.00 )@ColNomic-3B + head-LoRA, gentle/5-DOT test R@5 (%)",3,,Table 4,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,13b712b6f92ecaa6,bound,"ColNomic’s 92.69% Recall@5 sits 55.90 pp
+above the strongest text retriever and 69.58 pp above
+the strongest hybrid, indicating that the information
+loss occurs at the OCR step itself rather than at the
+embedder.",92.69,,92.69%,"ColNomic-3B (Ours, adopted) [38]",Table 4 > Recall@5,Table 4,p12,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r8c3=92.69%@ColNomic-3B (Ours, adopted) [38]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r1c2=92.69@ColNomic-3B (zero-shot)/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r2c2=92.69 ( 0.00 )@ColNomic-3B + head-LoRA, gentle/5-DOT test R@5 (%)",3,,Table 4,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,10cc785f8d0b51b1,wrong_cell,"Impact of high-resolution tiling on failure
+modes: To test H4, we pre-declare a ≥20 pp judge-
+accuracy gain as the threshold for tiling to count
+as a material improvement and compare full-page
+retrieval at 200 DPI against tile-level retrieval at
+400 DPI (1024×1024 crops with 256-pixel overlap) on
+the 424-pair page-disjoint test split over the full 1,898-
+page five-DOT visual index, holding the retriever fixed
+across both granularities (this tiling ablation uses the
+predecessor ColPali backbone).",20,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3,"20.1 [13.4, 26.9]",DSE-Qwen2-2B,Table A.2 > Caltrans,Table A.2,p20,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3=20.1 [13.4, 26.9]@DSE-Qwen2-2B/Caltrans|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r8c2=11.3 [3.8, 20.8]@Pix2Struct-decode + MiniLM/WYDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c2=34.0 [20.8, 47.2]@OCR + MiniLM/WYDOT",3,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,72205fda1506215f,wrong_cell,"A 100% verdict-accuracy claim on a single judge
+configuration is unconvincing without a credible failure
+mode.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p14,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,94d1df7a5f7aa509,wrong_cell,"This leads to consistently
+robust retrieval performance, maintaining over 91%
+Recall@5 across five DOTs using off-the-shelf patch-
+level embeddings.",91,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r5c2,"**91.03 [84.6, 96.2]**<br>**80.77 **",**Overall**,Table 1 > Recall@5 (%)<br>Ju,Table 1,p21,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r5c2=**91.03 [84.6, 96.2]**<br>**80.77 **@**Overall**/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r3c3=91.27%@ColNomic-7B [38]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r2c2=91.27@FDOT/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r3c2=91.92@Caltrans/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)",8,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,8b2e4470dafddf8c,wrong_cell,"Rank-
+sensitive metrics (Recall@1, MRR, nDCG@10) on the
+page-disjoint test split are reported in Appendix D
+(Table A.3).",10,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5,10,comp_05,Table A.5 > Steps,Table A.5,p13,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5=10@comp_05/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r7c5=10@comp_07/Steps|413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r2c1=_≈_0_._10 s (p50)@Retrieval / query/Cost,3,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,bce48a5277e061af,wrong_cell,"for the standardized 24” column) transfers the path
+A fix to the multi-plan pipeline and yields 100/100
+= 100% verdict accuracy (48/48 compliant +
+52/52 non-compliant, 25/25 at every 𝑁∈{2, 3, 4, 5}),
+confirming that the verdict accuracy is invariant to 𝑁
+once arithmetic-derived thresholds are pre-resolved.",24,413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r6c2,76.65 (_−_0_._24),"ColPali + head-LoRA, gentle",Table 15 > 5-DOT test R@5 (%),Table 15,p16,"413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r6c2=76.65 (_−_0_._24)@ColPali + head-LoRA, gentle/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c6=24.4 [17.5, 31.2]@OCR + MiniLM/FDOT",2,,Table 15,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,a04bb8ae80a2e447,wrong_cell,"stead of hand-injecting the rule, the agent re-
+trieves the governing requirement from a speci-
+fication corpus (Recall@5 = 100% among 1,913
+candidates), extracts its numeric limit (resolv-
+ing symbolic 𝑑/2), and audits against the self-
+grounded threshold, matching the 100% ceiling
+with no human-supplied rule.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p3,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,c8970fd1e4d8d477,wrong_cell,"PlanSightRAG achieves 91.47%
+Recall@5 on zero-shot retrieval, while on a held-out Michigan DOT corpus, it achieves
+91.40%.",91.47,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2,**91.47**,**Overall**,Table 6 > Zero-shot Recall@5 (%),Table 6,p2,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c2=**91.47**@**Overall**/Zero-shot Recall@5 (%),2,,Table 6,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,2a9d163dafda236a,wrong_cell,"The patch-level representation trans-
+fers zero-shot to an unseen sixth agency at 91.40%
+Recall@5 over the joint index, essentially matching in-
+distribution performance (91.47%).",91.40,413a184de4b1c752466fbfca3cd3b1f039f99d48:20#r1c3,**91.40**,"Joint (1_,_898+298)",Table A.4 > R@5,Table A.4,p21,"413a184de4b1c752466fbfca3cd3b1f039f99d48:20#r1c3=**91.40**@Joint (1_,_898+298)/R@5",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,06f6ba283cead660,wrong_cell,"[50], with text embedded by MiniLM, so only the page-
+to-text step varies—also collapse on engineering draw-
+ings (0.47%, 7.31%, and 0.00% Recall@5).",50,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c2,"75.00 [50.0, 93.8]<br>81.25",Hallucination,Table 1 > Recall@5 (%)<br>Ju,Table 1,p12,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c2=75.00 [50.0, 93.8]<br>81.25@Hallucination/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r2c3=50%@Qwen2.5-VL-7B (CoT)/Overall|413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r5c3=50.0@Rebar/OCR acc|413a184de4b1c752466fbfca3cd3b1f039f99d48:17#r2c3=59.17 [50.0, 68.3]@Qwen2.5-VL-7B/Judge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:24#r2c1=_≈_0_._10 s (p50)@Retrieval / query/Cost",5,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,d24254e1fd3b8725,wrong_cell,"To test H1, we pre-declare the acceptance threshold
+as a ≥15 pp Recall@5 margin over the strongest text-
+based and hybrid baselines and compare patch-level
+visual retrieval (ColPali) against a broad set of strong
+modern retrieval baselines, including the 2025–2026 Vi-
+DoRe state of the art: NVIDIA Nemotron-ColEmbed-
+8B/4B [43] (Qwen3-VL backbones) and ColNomic-
+3B/7B [38], along with ColQwen2.5-v0.2 and ColPali-
+v1.3 [7], DSE-Qwen2-2B [44], VisRAG-Ret [45], and
+BGE-M3 with OCR [46]—alongside seven legacy base-
+lines (CLIP, LayoutLMv3, Nougat, Pix2Struct, UDOP,
+OCR+MiniLM, VisionRAG-Pyramid) and a binary-
+quantized HPC-ColPali variant.",15,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c1,15,Hallucination Rate,Table 2 > WYDOT,Table 2,p11,"413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r4c1=15@Hallucination Rate/WYDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r1c2=1/5@Qwen2.5-VL-7B (plain)/Non-compliant|413a184de4b1c752466fbfca3cd3b1f039f99d48:12#r1c1=15@Spec only/Cand.|413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c2=_≈_15@Tile-level (400 DPI)/Tiles/Page|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c4=28.3 [15.2, 41.3]@VisionRAG (Pyramid, RRF)/AZDOT",5,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,aea97bc5af7a089f,wrong_cell,"On the choice of retriever: Several 2025–2026
+retrievers outperform zero-shot ColPali on this benchma-
+rk—-Nemotron-ColEmbed-8B reaches 95.28% Recall@5.",95.28,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r1c3,95.28%,Nemotron-ColEmbed-8B [43],Table 4 > Recall@5,Table 4,p11,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r1c3=95.28%@Nemotron-ColEmbed-8B [43]/Recall@5,1,,Table 4,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,badaecc87dbe25a3,wrong_cell,"On synthetic, parametrically-generated compliance drawings, our Qwen2.5-
+VL-72B pipeline reaches 100% verdict accuracy only when supplied a pre-resolved rule
+threshold, a controlled ceiling that a non-VLM OCR baseline already reaches at 76.4%.",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p2,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,8d161172e8643025,wrong_cell,"Although overall retrieval accuracy is high, several
+queries received a judge score of 0.0.",0.0,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r5c2,0.0,Rebar,Table 12 > OCR found,Table 12,p19,"413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r5c2=0.0@Rebar/OCR found|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c2=0.0 [0.0, 0.0]@CLIP ViT-B/32/WYDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c3=0.0 [0.0, 0.0]@CLIP ViT-B/32/Caltrans|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c5=0.0 [0.0, 0.0]@CLIP ViT-B/32/CDOT|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c1=0.00 [0.0, 0.0]@LayoutLMv3/Overall (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c2=0.0 [0.0, 0.0]@LayoutLMv3/WYDOT",23,,Table 12,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,2e04042c1df62870,wrong_cell,"In
+contrast, patch-level ColPali achieves 76.89% Recall@5,
+demonstrating that retaining spatial resolution is non-
+negotiable for this domain.",76.89,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r16c3,76.89%,ColPali (predecessor backbone) [7],Table 4 > Recall@5,Table 4,p11,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r16c3=76.89%@ColPali (predecessor backbone) [7]/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:4#r1c1=76.89@ColPali (Stage 1 only)/Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:7#r1c2=76.89@Zero-shot/Qwen-72B|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r5c2=76.89@ColPali (zero-shot)/5-DOT test R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r1c1=76.89@Full-page (200 DPI)/R@5 (%),5,,Table 4,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,0da26668488ae0c3,wrong_cell,"The agentic pipeline
+(Qwen2.5-VL-72B 4-bit backbone) achieves 9/10 =
+90% verdict accuracy on this pilot.",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p16,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,96d01b95b473ced6,wrong_cell,"12, left) is a far bigger factor for QA performance than search
+recall (Fig.",12,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r4c3,30.168 - 34.227,1,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **M Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p6,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r4c3=12.779 - 16.08@1/**M Recall**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c5=8.664 - 12.171@20/**ation Recall**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r3c3=12.2 -@0/**M Recall**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r4c3=12.58 -@1/**M Recall**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r6c3=12.62 - 1@3/**M Recall**,5,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,110196e7796515c2,wrong_cell,"DOT corpus (298 pages, 93 verified pairs) at 91.40%
+Recall@5 over the combined 1, 898+298-page index—
+essentially matching in-distribution performance (over-
+all 91.47%) on an agency never seen during indexing,
+drafting, or training (the 298-page Michigan-only pool
+yields a higher 93.55%, but that smaller candidate set
+is not directly comparable to the joint-index agency
+numbers; Appendix D).",298,413a184de4b1c752466fbfca3cd3b1f039f99d48:20#r2c1,298,Michigan-only,Table A.4 > # Candidates,Table A.4,p19,413a184de4b1c752466fbfca3cd3b1f039f99d48:20#r2c1=298@Michigan-only/# Candidates,1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,484a96ec851df107,wrong_cell,"Scaling
+The 4,056-pair benchmark inherently evaluates
+cross-agency scaling: retrieval stays high and balanced
+across all five agencies (89–93% Recall@5; Section 5.2),
+so the late-interaction embeddings retain discrimina-
+tive power despite diverse drafting conventions.",056,413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r5c6,"**4,056**",**Total**,Table 2 > Total,Table 2,p18,"413a184de4b1c752466fbfca3cd3b1f039f99d48:1#r5c6=**4,056**@**Total**/Total|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c1=**4,056**@**Overall**/_𝑁_|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c1=**4,056**@**Overall**/_𝑁_",3,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,efa174f4ee7944aa,wrong_cell,"The 100% accuracy reported in Section 5.6 is
+measured on an all-PASS ground-truth set and there-
+fore characterises the pipeline’s false-positive rejec-
+tion avoidance rather than its false-negative violation-
+detection sensitivity.",100,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2,"100.00 [100.0, 100.0]<br>79.31",Dimensional,Table 1 > Recall@5 (%)<br>Ju,Table 1,p27,"413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2=100.00 [100.0, 100.0]<br>79.31@Dimensional/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2=87.50 [68.8, 100.0]<br>68.75@Visual/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2=94.12 [82.4, 100.0]<br>94.12@Logical/Recall@5 (%)<br>Ju|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3=[82.4, 100.0]@Logical/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3=[62.5, 100.0]@Hallucination/dge (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3=**100%**@**Qwen2.5-VL-72B (CoT + thresholds)**/Overall",34,,Table 1,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,bb2a2db1b08fec21,wrong_cell,"Tile-level Recall@5 (82.08%) exceeds full-page Re-
+call@5 (76.89%) by 5.19 pp, consistent with the hypoth-
+esis that high-DPI tiling preserves the fine-grained line
+work and annotation density that 200 DPI page-level
+rasterization loses.",82.08,413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c1,82.08,Tile-level (400 DPI),Table 16 > R@5 (%),Table 16,p20,413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c1=82.08@Tile-level (400 DPI)/R@5 (%),1,,Table 16,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,4dab8bf76db4a05b,wrong_cell,"A first scale-up
+run with the original textual d/2 threshold confirms
+the pilot’s failure mode at scale: 88/100 = 88% verdict
+accuracy, with all 12 misses concentrated in the 𝑁=5
+pier subset (13/25 at 𝑁=5; perfect 25/25 at 𝑁=2, 3, 4).",88,413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r1c2,88.84,Hallucination Rate,Table 7 > Zero-shot Recall@5 (%),Table 7,p16,"413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r1c2=88.84@Hallucination Rate/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:9#r5c1=88/100 (88%)@**Total**/Before `d/2` fix|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r5c3=88.17@ColPali (zero-shot)/Michigan R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r6c3=88.17 ( 0.00 )@ColPali + head-LoRA, gentle/Michigan R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r7c3=88.17 ( 0.00 )@ColPali + head-LoRA, standard/Michigan R@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:19#r3c3=88.33@Logical/R@5",6,,Table 7,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,c7b8dc46f6c6fa0c,wrong_cell,"High-
+resolution tiling gives a modest, consistent lift: tile-
+level retrieval reaches 82.08% Recall@5 versus 76.89%
+for full-page (+5.19 pp), and judge accuracy rises from
+64.23% to 68.77% (+4.53 pp).",82.08,413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c1,82.08,Tile-level (400 DPI),Table 16 > R@5 (%),Table 16,p21,413a184de4b1c752466fbfca3cd3b1f039f99d48:15#r2c1=82.08@Tile-level (400 DPI)/R@5 (%),1,,Table 16,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,9c48d24d9a54aa09,wrong_cell,"While the
+framework is model-agnostic and supports lightweight
+backbones (such as Qwen 2.5-VL-7B for resource-
+constrained local deployment), we scale the backbone
+to Qwen 2.5-VL-72B for the primary high-accuracy
+evaluations reported in Section 5.7:.",2.5,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6,"2.5 [0.6, 5.0]",CLIP ViT-B/32,Table A.2 > FDOT,Table A.2,p8,"413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c6=2.5 [0.6, 5.0]@CLIP ViT-B/32/FDOT",1,,,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,f7bc7cb507298c11,wrong_cell,"Accuracy: The binary-quantization
+variant (HPC-ColPali) compresses the visual index by
+16.0× (477.74 MB to 29.86 MB) and retains 65.09%
+Recall@5—within 11.79 pp of full-precision ColPali.",65.09,413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r17c3,65.09%,HPC-ColPali (Binary Quantized),Table 4 > Recall@5,Table 4,p12,"413a184de4b1c752466fbfca3cd3b1f039f99d48:3#r17c3=65.09%@HPC-ColPali (Binary Quantized)/Recall@5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r12c1=65.09 [60.6, 69.6]@HPC-ColPali (BQ)/Overall (%)",2,,Table 4,no_mention,,False,True,
+f3b06a91470232d1587b194e2bc82fa9a50f3c9f,141a3a20ed69a19d,wrong_cell,"Recall@10
+Mean
+95% CI.",10,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:1#r10c5,56.205 - 60.759,20,"Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents, > **ation Recall**","Table 2: Performance on ASQA with Mistral and various numbers of ColBERT retrieved documents,",p7,f3b06a91470232d1587b194e2bc82fa9a50f3c9f:13#r10c4=10.378@20/**Cit**|f3b06a91470232d1587b194e2bc82fa9a50f3c9f:15#r10c5=6.859 - 10.063@20/**ation Recall**,2,,Table 2,no_mention,,False,True,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,a3647eab3c65087a,wrong_cell,"• ColNomic-3B reaches 91.47% Recall@5 on a new 4,056-pair five-DOT benchmark.",91.47,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2,**91.47**,**Overall**,Table 6 > Zero-shot Recall@5 (%),Table 6,p1,413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r6c2=**91.47**@**Overall**/Zero-shot Recall@5 (%)|413a184de4b1c752466fbfca3cd3b1f039f99d48:6#r5c2=**91.47**@**Overall**/Zero-shot Recall@5 (%),2,,Table 6,no_mention,,False,True,

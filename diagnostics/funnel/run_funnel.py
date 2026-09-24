@@ -136,7 +136,15 @@ def _install_binder_probe(paper_id: str):
                         "row_matches_subject": row_ok,
                         "value_match": val_hits,
                     })
+            n_value_matching = sum(
+                1 for c in cells
+                if any(n == _re.sub(r"[^\d.\-]", "", str(c.get("value", "")))
+                       or _re.search(r"(?<![\d.])" + _re.escape(n) + r"(?![\d])",
+                                     str(c.get("value", "")))
+                       for n in nums))
             detail = {
+                "n_value_matching_cells": n_value_matching,
+                "r4": out.get("r4"),
                 "claim_text": value,
                 "claim_value_raw": nums,
                 "claim_value_normalized": nums,   # the binder never normalises this side
@@ -344,6 +352,7 @@ def _install_gate_probe(paper_id: str):
                                     "attribution_confidence":
                                         it.get("attribution_confidence"),
                                     "ownership_flag": it.get("ownership_flag"),
+                                    "r4": sb.get("r4"),
                                     "range_check": it.get("range_check"),
                                     "provenance_valid": it.get("provenance_valid")},
                             code_location=LOC_RETURN)
@@ -595,6 +604,8 @@ def _run_metadata(arm: str, trace: bool) -> dict:
         "arm": arm,
         "claim_extractor": os.environ.get("RGPT_CLAIM_EXTRACTOR") or "from config",
         "ownership_policy": os.environ.get("RGPT_OWNERSHIP_POLICY") or "from config",
+        "disambiguation_policy": (os.environ.get("RGPT_DISAMBIGUATION_POLICY")
+                                  or "from config"),
         "python": sys.version,
         "platform": sys.platform,
         "pip_freeze": sh(sys.executable, "-m", "pip", "freeze").splitlines(),
@@ -621,6 +632,8 @@ def main() -> int:
                     help="override evidence_grounding.claim_extractor for this run")
     ap.add_argument("--ownership-policy", choices=("block", "warn"), default=None,
                     help="override evidence_grounding.ownership_policy for this run")
+    ap.add_argument("--disambiguation-policy", choices=("legacy", "scored"), default=None,
+                    help="override evidence_grounding.disambiguation_policy for this run")
     ap.add_argument("--out-root", default=None,
                     help="base directory for --out (default diagnostics/funnel/out)")
     a = ap.parse_args()
@@ -663,6 +676,8 @@ def main() -> int:
             cmd += ["--claim-extractor", a.claim_extractor]
         if a.ownership_policy:
             cmd += ["--ownership-policy", a.ownership_policy]
+        if a.disambiguation_policy:
+            cmd += ["--disambiguation-policy", a.disambiguation_policy]
         if trace_path:
             cmd += ["--trace-path", str(trace_path)]
         env = {**os.environ, "PYTHONIOENCODING": "utf-8",
@@ -671,6 +686,8 @@ def main() -> int:
             env["RGPT_CLAIM_EXTRACTOR"] = a.claim_extractor
         if a.ownership_policy:
             env["RGPT_OWNERSHIP_POLICY"] = a.ownership_policy
+        if a.disambiguation_policy:
+            env["RGPT_DISAMBIGUATION_POLICY"] = a.disambiguation_policy
         p = subprocess.run(cmd, capture_output=True, text=True, env=env)
         if MARKER in p.stdout:
             results[pid] = json.loads(p.stdout.split(MARKER, 1)[1].strip())
