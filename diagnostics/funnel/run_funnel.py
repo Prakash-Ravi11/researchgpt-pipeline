@@ -212,7 +212,8 @@ def _emit_attach_detail(b, grid, tid, paper_id, collapse_header_ws):
                         "raw_rows": 0, "raw_cols": 0, "block_text": block_text[:4000],
                         "gate_result": "no_grid", "discards": {},
                         "discarded_values": [], "attached_cell_ids": [],
-                        "attached_values": [], "caption": b.get("table_caption") or ""})
+                        "attached_values": [], "raw_grid": [], "gated_rows": [],
+                        "caption": b.get("table_caption") or ""})
         return
 
     g = _norm(grid)
@@ -291,6 +292,15 @@ def _emit_attach_detail(b, grid, tid, paper_id, collapse_header_ws):
                                         "caption": c.get("caption", "")}
                                        for c in (b.get("table_cells") or [])],
                     "block_text": block_text[:4000],
+                    # The RAW grid, before represent_layout.py:96 decides that row 0
+                    # is the only header row, plus the rows that survived the gate.
+                    # Read-only: both are re-derived from the pure _gate_grid call
+                    # above and change nothing.
+                    "raw_grid": [[str(c)[:200] for c in row[:30]]
+                                 for row in g[:40]],
+                    "gated_header": header,
+                    "gated_rows": [[str(c)[:200] for c in row[:30]]
+                                   for row in kept[:40]],
                     "caption": b.get("table_caption") or ""})
 
 

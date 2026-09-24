@@ -20,3 +20,5 @@ out/ownership_block/trace.jsonl
 out/ownership_block/results.json
 out/ownership_warn/trace.jsonl
 out/ownership_warn/results.json
+out/binding_breakdown/trace.jsonl
+out/binding_breakdown/results.json

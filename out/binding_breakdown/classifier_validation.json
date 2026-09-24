@@ -1,0 +1,358 @@
+{
+ "struct1_classified_as": "METRIC_IN_DROPPED_HEADER_ROW",
+ "struct1_expected": "METRIC_IN_DROPPED_HEADER_ROW",
+ "classifier_validated": true,
+ "cases": [
+  {
+   "id": "CORE-1",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "CORE-2",
+   "binding_status": "not_a_table_claim",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 0,
+    "candidates": [],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "REF-0",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "REF-1",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-1",
+   "binding_status": "bound",
+   "extracted_metric": "correlation",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Correlation"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "−0.4",
+      "row_label": "Ours",
+      "col_header": "Correlation",
+      "header_stack": [
+       "Correlation"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-2",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3 ± 0.4",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-3",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3†",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-4",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3*",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-5",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "**Model**",
+    "**Accuracy (%)**"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "**92.3**",
+      "row_label": "Ours",
+      "col_header": "**Accuracy (%)**",
+      "header_stack": [
+       "**Accuracy (%)**"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-6",
+   "binding_status": "bound",
+   "extracted_metric": "accuracy",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3 %",
+      "row_label": "Ours",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "NORM-7",
+   "binding_status": "bound",
+   "extracted_metric": "mae",
+   "sub_reason": "OTHER",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "MAE"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "1.2 × 10^-4",
+      "row_label": "Ours",
+      "col_header": "MAE",
+      "header_stack": [
+       "MAE"
+      ]
+     }
+    ],
+    "note": "metric appears somewhere in the paper but not at or above any candidate cell"
+   }
+  },
+  {
+   "id": "STRUCT-1",
+   "binding_status": "not_bindable",
+   "extracted_metric": "f1",
+   "sub_reason": "METRIC_IN_DROPPED_HEADER_ROW",
+   "n_cells": 4,
+   "gated_header": [
+    "",
+    "CIFAR-10",
+    "CIFAR-10"
+   ],
+   "evidence": {
+    "n_candidate_cells": 1,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "0.87",
+      "row_label": "Ours",
+      "col_header": "CIFAR-10",
+      "header_stack": [
+       "CIFAR-10",
+       "F1"
+      ]
+     }
+    ],
+    "hits": [
+     {
+      "table_id": "FIXTURE:0",
+      "cell_value": "0.87",
+      "kept_col_header": "CIFAR-10",
+      "grid_row": 0,
+      "text": "F1",
+      "row_is_header_like": true
+     }
+    ]
+   }
+  },
+  {
+   "id": "AMBIG-1",
+   "binding_status": "wrong_cell",
+   "extracted_metric": "accuracy",
+   "sub_reason": "WRONG_CELL",
+   "n_cells": 2,
+   "gated_header": [
+    "Model",
+    "Accuracy (%)"
+   ],
+   "evidence": {
+    "n_candidate_cells": 2,
+    "candidates": [
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3",
+      "row_label": "Method A",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)"
+      ]
+     },
+     {
+      "table_id": "FIXTURE:0",
+      "value": "92.3",
+      "row_label": "Method B",
+      "col_header": "Accuracy (%)",
+      "header_stack": [
+       "Accuracy (%)",
+       "92.3"
+      ]
+     }
+    ],
+    "chosen_row": "Method A",
+    "chosen_col": "Accuracy (%)",
+    "metric_matched_chosen_header": true
+   }
+  }
+ ]
+}
