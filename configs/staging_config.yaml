@@ -71,3 +71,8 @@ evidence_grounding:
   # acquired as LaTeX is kept only if verbatim survival of its ground-truth
   # numeric values is >= the paired PDF's, minus this tolerance. 0.0 = strict.
   latex_parity_tolerance: 0.0
+  # Diagnostic funnel tracing (diagnostics/funnel/). OFF by default, and read by
+  # nothing in src/ — only diagnostics/funnel/funnel_trace.py consults it. When
+  # false, emit() returns immediately and opens no file. Flipping it on changes
+  # no pipeline behaviour; it only writes a JSONL trace alongside the run.
+  funnel_trace_enabled: false

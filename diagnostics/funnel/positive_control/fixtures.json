@@ -1,0 +1,153 @@
+{
+ "_about": {
+  "purpose": "Positive control for the 142->3->0 diagnosis. Each case is fed to the binder at two levels. L1 calls src.evidence.gate.structural_bind directly with cells built by src.evidence.schema.table_cell -- the binder's real input type -- bypassing everything else. L2 injects the same table as a RAW GRID through src.evidence.represent_layout._attach, which is the real quality gate, then chunk_document, then gate_paper. Neither level modifies any pipeline function.",
+  "grid": "First row is the header row. Column 0 holds the row label, exactly as _layout_table_cells assumes (represent_layout.py:96-114).",
+  "cells_override": "Present only where the fixture must hand the binder a cell the real parser cannot construct (STRUCT-1's composed multi-level header). Everywhere else L1 cells are derived from the grid by the same rule the parser uses, minus the quality gate.",
+  "expected": "BIND = structural_bind returns status 'bound' at the named cell. NO_BIND = it returns anything else. RECORD_ONLY = no expectation; the outcome is recorded, not scored."
+ },
+ "cases": [
+  {
+   "id": "CORE-1",
+   "category": "core",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "CORE-2",
+   "category": "core_negative",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 95.1% accuracy (Table 1).",
+   "expected": "NO_BIND",
+   "expected_cell": null
+  },
+  {
+   "id": "REF-0",
+   "category": "reference",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 92.3% accuracy.",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "REF-1",
+   "category": "reference",
+   "label": "Table II",
+   "caption": "Table II: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3"], ["Baseline", "88.1"]],
+   "claim": "Our model reaches 92.3 accuracy (Tab. II).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "NORM-1",
+   "category": "normalization",
+   "note": "cell uses U+2212 MINUS SIGN; claim uses U+002D HYPHEN-MINUS. Correlation is used rather than accuracy so metric_range_check admits a negative value at L2.",
+   "label": "Table 1",
+   "caption": "Table 1: Correlation on the benchmark.",
+   "grid": [["Model", "Correlation"], ["Ours", "−0.4"], ["Baseline", "0.1"]],
+   "claim": "Our model achieves -0.4 correlation (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Correlation"}
+  },
+  {
+   "id": "NORM-2",
+   "category": "normalization",
+   "note": "value with a stated standard deviation",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3 ± 0.4"], ["Baseline", "88.1 ± 0.6"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "NORM-3",
+   "category": "normalization",
+   "note": "dagger footnote marker",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3†"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "NORM-4",
+   "category": "normalization",
+   "note": "asterisk significance marker",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3*"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "NORM-5",
+   "category": "normalization",
+   "note": "bold exactly as the current parser emits it: pymupdf4llm markdown keeps the ** markers and _parse_pipe_tables does not strip them (measured: 329 such values in the reference run).",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["**Model**", "**Accuracy (%)**"], ["Ours", "**92.3**"], ["Baseline", "88.1"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "**Accuracy (%)**"}
+  },
+  {
+   "id": "NORM-6",
+   "category": "normalization",
+   "note": "space before the percent sign in the cell, none in the claim",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Ours", "92.3 %"], ["Baseline", "88.1 %"]],
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "Accuracy (%)"}
+  },
+  {
+   "id": "NORM-7",
+   "category": "normalization",
+   "note": "scientific notation, different surface forms. MAE is used so the value is plausible for the metric.",
+   "label": "Table 1",
+   "caption": "Table 1: MAE on the benchmark.",
+   "grid": [["Model", "MAE"], ["Ours", "1.2 × 10^-4"], ["Baseline", "3.4 × 10^-4"]],
+   "claim": "Our model achieves an MAE of 1.2e-4 (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "MAE"}
+  },
+  {
+   "id": "STRUCT-1",
+   "category": "structure",
+   "note": "two header rows. The real parser treats row 0 as the only header (represent_layout.py:96), so the composed path CIFAR-10/F1 cannot be produced by the pipeline. cells_override hands the binder the ideal cell so L1 isolates the binder; L2 then shows what the real path actually builds.",
+   "label": "Table 1",
+   "caption": "Table 1: Results on CIFAR-10.",
+   "grid": [["", "CIFAR-10", "CIFAR-10"], ["Model", "Acc", "F1"], ["Ours", "91.0", "0.87"]],
+   "cells_override": [
+    {"value": "91.0", "column_header": "CIFAR-10/Acc", "row_label": "Ours", "row": 1, "col": 1},
+    {"value": "0.87", "column_header": "CIFAR-10/F1", "row_label": "Ours", "row": 1, "col": 2}
+   ],
+   "claim": "Ours reaches an F1 of 0.87 on CIFAR-10.",
+   "expected": "BIND",
+   "expected_cell": {"row_label": "Ours", "column_header": "CIFAR-10/F1"}
+  },
+  {
+   "id": "AMBIG-1",
+   "category": "ambiguity",
+   "note": "92.3 appears in two cells and the claim's subject matches neither row. No expectation is scored.",
+   "label": "Table 1",
+   "caption": "Table 1: Accuracy on the benchmark.",
+   "grid": [["Model", "Accuracy (%)"], ["Method A", "92.3"], ["Method B", "92.3"]],
+   "claim": "The system achieved an accuracy of 92.3% on the test set.",
+   "expected": "RECORD_ONLY",
+   "expected_cell": null
+  }
+ ]
+}

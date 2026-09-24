@@ -1,0 +1,109 @@
+{
+ "assertions": [
+  {
+   "assertion": "table ledger rows == 160",
+   "got": 160,
+   "expected": 160,
+   "pass": true
+  },
+  {
+   "assertion": "grid_returned == 142",
+   "got": 142,
+   "expected": 142,
+   "pass": true
+  },
+  {
+   "assertion": "no-grid == 18",
+   "got": 18,
+   "expected": 18,
+   "pass": true
+  },
+  {
+   "assertion": "grid returns producing no cell table == 50",
+   "got": 50,
+   "expected": 50,
+   "pass": true
+  },
+  {
+   "assertion": "  of which whole-table gate rejections == 46",
+   "got": 46,
+   "expected": 46,
+   "pass": true
+  },
+  {
+   "assertion": "  of which post-gate parse losses == 4",
+   "got": 4,
+   "expected": 4,
+   "pass": true
+  },
+  {
+   "assertion": "fallback == 68",
+   "got": 68,
+   "expected": 68,
+   "pass": true
+  },
+  {
+   "assertion": "no-grid + no-cell-table grids == fallback",
+   "got": 68,
+   "expected": 68,
+   "pass": true
+  },
+  {
+   "assertion": "cell tables == 92",
+   "got": 92,
+   "expected": 92,
+   "pass": true
+  },
+  {
+   "assertion": "attached cells == 2187",
+   "got": 2187,
+   "expected": 2187,
+   "pass": true
+  },
+  {
+   "assertion": "tables contributing to returned metrics account for the returned metrics (per brief)",
+   "got": 0,
+   "expected": 6,
+   "pass": false,
+   "falsified_premise": "0 of the RETURNED metrics ground to a table block; all ground to prose blocks, so no table contributes to any returned metric",
+   "returned_metrics_all": 6,
+   "returned_metrics_with_a_digit": 3
+  },
+  {
+   "assertion": "claim ledger rows == 22",
+   "got": 22,
+   "expected": 22,
+   "pass": true
+  },
+  {
+   "assertion": "entered binder == 14",
+   "got": 14,
+   "expected": 14,
+   "pass": true
+  },
+  {
+   "assertion": "papers with a claim in the binder == 8",
+   "got": 8,
+   "expected": 8,
+   "pass": true
+  },
+  {
+   "assertion": "bound == 0",
+   "got": 0,
+   "expected": 0,
+   "pass": true
+  },
+  {
+   "assertion": "every entered claim has a named terminal_reason_code",
+   "got": 0,
+   "expected": 0,
+   "pass": true
+  }
+ ],
+ "problems": [],
+ "two_by_two": {
+  "attached=False,fallback_text=False": 10,
+  "attached=True,fallback_text=False": 3,
+  "attached=True,fallback_text=True": 1
+ }
+}

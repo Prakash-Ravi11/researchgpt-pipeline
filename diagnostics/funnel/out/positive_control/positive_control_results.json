@@ -1,0 +1,868 @@
+{
+ "summary": {
+  "n_cases": 13,
+  "n_scored": 12,
+  "l1_pass": 12,
+  "l2_pass": 11,
+  "core_l1_pass": true,
+  "norm_l1_failures": []
+ },
+ "cases": [
+  {
+   "id": "CORE-1",
+   "category": "core",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "CORE-2",
+   "category": "core_negative",
+   "claim": "Our model achieves 95.1% accuracy (Table 1).",
+   "expected": "NO_BIND",
+   "expected_cell": null,
+   "L1": {
+    "status": "not_a_table_claim",
+    "reason": "claimed metric is a column, but the value appears in no cell at all (prose aggregate / overall figure)",
+    "cell": null,
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "not_a_table_claim",
+    "binding_reason": "claimed metric is a column, but the value appears in no cell at all (prose aggregate / overall figure)",
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "B4_binding",
+    "reason_code": "NOT_A_TABLE_CLAIM",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "REF-0",
+   "category": "reference",
+   "claim": "Our model achieves 92.3% accuracy.",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "REF-1",
+   "category": "reference",
+   "claim": "Our model reaches 92.3 accuracy (Tab. II).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3",
+     "caption": "Table II: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-1",
+   "category": "normalization",
+   "claim": "Our model achieves -0.4 correlation (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Correlation"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Correlation",
+     "value": "−0.4",
+     "caption": "Table 1: Correlation on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Correlation",
+      "value": "−0.4"
+     },
+     {
+      "row": "Baseline",
+      "col": "Correlation",
+      "value": "0.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Correlation"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Correlation",
+      "value": "−0.4"
+     },
+     {
+      "row": "Baseline",
+      "col": "Correlation",
+      "value": "0.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-2",
+   "category": "normalization",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3 ± 0.4",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3 ± 0.4"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1 ± 0.6"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3 ± 0.4"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1 ± 0.6"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-3",
+   "category": "normalization",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3†",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3†"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3†"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-4",
+   "category": "normalization",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3*",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3*"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3*"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-5",
+   "category": "normalization",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "**Accuracy (%)**"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "**Accuracy (%)**",
+     "value": "**92.3**",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "**Accuracy (%)**",
+      "value": "**92.3**"
+     },
+     {
+      "row": "Baseline",
+      "col": "**Accuracy (%)**",
+      "value": "88.1"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "**Model**",
+     "**Accuracy (%)**"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "**Accuracy (%)**",
+      "value": "**92.3**"
+     },
+     {
+      "row": "Baseline",
+      "col": "**Accuracy (%)**",
+      "value": "88.1"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-6",
+   "category": "normalization",
+   "claim": "Our model achieves 92.3% accuracy (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "Accuracy (%)"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "Accuracy (%)",
+     "value": "92.3 %",
+     "caption": "Table 1: Accuracy on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3 %"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1 %"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "Accuracy (%)",
+      "value": "92.3 %"
+     },
+     {
+      "row": "Baseline",
+      "col": "Accuracy (%)",
+      "value": "88.1 %"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "NORM-7",
+   "category": "normalization",
+   "claim": "Our model achieves an MAE of 1.2e-4 (Table 1).",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "MAE"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "MAE",
+     "value": "1.2 × 10^-4",
+     "caption": "Table 1: MAE on the benchmark."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "MAE",
+      "value": "1.2 × 10^-4"
+     },
+     {
+      "row": "Baseline",
+      "col": "MAE",
+      "value": "3.4 × 10^-4"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "MAE"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "bound",
+    "binding_reason": null,
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "none",
+    "reason_code": "BOUND_AND_RETURNED",
+    "cells_attached": [
+     {
+      "row": "Ours",
+      "col": "MAE",
+      "value": "1.2 × 10^-4"
+     },
+     {
+      "row": "Baseline",
+      "col": "MAE",
+      "value": "3.4 × 10^-4"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": true
+  },
+  {
+   "id": "STRUCT-1",
+   "category": "structure",
+   "claim": "Ours reaches an F1 of 0.87 on CIFAR-10.",
+   "expected": "BIND",
+   "expected_cell": {
+    "row_label": "Ours",
+    "column_header": "CIFAR-10/F1"
+   },
+   "L1": {
+    "status": "bound",
+    "reason": null,
+    "cell": {
+     "row": "Ours",
+     "col": "CIFAR-10/F1",
+     "value": "0.87",
+     "caption": "Table 1: Results on CIFAR-10."
+    },
+    "candidate": null,
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Ours",
+      "col": "CIFAR-10/Acc",
+      "value": "91.0"
+     },
+     {
+      "row": "Ours",
+      "col": "CIFAR-10/F1",
+      "value": "0.87"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 4,
+    "column_headers": [
+     "",
+     "CIFAR-10",
+     "CIFAR-10"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "not_bindable",
+    "binding_reason": "claimed metric matches no table column in this paper",
+    "final": "RETURNED",
+    "abstain_reason": null,
+    "stage_of_death": "B4_binding",
+    "reason_code": "NOT_BINDABLE",
+    "cells_attached": [
+     {
+      "row": "Model",
+      "col": "CIFAR-10",
+      "value": "Acc"
+     },
+     {
+      "row": "Model",
+      "col": "CIFAR-10",
+      "value": "F1"
+     },
+     {
+      "row": "Ours",
+      "col": "CIFAR-10",
+      "value": "91.0"
+     },
+     {
+      "row": "Ours",
+      "col": "CIFAR-10",
+      "value": "0.87"
+     }
+    ]
+   },
+   "l1_pass": true,
+   "l2_pass": false
+  },
+  {
+   "id": "AMBIG-1",
+   "category": "ambiguity",
+   "claim": "The system achieved an accuracy of 92.3% on the test set.",
+   "expected": "RECORD_ONLY",
+   "expected_cell": null,
+   "L1": {
+    "status": "wrong_cell",
+    "reason": "value is under column 'Accuracy (%)' but for row 'Method A', not the claim's subject 'The system'",
+    "cell": null,
+    "candidate": {
+     "row": "Method A",
+     "col": "Accuracy (%)"
+    },
+    "n_cells_given": 2,
+    "cells_given": [
+     {
+      "row": "Method A",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Method B",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     }
+    ]
+   },
+   "L2": {
+    "table_parse_status": "parsed",
+    "table_fallback": "tier:pymupdf4llm",
+    "n_cells_attached": 2,
+    "column_headers": [
+     "Model",
+     "Accuracy (%)"
+    ],
+    "rows_before_gate": 2,
+    "rows_after_gate": 2,
+    "drop_reasons": {},
+    "binding_status": "wrong_cell",
+    "binding_reason": "value is under column 'Accuracy (%)' but for row 'Method A', not the claim's subject 'The system'",
+    "final": "ABSTAINED",
+    "abstain_reason": "binding_wrong_cell",
+    "stage_of_death": "B4_binding",
+    "reason_code": "WRONG_CELL",
+    "cells_attached": [
+     {
+      "row": "Method A",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     },
+     {
+      "row": "Method B",
+      "col": "Accuracy (%)",
+      "value": "92.3"
+     }
+    ]
+   },
+   "l1_pass": null,
+   "l2_pass": null
+  }
+ ]
+}
