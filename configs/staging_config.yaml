@@ -76,3 +76,10 @@ evidence_grounding:
   # false, emit() returns immediately and opens no file. Flipping it on changes
   # no pipeline behaviour; it only writes a JSONL trace alongside the run.
   funnel_trace_enabled: false
+  # Which claim producer feeds gate_paper. `legacy` reads the free-form
+  # datasets/metrics/results strings from the frozen Stage-4 extraction cache
+  # (current behaviour, unchanged). `explicit` uses the deterministic rule-based
+  # sentence extractor in experiments/document_evidence_pipeline/explicit_claims.py.
+  # Default legacy: nothing changes unless this is deliberately flipped, and the
+  # env var RGPT_CLAIM_EXTRACTOR overrides it for a single run.
+  claim_extractor: legacy

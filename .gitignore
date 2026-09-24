@@ -11,3 +11,8 @@ node_modules/
 data/processed/
 data/raw_metadata/
 .github/modernize/
+
+# Diagnostic run artifacts over 5 MB. SHA-256 recorded in
+# docs/diagnosis/claims_explicit_v1.md; regenerate with run_funnel.py.
+out/claims_explicit/trace.jsonl
+out/claims_explicit/results.json

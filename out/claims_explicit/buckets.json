@@ -1,0 +1,56 @@
+{
+ "B-BIND": 536,
+ "B-BIND_by_terminal_reason": {
+  "RETURNED": 143,
+  "OWNERSHIP_UNVERIFIED": 252,
+  "EVIDENCE_SPAN_NOT_FOUND_IN_PAPER_CHUNKS": 58,
+  "BINDING_WRONG_CELL": 69,
+  "ATTRIBUTED_TO_CITED_WORK": 14
+ },
+ "B-TABLE": 207,
+ "B-UNDETECTED": 95,
+ "B-PROSE": 858,
+ "claims_total": 2218,
+ "entered_binder": 1754,
+ "bound": 5,
+ "papers_with_claim_entering_binder": 21,
+ "papers_total": 21,
+ "bindings_reviewed": 74,
+ "bindings_with_a_comparable_cell_value": 5,
+ "bindings_sign_mismatch": 0,
+ "bindings_sign_not_assessable": 69,
+ "rejection_totals": {
+  "NO_NUMBER": 6914,
+  "NUMBER_IN_NAME": 502,
+  "YEAR": 386,
+  "CITATION_MARKER": 255,
+  "NUMBER_IS_LABEL": 191,
+  "IN_CAPTION": 212,
+  "IN_TABLE_BLOCK": 275,
+  "IN_ACKNOWLEDGMENTS": 32,
+  "IN_REFERENCES": 2002
+ },
+ "rejections_total": 10769,
+ "returned_metrics": 0,
+ "returned_results": 597,
+ "binding_status_counts": {
+  "pdf_only": 189,
+  "no_binding_call": 464,
+  "not_a_table_claim": 33,
+  "not_bindable": 1458,
+  "wrong_cell": 69,
+  "bound": 5
+ },
+ "terminal_reason_counts": {
+  "UNVERIFIABLE_BINDING": 189,
+  "ATTRIBUTED_TO_CITED_WORK": 151,
+  "OWNERSHIP_UNVERIFIED": 937,
+  "RETURNED": 597,
+  "EVIDENCE_SPAN_NOT_FOUND_IN_PAPER_CHUNKS": 273,
+  "BINDING_WRONG_CELL": 69,
+  "METRIC_VALUE_OUT_OF_RANGE": 2
+ },
+ "largest_bucket": "B-PROSE",
+ "largest_bucket_n": 858,
+ "mapped_next_change": "claim classification"
+}

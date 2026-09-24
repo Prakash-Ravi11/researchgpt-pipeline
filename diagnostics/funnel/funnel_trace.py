@@ -82,6 +82,9 @@ def emit(stage: str, item_type: str, item_id: str, status: str, *,
         "detail": detail, "code_location": code_location,
     }
     line = json.dumps(row, default=str, ensure_ascii=False)
+    # json.dumps leaves U+2028/U+2029/U+0085 unescaped, but str.splitlines()
+    # treats them as line breaks -- which would split one record into two.
+    line = line.translate({0x2028: "\\u2028", 0x2029: "\\u2029", 0x85: "\\u0085"})
     with _lock:
         p: Path = _state["path"]
         p.parent.mkdir(parents=True, exist_ok=True)

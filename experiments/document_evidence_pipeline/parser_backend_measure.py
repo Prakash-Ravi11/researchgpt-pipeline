@@ -136,6 +136,24 @@ def _ablation_trigger(caption: str, headers: list[str], rows: list[str]) -> str 
     return "caption_or_header" if _ABLATION_RE.search(blob) else "row_has_ablation_only"
 
 
+def _claim_extractor() -> str:
+    """`legacy` (default) or `explicit`. Env var wins, then the config flag."""
+    env = os.environ.get("RGPT_CLAIM_EXTRACTOR", "").strip().lower()
+    if env in ("legacy", "explicit"):
+        return env
+    cfg = ROOT / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "claim_extractor":
+                v = val.split("#")[0].strip().lower()
+                if v in ("legacy", "explicit"):
+                    return v
+    except OSError:
+        pass
+    return "legacy"
+
+
 def run_one(paper_id: str, arm: str) -> dict:
     from src.evidence.represent import blocks_from_pdf
     from src.evidence.represent_layout import blocks_from_pdf_layout
@@ -159,10 +177,24 @@ def run_one(paper_id: str, arm: str) -> dict:
         chunks = chunk_document({"paper_id": paper_id, "representation": "pdf",
                                  "blocks": blocks})
         m = meta.get(paper_id, {})
-        claims = {"paper_id": paper_id,
-                  **{k: cache.get(paper_id, {}).get(k) for k in ("datasets", "metrics", "results")}}
+        # THE SINGLE CLAIM-PRODUCING CALL SITE. `legacy` is the original
+        # expression, unchanged; `explicit` swaps in the deterministic rule-based
+        # extractor (decision D3's treatment). Nothing downstream of this line
+        # differs between the two arms.
+        claim_extractor = _claim_extractor()
+        extraction = None
+        if claim_extractor == "explicit":
+            from explicit_claims import claims_for_gate
+            claims, extraction = claims_for_gate(paper_id, blocks)
+        else:
+            claims = {"paper_id": paper_id,
+                      **{k: cache.get(paper_id, {}).get(k) for k in ("datasets", "metrics", "results")}}
         surnames = [a.get("name", "") for a in (m.get("authors") or []) if isinstance(a, dict)]
         gated = gate_paper(claims, chunks, "FULL_TEXT", surnames)
+        rec["claim_extractor"] = claim_extractor
+        if extraction is not None:
+            rec["explicit_claims"] = extraction["claims"]
+            rec["explicit_rejections"] = extraction["rejections"]
         rec["parse_ok"] = True
     except Exception as e:                     # recorded, never swallowed
         rec["error"] = f"{type(e).__name__}: {e}"

@@ -36,6 +36,7 @@ import funnel_trace as ft  # noqa: E402  (diagnostics/funnel is this file's dir)
 
 OUT_ROOT = HERE / "out"
 MARKER = "@@JSON@@"
+_TABLE_LABEL_RE = __import__("re").compile(r"\b(?:Table|Tab\.)\s*([IVXLC]+|\d+)", __import__("re").I)
 
 # ---- reason codes, each taken from the literal condition in the code -------
 # src/evidence/represent_layout.py
@@ -336,6 +337,52 @@ def _install_gate_probe(paper_id: str):
     return original
 
 
+def _install_chunk_probe(paper_id: str):
+    """Wrap chunk_document to record a per-page index of the paper.
+
+    Read-only: calls the original and returns its result unchanged. Needed for
+    existence check (e) -- is the value in the page text OUTSIDE every detected
+    table block -- and for the (f) TABLE_POSSIBLY_UNDETECTED triage, neither of
+    which can be answered from the gate's own output.
+    """
+    from src.evidence import chunker as CH
+
+    original = CH.chunk_document
+
+    def traced(doc):
+        out = original(doc)
+        try:
+            pages: dict[str, dict] = {}
+            for b in doc.get("blocks") or []:
+                pg = str(b.get("page_or_node") or "p0")
+                p = pages.setdefault(pg, {"non_table_text": [], "n_table_blocks": 0,
+                                          "table_labels_in_prose": []})
+                if b.get("block_type") == "table":
+                    p["n_table_blocks"] += 1
+                else:
+                    t = b.get("text") or ""
+                    p["non_table_text"].append(t)
+                    p["table_labels_in_prose"] += _TABLE_LABEL_RE.findall(t)
+            for pg, p in pages.items():
+                ft.emit("A_page_index", "table_block", f"{paper_id}:page:{pg}", "KEEP",
+                        paper_id=paper_id, parent_id=paper_id,
+                        detail={"page": pg,
+                                "n_table_blocks": p["n_table_blocks"],
+                                "table_labels_in_prose":
+                                    sorted(set(p["table_labels_in_prose"])),
+                                "non_table_text": " ".join(p["non_table_text"])[:20000]},
+                        code_location="src/evidence/chunker.py (read-only probe)")
+        except Exception as e:
+            ft.emit("A_page_index", "table_block", f"{paper_id}:page:probe", "DROP",
+                    paper_id=paper_id, reason_code="PROBE_ERROR",
+                    detail={"probe_error": "%s: %s" % (type(e).__name__, e)},
+                    code_location="src/evidence/chunker.py (read-only probe)")
+        return out
+
+    CH.chunk_document = traced
+    return original
+
+
 def _emit_tables(rec: dict, paper_id: str) -> None:
     """Funnel A rows, derived from what run_one already recorded per table."""
     for i, t in enumerate(rec.get("tables") or []):
@@ -450,6 +497,7 @@ def worker(paper_id: str, arm: str, trace_path: str | None, run_id: str) -> dict
         _install_binder_probe(paper_id)
         _install_attach_probe(paper_id)
         _install_gate_probe(paper_id)
+        _install_chunk_probe(paper_id)
     rec = PBM.run_one(paper_id, arm)
     if trace_path:
         _emit_tables(rec, paper_id)
@@ -524,6 +572,7 @@ def _run_metadata(arm: str, trace: bool) -> dict:
         "funnel_trace_enabled_in_config": ft.config_flag(),
         "trace_requested": trace,
         "arm": arm,
+        "claim_extractor": os.environ.get("RGPT_CLAIM_EXTRACTOR") or "from config",
         "python": sys.version,
         "platform": sys.platform,
         "pip_freeze": sh(sys.executable, "-m", "pip", "freeze").splitlines(),
@@ -546,7 +595,14 @@ def main() -> int:
     ap.add_argument("--run-id", default="")
     ap.add_argument("--hash-only", action="store_true",
                     help="recompute counts/hashes for an existing out/ dir, no re-run")
+    ap.add_argument("--claim-extractor", choices=("legacy", "explicit"), default=None,
+                    help="override evidence_grounding.claim_extractor for this run")
+    ap.add_argument("--out-root", default=None,
+                    help="base directory for --out (default diagnostics/funnel/out)")
     a = ap.parse_args()
+    global OUT_ROOT
+    if a.out_root:
+        OUT_ROOT = Path(a.out_root)
 
     if a.hash_only:
         out = OUT_ROOT / a.out
@@ -577,10 +633,16 @@ def main() -> int:
         cmd = [sys.executable, "-u", str(Path(__file__).resolve()),
                "--worker", "--paper", pid, "--arm", a.arm, "--out", a.out,
                "--run-id", run_id]
+        if a.out_root:
+            cmd += ["--out-root", a.out_root]
+        if a.claim_extractor:
+            cmd += ["--claim-extractor", a.claim_extractor]
         if trace_path:
             cmd += ["--trace-path", str(trace_path)]
         env = {**os.environ, "PYTHONIOENCODING": "utf-8",
                "RGPT_FUNNEL_TRACE": "1" if a.trace else "0"}
+        if a.claim_extractor:
+            env["RGPT_CLAIM_EXTRACTOR"] = a.claim_extractor
         p = subprocess.run(cmd, capture_output=True, text=True, env=env)
         if MARKER in p.stdout:
             results[pid] = json.loads(p.stdout.split(MARKER, 1)[1].strip())

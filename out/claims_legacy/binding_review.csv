@@ -1,0 +1,3 @@
+paper_id,claim_id,binding_status,claim_sentence,numeric_span,bound_cell_value,row_header,column_header_path,table_caption,page,sign_match,human_label
+be7c4dc39030508deb495c9f689526ca1b4289cf,be7c4dc39030508deb495c9f689526ca1b4289cf:results:0,wrong_cell,"The best configuration using GPT-5.2 with full schema, RAG, and a second-pass auditing achieved an 80.36% F1 score.",5.2,,GPT-5.2, > _F_1 **score**,,,,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,e6f1d66c34b525dc480ced9902cf46419b6a37fa:results:0,wrong_cell,"The system achieved an nDCG@5 score of 0.4502, which was competitive with the organizer baseline but underperformed on Subtask C with a HM score of 0.3774.",0.4502,,NLP-CEIA-UFG (ours), > **nDCG@5**,,,,

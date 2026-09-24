@@ -29,7 +29,9 @@ KEEP = ("KEEP", "PASS")
 
 
 def load(path: Path) -> list[dict]:
-    return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    # split("\n"), not splitlines(): splitlines() also breaks on U+2028/U+2029/
+    # U+0085, which json.dumps leaves unescaped inside string values.
+    return [json.loads(x) for x in path.read_text(encoding="utf-8").split("\n") if x.strip()]
 
 
 def stage_table(rows: list[dict]) -> list[dict]:

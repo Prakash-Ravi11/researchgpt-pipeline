@@ -1,0 +1,39 @@
+{
+ "B-BIND": 4,
+ "B-BIND_by_terminal_reason": {
+  "OWNERSHIP_UNVERIFIED": 2,
+  "BINDING_WRONG_CELL": 2
+ },
+ "B-TABLE": 0,
+ "B-UNDETECTED": 0,
+ "B-PROSE": 10,
+ "claims_total": 22,
+ "entered_binder": 14,
+ "bound": 0,
+ "papers_with_claim_entering_binder": 8,
+ "papers_total": 21,
+ "bindings_reviewed": 2,
+ "bindings_with_a_comparable_cell_value": 0,
+ "bindings_sign_mismatch": 0,
+ "bindings_sign_not_assessable": 2,
+ "rejection_totals": {},
+ "rejections_total": 0,
+ "returned_metrics": 3,
+ "returned_results": 1,
+ "binding_status_counts": {
+  "pdf_only": 9,
+  "no_binding_call": 8,
+  "not_bindable": 3,
+  "wrong_cell": 2
+ },
+ "terminal_reason_counts": {
+  "UNVERIFIABLE_BINDING": 9,
+  "EVIDENCE_SPAN_NOT_FOUND_IN_PAPER_CHUNKS": 2,
+  "OWNERSHIP_UNVERIFIED": 5,
+  "RETURNED": 4,
+  "BINDING_WRONG_CELL": 2
+ },
+ "largest_bucket": "B-PROSE",
+ "largest_bucket_n": 10,
+ "mapped_next_change": "claim classification"
+}
