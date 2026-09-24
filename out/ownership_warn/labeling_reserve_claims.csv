@@ -1,0 +1,222 @@
+paper_id,claim_id,field,claim_text,numeric_values_raw,numeric_values_normalized,entered_binder,binding_status,terminal_state,terminal_reason_code,ownership_flag,paper_has_post_gate_cell_table,value_found_in_attached_cells,attached_cell_ids,value_found_in_discarded_cells,value_found_in_gate_rejected_or_fallback_table_text,fallback_table_ids,value_on_page_text,triage,f1_bibliography_heuristic,rule_id,section,page,grounded_block_id,attribution,bucket,bucket_reason,human_label
+fef0393e997ec51b184e39c712be63197d99fd46,c7eb7e99a24acbe5,results,"arXiv:1710.03740 [cs, stat].",1710.03740,1710.03740,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2019. url http://arxiv.org/abs/1711.0510,p32,fef0393e997ec51b184e39c712be63197d99fd46:472,UNKNOWN,B-PROSE,,
+fef0393e997ec51b184e39c712be63197d99fd46,9a6b159f1820a95e,results,"1
+The provided context does not mention anything
+about insect pests, so it is unlikely that a farmer
+would ask this question based on the given infor-
+mation.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,4. if the text mentioned a disease or di,p14,fef0393e997ec51b184e39c712be63197d99fd46:160,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,58a2a0b932c1d098,results,"Given per-step findings,
+produce (1) Summary of Evidence,
+(2) Compliance Verdict, (3) Engineer’s
+Note.”
+Output: Structured Markdown report
+with per-plan citations, overall verdict,
+and actionable engineer’s note.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. planner: decomposes a high-level quer,p8,413a184de4b1c752466fbfca3cd3b1f039f99d48:212,UNKNOWN,,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,19a13b78b53fbdc2,results,"1.00
+What event led to the creation of the Smithville Fiscal
+Responsibility Committee?",1.00,1.00,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,False,,True,,False,R1_STANDALONE_NUMERIC,3. open,p18,96285d75a5258dbbb883b31e23ff292605fa6f5a:385,UNKNOWN,B-NONE,VALUE_ONLY_IN_DISCARDED_CELLS,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,4d4b100f3245b554,results,"Safety (§4.6)
+XSTest; internal datasets.",4.6,4.6,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p18,f1f07a37d4cd44daab987ff19c0bcd185910f50c:318,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,30a07e51d384d354,results,"Command A
+85.5
+69.6
+50.8
+90.9
+94.9
+GPT-4o
+89.2
+77.9
+53.6
+83.8
+94.0
+DeepSeek V3
+88.5
+75.9
+59.1
+86.1∗
+94.3
+Llama 3.3 70B Instruct
+86.0
+66.0
+50.5
+92.1
+92.8
+Llama 3.1 405B Instruct
+88.6
+73.0
+49.0
+88.6
+93.9
+Mistral Large 2
+85.2
+67.9
+48.6
+83.8
+93.3
+Claude 3.5 Sonnet
+89.5
+78.0
+65.0
+90.2
+93.9
+Gemini 2.0 Pro
+89.3
+79.1
+64.7
+87.3
+92.2.",85.5|69.6|50.8|90.9|94.9|89.2|77.9|53.6|83.8|94.0|88.5|75.9|59.1|86.1|94.3|3.3|86.0|66.0|50.5|92.1|92.8|3.1|88.6|73.0|49.0|88.6|93.9|85.2|67.9|48.6|83.8|93.3|3.5|89.5|78.0|65.0|90.2|93.9|2.0|89.3|79.1|64.7|87.3|92.2,85.5|69.6|50.8|90.9|94.9|89.2|77.9|53.6|83.8|94.0|88.5|75.9|59.1|86.1|94.3|3.3|86.0|66.0|50.5|92.1|92.8|3.1|88.6|73.0|49.0|88.6|93.9|85.2|67.9|48.6|83.8|93.3|3.5|89.5|78.0|65.0|90.2|93.9|2.0|89.3|79.1|64.7|87.3|92.2,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r4c1,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:3,True,,False,R1_STANDALONE_NUMERIC,abstract,p18,f1f07a37d4cd44daab987ff19c0bcd185910f50c:327,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,27ac46c1f3d3611d,results,"We run on 0-shot, with CoT, and we report results only on the diamond subset.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p55,f1f07a37d4cd44daab987ff19c0bcd185910f50c:1154,UNKNOWN,,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,6fa16ae6e7f69d11,results,"Across 23 disjoint
+breadth projects, however, the estimate is -4.1 percentage
+points and both tested systems favor page-RAG.",23|4.1,23|4.1,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:4#r1c2|6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:4#r1c3,False,False,,True,,False,R1_STANDALONE_NUMERIC,conclusion,p8,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:11,UNKNOWN,B-BIND,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,5fb673194326db5a,results,"Preprint, arXiv:2404.01037.",2404.01037,2404.01037,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,limitations,p8,141276ba659da6e5aca1d3499713104eb3ca3c78:149,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,417f2a31ae1412f7,results,"32×32
+Multi-vector MaxSim ⇒grounded.",32|32,32|32,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r3c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r3c5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c4|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:22#r5c1,True,False,,True,,False,R1_STANDALONE_NUMERIC,introduction_related_work,p2,413a184de4b1c752466fbfca3cd3b1f039f99d48:32,UNKNOWN,B-BIND,,
+fef0393e997ec51b184e39c712be63197d99fd46,36a5f61a028346a2,results,"arXiv:1608.03983 [cs, math].",1608.03983,1608.03983,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2023. url http://arxiv.org/abs/2305.0193,p32,fef0393e997ec51b184e39c712be63197d99fd46:469,UNKNOWN,B-PROSE,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,6da39f1f33d0dd42,results,"Region-minus-page accuracy
+is 26.1 percentage points for cross-reference resolution, 16.2
+for technical-detail review, 13.3 for sheet-index checks, and
+10.0 for title accuracy.",26.1|16.2|13.3|10.0,26.1|16.2|13.3|10.0,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:1#r2c6,False,False,,True,,False,R1_STANDALONE_NUMERIC,5.2. heterogeneity and paired error audi,p6,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:128,UNKNOWN,B-BIND,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,a5289e79b59bfa04,results,"7.4
+Decline to answer.",7.4,7.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,"4. the llm generates a response, which t",p10,96285d75a5258dbbb883b31e23ff292605fa6f5a:185,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,12c48092f222304e,results,"Search (Step 1): “gabion wire tie”
+Top-1: WYDOT 511-1A p.",511,511,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r1c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r3c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c1,False,False,,True,,False,R1_STANDALONE_NUMERIC,1. planner: decomposes a high-level quer,p8,413a184de4b1c752466fbfca3cd3b1f039f99d48:18,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,73235fbb27e1289e,results,"arXiv preprint arXiv:2210.03350, 2022.",2210.03350|2022,2210.03350|2022,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p45,f1f07a37d4cd44daab987ff19c0bcd185910f50c:941,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,7ef78bf24fb06321,results,"Single-doc compliance scale-up (𝑛=500): The
+single-doc path A recipe (Qwen2.5-VL-72B 4-bit +
+CoT + per-drawing pre-resolved thresholds) scales to
+a 500-drawing test set (5 archetypes × 100 instances
+each, 250 compliant + 250 non-compliant).",500|2.5|500|100|250|250,500|2.5|500|100|250|250,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r5c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r7c3,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:23,True,,False,R1_STANDALONE_NUMERIC,5.7. compliance validation on a,p16,413a184de4b1c752466fbfca3cd3b1f039f99d48:350,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,34a87a2b4e5bf3ee,results,doi: 10.18653/v1/2023.acl-long.134.,10.18653|2023|134,10.18653|2023|134,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:16,True,,True,R1_STANDALONE_NUMERIC,2018. url https://mlsys.org/conferences/,p44,f1f07a37d4cd44daab987ff19c0bcd185910f50c:911,UNKNOWN,B-TABLE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,9679efbb2a7480cb,results,"arXiv preprint 2412.19437, 2024a.",2412.19437,2412.19437,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2018. url https://mlsys.org/conferences/,p44,f1f07a37d4cd44daab987ff19c0bcd185910f50c:913,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,cc64285f4a3ea9fa,results,"Command A Agentic
+—
+32.9
+59.7∗
+65.4
+—
+—
+—
+—.",32.9|59.7|65.4,32.9|59.7|65.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p24,f1f07a37d4cd44daab987ff19c0bcd185910f50c:467,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,07521dc231b7932d,results,"URL
+https://aclanthology.org/D18-1259.",1259,1259,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p48,f1f07a37d4cd44daab987ff19c0bcd185910f50c:1023,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,82630671f31e2c59,results,"GPT-4o(11-20)
+97.0
+92.1
+89.0
+88.8
+88.4
+-
+-
+-
+-
+-.",11|20|97.0|92.1|89.0|88.8|88.4,11|20|97.0|92.1|89.0|88.8|88.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:7|f1f07a37d4cd44daab987ff19c0bcd185910f50c:11|f1f07a37d4cd44daab987ff19c0bcd185910f50c:21|f1f07a37d4cd44daab987ff19c0bcd185910f50c:24,True,,False,R1_STANDALONE_NUMERIC,results,p34,f1f07a37d4cd44daab987ff19c0bcd185910f50c:717,UNKNOWN,B-TABLE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,b74fc7657ccb9bd8,results,doi: 10.1137/0330046.,10.1137|0330046,10.1137|0330046,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p45,f1f07a37d4cd44daab987ff19c0bcd185910f50c:937,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,46e31ad6cca153a1,results,"GPT-4.5 Preview
+47.2
+30.7
+38.3.",4.5|47.2|30.7|38.3,4.5|47.2|30.7|38.3,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r3c1|f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r3c2|f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r3c3,True,False,,True,,False,R1_STANDALONE_NUMERIC,results,p38,f1f07a37d4cd44daab987ff19c0bcd185910f50c:794,UNKNOWN,B-BIND,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,42e2778b53e9ae07,results,Gemini 3.6 Flash.,3.6,3.6,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,False,,True,,False,R1_STANDALONE_NUMERIC,4.3. experimental controls,p6,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:98,UNKNOWN,B-NONE,VALUE_ONLY_IN_DISCARDED_CELLS,
+ac8fffa1a4ae940d0810a52af515f572bfda183d,f2352a2e91e130b6,results,"Ao agregar
+a contagem de tokens por documento (somando todos os seus chunks constituintes), o
+total permanece praticamente estável, com um aumento de apenas 0,3%.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,False,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,4.1. ambiente experimental,p6,ac8fffa1a4ae940d0810a52af515f572bfda183d:65,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,afb3481a699136a8,results,Step 2 evidence: WYDOT 203-2A.,203,203,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r1c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r7c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r8c1,False,False,,True,,False,R1_STANDALONE_NUMERIC,1. planner: decomposes a high-level quer,p8,413a184de4b1c752466fbfca3cd3b1f039f99d48:211,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,b3ded2aaaf907e9b,results,"Gemini-1.5-Pro (002)
+96.2
+96.0
+96.0
+95.8
+93.8
+91.7
+91.6
+94.9
+94.2
+95.6.",1.5|002|96.2|96.0|96.0|95.8|93.8|91.7|91.6|94.9|94.2|95.6,1.5|002|96.2|96.0|96.0|95.8|93.8|91.7|91.6|94.9|94.2|95.6,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p34,f1f07a37d4cd44daab987ff19c0bcd185910f50c:719,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,5005507dccb8daa3,results,"Mistral Large 2
+82.9
+94.5
+86.0
+72.6
+84.8
+87.2
+72.6
+10.8
+54.0
+62.7
+53.4
+36.2
+51.3
+52.9
+42.2.",82.9|94.5|86.0|72.6|84.8|87.2|72.6|10.8|54.0|62.7|53.4|36.2|51.3|52.9|42.2,82.9|94.5|86.0|72.6|84.8|87.2|72.6|10.8|54.0|62.7|53.4|36.2|51.3|52.9|42.2,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p52,f1f07a37d4cd44daab987ff19c0bcd185910f50c:1111,UNKNOWN,B-PROSE,,
+fef0393e997ec51b184e39c712be63197d99fd46,b97acb1fe5f6550a,results,org/W04-1013.,1013,1013,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2023. url http://arxiv.org/abs/2305.0193,p32,fef0393e997ec51b184e39c712be63197d99fd46:468,UNKNOWN,B-PROSE,,
+fef0393e997ec51b184e39c712be63197d99fd46,e137493abd5c89fc,results,"In Proceedings of the 61st Annual Meeting of the Association for Computational
+Linguistics (Volume 1: Long Papers), pages 5591–5606, Toronto, Canada, July 2023.",5591|5606|2023,5591|5606|2023,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2023. url http://arxiv.org/abs/2305.0193,p31,fef0393e997ec51b184e39c712be63197d99fd46:457,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,8eb431059ac3ac56,results,"comp_01
+511-1A, 203-2A
+PASS
+PASS
+✓
+8
+comp_02
+606-7C, 606-2B
+PASS
+PASS
+✓
+7
+comp_03
+511-1A
+PASS
+PASS
+✓
+8
+comp_04
+202-1
+PASS
+PASS
+✓
+9
+comp_05
+511-1A
+PASS
+PASS
+✓
+10
+comp_06
+606-4B
+PASS
+PASS
+✓
+8
+comp_07
+203-2A
+PASS
+PASS
+✓
+10
+comp_08
+203-2A
+PASS
+PASS
+✓
+9.",511|203|606|606|511|202|511|10|606|203|10|203,511|203|606|606|511|202|511|10|606|203|10|203,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r1c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r2c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r3c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r4c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r5c5|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r6c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:21#r7c1,True,False,,True,,False,R1_STANDALONE_NUMERIC,method,p27,413a184de4b1c752466fbfca3cd3b1f039f99d48:563,UNKNOWN,B-BIND,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,b8e8b4fd0bcd9250,results,"F.2
+Examples in which RAGAS fails.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,TABLE_POSSIBLY_UNDETECTED,False,R1_STANDALONE_NUMERIC,3. mathematical tools:,p12,141276ba659da6e5aca1d3499713104eb3ca3c78:299,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,6568587f795b0fba,results,"4.11
+Human Evaluation.",4.11,4.11,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p36,f1f07a37d4cd44daab987ff19c0bcd185910f50c:778,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,e07174ef52bde112,results,"This threshold equates
+to 75% agreement with humans (Kocmi et al., 2024): humans will agree with automatic metric on 3 out of
+4 pairwise system comparisons that have a difference of 1.67 COMET-20.",75|2024|1.67|20,75|2024|1.67|20,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:2|f1f07a37d4cd44daab987ff19c0bcd185910f50c:4|f1f07a37d4cd44daab987ff19c0bcd185910f50c:6|f1f07a37d4cd44daab987ff19c0bcd185910f50c:7|f1f07a37d4cd44daab987ff19c0bcd185910f50c:9|f1f07a37d4cd44daab987ff19c0bcd185910f50c:10|f1f07a37d4cd44daab987ff19c0bcd185910f50c:11|f1f07a37d4cd44daab987ff19c0bcd185910f50c:16,True,,False,R1_STANDALONE_NUMERIC,results,p20,f1f07a37d4cd44daab987ff19c0bcd185910f50c:351,UNKNOWN,B-TABLE,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,778d22b867d6ea29,results,"August 3, 2026.",2026,2026,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,introduction_related_work,p1,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:13,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,bb92f584ba729aba,results,The code expert is trained in three stages (hyperparameters and full details in Appendix B.3):.,,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p12,f1f07a37d4cd44daab987ff19c0bcd185910f50c:244,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,756d7d330bda85f5,results,doi: 10.1162/tacl_a_00474.,10.1162,10.1162,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2018. url https://mlsys.org/conferences/,p41,f1f07a37d4cd44daab987ff19c0bcd185910f50c:861,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,9dbe0f326606ccd6,results,"Pointwise VLM re-ranking (MonoQwen2-
+VL-v0.1, 2B parameters) over the Top-20 retrieved
+candidates adds ≈5.91 s of latency per query (av-
+eraging ≈295 ms per pointwise candidate pass) on
+a single NVIDIA A100 GPU, corresponding to a
+throughput of approximately 610 queries per hour.",0.1|20|5.91|295|610,0.1|20|5.91|295|610,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r8c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c2,True,False,,True,,False,R1_STANDALONE_NUMERIC,5.10. cross-agency generalization and,p19,413a184de4b1c752466fbfca3cd3b1f039f99d48:398,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,28a16a0efc594113,results,"Ground truth is 6 inches [150 mm]; the model returns 4′-0′′ [1200], a fill-geometry dimension, conflating “scarification depth”
+with “fill thickness”.",150|1200,150|1200,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p31,413a184de4b1c752466fbfca3cd3b1f039f99d48:628,UNKNOWN,B-PROSE,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,4c1cc4e1c6f83ca6,results,"Region-
+RAG reduces the mean false-fail rate from 41.5% to 27.9%
+but increases the false-pass rate from 43.0% to 46.7%.",41.5|27.9|43.0|46.7,41.5|27.9|43.0|46.7,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,5.3. disjoint project breadth extension,p7,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:144,UNKNOWN,B-PROSE,,

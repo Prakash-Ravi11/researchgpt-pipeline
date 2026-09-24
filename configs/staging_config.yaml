@@ -83,3 +83,9 @@ evidence_grounding:
   # Default legacy: nothing changes unless this is deliberately flipped, and the
   # env var RGPT_CLAIM_EXTRACTOR overrides it for a single run.
   claim_extractor: legacy
+  # What the gate does when attribution comes back UNKNOWN (gate.py:571-582).
+  # `block` abstains, which is the current and default behaviour. `warn` lets the
+  # claim continue as if the check had passed, carrying OWNERSHIP_UNVERIFIED.
+  # Binding is decided earlier (gate.py:525-546), so this changes no binding.
+  # RGPT_OWNERSHIP_POLICY overrides it for a single run.
+  ownership_policy: block

@@ -282,6 +282,14 @@ def _emit_attach_detail(b, grid, tid, paper_id, collapse_header_ws):
                     "n_attached": len(b.get("table_cells") or []),
                     "attached_values": [str(c.get("value", ""))
                                         for c in (b.get("table_cells") or [])],
+                    # full cell inventory: lets a wrong_cell verdict (which records
+                    # only row+col, never the value -- defect F-3) be resolved back
+                    # to a concrete cell id and value. Read-only.
+                    "attached_cells": [{"row": c.get("row_label", ""),
+                                        "col": c.get("column_header", ""),
+                                        "value": str(c.get("value", "")),
+                                        "caption": c.get("caption", "")}
+                                       for c in (b.get("table_cells") or [])],
                     "block_text": block_text[:4000],
                     "caption": b.get("table_caption") or ""})
 
@@ -323,6 +331,9 @@ def _install_gate_probe(paper_id: str):
                                     "block_type_grounded": it.get("block_type"),
                                     "evidence_span": (it.get("evidence_span") or "")[:400],
                                     "attribution": it.get("attribution"),
+                                    "attribution_confidence":
+                                        it.get("attribution_confidence"),
+                                    "ownership_flag": it.get("ownership_flag"),
                                     "range_check": it.get("range_check"),
                                     "provenance_valid": it.get("provenance_valid")},
                             code_location=LOC_RETURN)
@@ -573,6 +584,7 @@ def _run_metadata(arm: str, trace: bool) -> dict:
         "trace_requested": trace,
         "arm": arm,
         "claim_extractor": os.environ.get("RGPT_CLAIM_EXTRACTOR") or "from config",
+        "ownership_policy": os.environ.get("RGPT_OWNERSHIP_POLICY") or "from config",
         "python": sys.version,
         "platform": sys.platform,
         "pip_freeze": sh(sys.executable, "-m", "pip", "freeze").splitlines(),
@@ -597,6 +609,8 @@ def main() -> int:
                     help="recompute counts/hashes for an existing out/ dir, no re-run")
     ap.add_argument("--claim-extractor", choices=("legacy", "explicit"), default=None,
                     help="override evidence_grounding.claim_extractor for this run")
+    ap.add_argument("--ownership-policy", choices=("block", "warn"), default=None,
+                    help="override evidence_grounding.ownership_policy for this run")
     ap.add_argument("--out-root", default=None,
                     help="base directory for --out (default diagnostics/funnel/out)")
     a = ap.parse_args()
@@ -637,12 +651,16 @@ def main() -> int:
             cmd += ["--out-root", a.out_root]
         if a.claim_extractor:
             cmd += ["--claim-extractor", a.claim_extractor]
+        if a.ownership_policy:
+            cmd += ["--ownership-policy", a.ownership_policy]
         if trace_path:
             cmd += ["--trace-path", str(trace_path)]
         env = {**os.environ, "PYTHONIOENCODING": "utf-8",
                "RGPT_FUNNEL_TRACE": "1" if a.trace else "0"}
         if a.claim_extractor:
             env["RGPT_CLAIM_EXTRACTOR"] = a.claim_extractor
+        if a.ownership_policy:
+            env["RGPT_OWNERSHIP_POLICY"] = a.ownership_policy
         p = subprocess.run(cmd, capture_output=True, text=True, env=env)
         if MARKER in p.stdout:
             results[pid] = json.loads(p.stdout.split(MARKER, 1)[1].strip())

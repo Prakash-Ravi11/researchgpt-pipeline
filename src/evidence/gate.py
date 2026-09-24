@@ -15,6 +15,7 @@ Only active when config['evidence_grounding']['enabled'] is true.
 from __future__ import annotations
 
 import json
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -504,6 +505,30 @@ def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 60
     return " ".join(parts)
 
 
+_OWNERSHIP_POLICIES = ("block", "warn")
+
+
+def _ownership_policy() -> str:
+    """`block` (default) or `warn`. RGPT_OWNERSHIP_POLICY wins, then the config
+    flag `evidence_grounding.ownership_policy`. Read per call and never cached, so
+    a run cannot inherit a stale value; the cost is one small file read per claim
+    only when the env var is unset."""
+    env = os.environ.get("RGPT_OWNERSHIP_POLICY", "").strip().lower()
+    if env in _OWNERSHIP_POLICIES:
+        return env
+    cfg = Path(__file__).resolve().parents[2] / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "ownership_policy":
+                v = val.split("#")[0].strip().lower()
+                if v in _OWNERSHIP_POLICIES:
+                    return v
+    except OSError:
+        pass
+    return "block"
+
+
 def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 surnames: list[str]) -> dict[str, Any]:
     item = _evidence_item(field, value)
@@ -569,8 +594,17 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
             item.update(final=ABSTAINED, abstain_reason="attributed_to_cited_work")
             return item
         if attr["attribution"] == UNKNOWN:
-            item.update(final=ABSTAINED, abstain_reason="ownership_unverified")
-            return item
+            # ownership_policy: `block` (the default) abstains here, byte-for-byte
+            # the previous behaviour. `warn` lets the claim continue exactly as if
+            # the check had passed, carrying OWNERSHIP_UNVERIFIED so nothing
+            # downstream can mistake it for a verified own result.
+            # Binding already completed above (lines 525-546); this branch changes
+            # no binding decision, no grounding and no other abstain reason.
+            if _ownership_policy() == "warn":
+                item["ownership_flag"] = "OWNERSHIP_UNVERIFIED"
+            else:
+                item.update(final=ABSTAINED, abstain_reason="ownership_unverified")
+                return item
     item["final"] = RETURNED
     return item
 

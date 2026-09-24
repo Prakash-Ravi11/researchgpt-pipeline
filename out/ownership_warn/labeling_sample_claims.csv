@@ -1,0 +1,247 @@
+paper_id,claim_id,field,claim_text,numeric_values_raw,numeric_values_normalized,entered_binder,binding_status,terminal_state,terminal_reason_code,ownership_flag,paper_has_post_gate_cell_table,value_found_in_attached_cells,attached_cell_ids,value_found_in_discarded_cells,value_found_in_gate_rejected_or_fallback_table_text,fallback_table_ids,value_on_page_text,triage,f1_bibliography_heuristic,rule_id,section,page,grounded_block_id,attribution,bucket,bucket_reason,human_label
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,eb3b9d13878d45d8,results,"The response budget is 8,192
+tokens.",192,192,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,"3.5. typed output, trace, and escalation",p5,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:93,UNKNOWN,B-PROSE,,
+fef0393e997ec51b184e39c712be63197d99fd46,8b93220e6afb4b9e,results,"Combined generation
+Context
+3.89
+0.96
+0.95
+4.77
+4.77.",3.89|0.96|0.95|4.77|4.77,3.89|0.96|0.95|4.77|4.77,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,fef0393e997ec51b184e39c712be63197d99fd46:12#r6c2|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c4|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c5|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c6|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c7|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c7|fef0393e997ec51b184e39c712be63197d99fd46:12#r9c5|fef0393e997ec51b184e39c712be63197d99fd46:13#r3c7,False,False,,True,,False,R1_STANDALONE_NUMERIC,experimental_setup,p24,fef0393e997ec51b184e39c712be63197d99fd46:318,UNKNOWN,B-BIND,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,a93ee8966e1bc79c,results,"Development and
+validation estimates are −3.1 and −10.4 percentage points,
+respectively.",3.1|10.4,3.1|10.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:4#r3c3|6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:4#r4c3,True,False,,True,,False,R1_STANDALONE_NUMERIC,5.3. disjoint project breadth extension,p6,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:137,UNKNOWN,B-BIND,,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,e7f561272faaf72f,results,"An Answerability
+Classifier evaluates the retrieved context and routes
+the query to either a Complete Answer, Partial An-
+swer, or Clarification Request generator using Gem-
+ini 2.5 Flash (Google DeepMind, 2025).",2.5|2025,2.5|2025,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p1,e6f1d66c34b525dc480ced9902cf46419b6a37fa:159,UNKNOWN,B-PROSE,,
+fef0393e997ec51b184e39c712be63197d99fd46,66ba516b67e8f466,results,arXiv:2307.09288 [cs].,2307.09288,2307.09288,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2019. url http://arxiv.org/abs/1908.1008,p33,fef0393e997ec51b184e39c712be63197d99fd46:498,UNKNOWN,B-PROSE,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,bde2a9769e92e91c,results,"For these experiments, we use 1,028 successful attack
+prompts from the LLMail-Inject challenge dataset (Scenario
+2) [1].",028,028,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,"4. the llm generates a response, which t",p6,96285d75a5258dbbb883b31e23ff292605fa6f5a:108,UNKNOWN,B-PROSE,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,631ba31359022d81,results,"0.12
+Can you name the play that will premiere at Bensonville
+Community Playhouse on November 19, 2023?",0.12|19|2023,0.12|19|2023,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r2c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r3c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r4c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r6c1,True,False,,True,,False,R1_STANDALONE_NUMERIC,3. open,p18,96285d75a5258dbbb883b31e23ff292605fa6f5a:392,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,25b13a34cbaf55d8,results,"In Anna Rogers, Jordan Boyd-Graber, and Naoaki Okazaki
+(eds.), Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume
+1: Long Papers), pp.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2018. url https://mlsys.org/conferences/,p44,f1f07a37d4cd44daab987ff19c0bcd185910f50c:911,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,4643f1b26d43a7d7,results,"URL https://aclanthology.o
+rg/2024.findings-acl.772.",2024|772,2024|772,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:2|f1f07a37d4cd44daab987ff19c0bcd185910f50c:4|f1f07a37d4cd44daab987ff19c0bcd185910f50c:6|f1f07a37d4cd44daab987ff19c0bcd185910f50c:9|f1f07a37d4cd44daab987ff19c0bcd185910f50c:10|f1f07a37d4cd44daab987ff19c0bcd185910f50c:11|f1f07a37d4cd44daab987ff19c0bcd185910f50c:16,True,,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p45,f1f07a37d4cd44daab987ff19c0bcd185910f50c:927,UNKNOWN,B-TABLE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,1cc7ffca82e7a708,results,"Model
+Taubench Retail
+Taubench Airline
+P@1
+P@2
+P@3
+P@4
+P@1
+P@2
+P@3
+P@4.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p19,f1f07a37d4cd44daab987ff19c0bcd185910f50c:341,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,172395781f8fa565,results,"Both gains fall well below
+H4’s pre-declared 20 pp bar.",20,20,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r8c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c2,True,False,,True,,False,R1_STANDALONE_NUMERIC,conclusion,p21,413a184de4b1c752466fbfca3cd3b1f039f99d48:425,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,dc0afbcf69606fd9,results,"𝑛=10 single-doc (pilot)
+5/5
+5/5
+100%
+𝑛=4 dense multi-view (pilot)
+2/2
+2/2
+100%
+𝑛=10 multi-plan (pilot)
+4/5
+5/5
+90%.",10|100|100|10|90,10|100|100|10|90,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r1c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r2c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r3c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:0#r4c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:5#r5c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r4c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:8#r5c3,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:23,True,,False,R1_STANDALONE_NUMERIC,5.7. compliance validation on a,p17,413a184de4b1c752466fbfca3cd3b1f039f99d48:362,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,7cf2ed4ebbc6be23,results,"Total across 6 sets
+334/335
+339/339
+673/674 (99.85%).",334|335|339|339|673|674|99.85,334|335|339|339|673|674|99.85,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:10#r7c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:10#r7c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:10#r7c3,False,False,,True,,False,R1_STANDALONE_NUMERIC,5.7. compliance validation on a,p17,413a184de4b1c752466fbfca3cd3b1f039f99d48:364,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,8dc149335fa61d56,results,URL https://aclanthology.org/2023.acl-long.134.,2023|134,2023|134,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:16,True,,True,R1_STANDALONE_NUMERIC,2018. url https://mlsys.org/conferences/,p44,f1f07a37d4cd44daab987ff19c0bcd185910f50c:911,UNKNOWN,B-TABLE,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,50bdf80a77c4ea88,results,"In 2022 In-
+ternational Conference on High Performance Big Data
+and Intelligent Systems (HDIS), pages 147–153.",2022|147|153,2022|147|153,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,3. open,p16,96285d75a5258dbbb883b31e23ff292605fa6f5a:339,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,b10b4314e5d26824,results,"doi: 10.18653
+/v1/2024.naacl-long.301.",10.18653|2024|301,10.18653|2024|301,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:2|f1f07a37d4cd44daab987ff19c0bcd185910f50c:4|f1f07a37d4cd44daab987ff19c0bcd185910f50c:6|f1f07a37d4cd44daab987ff19c0bcd185910f50c:9|f1f07a37d4cd44daab987ff19c0bcd185910f50c:10|f1f07a37d4cd44daab987ff19c0bcd185910f50c:11|f1f07a37d4cd44daab987ff19c0bcd185910f50c:16,True,,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p46,f1f07a37d4cd44daab987ff19c0bcd185910f50c:958,UNKNOWN,B-TABLE,,
+fef0393e997ec51b184e39c712be63197d99fd46,47948f8baf6a3e7d,results,"International Conference on Machine Learning, pages 957–966, 2015.",957|966|2015,957|966|2015,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,True,R1_STANDALONE_NUMERIC,2023. url http://arxiv.org/abs/2305.0193,p31,fef0393e997ec51b184e39c712be63197d99fd46:462,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,e9fc84fb1d2a800e,results,"The
+mean of 101.24 ms/query reflects the linear corpus
+scaling implied by the MaxSim brute-force scoring loop.",101.24,101.24,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p28,413a184de4b1c752466fbfca3cd3b1f039f99d48:600,UNKNOWN,B-PROSE,,
+c093b845f68ee02f440f80ec911220395ba5f904,4888152fbeeb1d94,results,"SemEval-2026 Task 12 focuses on Abductive
+Event Reasoning, a complex challenge requiring
+systems to deduce the implicit causes or outcomes
+of target events from a provided text corpus.",2026|12,2026|12,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p1,c093b845f68ee02f440f80ec911220395ba5f904:0,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,c89b4426679e2362,results,"Subedi et al.: Preprint submitted to Elsevier
+Page 27 of 31.",27|31,27|31,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c6|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c6|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c1,False,False,,True,,True,R1_STANDALONE_NUMERIC,results,p28,413a184de4b1c752466fbfca3cd3b1f039f99d48:602,UNKNOWN,B-BIND,,
+4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1,e5f9e24277136687,results,"Each top-ranked cluster is independently sum-
+marized into one sentence, following a prompt design that enforces
+conciseness and faithfulness to the original content [12, 34].11 This
+modular summarization process ensures that the response remains
+factually accurate and grounded.",12|34|11,12|34|11,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,TABLE_POSSIBLY_UNDETECTED,False,R1_STANDALONE_NUMERIC,abstract,p3,4f3fca4c4fa8471dfef57857a2bfc4c86a7735f1:84,UNKNOWN,B-UNDETECTED,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,45d194263341c3fa,results,"It should include a catchy and
+creative title, a brief role overview, and a list of at least 5 employee benefits offered by the company.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,TABLE_POSSIBLY_UNDETECTED,False,R1_STANDALONE_NUMERIC,results,p32,f1f07a37d4cd44daab987ff19c0bcd185910f50c:660,UNKNOWN,,,
+fef0393e997ec51b184e39c712be63197d99fd46,2f0eb07f90e18e2e,results,"Deep heavy
+soils with more than 60% clay content are not suitable for Citrus cultivation.",60,60,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,fef0393e997ec51b184e39c712be63197d99fd46:19#r3c3,False,False,,True,,False,R1_STANDALONE_NUMERIC,4. if the text mentioned a disease or di,p13,fef0393e997ec51b184e39c712be63197d99fd46:146,UNKNOWN,B-BIND,,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,a829e15ebb7217a4,results,1 Instituto de Informática — Universidade Federal de Goiás (UFG).,,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1 instituto de informática — universidad,p1,e6f1d66c34b525dc480ced9902cf46419b6a37fa:4,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,97e8c294e06e43b8,results,"Garnett (eds.), Advances in Neural Information Processing Systems,
+volume 30.",30,30,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:25#r3c2,False,False,,True,,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p47,f1f07a37d4cd44daab987ff19c0bcd185910f50c:905,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,a2a83db7cb504a14,results,"Subedi et al.: Preprint submitted to Elsevier
+Page 14 of 31.",14|31,14|31,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c6|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c6,False,False,,True,,True,R1_STANDALONE_NUMERIC,5.7. compliance validation on a,p15,413a184de4b1c752466fbfca3cd3b1f039f99d48:343,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,0933bf48b97db0bc,results,MaxSim score = 23.12.,23.12,23.12,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. planner: decomposes a high-level quer,p8,413a184de4b1c752466fbfca3cd3b1f039f99d48:123,UNKNOWN,B-PROSE,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,a2eb0896655afc2c,results,"Up to 12 page excerpts are retained, with document-
+balanced retrieval for tasks containing at most four files.",12,12,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:1#r1c6,False,False,,True,,False,R1_STANDALONE_NUMERIC,3.4. pdf evidence allocation,p3,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:44,UNKNOWN,B-BIND,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,1f4cdef843426d33,results,"1.00
+How did the Melville Bay small businesses respond to
+the implementation of the Melville Cybersecurity Com-
+pliance Act (MCCA) on November 3, 2023?",1.00|2023,1.00|2023,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r3c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r4c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r6c1,True,False,,True,,False,R1_STANDALONE_NUMERIC,3. open,p18,96285d75a5258dbbb883b31e23ff292605fa6f5a:388,UNKNOWN,B-BIND,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,4191c77c2072fbf8,results,"6:
+if A determines an answer exists then.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. query clarification: the system first,p5,141276ba659da6e5aca1d3499713104eb3ca3c78:82,UNKNOWN,,,
+fef0393e997ec51b184e39c712be63197d99fd46,b437686b94cecaf8,results,"GPT-3.5
+External context
+3.21
+17.77
+0.93
+1.04
+4.75
+4.77.",3.5|3.21|17.77|0.93|1.04|4.75|4.77,3.5|3.21|17.77|0.93|1.04|4.75|4.77,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,fef0393e997ec51b184e39c712be63197d99fd46:12#r1c5|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c6|fef0393e997ec51b184e39c712be63197d99fd46:12#r6c7|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c2|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c3|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c4|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c5|fef0393e997ec51b184e39c712be63197d99fd46:12#r7c6,True,False,,True,,False,R1_STANDALONE_NUMERIC,experimental_setup,p23,fef0393e997ec51b184e39c712be63197d99fd46:302,UNKNOWN,B-BIND,,
+fef0393e997ec51b184e39c712be63197d99fd46,4f84daa556519386,results,"5
+Wind erosion can have several negative effects on soil, including:
+1) Loss of topsoil: Wind erosion can lead to the loss of topsoil,
+which can negatively impact crop productivity and soil fertility.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,TABLE_POSSIBLY_UNDETECTED,False,R1_STANDALONE_NUMERIC,4. if the text mentioned a disease or di,p17,fef0393e997ec51b184e39c712be63197d99fd46:192,UNKNOWN,,,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,bd7b8e411c55977e,results,"5.3
+Domain and Turn Analysis.",5.3,5.3,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,introduction_related_work,p4,e6f1d66c34b525dc480ced9902cf46419b6a37fa:120,UNKNOWN,B-PROSE,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,85ba1f598ce35fc1,results,"Llama 3.3 70B Instruct
+91.5
+92.8
+91.6
+90.0
+89.6
+95.2
+90.0.",3.3|91.5|92.8|91.6|90.0|89.6|95.2|90.0,3.3|91.5|92.8|91.6|90.0|89.6|95.2|90.0,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:3|f1f07a37d4cd44daab987ff19c0bcd185910f50c:26,True,,True,R1_STANDALONE_NUMERIC,2017. url http://arxiv.org/abs/1711.0510,p51,f1f07a37d4cd44daab987ff19c0bcd185910f50c:1061,UNKNOWN,B-TABLE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,de824428cefe9df0,results,"Stride 768×768 px | ∼30 tiles/page | Grid (𝑖, 𝑗), BBox, Plan ID, Date per tile.",768|768|30,768|768|30,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r2c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c4|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c6,False,False,,True,,False,R1_STANDALONE_NUMERIC,3.1. visual-first multimodal rag,p5,413a184de4b1c752466fbfca3cd3b1f039f99d48:81,UNKNOWN,B-BIND,,
+81e060664f2446a3c2b8f6597c5ccf0984e744d5,e78415b5e38fd623,results,"Abstracts
+8358
+Total words
+7799769
+Time range
+1958-2024.",8358|7799769|1958|2024,8358|7799769|1958|2024,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,introduction_related_work,p2,81e060664f2446a3c2b8f6597c5ccf0984e744d5:38,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,681a68777cc1be26,results,"The full-LM LoRA
+configuration additionally inserts 𝑟=32 LoRA adapters
+on every transformer layer’s 𝑞/𝑘/𝑣/𝑜+ gate/up/down
+projections (37.2M parameters total for ColNomic-3B;
+the comparable 39.3M canonical adapter for ColPali),
+trained for 5 epochs with a unique-image batch sampler
+that guarantees no positive page appears twice in a
+batch.",32|37.2|39.3,32|37.2|39.3,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r3c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r4c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:14#r8c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r3c5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c4|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r11c2,True,False,,True,,False,R1_STANDALONE_NUMERIC,5.10. cross-agency generalization and,p19,413a184de4b1c752466fbfca3cd3b1f039f99d48:394,UNKNOWN,B-BIND,,
+ae2768758f9928d50eebd4c945f47ff51e0e6f3b,4a81423b9b13ac9e,results,"A Figura 1 ilustra a arquitetura conceitual de sistemas RAG e sua 
+adaptação para o ambiente da plataforma ProbY, evidenciando as etapas de geração de 
+embeddings, indexação vetorial e recuperação de documentos.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,False,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,body,p2,ae2768758f9928d50eebd4c945f47ff51e0e6f3b:12,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,75abd9f784fe7519,results,"(ii) The 8-query scale is too small for per-domain
+breakdowns; the eight queries are stratified across
+compliance domains (geotextile, guardrail, drainage,
+mailbox sight distance, gabion, silt fence, scarification,
+contour ditch) but each domain contributes only one
+query.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,method,p27,413a184de4b1c752466fbfca3cd3b1f039f99d48:571,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,27e20e850fbc69a7,results,"compared to models of similar size, an Answerable Accuracy of 86% and an Unanswerable Accuracy of 76%.",86|76,86|76,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,results,p34,f1f07a37d4cd44daab987ff19c0bcd185910f50c:708,UNKNOWN,B-PROSE,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,adab7f3dba6af11e,results,"email will be sent to the claimant within three (3) busi-
+ness days.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,"4. the llm generates a response, which t",p6,96285d75a5258dbbb883b31e23ff292605fa6f5a:102,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,37c6b3f76d0bfc71,results,"“fill thickness.” In one case, scar-
+ification depth was reported as 4′-0′′ (a fill-geometry
+dimension) instead of the 6 in [150 mm] specified in
+grading notes—reflecting a difficulty in distinguishing
+process parameters from geometric dimensions.",150,150,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,discussion,p20,413a184de4b1c752466fbfca3cd3b1f039f99d48:415,UNKNOWN,B-PROSE,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,8412fc2dbf733757,results,Failure Cases (Judge Score = 0.0).,0.0,0.0,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:11#r5c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r5c5|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c1|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c2|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c3|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r6c4,False,False,,True,,False,R1_STANDALONE_NUMERIC,results,p29,413a184de4b1c752466fbfca3cd3b1f039f99d48:407,UNKNOWN,B-BIND,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,cf93cc9d778dd0ef,results,"Subedi et al.: Preprint submitted to Elsevier
+Page 3 of 31.",31,31,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r4c6|413a184de4b1c752466fbfca3cd3b1f039f99d48:18#r10c6,False,False,,True,,True,R1_STANDALONE_NUMERIC,3.1. visual-first multimodal rag,p4,413a184de4b1c752466fbfca3cd3b1f039f99d48:259,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,899af7b3181b796c,results,"Self-A!ention
+MLP
+  Transformer Block 1
+(SWA).",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,abstract,p3,f1f07a37d4cd44daab987ff19c0bcd185910f50c:68,UNKNOWN,,,
+fef0393e997ec51b184e39c712be63197d99fd46,e006e7c5a6d7d4d6,results,"5) Economic Costs:
+The consequences of wind erosion, such as reduced agricultural
+productivity and health impacts, can have significant economic
+costs.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,TABLE_POSSIBLY_UNDETECTED,False,R1_STANDALONE_NUMERIC,4. if the text mentioned a disease or di,p17,fef0393e997ec51b184e39c712be63197d99fd46:193,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,10e1da522e3d87e7,results,"Llama 3.1 405B Instruct
+88.6 / 87.0
+29.3
+46.2
+52.7
+76.7
+3.2
+59.5
+90.4.",3.1|88.6|87.0|29.3|46.2|52.7|76.7|3.2|59.5|90.4,3.1|88.6|87.0|29.3|46.2|52.7|76.7|3.2|59.5|90.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,False,,True,,False,R1_STANDALONE_NUMERIC,results,p24,f1f07a37d4cd44daab987ff19c0bcd185910f50c:474,UNKNOWN,B-NONE,VALUE_ONLY_IN_DISCARDED_CELLS,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,a2a737f38cb6be34,results,"Each step must identify (1) what information to
+look for, (2) which standard-plan category it belongs to.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. planner: decomposes a high-level quer,p8,413a184de4b1c752466fbfca3cd3b1f039f99d48:209,UNKNOWN,,,
+fef0393e997ec51b184e39c712be63197d99fd46,b71e93dcc8fbfa58,results,"5
+The question is fluent, coherent, and makes sense.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,4. if the text mentioned a disease or di,p16,fef0393e997ec51b184e39c712be63197d99fd46:185,UNKNOWN,,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,7252169fa1a12337,results,"Multi-HyDE + BM25 + BGE Reranker without tools
+6.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. hyde,p8,141276ba659da6e5aca1d3499713104eb3ca3c78:139,UNKNOWN,,,
+413a184de4b1c752466fbfca3cd3b1f039f99d48,4cf3dfaebd074ffd,results,"Every method is eval-
+uated identically: the 424-pair page-disjoint test split
+is queried against the full 1,898-page five-DOT visual
+index.",424|898,424|898,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:19#r5c1,True,True,413a184de4b1c752466fbfca3cd3b1f039f99d48:23,True,,False,R1_STANDALONE_NUMERIC,5.1. comparison with existing solutions,p11,413a184de4b1c752466fbfca3cd3b1f039f99d48:416,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,0a4eed689c6019d4,results,"Multilingual (§4.3)
+MMMLU; NTREX; FLoReS; MGSM; mArenaHard (LLM-as-a-Judge); Language
+Confusion Benchmark; Al-Qasida; INCLUDE 44; mTauBench.",4.3|44,4.3|44,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:27,True,,False,R1_STANDALONE_NUMERIC,abstract,p18,f1f07a37d4cd44daab987ff19c0bcd185910f50c:315,UNKNOWN,B-TABLE,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,df3df8e4afc781f4,results,"Preprint,
+arXiv:2401.06311.",2401.06311,2401.06311,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,True,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,2024. corrective retrieval augmented gen,p10,141276ba659da6e5aca1d3499713104eb3ca3c78:250,UNKNOWN,B-PROSE,,
+141276ba659da6e5aca1d3499713104eb3ca3c78,dcfeb1eba5aceb59,results,"6
+Future work.",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,discussion,p7,141276ba659da6e5aca1d3499713104eb3ca3c78:130,UNKNOWN,,,
+e6f1d66c34b525dc480ced9902cf46419b6a37fa,68a8a1da66141d41,results,"The 204 partial-IDK responses (IDK = 0.5) are
+informative.",204|0.5,204|0.5,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,e6f1d66c34b525dc480ced9902cf46419b6a37fa:3#r2c1,True,False,,True,,False,R1_STANDALONE_NUMERIC,introduction_related_work,p4,e6f1d66c34b525dc480ced9902cf46419b6a37fa:117,UNKNOWN,B-BIND,,
+96285d75a5258dbbb883b31e23ff292605fa6f5a,b56829d3e9f77d1a,results,"Vanilla RAG
+1197
+66%
+H&S Structured Highlighter
+1181
+70%
+H&S Two Steps Highlighter
+1104
+70%
+H&S Baseline
+1099
+66%
+H&S Span Highlighter
+854
+31%
+H&S BERT Extractor (RepliQA)
+799
+28%
+H&S BERT Extractor (SQuAD2)
+762
+19%.",1197|66|1181|70|1104|70|1099|66|854|31|799|28|762|19,1197|66|1181|70|1104|70|1099|66|854|31|799|28|762|19,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r2c1|96285d75a5258dbbb883b31e23ff292605fa6f5a:11#r6c1,False,False,,True,,False,R1_STANDALONE_NUMERIC,"4. the llm generates a response, which t",p8,96285d75a5258dbbb883b31e23ff292605fa6f5a:144,UNKNOWN,B-BIND,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,139b8a23d0e0fae8,results,"Command R7B
+4.0
+0.8
+4.8
+11.8
+Gemma 2 9B
+2.8
+4.0
+6.8
+24.1
+Llama 3.1 8B
+6.4
+0.0
+6.4
+8.8
+Qwen 2.5 7B
+0.8
+0.0
+0.8
+9.4
+Command R Refresh
+3.2
+0.0
+3.2
+2.4.",4.0|0.8|4.8|11.8|2.8|4.0|6.8|24.1|3.1|6.4|0.0|6.4|8.8|2.5|0.8|0.0|0.8|9.4|3.2|0.0|3.2|2.4,4.0|0.8|4.8|11.8|2.8|4.0|6.8|24.1|3.1|6.4|0.0|6.4|8.8|2.5|0.8|0.0|0.8|9.4|3.2|0.0|3.2|2.4,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,False,,True,,False,R1_STANDALONE_NUMERIC,results,p31,f1f07a37d4cd44daab987ff19c0bcd185910f50c:635,UNKNOWN,B-NONE,VALUE_ONLY_IN_DISCARDED_CELLS,
+141276ba659da6e5aca1d3499713104eb3ca3c78,cef4e959b6819e32,results,"6: dtotal ←concat(S1, S2, ..., SN).",,,False,no_binding_call,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,False,False,,False,PROSE_ONLY,False,R1_STANDALONE_NUMERIC,1. query clarification: the system first,p5,141276ba659da6e5aca1d3499713104eb3ca3c78:70,UNKNOWN,,,
+f1f07a37d4cd44daab987ff19c0bcd185910f50c,cd96405e7d02e46a,results,"3.3.3.2
+Multilingual Data Annotation.",3.3|3.2,3.3|3.2,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,False,,True,True,f1f07a37d4cd44daab987ff19c0bcd185910f50c:3,True,,False,R1_STANDALONE_NUMERIC,abstract,p10,f1f07a37d4cd44daab987ff19c0bcd185910f50c:226,UNKNOWN,B-TABLE,,
+6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d,fc8cfba2fd0241ac,results,"In the repeated
+test, reallocating a four-image cap from retrieved
+page overviews to one overview plus three over-
+lapping tiles improves project–family standard-
+ized decision accuracy by 10.6 percentage points
+(95% project-cluster bootstrap CI 4.3–18.0; ex-
+act p = .031).",10.6|95|4.3|18.0|031,10.6|95|4.3|18.0|031,True,not_bindable,RETURNED,RETURNED,OWNERSHIP_UNVERIFIED,True,True,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:1#r5c4,False,False,,True,,False,R1_STANDALONE_NUMERIC,abstract,p1,6437463b4b13b7cc1cc75f3a9bfce4e2281ed79d:131,UNKNOWN,B-BIND,,

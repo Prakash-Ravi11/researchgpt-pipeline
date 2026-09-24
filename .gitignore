@@ -16,3 +16,7 @@ data/raw_metadata/
 # docs/diagnosis/claims_explicit_v1.md; regenerate with run_funnel.py.
 out/claims_explicit/trace.jsonl
 out/claims_explicit/results.json
+out/ownership_block/trace.jsonl
+out/ownership_block/results.json
+out/ownership_warn/trace.jsonl
+out/ownership_warn/results.json
