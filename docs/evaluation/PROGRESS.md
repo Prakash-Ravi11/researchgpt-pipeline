@@ -9,8 +9,10 @@
 > Never reconstruct progress from chat logs. Rules: `RESEARCH_DIRECTIVE.md`. Nothing is committed or pushed.
 
 ## Current Phase
-None active. Phase 08 (30-paper post-fix evaluation) is complete. Phase 09 is **not started** and needs
-the user's scope decision.
+**Phase 09A — borderless-table backend** (flag `borderless_policy`, default `off`). IN PROGRESS on branch
+`exp/phase09a-borderless`; baseline commit `797a922`. Checkpoint:
+`docs/evaluation/checkpoints/phase_09a_borderless.md`. Pre-registration:
+`src/evaluation/borderless_09a/PREREG_09A.md`.
 
 ## Status
 Phases 00–08 are complete. The checkpoint documentation was created on 2026-09-30 from the repository
