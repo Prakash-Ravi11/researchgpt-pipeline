@@ -29,3 +29,6 @@ data/chroma_users/
 
 # Vite build output (web/ lives on ui/researchiq; its own .gitignore is not on this branch).
 web/dist/
+
+# Phase 09A isolated venv for the borderless-table backend (requirements-borderless.txt).
+.venv-09a/

@@ -182,6 +182,7 @@ def blocks_from_pdf(data: bytes, paper_id: str, source: str) -> list[dict[str, A
             if btype == "table":
                 captions.append((b, pno, tuple(pb[:4])))
     _attach_pdf_table_cells(doc, captions)
+    _attach_borderless_cells(data, doc, captions)
     doc.close()
     return out
 
@@ -395,6 +396,49 @@ def _attach_pdf_table_cells(doc, captions: list[tuple[dict[str, Any], int, tuple
                 if not b.get("table_cells"):
                     b.update(table_parse_status="fallback_pdf",
                              table_fallback=f"table_extraction_error:{type(e).__name__}: {e}")
+
+
+# --------------------------------------------------------------------------
+# Borderless PDF tables (phase 09A), behind `borderless_policy`, default "off".
+# Only caption blocks the ruled path above left as `no_ruled_table_beside_caption` are
+# routed to src/evidence/borderless.py (Docling + Table Transformer consensus). With "off"
+# nothing is routed or imported, so the output is the ruled-only output above.
+# The flag is read like gate._disambiguation_policy on exp/r4-disambiguation:
+# RGPT_BORDERLESS_POLICY wins, then the `borderless_policy:` line of
+# configs/staging_config.yaml, then "off".
+# --------------------------------------------------------------------------
+_BORDERLESS_POLICIES = ("off", "consensus")
+
+
+def _borderless_policy() -> str:
+    import os
+    from pathlib import Path
+    env = os.environ.get("RGPT_BORDERLESS_POLICY", "").strip().lower()
+    if env in _BORDERLESS_POLICIES:
+        return env
+    cfg = Path(__file__).resolve().parents[2] / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "borderless_policy":
+                v = val.split("#")[0].strip().lower()
+                if v in _BORDERLESS_POLICIES:
+                    return v
+    except OSError:
+        pass
+    return "off"
+
+
+def _attach_borderless_cells(data: bytes, doc, captions: list[tuple[dict[str, Any], int, tuple]]) -> None:
+    """Route ruled-path rejects (`no_ruled_table_beside_caption`) to the borderless backend when enabled."""
+    if _borderless_policy() != "consensus":
+        return
+    todo = [(b, pno, bbox) for b, pno, bbox in captions
+            if b.get("table_parse_status") == "fallback_pdf"
+            and (b.get("table_fallback") or "").startswith("no_ruled_table_beside_caption")]
+    if todo:
+        from .borderless import attach_borderless
+        attach_borderless(data, doc, todo)
 
 
 # --------------------------------------------------------------------------
