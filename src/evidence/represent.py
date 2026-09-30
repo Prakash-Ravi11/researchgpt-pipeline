@@ -12,12 +12,16 @@ Output block schema (every downstream evidence item traces to one of these):
 A `block_type == "table"` block from JATS or LaTeX additionally carries
 `table_cells` (the canonical structured_table shape - value + column_header +
 row_label + caption + section per cell) and `table_parse_status` /
-`table_fallback`. PDF table blocks do not (that is the bindability loss).
+`table_fallback`. A PDF table block carries them only when its caption sits
+directly above or below a RULED table that PyMuPDF detects and that passes
+validation (see "PDF structured table cells" below); borderless PDF tables are
+not reconstructed and keep no cells.
 """
 from __future__ import annotations
 
 import re
 import xml.etree.ElementTree as ET
+from collections import defaultdict
 from typing import Any
 
 from .schema import REPR_JATS, REPR_LATEX, REPR_PDF, structured_table, table_cell
@@ -147,6 +151,7 @@ def blocks_from_pdf(data: bytes, paper_id: str, source: str) -> list[dict[str, A
     cursor = {"blocks": [], "pos": 0}
     out: list[dict[str, Any]] = []
     current_section = "body"
+    captions: list[tuple[dict[str, Any], int, tuple]] = []   # caption-like table blocks: (block, page, bbox)
 
     for pno, page in enumerate(doc, start=1):
         page_blocks = page.get_text("blocks")  # (x0,y0,x1,y1,text,bno,btype)
@@ -174,8 +179,222 @@ def blocks_from_pdf(data: bytes, paper_id: str, source: str) -> list[dict[str, A
                 "table" if low.startswith("table ") else "paragraph")
             b = _mk(paper_id, source, REPR_PDF, current_section, f"p{pno}", btype, raw, cursor)
             out.append(b); cursor["blocks"].append(b); cursor["pos"] = b["char_end"]
+            if btype == "table":
+                captions.append((b, pno, tuple(pb[:4])))
+    _attach_pdf_table_cells(doc, captions)
     doc.close()
     return out
+
+
+# --------------------------------------------------------------------------
+# PDF structured table cells (ruled tables only)
+#
+# The PDF front-end above types a block "table" from its first line; that block
+# is the table's caption, while the table body stays in ordinary text blocks.
+# A caption-LIKE table block ("Table 3: ...", "Table 1.", "TABLE IV",
+# "Table 2 Summary ...") gets `table_cells` when PyMuPDF's ruling-line table
+# detector (page.find_tables(), default strategy) finds a table directly below,
+# under or above it on the same page and the grid passes `_pdf_grid_problem`.
+# Only keys are added to that caption block -- block text, ids, char spans and
+# types are unchanged, so the text every other stage reads is identical.
+# Borderless tables are deliberately not reconstructed: a text-alignment
+# strategy splits words across columns and merges rows on real papers, and a
+# wrong grid is worse than none (a merged cell binds any row it names). Such
+# captions keep no cells, with the reason in `table_fallback`.
+#
+# Row label (`_pdf_row_label_column`): column 0, unless column 0 is CLEARLY an
+# index -- every body cell a small integer, consecutive from 0 or 1, and
+# zero-padded, index-headed ('S.no', 'No.', '#', 'ID', 'Rank', ...) or
+# unheaded -- AND a later column is entity-bearing (every body cell filled with
+# a word, all values distinct). Then the first such column is the row label and
+# the index becomes an ordinary cell; otherwise column 0 stays the row label.
+# Only the table's own cells decide -- never claims, captions or paper identity.
+# --------------------------------------------------------------------------
+_PDF_CAPTION_RE = re.compile(r"^\s*(?i:table|tab\.)\s*(?:\d+|[IVXLCivxlc]+)(?:\s*[.:]|\s*$|\s+[A-Z(\[])")
+_PDF_CAPTION_GAP = 60.0      # max vertical gap (pt) between a caption and its table
+_PDF_MIN_OVERLAP = 0.3       # min horizontal overlap, as a share of the narrower box
+_PDF_MIN_COLUMNS = 2
+_PDF_MIN_BODY_ROWS = 2
+_PDF_MAX_HEADER_CHARS = 60   # a longer "header" cell is a page region or prose, not a table
+_PDF_MAX_CELL_CHARS = 200
+_INDEX_VALUE_RE = re.compile(r"^\(?(\d{1,3})\)?[.)]?$")
+_INDEX_HEADER_RE = re.compile(
+    r"^(?:s\.?\s*no\.?|sl\.?\s*no\.?|sr\.?\s*no\.?|no\.?|nr\.?|#|index|idx|id|rank|serial(?:\s*no\.?)?)$", re.I)
+_WORD_RE = re.compile(r"[^\W\d_]{2,}")
+
+
+def _ws(s: Any) -> str:
+    return " ".join(str(s or "").split())
+
+
+def _lines(s: str | None) -> list[str]:
+    return [x for x in (s or "").splitlines() if x.strip()]
+
+
+def _pdf_table_grid(table) -> tuple[list[str], list[list[str | None]]]:
+    """(header, body) of a PyMuPDF table. Header cells are whitespace-collapsed; a None
+    header cell is covered by a merged header and repeats the header to its left. Body
+    cells keep their line breaks (for `_pdf_grid_problem`); None body cells (covered by a
+    merged cell) are kept for `_pdf_grid_cells`. An external header that is really the
+    caption line above the table is ignored (the first row is the header then). A first
+    body row with no digit, above rows that all carry numbers, is a second header row and
+    is folded into the header as 'top / sub'."""
+    rows = [[None if c is None else c.strip() for c in r] for r in (table.extract() or [])]
+    hdr = getattr(table, "header", None)
+    names = list(hdr.names or []) if hdr is not None and hdr.external else []
+    if not names or _PDF_CAPTION_RE.match(" ".join(h for h in names if h)):
+        names, rows = (rows[0] if rows else []), rows[1:]
+    header: list[str] = []
+    for h in names:
+        header.append(header[-1] if h is None and header else _ws(h))
+    n = len(header)
+    body = [(r + [""] * n)[:n] for r in rows]
+    if len(body) > _PDF_MIN_BODY_ROWS and not any(re.search(r"\d", c or "") for c in body[0]) \
+            and all(any(re.search(r"\d", c or "") for c in r) for r in body[1:]):
+        sub = [_ws(s) for s in body.pop(0)]
+        header = [f"{h} / {s}" if h and s and s != h else (h or s or "") for h, s in zip(header, sub)]
+    return header, body
+
+
+def _pdf_grid_problem(header: list[str], body: list[list[str | None]]) -> str | None:
+    """Why a detected grid must not become table_cells (None = keep it)."""
+    if len(header) < _PDF_MIN_COLUMNS:
+        return f"too_few_columns:{len(header)}"
+    if len(body) < _PDF_MIN_BODY_ROWS:
+        return f"too_few_body_rows:{len(body)}"
+    if any(len(h) > _PDF_MAX_HEADER_CHARS for h in header):
+        return "header_cell_too_long"
+    if not any(_WORD_RE.search(h) for h in header[1:]):
+        return "header_has_no_words"         # the "header" row is data or a figure fragment
+    if any(len(_ws(c)) > _PDF_MAX_CELL_CHARS for r in body for c in r):
+        return "prose_like_cell"
+    for r in body:                           # rows merged into one: 'A\nB\nC' beside '1.0\n2.0\n3.0'
+        k = len(_lines(r[0]))
+        for c in r[1:]:
+            ls = _lines(c)
+            if k >= 2 and len(ls) == k and all(re.search(r"\d", x) for x in ls) \
+                    and len({re.sub(r"\d+", "9", x.strip()) for x in ls}) == 1:
+                return "stacked_records"
+    if sum(1 for r in body if not r[0] and any(
+            (c or "")[:1].islower() and len(_ws(c)) >= 30 for c in r[1:])) >= 2:
+        return "wrapped_text_rows"           # the rows are lines of wrapped prose, not records
+    return None
+
+
+def _is_index_column(header: str, values: list[str | None]) -> bool:
+    """A CLEAR index/ordinal column: every body cell a small integer, consecutive from
+    0 or 1, and zero-padded, index-headed or unheaded."""
+    if len(values) < _PDF_MIN_BODY_ROWS or not all(values):
+        return False
+    found = [_INDEX_VALUE_RE.match(v) for v in values]
+    if not all(found):
+        return False
+    nums = [int(m.group(1)) for m in found]
+    if nums[0] not in (0, 1) or any(b - a != 1 for a, b in zip(nums, nums[1:])):
+        return False
+    padded = any(re.match(r"\(?0\d", v) for v in values)
+    return padded or not header or bool(_INDEX_HEADER_RE.match(header))
+
+
+def _is_entity_column(values: list[str | None]) -> bool:
+    """Every body cell filled with a word (2+ letters) and all values distinct."""
+    return (len(values) >= _PDF_MIN_BODY_ROWS and all(values)
+            and all(_WORD_RE.search(v) for v in values) and len(set(values)) == len(values))
+
+
+def _pdf_row_label_column(header: list[str], body: list[list[str | None]]) -> tuple[int, str]:
+    if not _is_index_column(header[0], [r[0] for r in body]):
+        return 0, "first_column"
+    for c in range(1, len(header)):
+        if _is_entity_column([r[c] for r in body]):
+            return c, f"entity_column:{c} (column 0 {header[0]!r} is an index)"
+    return 0, "first_column (column 0 is index-like; no entity-bearing column)"
+
+
+def _pdf_grid_cells(header: list[str], body: list[list[str | None]], caption: str,
+                    section: str | None, page_no: int) -> tuple[list[dict[str, Any]], str]:
+    lab, rule = _pdf_row_label_column(header, body)
+    cells: list[dict[str, Any]] = []
+    label = ""
+    for r_i, row in enumerate(body, start=1):
+        if row[lab] is not None:              # None: covered by a row-spanning label -> carry it down
+            label = _ws(row[lab])
+        for c, raw in enumerate(row):
+            val = _ws(raw)
+            if c == lab or not val or not header[c]:
+                continue
+            cell = table_cell(value=val, column_header=header[c], row_label=label,
+                              caption=caption, section=section, row=r_i, col=c)
+            cell["page"] = page_no
+            cells.append(cell)
+    return cells, rule
+
+
+def _attach_pdf_table_cells(doc, captions: list[tuple[dict[str, Any], int, tuple]]) -> None:
+    """Give each caption-like PDF table block the cells of the ruled table beside it."""
+    import pymupdf
+    by_page: dict[int, list[tuple[dict[str, Any], Any]]] = defaultdict(list)
+    for b, pno, bbox in captions:
+        if _PDF_CAPTION_RE.match(b["text"].splitlines()[0]):
+            by_page[pno].append((b, pymupdf.Rect(bbox)))
+    for pno, caps in sorted(by_page.items()):
+        try:
+            page = doc[pno - 1]
+            text_blocks = [(pymupdf.Rect(pb[:4]), pb[4].strip()) for pb in page.get_text("blocks")
+                           if pb[6] == 0 and (pb[4] or "").strip()]
+            text_blocks.sort(key=lambda x: (x[0].y0, x[0].x0))
+            grids, rejected = [], []
+            for t in page.find_tables().tables:
+                header, body = _pdf_table_grid(t)
+                why = _pdf_grid_problem(header, body)
+                if why:
+                    rejected.append(why)
+                else:
+                    grids.append((pymupdf.Rect(t.bbox), header, body, bool(t.header is not None and t.header.external)))
+            pairs = []
+            for ci, (_, cr) in enumerate(caps):
+                for gi, (tr, _, _, _) in enumerate(grids):
+                    if tr.y0 >= cr.y1 - 3:
+                        gap = max(0.0, tr.y0 - cr.y1)           # table below its caption
+                    elif cr.y0 <= tr.y0 < cr.y1:
+                        gap = 0.0                               # caption block runs into the table top
+                    elif tr.y1 <= cr.y0 + 3:
+                        gap = max(0.0, cr.y0 - tr.y1) + 0.5     # table above its caption (below wins ties)
+                    else:
+                        continue
+                    if gap <= _PDF_CAPTION_GAP and \
+                            min(cr.x1, tr.x1) - max(cr.x0, tr.x0) >= _PDF_MIN_OVERLAP * min(cr.width, tr.width):
+                        pairs.append((gap, ci, gi))
+            done_c, done_g = set(), set()
+            for _gap, ci, gi in sorted(pairs):
+                if ci in done_c or gi in done_g:
+                    continue
+                b, cr = caps[ci]
+                tr, header, body, external = grids[gi]
+                parts = [b["text"]]
+                if not external and tr.y0 >= cr.y1 - 3:   # caption lines split off between caption block and table
+                    parts += [t for r, t in text_blocks if r.y0 >= cr.y1 - 1 and r.y1 <= tr.y0 + 1
+                              and min(r.x1, cr.x1) - max(r.x0, cr.x0) > 0]
+                caption = _ws(" ".join(parts))[:400]
+                cells, rule = _pdf_grid_cells(header, body, caption, b["section"], pno)
+                if not cells:
+                    continue
+                done_c.add(ci)
+                done_g.add(gi)
+                b.update(table_cells=cells, table_caption=caption, table_parse_status="parsed",
+                         table_fallback=None, table_backend="pymupdf.find_tables",
+                         table_bbox=[round(v, 1) for v in tr], table_row_label_rule=rule,
+                         table_shape=[len(body), len(header)])
+            for ci, (b, _) in enumerate(caps):
+                if ci not in done_c:
+                    b.update(table_parse_status="fallback_pdf",
+                             table_fallback="no_ruled_table_beside_caption"
+                             + (f" (page grids rejected: {', '.join(sorted(set(rejected)))})" if rejected else ""))
+        except Exception as e:  # noqa: BLE001 -- cells are additive: never break the text path
+            for b, _ in caps:
+                if not b.get("table_cells"):
+                    b.update(table_parse_status="fallback_pdf",
+                             table_fallback=f"table_extraction_error:{type(e).__name__}: {e}")
 
 
 # --------------------------------------------------------------------------

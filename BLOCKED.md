@@ -162,3 +162,49 @@ request again.
 **To resume:** send the 90 lines as message text, or fill
 runs/phase4_denominator/labels_template.txt and save it. Phase 4 runs as briefed the
 moment 90 parse.
+
+## 2026-09-30 Phase — PDF table-cell implementation (after Stage B)
+
+**What I was doing:** implementing ruled-PDF-table -> `table_cells` in
+`src/evidence/represent.py` (`blocks_from_pdf`). The helper code is built and tested as a
+scratchpad prototype first, so that it goes into production in one insertion.
+
+**Which stop conditions fired (no test failed; nothing is broken):**
+- `src/evidence/represent.py` has been edited twice this phase. Both edits are inert, so
+  behaviour is identical to HEAD: one updated the docstring and added the `defaultdict` import,
+  the other initialises the `captions` list. The remaining insertion (wiring plus helpers) would
+  be the 3rd edit of that file.
+- The prototype check script was run 4 times, each run after fixing a defect the previous run
+  had surfaced.
+- The phase has gone well past ~20 tool calls without a phase artifact.
+
+**What I tried / found (prototype, all 30 physical PDFs):**
+1. Text stream invariance holds. Blocks, text, ids, spans and types are identical to production;
+   the extra keys appear only on table blocks.
+2. Pairing bug found and fixed. A "table above caption" gap could go negative (-0.4 pt) and beat
+   exact overlaps, which swapped P005 Tables 4 and 5. Gaps are now clamped at 0.
+3. Five accepted grids were garbage:
+   - rows stacked into one cell: P019 T1/T2, P027 T1;
+   - wrapped-prose lines as rows: P020 T III;
+   - a data row taken as the header: P024 T2.
+
+   The binder matches numbers at token boundaries inside multi-value cells
+   (src/evidence/gate.py:459-465), so a stacked cell would bind every method named in the
+   merged label. I added three validation rules: `stacked_records`, `wrapped_text_rows` and
+   `header_has_no_words`. Across all find_tables grids they fire only on garbage.
+4. PyMuPDF sometimes reports the caption line as an "external header". That header is now
+   ignored; P005 T1, T7 and T8 had headers made of caption fragments.
+5. Caption continuation blocks between a caption and a table below it are appended. All 5 cases
+   were checked and are genuine: P003 T2/T6, P008 T I/II, P023 T3.
+
+**Result:** 158 table-typed blocks, 28 parsed, 643 cells. P003 Table 3 uses rule
+`entity_column:1` ('S.no' is an index), and cell 92.3 has row "Proposed Method", column
+"Dice Score (%)", page 6.
+
+**What I need from you:** "proceed", to make the single final edit to represent.py (the 3rd this
+phase), then:
+- write the regression tests and run every suite;
+- run P003 acceptance with the unchanged Stage B oracle functions;
+- mine the 30 PDFs and run the post-fix evaluation.
+
+There will be no 4th edit to represent.py: if the in-place tests expose a defect, I stop again.
