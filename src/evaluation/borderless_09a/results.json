@@ -4515,8 +4515,8 @@
    }
   },
   "decision_final": "KEEP DEFAULT OFF (borderless_policy=off). P1 FAIL and P3 FAIL; P2 PASS, P4 PASS. Not all four pass -> no enable commit.",
-  "determinism": "run 1 and run 2 identical on every verdict, claim, NEG, criteria and summary field (timing and diagnostic-only fields excluded); the 9 reviewed tables and the 17 other accepted tables were re-derived afterwards with identical verdicts and cell counts",
-  "timing_note": "per-page parser seconds from run 2 (Docling A 3.4-41.2 s/page, TATR B 0.45-6.5 s/page on CPU). The run-2 P017 child wall time (23517.2 s vs 156.5 s in run 1) contains a wall-clock gap outside the parsers (its per-page parser seconds are normal); a system suspend coinciding with the date change is suspected; it is not CPU cost.",
+  "determinism": "run 1 and run 2 identical on every verdict, claim, NEG, criteria and summary field (timing and diagnostic-only fields excluded); all 24 accepted tables were re-derived afterwards with identical verdicts and cell counts",
+  "timing_note": "per-page parser seconds from run 2 over the 50 routed captions: Docling A 1.28-41.16 s/page, TATR B 0.36-6.96 s/page (CPU). Consensus child wall 25.4-156.5 s per paper with routed tables (runs 1 and 2). The run-2 P017 child wall time (23517.2 s vs 156.5 s in run 1) contains a wall-clock gap outside the parsers (its per-page parser seconds are normal); a system suspend coinciding with the date change is suspected; it is not CPU cost.",
   "crops": [
    "P001_Table1_p7_accepted.png",
    "P001_Table2_p8_accepted.png",

@@ -6,120 +6,126 @@
 > 3. run `git status --short`;
 > 4. continue from *Next Action*.
 >
-> Never reconstruct progress from chat logs. Rules: `RESEARCH_DIRECTIVE.md`. Nothing is committed or pushed.
+> Never reconstruct progress from chat logs. Rules: `RESEARCH_DIRECTIVE.md`. Commits and pushes happen only
+> when a phase brief asks for them. Phase 09A did; phases 00–08 did not.
 
 ## Current Phase
-**Phase 09A — borderless-table backend** (flag `borderless_policy`, default `off`). IN PROGRESS on branch
-`exp/phase09a-borderless`; baseline commit `797a922`. Checkpoint:
-`docs/evaluation/checkpoints/phase_09a_borderless.md`. Pre-registration:
-`src/evaluation/borderless_09a/PREREG_09A.md`.
+None active. **Phase 09A (borderless-table backend) is complete.** The default stays
+`borderless_policy = off`: P1 FAIL, P2 PASS, P3 FAIL, P4 PASS. The next phase needs the user's choice.
 
 ## Status
-Phases 00–08 are complete. The checkpoint documentation was created on 2026-09-30 from the repository
-artifacts.
-
-Two read-only verifier agents audited it against those artifacts: 384 facts checked, 5 discrepancies
-found, all corrected on 2026-09-30:
-- PF013 misattributed to the unparsed-table case;
-- `test_postfix_evaluate.py` misattributed to Phase 05;
-- the P001 contextual-tier example, which revealed the harvest recall limit;
-- "meet" corrected to "exceed" for the 30–50-pair aim;
-- a stale test-docstring path.
+- Phases 00–08 are complete. Their checkpoints were audited on 2026-09-30: 384 facts, 5 discrepancies found
+  and corrected.
+- Phase 09A is complete (2026-10-01) on branch `exp/phase09a-borderless`, which is pushed to origin.
 
 ## Last Completed Phase
-`phase_08_30paper_evaluation`, 2026-09-30.
+`phase_09a_borderless`, 2026-10-01.
 
 ## Next Action
-Wait for the user to choose Phase 09. Do not start any option unprompted. Candidate scopes:
-- (A) borderless-table reconstruction: blocks 11 of 18 claims;
-- (B) the binder's metric/subject model: `not_bindable`, comparison claims, metric in the caption;
-- (C) the fall-through gate path (`not_bindable` / `not_a_table_claim` fall through to grounding once a
-  paper has any cells);
-- (D) human validation of the 55 machine-assisted pairs.
+Wait for the user to choose the next change. Do not start it unprompted. The phase 09A report names these
+candidates:
+- the binder residuals: 3 `not_bindable` (P014 C041, C042, C045) and 2 `wrong_cell` (P006 C021, P008 C027);
+- the 9 claims that are binder-blocked even with perfect cells: C005, C012, C025, C034, C035, C048, C052,
+  C057, C058;
+- two gate findings: an "Ablation-CAM" row label forces ablation classification (C013), and sentence
+  splitting at "et al." (C085);
+- closing the `not_bindable` → grounding → RETURNED fall-through before any backend adds cells by default
+  (this is phase 09A's P3);
+- human validation of the 55 machine-assisted gold pairs.
 
 ## Repository State
-- Branch `claude-code-verification`, HEAD `30fc85d75d9ec5aaf8d354d38c0cddab82930418`. Not committed, not pushed.
-- Tracked, modified:
-  - `src/evidence/represent.py`: +220/−1, the only production change; SHA-256 `b413d68dc3e9795b…`;
-  - `BLOCKED.md`: +46, the directive stop log.
-- Untracked, new this programme:
-  - `docs/evaluation/` (this file and the checkpoints);
-  - `tests/test_pdf_table_cells.py`;
-  - `src/evaluation/bottleneck_diagnosis/*` (scripts, tests, artifacts).
+- Branch **`exp/phase09a-borderless`**, pushed. It was created from `30fc85d` (`claude-code-verification`,
+  unchanged). Its commits:
 
-  `docs/`, `out/` and `src/evaluation/` were already untracked.
-- Unchanged: `gate.py` and the binder, `chunker.py`, `pdf_parser.py`, `schema.py`, configs, the verified gold,
-  and the candidate ZIP (SHA-256 `a11900f2ea572e89…`, re-checked 2026-09-30).
-- Tests, last run 2026-09-30: **178 passed, 0 failed, 0 skipped**.
-  - pytest 78: new 30 + 6 + 4; `test_anchors` 9; Stage B 6; Phase 2.1 20; portability 3.
+  | Commit | Content |
+  |---|---|
+  | `4d3c183` | bottleneck_diagnosis |
+  | `797a922` | phase 04–08 baseline: ruled-table `represent.py`, tests, checkpoints, `BLOCKED.md` |
+  | `6c1a8b9` | 09A pre-registration |
+  | `189a037` | backend |
+  | `6e39fbe` | tests |
+  | `671afb8` | validation run |
+  | final commit | report + this file |
+
+- Production code on the branch:
+  - `src/evidence/represent.py`: ruled path (phase 04) plus 09A additions (+44/−0);
+  - `src/evidence/borderless.py`: new, used only when `borderless_policy=consensus`.
+- Unchanged: `gate.py` and the binder, `chunker.py`, `pdf_parser.py`, `schema.py`, `requirements.txt`,
+  configs, the verified gold, and the candidate ZIP (SHA-256 `a11900f2ea572e89…`; untracked, never touched).
+- Environments:
+  - `.venv`: production, Python 3.10.18;
+  - `.venv-09a`: gitignored, Python 3.13.6, pinned by `requirements-borderless.txt` (docling 2.117.0,
+    transformers 5.17.0, timm 1.0.30, torch 2.14.0 CPU).
+- Tests, last run 2026-10-01: **191 passed, 0 failed**.
+  - pytest 91: borderless 13, pdf_table_cells 30, physical 6, evaluator 4, anchors 9, Stage B 6,
+    Phase 2.1 20, portability 3.
   - `tests/test_pipeline.py`: 37.
   - experiments unit suite: 63.
-- The scratchpad is empty; nothing important lives outside the repository.
+- Still untracked and not ours: `docs/diagnosis/`, `out/`, `src/evaluation/candidate_gold/`. The scratchpad
+  is empty.
 
 ## Important Artifacts
-All in `src/evaluation/bottleneck_diagnosis/` unless noted.
 
-| Artifact | What | SHA-256 prefix |
+| Artifact | What | SHA-256 prefix / note |
 |---|---|---|
-| `pdf_identity_manifest_v2.csv` | canonical PDF path + hash per paper (PDF source of truth) | `2177a036cb3ace23` |
-| `verified_gold_pairs.json` | Stage A verified gold (P003/G002 only) | `e75d8ef53047e554` |
-| `gold_binder_oracle.json/.csv/_report.md` | Stage B **pre-fix** oracle record | json `db2862d709c2617b` |
-| `postfix_candidates.json` | 85 harvested candidates (evaluator input) | `df94a0071f3892cf` |
-| `postfix_blind_readings.json` | raw blind readings, 2 readers × 85 (evaluator input) | `450a327af10e03ae` |
-| `postfix_labelling_workflow.js` | blind-reader protocol (prompts) | `e8eed1c5d8588a2b` |
-| `postfix_claim_cell_gold.json/.csv`, `postfix_claim_cell_report.md` | gold: 18 claims / 55 pairs / 12 papers | json `29ac3c4bd250b61e` |
-| `postfix_binder_oracle.json/.csv/_report.md` | before/after evaluation + P003 acceptance | json `f48dcb6ee98ba7d1` |
-| `postfix_mine_claims.py`, `postfix_evaluate.py` | harvest; gold assembly + evaluation | — |
-| `tests/test_pdf_table_cells.py`, `test_postfix_physical_pdfs.py`, `test_postfix_evaluate.py` | regression tests (30 / 6 / 4) | — |
-| `docs/evaluation/checkpoints/phase_00…phase_08*.md` | one checkpoint per phase | — |
+| `src/evaluation/bottleneck_diagnosis/pdf_identity_manifest_v2.csv` | canonical PDF path + hash per paper | `2177a036cb3ace23` |
+| `…/verified_gold_pairs.json` | Stage A verified gold (P003/G002) | `e75d8ef53047e554` |
+| `…/gold_binder_oracle.json/.csv/_report.md` | Stage B **pre-fix** oracle record | json `db2862d709c2617b` |
+| `…/postfix_candidates.json`, `…/postfix_blind_readings.json`, `…/postfix_labelling_workflow.js` | phase 07 inputs and protocol | `df94a007…`, `450a327a…`, `e8eed1c5…` |
+| `…/postfix_claim_cell_gold.json/.csv`, `…/postfix_claim_cell_report.md` | gold: 18 claims / 55 pairs / 12 papers | json `29ac3c4bd250b61e` |
+| `…/postfix_binder_oracle.json/.csv/_report.md` | phase 08 before/after + P003 acceptance | json `f48dcb6ee98ba7d1` |
+| `src/evaluation/borderless_09a/PREREG_09A.md` | 09A pre-registration | commit `6c1a8b9` |
+| `src/evaluation/borderless_09a/results.json` | 09A oracle, identity, validation, review | sections of the same names |
+| `src/evaluation/borderless_09a/PHASE09A_REPORT.md`, `crops/` | 09A report; 29 crops | — |
+| `docs/evaluation/checkpoints/phase_00…phase_09a*.md` | one checkpoint per phase | — |
 
 ## Important Decisions
 - The candidate ZIP is candidate data, never gold. Only verified pairs count.
-- PDFs are the hash-pinned canonical copies from `pdf_identity_manifest_v2.csv`; never download or substitute.
-- The fix lives in the representation layer only: ruled PDF tables via `find_tables` (ruling-line
-  strategy), cells attached to caption blocks, malformed grids rejected, and an index-aware row label.
-  No text strategy; no paper-specific rules.
-- `gate.py` and the binder are unchanged. Change them only if a later evaluation independently proves it
-  necessary.
+- PDFs are the hash-pinned canonical copies; never download or substitute.
+- Ruled PDF tables use `find_tables` (ruling-line strategy) with validation rules and an index-aware row
+  label. No text strategy and no paper-specific rules.
+- **Phase 09A:** the Docling + TATR consensus backend exists behind `borderless_policy`, **default `off`**.
+  It is not enabled: P1 and P3 fail. Enabling it needs new pre-registered evidence.
+- `gate.py` and the binder are unchanged. Change them only when an evaluation proves it necessary.
 - Never modify the verified gold or the claim wording to make a test pass.
-- Stage B `main()` is never run again (it would overwrite the pre-fix record). Import its functions.
-- Evaluator rules are fixed before results. After results, report defects; do not fix them silently.
-- Checkpoint discipline (2026-09-30): every phase ends with a checkpoint file and an update of this file.
+- Stage B `main()` is never run again. Import its functions.
+- Evaluator rules are fixed before results. After results, report defects and do not fix them silently.
+- Checkpoint discipline: every phase ends with a checkpoint file and an update of this file.
 
 ## Known Issues
-- **Borderless tables get no cells.** 11 of 18 claims fail at representation because of this (Phase 08).
-- **Binder limits** (not fixed):
-  - metric vocabulary (`gate.py:455`): 3 P014 claims;
-  - comparison claims with a single-subject parse (`gate.py:471`);
-  - metric only in the caption (`gate.py:482`).
-- **Fall-through precision risk.** Once a PDF paper has any cells, claims the binder cannot bind
-  (`not_bindable`, `not_a_table_claim`) fall through to grounding (`gate.py:544`) instead of abstaining as
-  `pdf_only`.
-  - PF013 (parsed table; the metric "95HD" is not recognised) was RETURNED without a bind.
-  - P017 C057/C058 (unparsed tables) still abstained.
-
-  Unmeasured beyond this set.
-- **Harvest recall limit.** A table is found only when its caption starts a text block. 17 of 129
-  referenced table labels had no such caption (for example P001 Table 5, whose caption is merged below the
-  table), so 17 explicit numeric sentences were never candidates. The P001 p13 claim that motivated the
-  contextual tier is among the misses.
-- **Index cells** are kept as ordinary cells. The Stage B R1 CANONICAL_ROWLABEL probe flipped from `bound`
-  to `wrong_cell`.
-- **Text artifacts:** ligatures expanded in table text but not in block text; subscripts garbled
-  ("ADC D _"); narrow-cell wraps ("0.94 7", "Mas k", "BLE U"); P003 Table 3 caption truncated.
-- **Evaluator caveats** (disclosed, not changed): PF026–PF028 ligature mismatch (true correct count
-  26/55, not 23/55); PF008 tie-break mislabel.
-- All Phase 07 labels are machine-assisted and unvalidated; human validation is pending.
-- `tests/test_portability.py` subprocesses write `src/__pycache__/*.pyc` even under `-B` (git-ignored;
-  delete after runs).
+- **Binder-blocked claims** (phase 09A oracle): with perfect cells only 2 of 11 target claims bind. The
+  causes: metric in the caption or methods as columns; implicit OWN with method-named rows; no metric
+  word (counts, ranges, ICC); metric inside the cell text; plural "DSCs"; "R2" parsed as r².
+- **Binder limits** (phase 08): the metric vocabulary (`gate.py:455`); comparison claims parsed as a single
+  subject (`gate.py:471`); metric only in the caption (`gate.py:482`).
+- **Fall-through precision risk**, now measured: once a paper has any cells, `not_bindable` /
+  `not_a_table_claim` claims fall through to grounding (`gate.py:544`). With the borderless backend on,
+  **6 pairs** gained unverified returns (PF001, PF002, PF006, PF017, PF018, PF019).
+- **Gate findings**, reported only:
+  - a row label containing "Ablation" (baseline "Ablation-CAM") makes `classify_table` return ablation,
+    so the paper's own result (C013) is withheld;
+  - `gate_paper` splits sentences at "et al.", so C085's fragment reads `wrong_cell`.
+- **Borderless backend limits:**
+  - extraction is per page, so continued tables lose their continuation (P016 T4.2: 14 cells);
+  - multi-level headers over 40 characters fail G3 (P017 T6);
+  - spanning labels cause disagreement (P017 T7);
+  - text-only tables can be "accepted" with 0 cells (P020 TABLE I).
+- **Borderless still uncovered with the flag off:** 11 of 18 claims fail at representation (phase 08).
+- **Harvest recall limit:** 17 of 129 referenced table labels have no caption that starts a text block.
+- **Index cells** are kept as ordinary cells (the Stage B R1 probe flipped from `bound` to `wrong_cell`).
+- **Text artifacts:** ligatures, subscripts ("ADC D _"), narrow-cell wraps ("0.94 7", "Mas k", "BLE U").
+- **Evaluator caveats** (phase 08): PF026–PF028 ligature mismatch; PF008 tie-break mislabel.
+- All gold labels and crop reviews are machine-assisted and unvalidated.
+- `tests/test_portability.py` subprocesses write `src/__pycache__/*.pyc` even under `-B` (git-ignored).
 
 ## Do Not Redo
-- Phases 00–08: the ZIP inventory, PDF identity, Stage A, the Stage B pre-fix oracle, the prototype and
-  rule measurement, the production edit, test design, P003 acceptance, harvest + blind labelling, and the
-  post-fix evaluation.
+- Phases 00–08, as recorded in their checkpoints.
+- Phase 09A: target derivation, pre-registration, oracle ceiling, flag-off identity, both validation runs,
+  and the crop review.
 - No further `src/evidence/represent.py` edit without a new measured reason.
-- Do not relabel the Phase 07 set with machine readers.
+- Do not relabel the phase 07 set with machine readers.
 - Do not run `stage_b_gold_binder_oracle.py` as a script.
+- Do not enable `borderless_policy` by default without a new pre-registered evaluation.
 
 ## Last Checkpoint
-`docs/evaluation/checkpoints/phase_08_30paper_evaluation.md` (2026-09-30).
+`docs/evaluation/checkpoints/phase_09a_borderless.md` (2026-10-01).
