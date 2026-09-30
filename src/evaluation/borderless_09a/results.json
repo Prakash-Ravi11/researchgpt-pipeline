@@ -1,0 +1,4560 @@
+{
+ "artifact": "phase09a_results",
+ "oracle": {
+  "generated_at_utc": "2026-09-30T16:27:26+00:00",
+  "versions": {
+   "python": "3.13.6",
+   "pymupdf": "1.28.2",
+   "pyyaml": "6.0.3",
+   "tqdm": "4.70.0"
+  },
+  "claims": [
+   {
+    "candidate_id": "C005",
+    "paper_id": "P001",
+    "pair_ids": [
+     "PF001",
+     "PF002"
+    ],
+    "tables": [
+     "Table 4 p13"
+    ],
+    "claim": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+    "oracle_cells": [
+     {
+      "row": "Average",
+      "col": "Ours",
+      "value": "0.926 ± 0.012",
+      "caption": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33]."
+     },
+     {
+      "row": "Average",
+      "col": "nnU-Net",
+      "value": "0.920 ± 0.014",
+      "caption": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33]."
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "0.926",
+      "0.012",
+      "0.920",
+      "0.014"
+     ],
+     "metric_tokens": [
+      "dice",
+      "score"
+     ],
+     "subject": "It"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "RETURNED"
+    ],
+    "gate_abstain_reasons": [
+     null
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C012",
+    "paper_id": "P004",
+    "pair_ids": [
+     "PF004"
+    ],
+    "tables": [
+     "Table 1 p7"
+    ],
+    "claim": "Quantitative evaluation results in the second section of Table 1 show that the network trained with UM-CAM and SPL supervision achieves an average DSC score of 89.76%, improving the DSC by 11.07% compared to the baseline model.",
+    "oracle_cells": [
+     {
+      "row": "UM-CAM+SPL",
+      "col": "DSC (%)",
+      "value": "89.76±5.09*",
+      "caption": "Table 1. Ablation study on the validation set to validate the effectiveness of UM-CAM and SPL. * denotes p-value < 0.05 when comparing with the second place method."
+     }
+    ],
+    "problems": [],
+    "binder_status": "wrong_cell",
+    "bound_cell": null,
+    "binder_reason": "value is under column 'DSC (%)' but for row 'UM-CAM+SPL', not the claim's subject OWN",
+    "parse": {
+     "numbers": [
+      "89.76",
+      "11.07"
+     ],
+     "metric_tokens": [
+      "dsc",
+      "score"
+     ],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "binding_wrong_cell"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C013",
+    "paper_id": "P004",
+    "pair_ids": [
+     "PF005",
+     "PF006"
+    ],
+    "tables": [
+     "Table 2 p8"
+    ],
+    "claim": "Our proposed method achieves an average DSC of 90.22% and an average HD95 of 4.04 pixels, which is at least 3.02 pixels lower than other weakly-supervised methods on the testing set.",
+    "oracle_cells": [
+     {
+      "row": "UM-CAM+SPL (ours)",
+      "col": "Test set / DSC (%)",
+      "value": "90.22±3.75*",
+      "caption": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth- ods. * denotes p-value < 0.05 when comparing with the second place weakly supervised method."
+     },
+     {
+      "row": "UM-CAM+SPL (ours)",
+      "col": "Test set / HD95 (pixels)",
+      "value": "4.04±4.26*",
+      "caption": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth- ods. * denotes p-value < 0.05 when comparing with the second place weakly supervised method."
+     }
+    ],
+    "problems": [],
+    "binder_status": "bound",
+    "bound_cell": {
+     "row": "UM-CAM+SPL (ours)",
+     "col": "Test set / DSC (%)",
+     "value": "90.22±3.75*",
+     "caption": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth- ods. * denotes p-value < 0.05 when comparing with the second place weakly supervised method."
+    },
+    "binder_reason": null,
+    "parse": {
+     "numbers": [
+      "90.22",
+      "4.04",
+      "3.02"
+     ],
+     "metric_tokens": [
+      "dsc"
+     ],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": true,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "bound_to_other_table"
+    ],
+    "classification": "bindable"
+   },
+   {
+    "candidate_id": "C025",
+    "paper_id": "P007",
+    "pair_ids": [
+     "PF011"
+    ],
+    "tables": [
+     "Table 3 p10"
+    ],
+    "claim": "All ICC estimates exceed 0.922, indicating an excellent inter-rater agreement [36] (Table 3).",
+    "oracle_cells": [
+     {
+      "row": "LCC",
+      "col": "ICC3",
+      "value": "0.922",
+      "caption": "Table 3. Inter-rater agreement results for dHCP dataset. The intra-class coefficient (ICC3), together with the corresponding p-value and Confidence Interval at 95th percentile (CI95%), are reported for each linear biometric measurement."
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "0.922",
+      "36"
+     ],
+     "metric_tokens": [],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "attributed_to_cited_work"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C034",
+    "paper_id": "P011",
+    "pair_ids": [
+     "PF017"
+    ],
+    "tables": [
+     "Table 1 p2"
+    ],
+    "claim": "Dis-carding pathological and non-annotated brains, our training dataset results in 15 healthy fetal brains (see details summarized in Table 1).",
+    "oracle_cells": [
+     {
+      "row": "TRAINING",
+      "col": "Number of subjects",
+      "value": "15",
+      "caption": "Table 1: Summary of the data used for training and quantitative and qualitative evaluation."
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "15"
+     ],
+     "metric_tokens": [],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "RETURNED"
+    ],
+    "gate_abstain_reasons": [
+     null
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C035",
+    "paper_id": "P011",
+    "pair_ids": [
+     "PF018",
+     "PF019"
+    ],
+    "tables": [
+     "Table 1 p2"
+    ],
+    "claim": "The normative spatiotemporal MRI atlas of the fetal brain [14] provides 3D high-quality isotropic smooth volumes along with tissue label maps for all gestational age between 21 and 38 weeks (see Table 1 for details).",
+    "oracle_cells": [
+     {
+      "row": "EVALUATION Quantitative",
+      "col": "Gestational age (weeks)",
+      "value": "21-38",
+      "caption": "Table 1: Summary of the data used for training and quantitative and qualitative evaluation."
+     },
+     {
+      "row": "EVALUATION Quantitative",
+      "col": "Gestational age (weeks)",
+      "value": "21-38",
+      "caption": "Table 1: Summary of the data used for training and quantitative and qualitative evaluation."
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "14",
+      "21",
+      "38"
+     ],
+     "metric_tokens": [],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "attributed_to_cited_work"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C048",
+    "paper_id": "P015",
+    "pair_ids": [
+     "PF041"
+    ],
+    "tables": [
+     "Table 2 p9"
+    ],
+    "claim": "Across all cross-validation splits, Fetal-SynthSeg achieves the highest global average Dice score of 74.9, consistently outperforming all other simulation-based approaches.",
+    "oracle_cells": [
+     {
+      "row": "FetalSynthSeg",
+      "col": "Global",
+      "value": "74.9±11.5∗",
+      "caption": "Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated across multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the best-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the best method is statistically significantly bet"
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "74.9"
+     ],
+     "metric_tokens": [
+      "dice",
+      "score"
+     ],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "ownership_unverified"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C052",
+    "paper_id": "P016",
+    "pair_ids": [
+     "PF042",
+     "PF043"
+    ],
+    "tables": [
+     "Table 4.2 p22"
+    ],
+    "claim": "A contextual transformer block integrated into an encoder-decoder architecture with hybrid dilated convolutions achieved a DSC of 83.79% on a private dataset of 80 fetal MRIs (X.",
+    "oracle_cells": [
+     {
+      "row": "(X. Huang et al., 2023a)",
+      "col": "Results",
+      "value": "DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm",
+      "caption": "Table 4.2: Performance comparison of the proposed model with state-of-the-art methods."
+     },
+     {
+      "row": "(X. Huang et al., 2023a)",
+      "col": "Dataset",
+      "value": "80 fetuses (private)",
+      "caption": "Table 4.2: Performance comparison of the proposed model with state-of-the-art methods."
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "83.79",
+      "80"
+     ],
+     "metric_tokens": [
+      "dsc"
+     ],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "ownership_unverified"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C057",
+    "paper_id": "P017",
+    "pair_ids": [
+     "PF044",
+     "PF045"
+    ],
+    "tables": [
+     "Table 6 p22"
+    ],
+    "claim": "FreeHemoSeg achieved the best lesion segmentation performance (Table 6, Figure 6), achieving DSCs of 0.559 (95% CI, 0.546–0.571) and 0.512 (95% CI, 0.497–0.526) on the internal and external validation datasets, respectively.",
+    "oracle_cells": [
+     {
+      "row": "FreeHemoSeg",
+      "col": "Overall (n = 1456 slices)",
+      "value": "0.559 (0.546, 0.571)",
+      "caption": "Table 6. GMH-IVH Lesion Segmentation Performance. Abbreviations: SL Model, supervised learning model; DSC, Dice similarity coefficient; SAM, segment anything model. Internal Validation"
+     },
+     {
+      "row": "FreeHemoSeg",
+      "col": "Overall (n = 1410 slices)",
+      "value": "0.512 (0.497, 0.526)",
+      "caption": "Table 6. GMH-IVH Lesion Segmentation Performance. Abbreviations: SL Model, supervised learning model; DSC, Dice similarity coefficient; SAM, segment anything model. Internal Validation"
+     }
+    ],
+    "problems": [],
+    "binder_status": "not_bindable",
+    "bound_cell": null,
+    "binder_reason": "claimed metric matches no table column in this paper",
+    "parse": {
+     "numbers": [
+      "0.559",
+      "95",
+      "0.546",
+      "0.571",
+      "0.512",
+      "95",
+      "0.497",
+      "0.526"
+     ],
+     "metric_tokens": [],
+     "subject": "FreeHemoSeg"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "ownership_unverified"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C058",
+    "paper_id": "P017",
+    "pair_ids": [
+     "PF046",
+     "PF047",
+     "PF048",
+     "PF049",
+     "PF050",
+     "PF051",
+     "PF052",
+     "PF053",
+     "PF054"
+    ],
+    "tables": [
+     "Table 7 p28"
+    ],
+    "claim": "Compared with standard 2D stack interpretation, FreeHemoSeg’s assistance increased sensitivity from 0.882 to 1.000 for R1 and from 0.882 to 0.941 for R2, while reducing interpretation time from 43.1 ± 28.1 s to 36.2 ± 17.4 s for R1 (16.0% reduction) and from 63.9 ± 21.9 s to 30.2 ± 7.5 s for R2 (52.7% reduction), with specificity remaining high across all conditions (≥ 0.943).",
+    "oracle_cells": [
+     {
+      "row": "2D Stacks",
+      "col": "Sensitivity",
+      "value": "0.882",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "FreeHemoSeg",
+      "col": "Sensitivity",
+      "value": "1.000",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "2D Stacks",
+      "col": "Sensitivity",
+      "value": "0.882",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "FreeHemoSeg",
+      "col": "Sensitivity",
+      "value": "0.941",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "2D Stacks",
+      "col": "Time (s)",
+      "value": "43.1±28.1",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "FreeHemoSeg",
+      "col": "Time (s)",
+      "value": "36.2±17.4",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "2D Stacks",
+      "col": "Time (s)",
+      "value": "63.9±21.9",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "FreeHemoSeg",
+      "col": "Time (s)",
+      "value": "30.2±7.5",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     },
+     {
+      "row": "3D Volume",
+      "col": "Specificity",
+      "value": "0.943",
+      "caption": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the External Validation Dataset"
+     }
+    ],
+    "problems": [],
+    "binder_status": "wrong_cell",
+    "bound_cell": null,
+    "binder_reason": "value is under column 'Sensitivity' but for row '2D Stacks', not the claim's subject OWN",
+    "parse": {
+     "numbers": [
+      "0.882",
+      "1.000",
+      "0.882",
+      "0.941",
+      "43.1",
+      "28.1",
+      "36.2",
+      "17.4",
+      "16.0",
+      "63.9",
+      "21.9",
+      "30.2",
+      "7.5",
+      "52.7",
+      "0.943"
+     ],
+     "metric_tokens": [
+      "r2",
+      "sensitivity",
+      "specificity"
+     ],
+     "subject": "OWN (implicit)"
+    },
+    "bound_to_gold_cell": false,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "binding_wrong_cell"
+    ],
+    "classification": "binder-blocked"
+   },
+   {
+    "candidate_id": "C085",
+    "paper_id": "P030",
+    "pair_ids": [
+     "PF055"
+    ],
+    "tables": [
+     "Table 2 p5"
+    ],
+    "claim": "Wen et al. achieved a mean DSC of 0.9010 using the FeTA 2021 dataset, which is higher than that reported in other stud-ies [45].",
+    "oracle_cells": [
+     {
+      "row": "Wen et al.[43]",
+      "col": "Mean DSC",
+      "value": "0.9010",
+      "caption": "Table 2 A brief summary of the deep learn-based methods for fetal brain tissue segmentation"
+     }
+    ],
+    "problems": [],
+    "binder_status": "bound",
+    "bound_cell": {
+     "row": "Wen et al.[43]",
+     "col": "Mean DSC",
+     "value": "0.9010",
+     "caption": "Table 2 A brief summary of the deep learn-based methods for fetal brain tissue segmentation"
+    },
+    "binder_reason": null,
+    "parse": {
+     "numbers": [
+      "0.9010",
+      "2021",
+      "45"
+     ],
+     "metric_tokens": [
+      "dsc"
+     ],
+     "subject": "Wen et al."
+    },
+    "bound_to_gold_cell": true,
+    "gate_final": [
+     "ABSTAINED"
+    ],
+    "gate_abstain_reasons": [
+     "binding_wrong_cell"
+    ],
+    "classification": "bindable"
+   }
+  ],
+  "bindable": [
+   "C013",
+   "C085"
+  ],
+  "binder_blocked": [
+   "C005",
+   "C012",
+   "C025",
+   "C034",
+   "C035",
+   "C048",
+   "C052",
+   "C057",
+   "C058"
+  ]
+ },
+ "identity": {
+  "generated_at_utc": "2026-09-30T16:31:46+00:00",
+  "baseline": "797a922",
+  "policy_resolved": "off",
+  "versions": {
+   "python": "3.10.18",
+   "pymupdf": "1.28.2",
+   "pyyaml": "6.0.3",
+   "tqdm": "4.70.0"
+  },
+  "papers": {
+   "P001": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "a80467d4787c2269",
+    "records_sha256": "a0773bb92585036a"
+   },
+   "P002": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "7399e17432ada86c",
+    "records_sha256": "fef6a7601a85774a"
+   },
+   "P003": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "cce2fa4f569f6c5e",
+    "records_sha256": "cafbf41d0cd6a6cd"
+   },
+   "P004": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "86397771a49cad9a",
+    "records_sha256": "930cf20a04792508"
+   },
+   "P005": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "22f52f90ab41f28c",
+    "records_sha256": "dc061ce327f92b75"
+   },
+   "P006": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "eee02abc5fe06601",
+    "records_sha256": "696cb984cc245b9d"
+   },
+   "P007": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "f6518bbf3896814a",
+    "records_sha256": "3b09fe091cd07ab4"
+   },
+   "P008": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "72289c976af999b8",
+    "records_sha256": "8adcbd0e001d512c"
+   },
+   "P009": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "0766c09ecfd6c481",
+    "records_sha256": "ace2fe02dc07b8ac"
+   },
+   "P010": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "6ff0d75c4cf12ae8",
+    "records_sha256": "86499ff6136a4c01"
+   },
+   "P011": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "4820230d0ef2d52d",
+    "records_sha256": "f8137b00bf2b490a"
+   },
+   "P012": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "59604e84137445c7",
+    "records_sha256": "29169f3f8c5bd424"
+   },
+   "P013": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "20d5de1edbb4ac08",
+    "records_sha256": "9bad3a63635caa1e"
+   },
+   "P014": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "a7a34a731ee55ccf",
+    "records_sha256": "1bc1435a1bb9165b"
+   },
+   "P015": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "50489a0e11d62a69",
+    "records_sha256": "d4d561c40a94c731"
+   },
+   "P016": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "5f3238d3b26cce7d",
+    "records_sha256": "e595d092835d131d"
+   },
+   "P017": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "b06d51d4d39dd9ee",
+    "records_sha256": "9bffd436287ec288"
+   },
+   "P018": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "4b5a923ee2339ca4",
+    "records_sha256": "18643293f51aa792"
+   },
+   "P019": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "d3e433da4543e8ae",
+    "records_sha256": "99b2f25de5553ab8"
+   },
+   "P020": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "301b9ded2af074fc",
+    "records_sha256": "55462d9da02317f1"
+   },
+   "P021": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "7c69d9665b79a09a",
+    "records_sha256": "7d4d71e7409eb37d"
+   },
+   "P022": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "c3e15ab211ec6c07",
+    "records_sha256": "8d87e73cd680e40a"
+   },
+   "P023": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "903a7d6bfe152882",
+    "records_sha256": "14fe8aafb0dd8233"
+   },
+   "P024": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "0cd60322c70e90e4",
+    "records_sha256": "30c76b2815741564"
+   },
+   "P025": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "378082f2f9bf6845",
+    "records_sha256": "396f3479cdbd32b8"
+   },
+   "P026": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "ff3b65d324350e39",
+    "records_sha256": "f06f7ca0e5d3c0c6"
+   },
+   "P027": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "d799b1f8559aa9c7",
+    "records_sha256": "6902a7ae2ad5eb1c"
+   },
+   "P028": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "a310ccc963313095",
+    "records_sha256": "7f1eea7c59fe069e"
+   },
+   "P029": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "9577efcced87cf85",
+    "records_sha256": "37222590d87e1136"
+   },
+   "P030": {
+    "blocks_identical": true,
+    "records_identical": true,
+    "blocks_sha256": "c89b4a2751f784ca",
+    "records_sha256": "3212f68f43e47c90"
+   }
+  },
+  "all_blocks_identical": true,
+  "all_records_identical": true,
+  "pairs_evaluated": 55,
+  "claims_evaluated": 18,
+  "pairs_with_any_difference": [],
+  "claims_with_any_difference": []
+ },
+ "validation": {
+  "generated_at_utc": "2026-09-30T23:42:03+00:00",
+  "papers": [
+   "P001",
+   "P003",
+   "P004",
+   "P006",
+   "P007",
+   "P008",
+   "P011",
+   "P014",
+   "P015",
+   "P016",
+   "P017",
+   "P019",
+   "P020",
+   "P024",
+   "P027",
+   "P030"
+  ],
+  "papers_measured_for_pairs": [
+   "P001",
+   "P003",
+   "P004",
+   "P006",
+   "P007",
+   "P008",
+   "P011",
+   "P014",
+   "P015",
+   "P016",
+   "P017",
+   "P030"
+  ],
+  "unmeasured": [],
+  "child_wall_seconds": {
+   "P001:off": 2.4,
+   "P003:off": 2.5,
+   "P004:off": 1.4,
+   "P006:off": 2.5,
+   "P007:off": 1.9,
+   "P008:off": 2.1,
+   "P011:off": 1.8,
+   "P014:off": 2.5,
+   "P015:off": 2.6,
+   "P016:off": 2.5,
+   "P017:off": 2.6,
+   "P019:off": 1.5,
+   "P020:off": 3.4,
+   "P024:off": 2.9,
+   "P027:off": 1.3,
+   "P030:off": 2.5,
+   "P001:consensus": 88.1,
+   "P003:consensus": 51.9,
+   "P004:consensus": 55.4,
+   "P006:consensus": 54.3,
+   "P007:consensus": 85.3,
+   "P008:consensus": 48.5,
+   "P011:consensus": 62.0,
+   "P014:consensus": 2.6,
+   "P015:consensus": 79.5,
+   "P016:consensus": 131.5,
+   "P017:consensus": 23517.2,
+   "P019:consensus": 36.8,
+   "P020:consensus": 39.8,
+   "P024:consensus": 42.3,
+   "P027:consensus": 25.4,
+   "P030:consensus": 41.0
+  },
+  "versions": {
+   "off": {
+    "python": "3.13.6",
+    "pymupdf": "1.28.2",
+    "pyyaml": "6.0.3",
+    "tqdm": "4.70.0"
+   },
+   "consensus": {
+    "python": "3.13.6",
+    "pymupdf": "1.28.2",
+    "pyyaml": "6.0.3",
+    "tqdm": "4.70.0",
+    "docling": "2.117.0",
+    "docling-core": "2.99.0",
+    "docling-ibm-models": "3.15.0",
+    "docling-parse": "7.22.1",
+    "transformers": "5.17.0",
+    "timm": "1.0.30",
+    "torch": "2.14.0",
+    "torchvision": "0.29.0"
+   }
+  },
+  "target_tables": [
+   {
+    "paper_id": "P001",
+    "table": "Table 4",
+    "page": 13,
+    "claims": [
+     "C005"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      9,
+      5
+     ],
+     "header": [
+      "Label",
+      "Ours",
+      "nnU-Net",
+      "PP",
+      "dHCP"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 14.44,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      9,
+      5
+     ],
+     "header": [
+      "Label",
+      "Ours",
+      "nnU-Net",
+      "PP",
+      "dHCP"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 2.11,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 2,
+    "crop": "crops/P001_Table4_p13_accepted.png"
+   },
+   {
+    "paper_id": "P004",
+    "table": "Table 1",
+    "page": 7,
+    "claims": [
+     "C012"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "fallback_pdf",
+    "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+    "verdict": "rejected",
+    "code": "G1",
+    "error": null,
+    "agree": false,
+    "A": {
+     "candidate": true,
+     "shape": [
+      5,
+      4
+     ],
+     "header": [
+      "",
+      "Method",
+      "DSC (%)",
+      "HD95 (pixels)"
+     ],
+     "rule": "first_column",
+     "G1": false,
+     "G2": false,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 4,
+     "G2_missing": 10,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 35.58,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [
+      "74.48±13.26 77.40±13.28",
+      "39.88±14.66 38.70±19.75",
+      "78.69±10.02 85.22±6.62 89.05±4.30",
+      "22.17±16.60 5.26±4.23 3.84±4.07"
+     ],
+     "G2_missing_words": [
+      "74.48±13.26",
+      "39.88±14.66",
+      "77.40±13.28",
+      "38.70±19.75",
+      "78.69±10.02",
+      "22.17±16.60",
+      "85.22±6.62",
+      "5.26±4.23",
+      "89.05±4.30",
+      "3.84±4.07"
+     ],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 0,
+     "target_cells": 1
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      5,
+      4
+     ],
+     "header": [
+      "",
+      "Method",
+      "DSC (%)",
+      "HD95 (pixels)"
+     ],
+     "rule": "first_column",
+     "G1": false,
+     "G2": false,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 2,
+     "G2_missing": 6,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 5.95,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [
+      "74.48±13.26 77.40±13.28 79.00±12.83*",
+      "39.88±14.66 38.70±19.75 35.33±16.98"
+     ],
+     "G2_missing_words": [
+      "74.48±13.26",
+      "39.88±14.66",
+      "77.40±13.28",
+      "38.70±19.75",
+      "79.00±12.83*",
+      "35.33±16.98"
+     ],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 0,
+     "target_cells": 1
+    },
+    "triples_only_in_A": [
+     [
+      "",
+      "dsc(%)",
+      "89.76±5.09"
+     ],
+     [
+      "",
+      "hd95(pixels)",
+      "3.10±2.61"
+     ],
+     [
+      "pseudomaskgeneration",
+      "dsc(%)",
+      "74.48±13.2677.40±13.28"
+     ],
+     [
+      "pseudomaskgeneration",
+      "hd95(pixels)",
+      "39.88±14.6638.70±19.75"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "78.69±10.0285.22±6.6289.05±4.30"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "79.00±12.83"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "22.17±16.605.26±4.233.84±4.07"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "35.33±16.98"
+     ]
+    ],
+    "triples_only_in_B": [
+     [
+      "pseudomaskgeneration",
+      "dsc(%)",
+      "74.48±13.2677.40±13.2879.00±12.83"
+     ],
+     [
+      "pseudomaskgeneration",
+      "hd95(pixels)",
+      "39.88±14.6638.70±19.7535.33±16.98"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "78.69±10.02"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "85.22±6.62"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "89.05±4.30"
+     ],
+     [
+      "segmentation",
+      "dsc(%)",
+      "89.76±5.09"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "22.17±16.60"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "3.10±2.61"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "3.84±4.07"
+     ],
+     [
+      "segmentation",
+      "hd95(pixels)",
+      "5.26±4.23"
+     ]
+    ],
+    "accepted_target_cells_correct": 0
+   },
+   {
+    "paper_id": "P004",
+    "table": "Table 2",
+    "page": 8,
+    "claims": [
+     "C013"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      7,
+      5
+     ],
+     "header": [
+      "Method",
+      "Validation set / DSC (%)",
+      "Validation set / HD95 (pixels)",
+      "Test set / DSC (%)",
+      "Test set / HD95 (pixels)"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 8.62,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      7,
+      5
+     ],
+     "header": [
+      "Method",
+      "Validation set / DSC (%)",
+      "Validation set / HD95 (pixels)",
+      "Test set / DSC (%)",
+      "Test set / HD95 (pixels)"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 1.45,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 2,
+    "crop": "crops/P004_Table2_p8_accepted.png"
+   },
+   {
+    "paper_id": "P007",
+    "table": "Table 3",
+    "page": 10,
+    "claims": [
+     "C025"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      5,
+      4
+     ],
+     "header": [
+      "Measurement",
+      "ICC3",
+      "p-value",
+      "CI95%"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 7.15,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      5,
+      4
+     ],
+     "header": [
+      "Measurement",
+      "ICC3",
+      "p-value",
+      "CI95%"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 1.92,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 1,
+    "crop": "crops/P007_Table3_p10_accepted.png"
+   },
+   {
+    "paper_id": "P011",
+    "table": "Table 1",
+    "page": 2,
+    "claims": [
+     "C034",
+     "C035"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      3,
+      7
+     ],
+     "header": [
+      "Dataset",
+      "Magnetic field strength (Tesla)",
+      "Vendor",
+      "Image resolution (mm3 )",
+      "Number of subjects",
+      "Gestational age (weeks)",
+      "Reconstruction method"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 36.04,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 3,
+     "target_cells": 3
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      3,
+      7
+     ],
+     "header": [
+      "Dataset",
+      "Magnetic ﬁeld strength (Tesla)",
+      "Vendor",
+      "Image resolution (mm3)",
+      "Number of subjects",
+      "Gestational age (weeks)",
+      "Reconstruction method"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 6.54,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 3,
+     "target_cells": 3
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 3,
+    "crop": "crops/P011_Table1_p2_accepted.png"
+   },
+   {
+    "paper_id": "P015",
+    "table": "Table 2",
+    "page": 9,
+    "claims": [
+     "C048"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      5,
+      8
+     ],
+     "header": [
+      "Testing split / Training split",
+      "CHUV-MIAL / KISPI-IRTK",
+      "CHUV-MIAL / KISPI-MIAL",
+      "KISPI-IRTK / CHUV-MIAL",
+      "KISPI-IRTK / KISPI-MIAL",
+      "KISPI-MIAL / CHUV-MIAL",
+      "KISPI-MIAL / KISPI-IRTK",
+      "Global"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 10.66,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      5,
+      8
+     ],
+     "header": [
+      "Testing split Training split",
+      "CHUV-MIAL / KISPI-IRTK",
+      "CHUV-MIAL / KISPI-MIAL",
+      "KISPI-IRTK / CHUV-MIAL",
+      "KISPI-IRTK / KISPI-MIAL",
+      "KISPI-MIAL / CHUV-MIAL",
+      "KISPI-MIAL / KISPI-IRTK",
+      "Global"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 1.42,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 1,
+    "crop": "crops/P015_Table2_p9_accepted.png"
+   },
+   {
+    "paper_id": "P016",
+    "table": "Table 4.2",
+    "page": 22,
+    "claims": [
+     "C052"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      2,
+      6
+     ],
+     "header": [
+      "Reference",
+      "Dataset",
+      "Modality",
+      "Classes",
+      "Method",
+      "Results"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [
+      "7 (eCSF, GM, WM, LV, CB, DGM, BS)",
+      "7 (eCSF, GM, WM, CB, DGM, BS, LV)",
+      "Multi-scale deformable transformers, graph convolution attention"
+     ],
+     "seconds_page": 6.14,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      2,
+      6
+     ],
+     "header": [
+      "Reference",
+      "Dataset",
+      "Modality",
+      "Classes",
+      "Method",
+      "Results"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [
+      "7 (eCSF, GM, WM, LV, CB, DGM, BS)",
+      "7 (eCSF, GM, WM, CB, DGM, BS, LV)",
+      "Multi-scale deformable transformers, graph convolution attention"
+     ],
+     "seconds_page": 1.7,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 2,
+     "target_cells": 2
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 2,
+    "crop": "crops/P016_Table4.2_p22_accepted.png"
+   },
+   {
+    "paper_id": "P017",
+    "table": "Table 6",
+    "page": 22,
+    "claims": [
+     "C057"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "fallback_pdf",
+    "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G3",
+    "verdict": "rejected",
+    "code": "G3",
+    "error": null,
+    "agree": false,
+    "A": {
+     "candidate": true,
+     "shape": [
+      7,
+      6
+     ],
+     "header": [
+      "Method",
+      "Overall (n = 1456 / slices)",
+      "Subgroup analysis / Grade I (n = 914 slices)",
+      "Subgroup analysis / Grade II (n = 271 slices)",
+      "Subgroup analysis / Grade III (n = 123 slices)",
+      "Subgroup analysis / Grade IV (n = 148 slices)"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": false,
+     "G3_problem": "header_too_long",
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [
+      "Subgroup analysis / Grade I (n = 914 slices)",
+      "Subgroup analysis / Grade II (n = 271 slices)",
+      "Subgroup analysis / Grade III (n = 123 slices)",
+      "Subgroup analysis / Grade IV (n = 148 slices)"
+     ],
+     "seconds_page": 6.68,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 0,
+     "target_cells": 2
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      11,
+      6
+     ],
+     "header": [
+      "Method",
+      "Overall (n = 1456 slices)",
+      "Subgroup analysis Grade I (n = 914 slices)",
+      "Grade II (n = 271 slices)",
+      "Grade III (n = 123 slices)",
+      "Grade IV (n = 148 slices)"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": false,
+     "G3_problem": "header_too_long",
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [
+      "Subgroup analysis Grade I (n = 914 slices)"
+     ],
+     "seconds_page": 0.79,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 2
+    },
+    "triples_only_in_A": [
+     [
+      "freehemoseg",
+      "overall(n=1456/slices)",
+      "0.559(0.546,0.571)"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysis/gradei(n=914slices)",
+      "0.544(0.530,0.558)"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysis/gradeii(n=271slices)",
+      "0.520(0.486,0.553)"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysis/gradeiii(n=123slices)",
+      "0.517(0.472,0.562)"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysis/gradeiv(n=148slices)",
+      "0.754(0.719,0.789)"
+     ],
+     [
+      "freehemosegw/osam",
+      "overall(n=1456/slices)",
+      "0.526(0.514,0.538)"
+     ],
+     [
+      "freehemosegw/osam",
+      "overall(n=1456/slices)",
+      "<.001"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradei(n=914slices)",
+      "0.518(0.504,0.532)"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradei(n=914slices)",
+      "<.001"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeii(n=271slices)",
+      "0.476(0.442,0.510)"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeii(n=271slices)",
+      "<.001"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeiii(n=123slices)",
+      "0.496"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeiii(n=123slices)",
+      "0.543(0.514,0.572)"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeiv(n=148slices)",
+      "0.649(0.606,0.692)"
+     ],
+     [
+      "freehemosegw/osam",
+      "subgroupanalysis/gradeiv(n=148slices)",
+      "<.001"
+     ],
+     [
+      "slmodel",
+      "overall(n=1456/slices)",
+      "0.479(0.466,0.493)"
+     ],
+     [
+      "slmodel",
+      "overall(n=1456/slices)",
+      "<.001"
+     ],
+     [
+      "slmodel",
+      "subgroupanalysis/gradei(n=914slices)",
+      "0.482(0.466,0.498)"
+     ],
+     [
+      "slmodel",
+      "subgroupanalysis/gradei(n=914slices)",
+      "<.001"
+     ],
+     [
+      "slmodel",
+      "subgroupanalysis/gradeii(n=271slices)",
+      "0.463(0.429,0.497)"
+     ]
+    ],
+    "triples_only_in_B": [
+     [
+      "",
+      "gradeii(n=271slices)",
+      "0.476"
+     ],
+     [
+      "",
+      "gradeiii(n=123slices)",
+      "0.543"
+     ],
+     [
+      "",
+      "gradeiv(n=148slices)",
+      "0.649"
+     ],
+     [
+      "",
+      "overall(n=1456slices)",
+      "0.526"
+     ],
+     [
+      "",
+      "subgroupanalysisgradei(n=914slices)",
+      "0.518"
+     ],
+     [
+      "freehemoseg",
+      "gradeii(n=271slices)",
+      "(0.486,0.553)"
+     ],
+     [
+      "freehemoseg",
+      "gradeii(n=271slices)",
+      "0.520"
+     ],
+     [
+      "freehemoseg",
+      "gradeiii(n=123slices)",
+      "(0.472,0.562)"
+     ],
+     [
+      "freehemoseg",
+      "gradeiii(n=123slices)",
+      "0.517"
+     ],
+     [
+      "freehemoseg",
+      "gradeiv(n=148slices)",
+      "(0.719,0.789)"
+     ],
+     [
+      "freehemoseg",
+      "gradeiv(n=148slices)",
+      "0.754"
+     ],
+     [
+      "freehemoseg",
+      "overall(n=1456slices)",
+      "(0.546,0.571)"
+     ],
+     [
+      "freehemoseg",
+      "overall(n=1456slices)",
+      "0.559"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysisgradei(n=914slices)",
+      "(0.530,0.558)"
+     ],
+     [
+      "freehemoseg",
+      "subgroupanalysisgradei(n=914slices)",
+      "0.544"
+     ],
+     [
+      "freehemosegw/osam",
+      "gradeii(n=271slices)",
+      "(0.442,0.510)"
+     ],
+     [
+      "freehemosegw/osam",
+      "gradeii(n=271slices)",
+      "<.001"
+     ],
+     [
+      "freehemosegw/osam",
+      "gradeiii(n=123slices)",
+      "(0.514,0.572)"
+     ],
+     [
+      "freehemosegw/osam",
+      "gradeiii(n=123slices)",
+      "0.496"
+     ],
+     [
+      "freehemosegw/osam",
+      "gradeiv(n=148slices)",
+      "(0.606,0.692)"
+     ]
+    ],
+    "accepted_target_cells_correct": 0
+   },
+   {
+    "paper_id": "P017",
+    "table": "Table 7",
+    "page": 28,
+    "claims": [
+     "C058"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "fallback_pdf",
+    "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+    "verdict": "rejected",
+    "code": "disagree",
+    "error": null,
+    "agree": false,
+    "A": {
+     "candidate": true,
+     "shape": [
+      6,
+      6
+     ],
+     "header": [
+      "Radiologist",
+      "Method",
+      "Sensitivity",
+      "Specificity",
+      "Time (s)",
+      "Confidence"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 3.38,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 0,
+     "target_cells": 9
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      6,
+      6
+     ],
+     "header": [
+      "Radiologist",
+      "Method",
+      "Sensitivity",
+      "Specificity",
+      "Time (s)",
+      "Confidence"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 0.45,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 0,
+     "target_cells": 9
+    },
+    "triples_only_in_A": [
+     [
+      "",
+      "confidence",
+      "4.64±0.56"
+     ],
+     [
+      "",
+      "confidence",
+      "4.79±0.50"
+     ],
+     [
+      "",
+      "confidence",
+      "4.83±0.48"
+     ],
+     [
+      "",
+      "confidence",
+      "4.93±0.26"
+     ],
+     [
+      "",
+      "method",
+      "3dvolume"
+     ],
+     [
+      "",
+      "method",
+      "3dvolume"
+     ],
+     [
+      "",
+      "sensitivity",
+      "0.824"
+     ],
+     [
+      "",
+      "sensitivity",
+      "0.882"
+     ],
+     [
+      "",
+      "sensitivity",
+      "0.941"
+     ],
+     [
+      "",
+      "sensitivity",
+      "1.000"
+     ],
+     [
+      "",
+      "specificity",
+      "0.943"
+     ],
+     [
+      "",
+      "specificity",
+      "0.962"
+     ],
+     [
+      "",
+      "specificity",
+      "0.962"
+     ],
+     [
+      "",
+      "specificity",
+      "1.000"
+     ],
+     [
+      "",
+      "time(s)",
+      "17.2±1.9"
+     ],
+     [
+      "",
+      "time(s)",
+      "22.8±11.6"
+     ],
+     [
+      "",
+      "time(s)",
+      "30.2±7.5"
+     ],
+     [
+      "",
+      "time(s)",
+      "36.2±17.4"
+     ]
+    ],
+    "triples_only_in_B": [
+     [
+      "r1",
+      "confidence",
+      "4.83±0.48"
+     ],
+     [
+      "r1",
+      "confidence",
+      "4.93±0.26"
+     ],
+     [
+      "r1",
+      "method",
+      "3dvolume"
+     ],
+     [
+      "r1",
+      "sensitivity",
+      "0.882"
+     ],
+     [
+      "r1",
+      "sensitivity",
+      "1.000"
+     ],
+     [
+      "r1",
+      "specificity",
+      "0.962"
+     ],
+     [
+      "r1",
+      "specificity",
+      "1.000"
+     ],
+     [
+      "r1",
+      "time(s)",
+      "22.8±11.6"
+     ],
+     [
+      "r1",
+      "time(s)",
+      "36.2±17.4"
+     ],
+     [
+      "r2",
+      "confidence",
+      "4.64±0.56"
+     ],
+     [
+      "r2",
+      "confidence",
+      "4.79±0.50"
+     ],
+     [
+      "r2",
+      "method",
+      "3dvolume"
+     ],
+     [
+      "r2",
+      "sensitivity",
+      "0.824"
+     ],
+     [
+      "r2",
+      "sensitivity",
+      "0.941"
+     ],
+     [
+      "r2",
+      "specificity",
+      "0.943"
+     ],
+     [
+      "r2",
+      "specificity",
+      "0.962"
+     ],
+     [
+      "r2",
+      "time(s)",
+      "17.2±1.9"
+     ],
+     [
+      "r2",
+      "time(s)",
+      "30.2±7.5"
+     ]
+    ],
+    "accepted_target_cells_correct": 0
+   },
+   {
+    "paper_id": "P030",
+    "table": "Table 2",
+    "page": 5,
+    "claims": [
+     "C085"
+    ],
+    "caption_block_found": true,
+    "table_parse_status": "parsed",
+    "table_fallback": null,
+    "verdict": "accepted",
+    "code": null,
+    "error": null,
+    "agree": true,
+    "A": {
+     "candidate": true,
+     "shape": [
+      13,
+      4
+     ],
+     "header": [
+      "Paper",
+      "Architecture",
+      "Dataset",
+      "Mean DSC"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 17.1,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "B": {
+     "candidate": true,
+     "shape": [
+      13,
+      4
+     ],
+     "header": [
+      "Paper",
+      "Architecture",
+      "Dataset",
+      "Mean DSC"
+     ],
+     "rule": "first_column",
+     "G1": true,
+     "G2": true,
+     "G3": true,
+     "G3_problem": null,
+     "false_cells_G1": 0,
+     "G2_missing": 0,
+     "G2_duplicated": 0,
+     "absorbed_text": [],
+     "seconds_page": 3.79,
+     "captions_on_page": 1,
+     "error": null,
+     "G1_failures": [],
+     "G2_missing_words": [],
+     "G2_duplicated_words": [],
+     "target_cells_correct": 1,
+     "target_cells": 1
+    },
+    "triples_only_in_A": [],
+    "triples_only_in_B": [],
+    "accepted_target_cells_correct": 1,
+    "crop": "crops/P030_Table2_p5_accepted.png"
+   }
+  ],
+  "target_claims": [
+   {
+    "candidate_id": "C005",
+    "paper_id": "P001",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "RETURNED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "wrong_cell",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "binder:wrong_cell",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C012",
+    "paper_id": "P004",
+    "oracle": {
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "bound",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed",
+     "bound_cell": {
+      "row": "UM-CAM+SPL (ours)",
+      "col": "Validation set / DSC (%)",
+      "value": "89.76±5.09*",
+      "caption": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth- ods. * denotes p-value < 0.05 when comparing with the second place weakly supervised method."
+     }
+    }
+   },
+   {
+    "candidate_id": "C013",
+    "paper_id": "P004",
+    "oracle": {
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "bound",
+     "bound_correct": true,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "gate:bound_to_ablation_table",
+     "bound_cell": {
+      "row": "UM-CAM+SPL (ours)",
+      "col": "Test set / DSC (%)",
+      "value": "90.22±3.75*",
+      "caption": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth- ods. * denotes p-value < 0.05 when comparing with the second place weakly supervised method."
+     }
+    }
+   },
+   {
+    "candidate_id": "C025",
+    "paper_id": "P007",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "binder:not_bindable",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C034",
+    "paper_id": "P011",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "RETURNED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "RETURNED"
+     ],
+     "failure": "binder:not_bindable",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C035",
+    "paper_id": "P011",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "binder:not_bindable",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C048",
+    "paper_id": "P015",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "binder:not_bindable",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C052",
+    "paper_id": "P016",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "wrong_cell",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "binder:wrong_cell",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C057",
+    "paper_id": "P017",
+    "oracle": {
+     "binder_status": "not_bindable",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C058",
+    "paper_id": "P017",
+    "oracle": {
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "not_bindable",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed",
+     "bound_cell": null
+    }
+   },
+   {
+    "candidate_id": "C085",
+    "paper_id": "P030",
+    "oracle": {
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "gate_final": [
+      "ABSTAINED"
+     ]
+    },
+    "before": {
+     "binder_status": "pdf_only",
+     "bound_correct": false,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "representation:table_not_reconstructed"
+    },
+    "after": {
+     "binder_status": "bound",
+     "bound_correct": true,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "failure": "none",
+     "bound_cell": {
+      "row": "Wen et al.[43]",
+      "col": "Mean DSC",
+      "value": "0.9010",
+      "caption": "Table 2 A brief summary of the deep learn-based methods for fetal brain tissue segmentation"
+     }
+    }
+   }
+  ],
+  "neg": [
+   {
+    "paper_id": "P019",
+    "table": "Table 1",
+    "page": 9,
+    "verdict": "accepted",
+    "code": null,
+    "table_fallback": null,
+    "accepted_cells": [
+     {
+      "value": "0.252",
+      "column_header": "DHCP / DSC",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 1,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.188",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 2,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "9.803",
+      "column_header": "DHCP / HD95",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 3,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "5.186",
+      "column_header": "DHCP / MSD",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 4,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.393",
+      "column_header": "CRL / DSC",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 5,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.280",
+      "column_header": "CRL / Jaccard",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 6,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "5.352",
+      "column_header": "CRL / HD95",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 7,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "1.291",
+      "column_header": "CRL / MSD",
+      "row_label": "Med-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 1,
+      "col": 8,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.600",
+      "column_header": "DHCP / DSC",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 1,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.478",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 2,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "3.057",
+      "column_header": "DHCP / HD95",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 3,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "1.082",
+      "column_header": "DHCP / MSD",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 4,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.493",
+      "column_header": "CRL / DSC",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 5,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.365",
+      "column_header": "CRL / Jaccard",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 6,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "3.508",
+      "column_header": "CRL / HD95",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 7,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.486",
+      "column_header": "CRL / MSD",
+      "row_label": "Med-SAM-FT",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 2,
+      "col": 8,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.882",
+      "column_header": "DHCP / DSC",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 1,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.794",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 2,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "1.044",
+      "column_header": "DHCP / HD95",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 3,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.389",
+      "column_header": "DHCP / MSD",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 4,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.801",
+      "column_header": "CRL / DSC",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 5,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.684",
+      "column_header": "CRL / Jaccard",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 6,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "1.014",
+      "column_header": "CRL / HD95",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 7,
+      "spans": {},
+      "page": 9
+     },
+     {
+      "value": "0.387",
+      "column_header": "CRL / MSD",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "section": "abstract",
+      "row": 3,
+      "col": 8,
+      "spans": {},
+      "page": 9
+     }
+    ],
+    "parsers": {
+     "A": {
+      "candidate": true,
+      "shape": [
+       3,
+       9
+      ],
+      "header": [
+       "Method",
+       "DHCP / DSC",
+       "DHCP / Jaccard",
+       "DHCP / HD95",
+       "DHCP / MSD",
+       "CRL / DSC",
+       "CRL / Jaccard",
+       "CRL / HD95",
+       "CRL / MSD"
+      ],
+      "seconds_page": 18.0,
+      "G1": true,
+      "G2": true,
+      "G3": true
+     },
+     "B": {
+      "candidate": true,
+      "shape": [
+       3,
+       9
+      ],
+      "header": [
+       "Method",
+       "DHCP / DSC",
+       "DHCP / Jaccard",
+       "DHCP / HD95",
+       "DHCP / MSD",
+       "CRL / DSC",
+       "CRL / Jaccard",
+       "CRL / HD95",
+       "CRL / MSD"
+      ],
+      "seconds_page": 4.48,
+      "G1": true,
+      "G2": true,
+      "G3": true
+     }
+    },
+    "crop": "crops/P019_Table1_p9_NEG.png"
+   },
+   {
+    "paper_id": "P019",
+    "table": "Table 2",
+    "page": 10,
+    "verdict": "accepted",
+    "code": null,
+    "table_fallback": null,
+    "accepted_cells": [
+     {
+      "value": "0.902",
+      "column_header": "DHCP / DSC",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 1,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.830",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 2,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "1.155",
+      "column_header": "DHCP / HD95",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 3,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.430",
+      "column_header": "DHCP / MSD",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 4,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.918",
+      "column_header": "CRL / DSC",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 5,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.854",
+      "column_header": "CRL / Jaccard",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 6,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.827",
+      "column_header": "CRL / HD95",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 7,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.180",
+      "column_header": "CRL / MSD",
+      "row_label": "nnUNet",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 1,
+      "col": 8,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.911",
+      "column_header": "DHCP / DSC",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 1,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.840",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 2,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.958",
+      "column_header": "DHCP / HD95",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 3,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.298",
+      "column_header": "DHCP / MSD",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 4,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.911",
+      "column_header": "CRL / DSC",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 5,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.840",
+      "column_header": "CRL / Jaccard",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 6,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.958",
+      "column_header": "CRL / HD95",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 7,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.298",
+      "column_header": "CRL / MSD",
+      "row_label": "SwinUNetR",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 2,
+      "col": 8,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.882",
+      "column_header": "DHCP / DSC",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 1,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.794",
+      "column_header": "DHCP / Jaccard",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 2,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "1.044",
+      "column_header": "DHCP / HD95",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 3,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.389",
+      "column_header": "DHCP / MSD",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 4,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.801",
+      "column_header": "CRL / DSC",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 5,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.684",
+      "column_header": "CRL / Jaccard",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 6,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "1.014",
+      "column_header": "CRL / HD95",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 7,
+      "spans": {},
+      "page": 10
+     },
+     {
+      "value": "0.387",
+      "column_header": "CRL / MSD",
+      "row_label": "FeTal-SAM",
+      "caption": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "section": "abstract",
+      "row": 3,
+      "col": 8,
+      "spans": {},
+      "page": 10
+     }
+    ],
+    "parsers": {
+     "A": {
+      "candidate": true,
+      "shape": [
+       3,
+       9
+      ],
+      "header": [
+       "Method",
+       "DHCP / DSC",
+       "DHCP / Jaccard",
+       "DHCP / HD95",
+       "DHCP / MSD",
+       "CRL / DSC",
+       "CRL / Jaccard",
+       "CRL / HD95",
+       "CRL / MSD"
+      ],
+      "seconds_page": 4.57,
+      "G1": true,
+      "G2": true,
+      "G3": true
+     },
+     "B": {
+      "candidate": true,
+      "shape": [
+       3,
+       9
+      ],
+      "header": [
+       "Method",
+       "DHCP / DSC",
+       "DHCP / Jaccard",
+       "DHCP / HD95",
+       "DHCP / MSD",
+       "CRL / DSC",
+       "CRL / Jaccard",
+       "CRL / HD95",
+       "CRL / MSD"
+      ],
+      "seconds_page": 0.77,
+      "G1": true,
+      "G2": true,
+      "G3": true
+     }
+    },
+    "crop": "crops/P019_Table2_p10_NEG.png"
+   },
+   {
+    "paper_id": "P027",
+    "table": "Table 1",
+    "page": 6,
+    "verdict": "rejected",
+    "code": "G3",
+    "table_fallback": "no_ruled_table_beside_caption (page grids rejected: stacked_records); borderless_rejected:G3",
+    "accepted_cells": [],
+    "parsers": {
+     "A": {
+      "candidate": true,
+      "shape": [
+       9,
+       8
+      ],
+      "header": [
+       "Model",
+       "Normal / aDice (%) aIoU (%) aDice (%) aIoU (%)",
+       "Normal / aDice (%) aIoU (%) aDice (%) aIoU (%)",
+       "Challenging / aDice (%) aIoU (%) aDice (%) aIoU (%)",
+       "Challenging / aDice (%) aIoU (%) aDice (%) aIoU (%)",
+       "FLOPs / (G)",
+       "#Trainable / Parameters",
+       "Inference Time / (ms)"
+      ],
+      "seconds_page": 19.61,
+      "G1": true,
+      "G2": true,
+      "G3": false
+     },
+     "B": {
+      "candidate": true,
+      "shape": [
+       9,
+       8
+      ],
+      "header": [
+       "Model",
+       "Normal / aDice (%)",
+       "Normal / aIoU (%)",
+       "Challenging / aDice (%)",
+       "Challenging / aIoU (%)",
+       "FLOPs (G)",
+       "#Trainable Parameters",
+       "Inference Time (ms)"
+      ],
+      "seconds_page": 3.68,
+      "G1": true,
+      "G2": true,
+      "G3": true
+     }
+    },
+    "crop": "crops/P027_Table1_p6_NEG.png"
+   },
+   {
+    "paper_id": "P020",
+    "table": "TABLE III",
+    "page": 14,
+    "verdict": "rejected",
+    "code": "G1",
+    "table_fallback": "no_ruled_table_beside_caption (page grids rejected: header_cell_too_long, too_few_body_rows:1, wrapped_text_rows); borderless_rejected:G1",
+    "accepted_cells": [],
+    "parsers": {
+     "A": {
+      "candidate": true,
+      "shape": [
+       15,
+       6
+      ],
+      "header": [
+       "Sr. No.",
+       "Model Name/Backbone",
+       "Papers Description (code link)",
+       "Dice Score",
+       "Extra Training Data",
+       "Year"
+      ],
+      "seconds_page": 4.33,
+      "G1": false,
+      "G2": false,
+      "G3": true
+     },
+     "B": {
+      "candidate": true,
+      "shape": [
+       15,
+       6
+      ],
+      "header": [
+       "Sr. No.",
+       "Model Name/Backbone",
+       "Papers Description (code link)",
+       "Dice Score",
+       "Extra Training Data",
+       "Year"
+      ],
+      "seconds_page": 1.13,
+      "G1": false,
+      "G2": false,
+      "G3": true
+     }
+    },
+    "crop": "crops/P020_TABLEIII_p14_NEG.png"
+   },
+   {
+    "paper_id": "P024",
+    "table": "Table 2",
+    "page": 8,
+    "verdict": "rejected",
+    "code": "no_candidate",
+    "table_fallback": "no_ruled_table_beside_caption (page grids rejected: header_has_no_words); borderless_rejected:no_candidate",
+    "accepted_cells": [],
+    "parsers": {
+     "A": {
+      "candidate": false,
+      "shape": null,
+      "header": null,
+      "seconds_page": 1.28,
+      "G1": null,
+      "G2": null,
+      "G3": null
+     },
+     "B": {
+      "candidate": false,
+      "shape": null,
+      "header": null,
+      "seconds_page": 0.36,
+      "G1": null,
+      "G2": null,
+      "G3": null
+     }
+    },
+    "crop": "crops/P024_Table2_p8_NEG.png"
+   }
+  ],
+  "summary_off_vs_on": {
+   "before": {
+    "pairs": 55,
+    "claims": 18,
+    "pairs_table_structured": 31,
+    "pairs_target_value_in_a_reconstructed_cell": 31,
+    "pairs_correctly_reconstructed": 23,
+    "pairs_row_match": {
+     "None": 24,
+     "exact": 25,
+     "wrong": 6
+    },
+    "pairs_column_match": {
+     "None": 24,
+     "exact": 29,
+     "wrong": 1,
+     "whitespace_artifact": 1
+    },
+    "CANONICAL_pairs": {
+     "binder_status": {
+      "pdf_only": 13,
+      "bound": 4,
+      "not_bindable": 38
+     },
+     "bound_correct": 4,
+     "returned": 5,
+     "failure": {
+      "representation:table_not_reconstructed": 24,
+      "none": 4,
+      "binder:not_bindable": 19,
+      "representation:target_cell_column_wrong": 1,
+      "representation:target_cell_column_whitespace_artifact": 1,
+      "representation:target_cell_row_wrong": 6
+     }
+    },
+    "REAL_claims": {
+     "binder_status": {
+      "pdf_only": 9,
+      "bound": 2,
+      "wrong_cell": 2,
+      "not_bindable": 5
+     },
+     "bound_correct": 2,
+     "returned": 2,
+     "own_method_claims": 12,
+     "own_method_bound_correct_and_returned": 2,
+     "failure": {
+      "representation:table_not_reconstructed": 11,
+      "none": 2,
+      "binder:wrong_cell": 2,
+      "binder:not_bindable": 3
+     },
+     "gate_abstain_reasons": {
+      "unverifiable_binding": 9,
+      "binding_wrong_cell": 2,
+      "ownership_unverified": 4,
+      "evidence_span_not_found_in_paper_chunks": 1
+     }
+    }
+   },
+   "after": {
+    "pairs": 55,
+    "claims": 18,
+    "pairs_table_structured": 43,
+    "pairs_target_value_in_a_reconstructed_cell": 43,
+    "pairs_correctly_reconstructed": 35,
+    "pairs_row_match": {
+     "exact": 37,
+     "None": 12,
+     "wrong": 6
+    },
+    "pairs_column_match": {
+     "exact": 41,
+     "None": 12,
+     "wrong": 1,
+     "whitespace_artifact": 1
+    },
+    "CANONICAL_pairs": {
+     "binder_status": {
+      "not_bindable": 48,
+      "bound": 7
+     },
+     "bound_correct": 6,
+     "returned": 10,
+     "failure": {
+      "binder:not_bindable": 29,
+      "none": 6,
+      "representation:table_not_reconstructed": 12,
+      "representation:target_cell_column_wrong": 1,
+      "representation:target_cell_column_whitespace_artifact": 1,
+      "representation:target_cell_row_wrong": 6
+     }
+    },
+    "REAL_claims": {
+     "binder_status": {
+      "wrong_cell": 4,
+      "bound": 5,
+      "not_bindable": 9
+     },
+     "bound_correct": 4,
+     "returned": 3,
+     "own_method_claims": 12,
+     "own_method_bound_correct_and_returned": 2,
+     "failure": {
+      "binder:wrong_cell": 4,
+      "none": 3,
+      "representation:table_not_reconstructed": 3,
+      "gate:bound_to_ablation_table": 1,
+      "binder:not_bindable": 7
+     },
+     "gate_abstain_reasons": {
+      "binding_wrong_cell": 5,
+      "bound_to_ablation_table": 2,
+      "attributed_to_cited_work": 2,
+      "ownership_unverified": 5,
+      "evidence_span_not_found_in_paper_chunks": 1
+     }
+    }
+   }
+  },
+  "criteria": {
+   "P1": {
+    "pass": false,
+    "target_claims_bound": [
+     "C013",
+     "C085"
+    ],
+    "papers": [
+     "P004",
+     "P030"
+    ]
+   },
+   "P2": {
+    "pass": "MANUAL_CHECK_REQUIRED",
+    "neg_accepted": [
+     "P019 Table 1",
+     "P019 Table 2"
+    ],
+    "neg_unmeasured": []
+   },
+   "P3": {
+    "pass": false,
+    "regressions": [
+     {
+      "pair_id": "PF001",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF002",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF006",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF017",
+      "reasons": [
+       "REAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF018",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF019",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     }
+    ],
+    "pairs_compared": 55
+   },
+   "P4": {
+    "pass": true,
+    "accepted_cells": 533,
+    "absent_from_text_layer": []
+   }
+  },
+  "canary_newline_cells": 0,
+  "decision": "KEEP DEFAULT OFF: P2 or P4 not passed (see criteria)",
+  "all_borderless_blocks": {
+   "P001": [
+    {
+     "page_or_node": "p7",
+     "text": "Table 1: Average Dice scores, percentage of negative Jacobian’s determinant, and memory usage for the original\nVoxelMorph architecture and the contracted architecture, for different number of cascades.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 26,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 38.87,
+      "B": 6.5
+     }
+    },
+    {
+     "page_or_node": "p8",
+     "text": "Table 2: Average Dice scores and percentage of negative Jacobian’s determinant for different regularization parameters.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 8,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 6.69,
+      "B": 1.64
+     }
+    },
+    {
+     "page_or_node": "p10",
+     "text": "Table 3: Average Dice scores obtained using ANTs rigid registration [2], VoxelMorph [3], TransMorph[7] and the\nproposed method, with and without deformation field accumulation.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 10.85,
+      "B": 1.34
+     }
+    },
+    {
+     "page_or_node": "p13",
+     "text": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33],\nand the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33].",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 36,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 14.44,
+      "B": 2.11
+     }
+    }
+   ],
+   "P003": [
+    {
+     "page_or_node": "p6",
+     "text": "Table 4: Examples of generated natural language",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: header_cell_too_long); borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 40.0,
+      "B": 6.94
+     }
+    }
+   ],
+   "P004": [
+    {
+     "page_or_node": "p7",
+     "text": "Table 1. Ablation study on the validation set to validate the effectiveness of UM-CAM\nand SPL. * denotes p-value < 0.05 when comparing with the second place method.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 35.58,
+      "B": 5.95
+     }
+    },
+    {
+     "page_or_node": "p8",
+     "text": "Table 2. Comparison between ours and existing weakly-supervised segmentation meth-\nods. * denotes p-value < 0.05 when comparing with the second place weakly supervised\nmethod.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 28,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 8.62,
+      "B": 1.45
+     }
+    }
+   ],
+   "P006": [
+    {
+     "page_or_node": "p11",
+     "text": "TABLE III: PRECISION PERFORMANCE OF YOLO MODELS",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: too_few_body_rows:1); borderless_rejected:G3",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G3",
+     "seconds": {
+      "A": 33.91,
+      "B": 5.82
+     }
+    },
+    {
+     "page_or_node": "p12",
+     "text": "TABLE IV: RECALL PERFORMANCE OF THE YOLO MODELS",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: too_few_body_rows:0, too_few_body_rows:1); borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 9.24,
+      "B": 0.74
+     }
+    }
+   ],
+   "P007": [
+    {
+     "page_or_node": "p3",
+     "text": "Table 1. Overview of recent studies on automatic fetal brain biometry in MRI. The table lists the works in chronological \norder and reports the imaging input on which measurements are performed, the type of methodological approach (machine \nlearning/deep learning, computer vision, geometric-prior–based, or hybrid), the type of output generated by each pipeline \n(direct measurement vs landmark-based measurement) and, in the last column, the extracted biometric parameters.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 37.0,
+      "B": 6.96
+     }
+    },
+    {
+     "page_or_node": "p5",
+     "text": "Table 2. Main acquisition parameters and population statistics for the datasets used in the study, namely the Zurich and \ndHCP datasets.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 7.64,
+      "B": 2.32
+     }
+    },
+    {
+     "page_or_node": "p10",
+     "text": "Table 3. Inter-rater agreement results for dHCP dataset. The intra-class coefficient (ICC3), together with the \ncorresponding p-value and Confidence Interval at 95th percentile (CI95%), are reported for each linear biometric \nmeasurement.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 15,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 7.15,
+      "B": 1.92
+     }
+    },
+    {
+     "page_or_node": "p11",
+     "text": "Table 5. Landmark localization distance error. Distance between the ground truth and the predicted landmarks is reported \nas the mean ± standard deviation. ‘Landmark1’ and ‘Landmarks2’ indicate the pair of landmarks used to derive each \nmeasurement. All values are expressed in millimetres (mm).",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 10,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 6.52,
+      "B": 1.58
+     }
+    },
+    {
+     "page_or_node": "p12",
+     "text": "Table 4. For each measurement, the second and third rows report the mean absolute error (MAE) and root mean squared \nerror (RMSE) computed across the test set for both our pipeline (‘ours’) and the competing method proposed by Luis et al. \n[3]. Additionally, the third row includes the Pearson correlation coefficient (R). The best results are shown in bold.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 7.82,
+      "B": 1.77
+     }
+    }
+   ],
+   "P008": [
+    {
+     "page_or_node": "p8",
+     "text": "TABLE III\nSUPERVISED LEARNING BASED ON DIFFERENT FEATURES.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 12,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 37.38,
+      "B": 6.5
+     }
+    }
+   ],
+   "P011": [
+    {
+     "page_or_node": "p2",
+     "text": "Table 1: Summary of the data used for training and quantitative and qualitative evaluation.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 15,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 36.04,
+      "B": 6.54
+     }
+    },
+    {
+     "page_or_node": "p3",
+     "text": "Table 2: Segmentation performances (mean±standard deviation) for both methods. Boldface text: best values for each metrics. Italic text:\np-values of paired Wilcoxon rank sum test adjusted with Bonferroni multiple comparisons correction, between both methods for each metric.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: too_few_body_rows:0); borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 6.27,
+      "B": 1.14
+     }
+    },
+    {
+     "page_or_node": "p4",
+     "text": "Table 3: Experts’ qualitative evaluation results in the comparison of\nBaseline U-Net and TopoCP automatic segmentations.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 6.74,
+      "B": 1.12
+     }
+    }
+   ],
+   "P014": [],
+   "P015": [
+    {
+     "page_or_node": "p5",
+     "text": "Table 1: Dataset properties. Nn – number of neurotypical subjects, Np – number of pathological subjects. SR algorithms\nare MIALSRTK (MIAL (Tourbier et al., 2020)), IRTK (Kuklisova-Murgasova et al., 2012), NiftyMIC (Ebner et al.,\n2020), and SVRTK (Uus et al., 2022)",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 37.93,
+      "B": 6.58
+     }
+    },
+    {
+     "page_or_node": "p9",
+     "text": "Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated\nacross multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the\nbest-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the\nbest method is statistically significantly better than the second best according to a Wilcoxon rank-sum test (p < 0.05).",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 35,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 10.66,
+      "B": 1.42
+     }
+    },
+    {
+     "page_or_node": "p11",
+     "text": "Table 3: Dice performance (in %) and surface distance (in mm) across datasets for each model. Values are mean±\nstandard deviation. Bold indicates best and underlined second-best performance per column. An asterisk (∗) marks\ncases where the best method is statistically significantly better than the second-best method according to a Wilcoxon\nrank-sum test (p < 0.05).",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 60,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 15.26,
+      "B": 1.6
+     }
+    }
+   ],
+   "P016": [
+    {
+     "page_or_node": "p15",
+     "text": "Table 3. 1: Summary of hyperparameters used for training the fetal brain tissue segmentation model.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 37.22,
+      "B": 6.37
+     }
+    },
+    {
+     "page_or_node": "p18",
+     "text": "Table 4. 1: Performance comparison of the proposed fetal brain tissue segmentation model against baseline architectures",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 30.85,
+      "B": 1.81
+     }
+    },
+    {
+     "page_or_node": "p22",
+     "text": "Table 4.2: Performance comparison of the proposed model with state-of-the-art methods.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 8,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 6.14,
+      "B": 1.7
+     }
+    },
+    {
+     "page_or_node": "p24",
+     "text": "Table 4.3: Computational complexity comparison of the proposed model with baseline architectures.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 15,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 5.58,
+      "B": 1.58
+     }
+    },
+    {
+     "page_or_node": "p25",
+     "text": "Table 4.4:  Impact of CLAHE preprocessing on the performance of the suggested fetal brain tissue segmentation model.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 8,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 5.92,
+      "B": 1.47
+     }
+    },
+    {
+     "page_or_node": "p26",
+     "text": "Table 4.5: Contrast-stratified performance across models.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 7.13,
+      "B": 1.58
+     }
+    },
+    {
+     "page_or_node": "p27",
+     "text": "Table 4.6: Contrast-stratified performance across models.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 15,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 7.42,
+      "B": 1.34
+     }
+    },
+    {
+     "page_or_node": "p28",
+     "text": "Table 4. 5: Impact of learning rates on the performance of the proposed fetal brain tissue segmentation model.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 12,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 8.91,
+      "B": 1.62
+     }
+    },
+    {
+     "page_or_node": "p28",
+     "text": "Table 4. 6:  Impact of optimizers on the performance of the proposed fetal brain tissue segmentation model.",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 8,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 8.91,
+      "B": 1.62
+     }
+    }
+   ],
+   "P017": [
+    {
+     "page_or_node": "p6",
+     "text": "Table 1. Fetal MRI Acquisition Protocols for Different Scanners. Abbreviations: HASTE, half-Fourier acquired single-shot turbo spin-echo; SSFSE, single shot fast spin \necho; TSE-SSH, turbo spin-echo single-shot.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 41.16,
+      "B": 6.52
+     }
+    },
+    {
+     "page_or_node": "p16",
+     "text": "Table 3. Baseline Characteristics of the Study Population. Abbreviations: UAD, unsupervised \nanomaly detection; GMH-IVH, germinal matrix-intraventricular hemorrhage; MA, maternal age; GA, \ngestational age; LP, left periventricular; RP, right periventricular; BP, bilateral periventricular. \n Characteristic \nTraining Dataset A \nTraining Dataset B \nValidation Dataset A \nValidation Dataset B \nFunction \nSL Model training \nUAD models training Internal validation \nExternal validation \nNo. of fetal brain volumes",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 56,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 18.32,
+      "B": 1.65
+     }
+    },
+    {
+     "page_or_node": "p19",
+     "text": "Table 4. Diagnosis Accuracy. Abbreviations: AUROC, area under the receiver operating characteristic curve; AUPR, area under the precision-recall curve; IKD, informative \nknowledge distillation; RD4AD, reverse distillation for anomaly detection; Skip-TS, teacher-student model with skip connections; SL Model, supervised learning model.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 17.36,
+      "B": 1.02
+     }
+    },
+    {
+     "page_or_node": "p20",
+     "text": "Table 5. Significance of Diagnostic Accuracy Differences between FreeHemoSeg and Other \nMethods. Abbreviations: AUROC, area under the receiver operating characteristic curve; AUPR, area \nunder the precision-recall curve; IKD, informative knowledge distillation; RD4AD, reverse distillation \nfor anomaly detection; Skip-TS, teacher-student model with skip connections; SL Model, supervised \nlearning model.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 11.24,
+      "B": 1.04
+     }
+    },
+    {
+     "page_or_node": "p22",
+     "text": "Table 6. GMH-IVH Lesion Segmentation Performance. Abbreviations: SL Model, supervised \nlearning model; DSC, Dice similarity coefficient; SAM, segment anything model. \nInternal Validation",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G3",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G3",
+     "seconds": {
+      "A": 6.68,
+      "B": 0.79
+     }
+    },
+    {
+     "page_or_node": "p28",
+     "text": "Table 7. Diagnostic Performance with and without FreeHemoSeg Assistance on the \nExternal Validation Dataset",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:disagree",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "disagree",
+     "seconds": {
+      "A": 3.38,
+      "B": 0.45
+     }
+    }
+   ],
+   "P019": [
+    {
+     "page_or_node": "p9",
+     "text": "Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 24,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 18.0,
+      "B": 4.48
+     }
+    },
+    {
+     "page_or_node": "p10",
+     "text": "Table 2: FeTal-SAM comparison to 3D SOTA models",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 24,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 4.57,
+      "B": 0.77
+     }
+    },
+    {
+     "page_or_node": "p12",
+     "text": "Table 3: Segmentation results from four experts for eight tissue regions",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 5.65,
+      "B": 0.62
+     }
+    }
+   ],
+   "P020": [
+    {
+     "page_or_node": "p4",
+     "text": "TABLE I. Comparison of our review with existing reviews",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 0,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 23.49,
+      "B": 4.1
+     }
+    },
+    {
+     "page_or_node": "p14",
+     "text": "TABLE III. Description of DL models with their dice scores and training data",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: header_cell_too_long, too_few_body_rows:1, wrapped_text_rows); borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 4.33,
+      "B": 1.13
+     }
+    }
+   ],
+   "P024": [
+    {
+     "page_or_node": "p4",
+     "text": "Table 1: Dataset properties. Nn – number of neurotypical and Np – pathological\nsubjects.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:G1",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G1",
+     "seconds": {
+      "A": 30.09,
+      "B": 4.07
+     }
+    },
+    {
+     "page_or_node": "p8",
+     "text": "Table 2: Evaluation of the proposed pathology-informed augmentation models\non the dHCP and CHUV-CC datasets. For dHCP, Dice and HD95 scores are\naveraged over the 7 FeTA classes, with CC being incorporated into the WM, due\nto CC inconsistencies in its ground truth annotations (see Figure 2). Statistically\nsignificant difference between the current model and BSynth is indicated by *",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: header_has_no_words); borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 1.28,
+      "B": 0.36
+     }
+    },
+    {
+     "page_or_node": "p9",
+     "text": "Table 3: Evaluation results on the KISPI-\nPath dataset, averaged across all labels.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 3.26,
+      "B": 0.39
+     }
+    }
+   ],
+   "P027": [
+    {
+     "page_or_node": "p6",
+     "text": "Table 1: Comparing RFBSNet with eight state-of-the-art methods based on av-\nerage Dice (aDice) and average IOU (aIoU) on normal and challenging test sets.\nThis table also shows the number of FLOPS (in giga FLOPS), the number of\ntraining parameters, and the inference time (in ms) of each method. RFBSNet\nachieved the highest accuracy and the best inference speed among all methods.",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption (page grids rejected: stacked_records); borderless_rejected:G3",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "G3",
+     "seconds": {
+      "A": 19.61,
+      "B": 3.68
+     }
+    }
+   ],
+   "P030": [
+    {
+     "page_or_node": "p5",
+     "text": "Table 2 A brief summary of the deep learn-based methods for fetal\nbrain tissue segmentation",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 20,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 17.1,
+      "B": 3.79
+     }
+    },
+    {
+     "page_or_node": "p7",
+     "text": "Table 3 A brief summary of the deep learn-based methods for infant\nbrain tissue segmentation",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 44,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 4.24,
+      "B": 0.46
+     }
+    },
+    {
+     "page_or_node": "p8",
+     "text": "Table 4 A brief summary of adult brain tissue segmentation methods\nwith different network structures",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 41,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 4.62,
+      "B": 0.51
+     }
+    },
+    {
+     "page_or_node": "p9",
+     "text": "Table 4 (continued)",
+     "table_parse_status": "parsed",
+     "table_fallback": null,
+     "table_backend": "borderless:consensus",
+     "n_cells": 13,
+     "verdict": "accepted",
+     "code": null,
+     "seconds": {
+      "A": 2.36,
+      "B": 0.62
+     }
+    },
+    {
+     "page_or_node": "p10",
+     "text": "Table 5 A brief summary of\nadult brain tissue segmentation\nmethods with different prior\nknowledge",
+     "table_parse_status": "fallback_pdf",
+     "table_fallback": "no_ruled_table_beside_caption; borderless_rejected:no_candidate",
+     "table_backend": null,
+     "n_cells": 0,
+     "verdict": "rejected",
+     "code": "no_candidate",
+     "seconds": {
+      "A": 3.42,
+      "B": 0.6
+     }
+    }
+   ]
+  }
+ },
+ "review": {
+  "labels_are": "machine-assisted (agent) reviews against PDF crops, full-page renders and the text layer; not validated by a human",
+  "p2_neg_manual_review": {
+   "method": "every accepted NEG cell compared with the PDF, twice independently: main agent (crop reading) and verifier agent g3 (crop + full-page render + text layer)",
+   "tables": [
+    {
+     "table": "P019 Table 1 p9",
+     "accepted_cells": 24,
+     "incorrect_cells": 0,
+     "missing_numeric_cells": 0
+    },
+    {
+     "table": "P019 Table 2 p10",
+     "accepted_cells": 24,
+     "incorrect_cells": 0,
+     "missing_numeric_cells": 0,
+     "note": "SwinUNetR prints identical DHCP and CRL values in the PDF itself; reproduced faithfully"
+    }
+   ],
+   "rejected_neg": {
+    "P027 Table 1": "G3",
+    "P020 TABLE III": "G1",
+    "P024 Table 2": "no_candidate"
+   },
+   "P2": "PASS"
+  },
+  "accepted_table_crop_review": [
+   {
+    "id": "P001 Table 4 p13",
+    "cells_checked": 36,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "The crop holds the whole table from the top rule to the bottom rule; a full-page render of page 13 confirmed this. The printed table has 9 body rows (CSF, Grey Matter, White Matter, Ventricles, Cerebellum, Thalamus, Brain Stem, Average, Time) and 4 value columns (Ours, nnU-Net, PP, dHCP). The row-label column header 'Label' is correctly not attached as a cell. I checked all 36 cells three ways: visually on the crop, on a 300 dpi re-render, and mechanically against a text-layer grid. They all match exactly, including the Time row ('60s', '80s', '> 30min', '> 1h', where '>' is printed). Bold formatting was dropped, which is fine. The same page also has Table 5 (FeTa dataset), and none of its values leaked in; for example, CSF/Ours is 0.923 from Table 4, not Table 5's 0.903. The caption sits below the table and was not absorbed."
+   },
+   {
+    "id": "P004 Table 2 p8",
+    "cells_checked": 28,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "The crop holds the whole table, including the FullySup row below the midrule; a full-page render of page 8 confirmed this. The two-level header (Validation set / Test set over DSC (%) and HD95 (pixels)) is correctly flattened as 'top / sub' in all 4 columns. HD95 is printed as HD with a subscript 95, so 'HD95' is a faithful rendering. The row labels keep their citation brackets exactly as printed: Grad-CAM++ [4], Score-CAM [25], Ablation-CAM [17], AMR [16], DRS [9], UM-CAM+SPL (ours), FullySup. All 28 values match the printed text exactly, including the trailing '*' significance markers on the bold UM-CAM+SPL row. The caption's footnote text ('* denotes p-value < 0.05 ...') was not absorbed into any cell."
+   },
+   {
+    "id": "P007 Table 3 p10",
+    "cells_checked": 15,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "The crop holds the whole table (5 body rows, header 'Measurement | ICC3 | p-value | CI95%'); a full-page render of page 10 confirmed this. The row labels LCC, HV, bBIP, sBIP and TCD (italic in print) match. The column headers ICC3, p-value and CI95% match; their digits are header text, not missing cells. All 15 values match the printed text exactly, including the scientific-notation p-values (2.60E-05, 2.00E-06, 6.99E-08, 5.02E-12, 7.09E-10) and the bracketed intervals ([0.99, 1.0] and [0.97, 1.0] keep one decimal place, as printed). No caption or body-prose text was absorbed."
+   },
+   {
+    "id": "P011 Table 1 p2",
+    "cells_checked": 15,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "I checked all 15 attached cells against the crop, a full-page render and the PDF text layer. Every value matches exactly, including '21-38' (hyphen), '0.5x0.5x0.5' (the PDF uses the letter x, not ×), '[22.6 - 33.4] (28.7±3.5)', '[18-34] (27.3±4.1)' and 'Gholipour et. al, 2017 [14]'. The shape [3, 7] matches the printed table: 3 body rows and 7 columns. Nothing is missing: the Vendor column (General Electric / Siemens; Philips / Siemens) has no digits, so leaving it out is correct. The header 'Image resolution (mm3 )' is the printed 'Image resolution (mm³)' with the superscript flattened. The column is still named correctly, so I did not count it as an error. The two-line row labels 'EVALUATION Quantitative' and 'EVALUATION Qualitative' are joined correctly. No caption text ended up in any cell."
+   },
+   {
+    "id": "P015 Table 2 p9",
+    "cells_checked": 35,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "I checked all 35 cells (5 rows x 7 columns) against the crop and the PDF text layer. Every mean±std value matches exactly, including the small subscript std digits. Asterisks are kept as U+2217, which is what the PDF prints, on FetalSynthSeg columns 1, 3, 4 and 7 and on FetalRealSeg column 2. The two-level headers are right: the top level is the testing split (CHUV-MIAL, KISPI-IRTK, KISPI-MIAL) and the sub level is the training split. I confirmed each value column's x-position sits under the right sub-header, and 'Global' spans both header rows. Bold and underline marks are formatting only and are not needed. One aside that does not affect any cell: the JSON 'caption' field is cut off mid-word ('...statistically significantly bet'). The printed caption goes on to say 'better than the second best according to a Wilcoxon rank-sum test (p < 0.05)'."
+   },
+   {
+    "id": "P016 Table 4.2 p22",
+    "cells_checked": 8,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [
+     {
+      "row_label": "(Mazher et al., 2022)",
+      "column_header": "Modality",
+      "pdf_value": "T2w MRI"
+     },
+     {
+      "row_label": "(Mazher et al., 2022)",
+      "column_header": "Classes",
+      "pdf_value": "7 (eCSF, GM, WM, CB, DGM, BS, LV)"
+     },
+     {
+      "row_label": "(Mazher et al., 2022)",
+      "column_header": "Results",
+      "pdf_value": "DSC: 0.791 ± 0.18"
+     },
+     {
+      "row_label": "(Peng et al., 2023)",
+      "column_header": "Dataset",
+      "pdf_value": "FeTA 2021 (public)"
+     },
+     {
+      "row_label": "(Peng et al., 2023)",
+      "column_header": "Modality",
+      "pdf_value": "T2w MRI"
+     },
+     {
+      "row_label": "(Peng et al., 2023)",
+      "column_header": "Classes",
+      "pdf_value": "7 (eCSF, GM, WM, VT, CB, DGM, BS)"
+     },
+     {
+      "row_label": "(Peng et al., 2023)",
+      "column_header": "Results",
+      "pdf_value": "DSC: 0.842 (training), 0.774 (FeTA 2021 test)"
+     },
+     {
+      "row_label": "(V. Singh et al., 2021)",
+      "column_header": "Dataset",
+      "pdf_value": "734 2D fetal ultrasound images (private)"
+     },
+     {
+      "row_label": "(V. Singh et al., 2021)",
+      "column_header": "Results",
+      "pdf_value": "DSC: 87.00%, HD: 28.15, Recall: 86.00%, Precision: 90.00%"
+     },
+     {
+      "row_label": "Proposed Model",
+      "column_header": "Dataset",
+      "pdf_value": "FetA 2021"
+     },
+     {
+      "row_label": "Proposed Model",
+      "column_header": "Modality",
+      "pdf_value": "T2w MRI"
+     },
+     {
+      "row_label": "Proposed Model",
+      "column_header": "Classes",
+      "pdf_value": "7 (eCSF, GM, WM, LV, CB, DGM, BS)"
+     },
+     {
+      "row_label": "Proposed Model",
+      "column_header": "Method",
+      "pdf_value": "MLP based decoder with ResNet-34 encoder"
+     },
+     {
+      "row_label": "Proposed Model",
+      "column_header": "Results",
+      "pdf_value": "Accuracy: 97.37 DSC: 90.33 IoU: 86.93 Precision: 90.83"
+     }
+    ],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "HAS_ERRORS",
+    "notes": "All 8 attached cells, which are the page-22 rows for Huang 2023a and Qi 2024, match the crop and the PDF text layer exactly. Their headers and row labels are also correct. The Method cells on p22 have no digits, so leaving them out is correct. The only defect is that the table is incomplete. Printed Table 4.2 starts at the bottom of p22 and continues on p23 without a repeated header. The continuation has 4 more body rows: (Mazher et al., 2022), (Peng et al., 2023), (V. Singh et al., 2021) and the bold 'Proposed Model' row, which holds the paper's own headline result. The extraction stops at the page break, so its shape [2, 6] undercounts the printed 6 body rows x 6 columns. All 14 missing numeric cells listed are on p23. 'FetA 2021' is spelled that way in the PDF. The p23 'Note:' footnote with the class abbreviations is not absorbed into any cell. If the audit is meant to cover only the page-22 part, that part is fully correct (8/8, nothing missing on p22). The HAS_ERRORS verdict comes only from the rows lost to the page break."
+   },
+   {
+    "id": "P030 Table 2 p5",
+    "cells_checked": 20,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "Checked against the crop, a full-page 200-dpi render and the PyMuPDF text layer on page 5. The table is complete: 13 body rows x 4 columns (Paper | Architecture | Dataset | Mean DSC), and the closing rule sits at y=431 just after the Sun et al. [46] row. There are 20 printed numeric cells and all 20 are attached: all 13 Mean DSC values, Architecture 'DeepMedic 0.7.0', '3D U-Net' and '3D UX-Net', and Dataset 'FeTA 2021' (Peng, Wen, Lee) and 'Discovery MR450 GE Healthcare' (Zhao). No other Architecture or Dataset cell contains a digit. The multi-line Dataset cell for Zhao is joined correctly. The two-line header 'Mean'/'DSC' is correctly given as 'Mean DSC'. The row labels match the printed text, including the unspaced 'Pei et al.[40]' and 'Wen et al.[43]'. One whitespace-only difference, not counted as an error under the rules: row 6 (Zhao et al. [39]) Architecture is attached as '3DU-Net', but the PDF prints '3D U-Net'. In the text layer these are two words, at x=118 and x=130, with a gap of about 1 pt. The extractor merged them, although it kept the space in row 11's '3D UX-Net'. Neither the caption nor the body prose below the table ('proposed many CNN-based...') ended up in any cell."
+   },
+   {
+    "id": "P019 Table 1 p9",
+    "cells_checked": 24,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "Checked against the crop, a full-page render and the text layer on page 9. The printed table is Method, then DHCP {DSC, Jaccard, HD95, MSD} and CRL {DSC, Jaccard, HD95, MSD}, with 3 body rows (Med-SAM, Med-SAM-FT, FeTal-SAM). The group labels line up with their sub-columns: 'DHCP' is centred at x=226 over sub-columns at x=167-294, and 'CRL' at x=397 over x=332-459. So the headers 'DHCP / *' and 'CRL / *' are right. All 24 values match the text layer character for character, for example Med-SAM 9.803 / 5.186 and Med-SAM-FT 3.508 / 0.486. Nothing lies between the last row and the bottom rule at y=787. The caption ('...with DHCP and CRL datasets') did not end up in any cell. This audit covers cell fidelity only: the record's kind='NEG' label, and whether the table should have been accepted, were not evaluated."
+   },
+   {
+    "id": "P019 Table 2 p10",
+    "cells_checked": 24,
+    "incorrect_cells": [],
+    "missing_numeric_cells": [],
+    "headers_correct": true,
+    "row_labels_correct": true,
+    "non_table_text_absorbed": false,
+    "verdict": "ALL_CORRECT",
+    "notes": "Checked against the crop, a full-page render and the text layer on page 10. The layout is the same two-level header as Table 1: DHCP / CRL x {DSC, Jaccard, HD95, MSD}. The 3 body rows are nnUNet, SwinUNetR and FeTal-SAM. All 24 values match exactly. The SwinUNetR CRL values (0.911, 0.840, 0.958, 0.298) are identical to its DHCP values. The PDF text layer prints exactly these values, so the extraction is faithful; the duplication looks like an error in the paper itself. The FeTal-SAM row repeats Table 1's FeTal-SAM row, which is also what the PDF prints. Nothing lies below the last row before the rule at y=788. No caption text ended up in any cell. As with Table 1, the kind='NEG' label was not evaluated; this audit covers cell fidelity only."
+   }
+  ],
+  "criteria_final": {
+   "P1": {
+    "pass": false,
+    "target_claims_bound": [
+     "C013",
+     "C085"
+    ],
+    "papers": [
+     "P004",
+     "P030"
+    ],
+    "note": "2 of 11 bound from 2 papers; the Step 1 oracle ceiling is also 2 (9 target claims are binder-blocked)"
+   },
+   "P2": {
+    "pass": true,
+    "basis": "p2_neg_manual_review: 2 NEG tables accepted, 48/48 cells correct; 3 NEG tables rejected"
+   },
+   "P3": {
+    "pass": false,
+    "regressions": [
+     {
+      "pair_id": "PF001",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF002",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF006",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF017",
+      "reasons": [
+       "REAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF018",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     },
+     {
+      "pair_id": "PF019",
+      "reasons": [
+       "CANONICAL:unverified_return"
+      ]
+     }
+    ],
+    "note": "all 6 are 'unverified_return': abstained as pdf_only before, now not_bindable -> grounding -> RETURNED without a bind"
+   },
+   "P4": {
+    "pass": true,
+    "accepted_cells": 533,
+    "absent_from_text_layer": 0
+   }
+  },
+  "decision_final": "KEEP DEFAULT OFF (borderless_policy=off). P1 FAIL and P3 FAIL; P2 PASS, P4 PASS. Not all four pass -> no enable commit.",
+  "determinism": "run 1 and run 2 identical on every verdict, claim, NEG, criteria and summary field (timing and diagnostic-only fields excluded); the 9 reviewed tables and the 17 other accepted tables were re-derived afterwards with identical verdicts and cell counts",
+  "timing_note": "per-page parser seconds from run 2 (Docling A 3.4-41.2 s/page, TATR B 0.45-6.5 s/page on CPU). The run-2 P017 child wall time (23517.2 s vs 156.5 s in run 1) contains a wall-clock gap outside the parsers (its per-page parser seconds are normal); a system suspend coinciding with the date change is suspected; it is not CPU cost.",
+  "crops": [
+   "P001_Table1_p7_accepted.png",
+   "P001_Table2_p8_accepted.png",
+   "P001_Table4_p13_accepted.png",
+   "P004_Table2_p8_accepted.png",
+   "P007_Table3_p10_accepted.png",
+   "P007_Table5_p11_accepted.png",
+   "P008_TABLEIII_p8_accepted.png",
+   "P011_Table1_p2_accepted.png",
+   "P015_Table2_p9_accepted.png",
+   "P015_Table3_p11_accepted.png",
+   "P016_Table4.2_p22_accepted.png",
+   "P016_Table4.3_p24_accepted.png",
+   "P016_Table4.4_p25_accepted.png",
+   "P016_Table4.5_p28_accepted.png",
+   "P016_Table4.6_p27_accepted.png",
+   "P016_Table4.6_p28_accepted.png",
+   "P017_Table3_p16_accepted.png",
+   "P019_Table1_p9_NEG.png",
+   "P019_Table1_p9_accepted.png",
+   "P019_Table2_p10_NEG.png",
+   "P019_Table2_p10_accepted.png",
+   "P020_TABLEIII_p14_NEG.png",
+   "P020_TABLEI_p4_accepted.png",
+   "P024_Table2_p8_NEG.png",
+   "P027_Table1_p6_NEG.png",
+   "P030_Table2_p5_accepted.png",
+   "P030_Table3_p7_accepted.png",
+   "P030_Table4_p8_accepted.png",
+   "P030_Table4_p9_accepted.png"
+  ],
+  "disclosures": [
+   "API smoke test of Docling and TATR on P001 p13 (a target page) before the backend commit; no pre-registered rule changed afterwards.",
+   "validate_09a.py was edited after run 1 only to fix a reporting key (per-table seconds were read as 'seconds' instead of 'seconds_page', so run 1 recorded no per-table time) and to persist more diagnostics; no scoring rule changed; run 2 reproduced every verdict.",
+   "Two transformers-5 compatibility shims for TATR (config dilation null -> False; structure preprocessor longest_edge 800 applied manually).",
+   "P1 counting and the oracle use the whole-claim structural_bind (as in phases 06-08); gate_paper splits C085's sentence at 'et al.', so its gate item reads wrong_cell.",
+   "P016 Table 4.2 continues on p23; extraction is per page, so 14 numeric cells of the continuation (incl. the Proposed Model row) are not captured.",
+   "P020 TABLE I was accepted with 0 numeric cells (a text-only table): consensus of two empty triple sets; nothing is attached."
+  ]
+ }
+}
