@@ -1,0 +1,3673 @@
+[
+ {
+  "reader": "A_claim_first",
+  "group": "G1",
+  "labels": [
+   {
+    "candidate_id": "C001",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "claim_text is only the fused body of Table 1 (Dice, %|J|<=0, GPU per number of cascades for the original and contracted architectures), its caption and the page number; there is no natural-language sentence.",
+    "notes": "The prose sentences on p7 that mention Table 1 carry no numbers."
+   },
+   {
+    "candidate_id": "C002",
+    "claim_text_exact": "Based on these results, we adopted a regularization parameter of λ = 1, which provides the best Dice score and significantly reduces the percentage of negative Jacobian values.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The only number in the sentence is the adopted setting λ = 1, which is a row key (λ column) of Table 2, not a reported result; the Dice value it alludes to (0.866 ± 0.020) is not stated. All other numbers in claim_text come from the fused Table 2 body.",
+    "notes": "The sentence itself does not name Table 2 (the preceding sentence does; the fused caption made the reference explicit)."
+   },
+   {
+    "candidate_id": "C003",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "claim_text is the fused body and caption of Table 3 followed by a sentence fragment ('registration, which can be computationally intensive and time-consuming.') continuing from the previous page; no result sentence points to the table.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C004",
+    "claim_text_exact": "Table 4 presents the segmentation results on the 20 fetal brain MRI scans of the IMPACT test set, nnU-Net [17] when trained and tested on the same sets of images, and two classical MAS methods that are the dHCP pipeline for neonatal brain segmentation [26] and the perinatal brain segmentation pipeline [33].",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Table-description sentence whose only number is the test-set size (20 scans); 20 is not printed in any cell of Table 4 (the p13 occurrences of 20 are in prose about Table 5 and the FeTa age range).",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C005",
+    "claim_text_exact": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.926",
+      "table_label": "Table 4",
+      "table_page": 13,
+      "row_label_levels": [
+       "Average"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Ours"
+      ],
+      "cell_text": "0.926 ± 0.012",
+      "numeric_value": 0.926,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.920",
+      "table_label": "Table 4",
+      "table_page": 13,
+      "row_label_levels": [
+       "Average"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "nnU-Net"
+      ],
+      "cell_text": "0.920 ± 0.014",
+      "numeric_value": 0.92,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "Both values are in the Average row of Table 4 (p13), under Ours (0.926 ± 0.012) and nnU-Net (0.920 ± 0.014), matching the claim's subjects and metric (average Dice).",
+    "notes": "0.920 is numerically equal to the Thalamus/PP cell printed '0.92 ± 0.02' (counted as 1 other cell). 0.926 ± 0.012 also appears in prose on p10 (LWV), not in a table."
+   },
+   {
+    "candidate_id": "C006",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "claim_text is only the fused Table 4 body (labels x Ours/nnU-Net/PP/dHCP, plus the Time row) and its caption; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C007",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the running header ('22 P. de Dumast et al.'), the fused body of the dataset-summary Table 1 and its caption; there is no natural-language claim.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C008",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the fused body of Table 4 (sub-tables (a) FeTA and (b) STA: Baseline/Hybrid/TopoCP x DSC/ASSD/HR) plus the caption start; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C009",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the Figure 2 caption, the Table 1 caption and body, and the section number '3.'; there is no natural-language sentence.",
+    "notes": "The prose sentence on this page reporting 91.3 on BraTS is not part of this candidate."
+   },
+   {
+    "candidate_id": "C010",
+    "claim_text_exact": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "92.3",
+      "table_label": "Table 3",
+      "table_page": 6,
+      "row_label_levels": [
+       "Proposed Method"
+      ],
+      "row_index_cell": "04",
+      "column_header_levels": [
+       "Dice Score (%)"
+      ],
+      "cell_text": "92.3",
+      "numeric_value": 92.3,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "After the fused Table 2 (BraTS) body, the sentence reports the proposed method's ISLES Dice of 92.3%, which Table 3 (p6) prints once at Proposed Method / Dice Score (%).",
+    "notes": "The S.no column (01-04) is an index. '92,3' also appears in the Figure 5 chart on p6, which is not the table."
+   },
+   {
+    "candidate_id": "C011",
+    "claim_text_exact": "These quantitative results demonstrate the effectiveness of our proposed framework in accurately segmenting brain tumors and ischemic lesions from MRI scans, outperforming several state-of-the-art methods on benchmark datasets are shown in figure 4 and 5.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The natural-language sentence carries no number and points to figures 4 and 5; every number in claim_text comes from the fused Table 3 body.",
+    "notes": "The context sentence is a figure caption plus the Table 3 caption."
+   },
+   {
+    "candidate_id": "C012",
+    "claim_text_exact": "Quantitative evaluation results in the second section of Table 1 show that the network trained with UM-CAM and SPL supervision achieves an average DSC score of 89.76%, improving the DSC by 11.07% compared to the baseline model.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "89.76",
+      "table_label": "Table 1",
+      "table_page": 7,
+      "row_label_levels": [
+       "Segmentation",
+       "UM-CAM+SPL"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "DSC (%)"
+      ],
+      "cell_text": "89.76±5.09*",
+      "numeric_value": 89.76,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "'Second section of Table 1' is the Segmentation block; its UM-CAM+SPL row has DSC 89.76±5.09*, matching the claim.",
+    "notes": "11.07% is a derived difference (89.76 - 78.69 for the Grad-CAM baseline), not printed. The same 89.76±5.09* also appears in Table 2 (validation set), a different table."
+   },
+   {
+    "candidate_id": "C013",
+    "claim_text_exact": "Our proposed method achieves an average DSC of 90.22% and an average HD95 of 4.04 pixels, which is at least 3.02 pixels lower than other weakly-supervised methods on the testing set.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "90.22",
+      "table_label": "Table 2",
+      "table_page": 8,
+      "row_label_levels": [
+       "UM-CAM+SPL (ours)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Test set",
+       "DSC (%)"
+      ],
+      "cell_text": "90.22±3.75*",
+      "numeric_value": 90.22,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "4.04",
+      "table_label": "Table 2",
+      "table_page": 8,
+      "row_label_levels": [
+       "UM-CAM+SPL (ours)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Test set",
+       "HD95 (pixels)"
+      ],
+      "cell_text": "4.04±4.26*",
+      "numeric_value": 4.04,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "On the test set, the UM-CAM+SPL (ours) row of Table 2 has DSC 90.22±3.75* and HD95 4.04±4.26*, matching the claim.",
+    "notes": "3.02 is derived (7.06 for DRS minus 4.04), not printed."
+   },
+   {
+    "candidate_id": "C014",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "claim_text is the Table 3 caption tail and the CSPCNN local-pathway architecture body (layers, filter sizes, shapes) followed by 'Table 4.'; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C015",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "claim_text is the Table 4 caption tail and the CSPCNN global-pathway architecture body followed by 'Table 5.'; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C016",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "claim_text is the Table 5 caption tail and the MRIPCNN local-pathway architecture body; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C017",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "claim_text is the Table 6 caption tail and body (p13) followed by 'Table 7.'; there is no natural-language sentence.",
+    "notes": "The candidate is keyed to Table 7, but the fused content is Table 6."
+   },
+   {
+    "candidate_id": "C018",
+    "claim_text_exact": "The architectures of the two CNNs are integrated by merging their respective feature maps show in Table 7.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "The sentence is a method description with no number; the numbers in claim_text (256, 21, 14,450,688, 128, 5) come from the fused Table 7 body.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C019",
+    "claim_text_exact": "Table IV presents the recall performance evaluation of YOLOv5 and YOLOv7 on 827 labeled boxes and masks images.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Table-introduction sentence whose only value is the evaluation-set size 827; Table IV prints 827 both in the merged Images cell spanning all class rows and in the Labels cell of the All row, and 'labeled boxes and masks images' does not decide between them.",
+    "notes": "Table IV caption and first header row are at the bottom of p12; its body is on p13 (P006_p13.png). The 827s on p12 belong to fragments of the preceding table. Read strictly as a setup description it would be WRONG_CLAIM."
+   },
+   {
+    "candidate_id": "C020",
+    "claim_text_exact": "Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at the IoU threshold of 0.5.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Table-introduction sentence; 827 is printed in Table V (p14) both in the merged Images cell and in the Labels cell of the All row, and the claim does not single one out; 0.5 is the IoU threshold from the caption (MAP@.5), not a cell.",
+    "notes": "Read strictly as a setup description it would be WRONG_CLAIM."
+   },
+   {
+    "candidate_id": "C021",
+    "claim_text_exact": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.947",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv5",
+       "Box"
+      ],
+      "cell_text": "0.947",
+      "numeric_value": 0.947,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.947",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv5",
+       "Mask"
+      ],
+      "cell_text": "0.947",
+      "numeric_value": 0.947,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.94",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv7",
+       "Box"
+      ],
+      "cell_text": "0.94",
+      "numeric_value": 0.94,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.941",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv7",
+       "Mask"
+      ],
+      "cell_text": "0.941",
+      "numeric_value": 0.941,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The All row of Table V (p14) prints YOLOv5 Box 0.947, Mask 0.947 and YOLOv7 Box 0.94, Mask 0.941, exactly as claimed.",
+    "notes": "The YOLOv5 Box cell wraps as '0.94' / '7' in its narrow column (reads 0.947), so a naive extractor may see 0.94 there. The two 0.947 cells are singled out by box vs mask."
+   },
+   {
+    "candidate_id": "C022",
+    "claim_text_exact": "Table VI shows the mAP for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at IoU threshold of 0.5-0.95.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Table-introduction sentence; 827 appears in Table VI (p15) both in the merged Images cell and in the Labels cell of the All row; 0.5-0.95 is the IoU range from the caption, not a cell.",
+    "notes": "Read strictly as a setup description it would be WRONG_CLAIM."
+   },
+   {
+    "candidate_id": "C023",
+    "claim_text_exact": "Based on these results, it can be concluded that both models offer exceptional overall performance, with YOLOv7 demonstrates superior performance across numerous evaluation criteria, particularly with regard to mAP@0.5-0.95as evidence in Table VI.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Qualitative conclusion; its only numbers (0.5-0.95) are the IoU range inside the metric name mAP@0.5-0.95, not values printed in Table VI cells.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C024",
+    "claim_text_exact": "The RCNN models achieved a commendable high recall rate with 95%, though precision and mAP remain unspecified.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "'The RCNN models ... recall rate with 95%': Table VII (p17) prints 95.0% recall for both RCNN [55] and Mask RCNN [55] (Faster RCNN [55] has 94.0%), and the plural subject does not single out one row.",
+    "notes": "The context sentence names RCNN, Faster RCNN and Mask RCNN. If only the 'RCNN [55]' row were meant, the target would be RCNN [55] / Recall = 95.0%."
+   },
+   {
+    "candidate_id": "C025",
+    "claim_text_exact": "All ICC estimates exceed 0.922, indicating an excellent inter-rater agreement [36] (Table 3).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.922",
+      "table_label": "Table 3",
+      "table_page": 10,
+      "row_label_levels": [
+       "LCC"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "ICC3"
+      ],
+      "cell_text": "0.922",
+      "numeric_value": 0.922,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The bound 0.922 is the smallest ICC3 value in Table 3 (p10), printed once at LCC / ICC3.",
+    "notes": "The claim says 'exceed' although LCC equals 0.922 (inclusive bound). The fused preceding sentence and heading '3.1 Inter-observer agreement' are excluded."
+   },
+   {
+    "candidate_id": "C026",
+    "claim_text_exact": "Our method achieved mean Dice of 0.87, 95HD of 0.96, and ASD of 0.28.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.87",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.87±0.06",
+      "numeric_value": 0.87,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.96",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "95HD(mm)↓"
+      ],
+      "cell_text": "0.96±0.38",
+      "numeric_value": 0.96,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.28",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "ASD(mm)↓"
+      ],
+      "cell_text": "0.28±0.14",
+      "numeric_value": 0.28,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "The Ours row of TABLE I (p7) prints Dice 0.87±0.06, 95HD 0.96±0.38 and ASD 0.28±0.14.",
+    "notes": "0.28 also appears at PAUNet [38] / ASD (0.28±0.13); the subject 'Our method' selects the Ours row."
+   },
+   {
+    "candidate_id": "C027",
+    "claim_text_exact": "We observe that by adding 2.6% extra parameters, our attention module could improve the performance by 3% (from 0.84 by DSRNet to 0.87 by Ours) in terms of Dice.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.84",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "DSRNet"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.84±0.06",
+      "numeric_value": 0.84,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.87",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.87±0.06",
+      "numeric_value": 0.87,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Dice of DSRNet (0.84±0.06) and Ours (0.87±0.06) in TABLE I (p7) match the claimed 0.84 -> 0.87.",
+    "notes": "2.6% (parameters 2.75M vs 2.68M) and 3% are derived, not printed."
+   },
+   {
+    "candidate_id": "C028",
+    "claim_text_exact": "For the similar-domain data, Table 3 shows that in experiments trained with dHCP (experiments 3,4,7,8), subjects generally had slightly better results compared to their counterparts without dHCP (experiments 1,2,5,6), respectively having average Dice improvements of 0.02, 0.04, 0.04, and 0.03 (all with p<1e-9).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.02, 0.04, 0.04 and 0.03 are derived differences between similar-domain cells of Table 3 (p15) (e.g. Exp 3 0.82 - Exp 1 0.80); none is printed in a cell, and p<1e-9 is prose only.",
+    "notes": "P009 has two tables captioned 'Table 3': p15 (Dice score result summary, the one meant here) and p19 (comparison with related works). The 0.02/0.03/0.04 hits on p19 are prose."
+   },
+   {
+    "candidate_id": "C029",
+    "claim_text_exact": "According to Table 3, the only noticeable increase in the overall mean Dice scores as a result of adding the dHCP occurred when comparing experiments 5 and 7 (improvement of 0.02, p<1e-8).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.02 is the derived out-of-domain difference between Experiment 7 (0.76±0.13) and Experiment 5 (0.74±0.10) in Table 3 (p15); it is not printed in a cell, and p<1e-8 is prose only.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C030",
+    "claim_text_exact": "We observed from Table 3 that the data-driven sampling has caused a notable improvement when the training data contains only the FeTA training set (experiments 1 and 2), with an average Dice score improvement of 0.07 (p<1e-4 for t-test and p<1e-5 for Wilcoxon test).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.07 is the derived most-pathological difference between Experiment 2 (0.67±0.15) and Experiment 1 (0.60±0.21) in Table 3 (p15); it is not printed, and the p-values are prose only.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C031",
+    "claim_text_exact": "The data-driven sampling also slightly improved the average Dice scores when the training data contained FeTA+dHCP (0.03 improvement from experiment 3 to 4, p=0.07 for t-test and p=0.4 for Wilcoxon test, not statistically significant) or FeTA+synthetic (0.02 improvement from experiment 5 to 6, p < 0.01 for t-test and p<1e-5 for Wilcoxon test).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.03 (Exp 4 0.55 - Exp 3 0.52) and 0.02 (Exp 6 0.66 - Exp 5 0.64) are derived most-pathological differences in Table 3 (p15); the p-values (0.07, 0.4, 0.01) appear only in prose.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C032",
+    "claim_text_exact": "A batch of 17 MRI cases are passed to the model in Table 1 the abnormalities are localized and segmented in 318 Sec­ onds.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "17 is the number of cases, printed in Table 1 only as the case index of the last row, and 318 s is a batch total that Table 1 does not print (it lists per-case times only).",
+    "notes": "The Case column (1-17) is a row index, so the coinciding '17' is a row identifier, not a value."
+   },
+   {
+    "candidate_id": "C033",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the fused Table 1 header/body and caption plus a sentence fragment continuing from p1; no result sentence references the table.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C034",
+    "claim_text_exact": "Dis-carding pathological and non-annotated brains, our training dataset results in 15 healthy fetal brains (see details summarized in Table 1).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "15",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "TRAINING"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Number of subjects"
+      ],
+      "cell_text": "15",
+      "numeric_value": 15,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The training-set size of 15 healthy fetal brains is printed once in Table 1 (p2) at TRAINING / Number of subjects.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C035",
+    "claim_text_exact": "The normative spatiotemporal MRI atlas of the fetal brain [14] provides 3D high-quality isotropic smooth volumes along with tissue label maps for all gestational age between 21 and 38 weeks (see Table 1 for details).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "21",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "EVALUATION Quantitative"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Gestational age (weeks)"
+      ],
+      "cell_text": "21-38",
+      "numeric_value": 21,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "38",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "EVALUATION Quantitative"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Gestational age (weeks)"
+      ],
+      "cell_text": "21-38",
+      "numeric_value": 38,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The atlas [14] is the quantitative evaluation set (reconstruction method 'Gholipour et. al, 2017 [14]'), whose gestational age is printed as 21-38 in Table 1 (p2).",
+    "notes": "Both claim values sit in the same range cell. The row-label cell prints 'EVALUATION' over 'Quantitative'."
+   },
+   {
+    "candidate_id": "C036",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the fused Table 2 body (Baseline U-Net/TopoCP with p-value columns) and its caption; there is no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C037",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the running header plus the Table 1 caption; a caption, not a claim.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C038",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is the fused Table 1 body followed by a sentence fragment ('templates while preserving accurate individual registrations.') continuing from the previous page; no claim.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C039",
+    "claim_text_exact": "Two model implementations are trained, in Ours-Disc the discriminator is in-cluded, while in Ours-Reg the optimization is performed solely by the registration framework.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The sentence is a method description without numbers; all numbers in claim_text come from the fused Table 2 body.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C040",
+    "claim_text_exact": "Our cohort consisted of 182 participants: 62 with SRI (59 SSRIs, 3 SNRIs) exposure and 120 unexposed controls (Table 1).",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "62 and 120 are printed only in Table 1's column headers 'SRI-exposed (n = 62)' and 'Unexposed (n = 120)', not in body cells, so no (row, column) cell holds them; 182 (their sum), 59 SSRIs and 3 SNRIs are not printed.",
+    "notes": "If header cells were accepted as targets: 62 -> header 'SRI-exposed (n = 62)', 120 -> header 'Unexposed (n = 120)' (Table 1, p4). The heading 'RESULTS Demographics' is excluded."
+   },
+   {
+    "candidate_id": "C041",
+    "claim_text_exact": "SRI-exposed fetuses showed signiﬁcantly smaller left (0.45 vs 0.53 cm3, adjusted p = 0.0004) and right (0.48 vs 0.56 cm3, adjusted p = 0.0004) hippocampal volumes compared with controls (Table 2).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.45",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.45",
+      "numeric_value": 0.45,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.53",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.53",
+      "numeric_value": 0.53,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.48",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.48",
+      "numeric_value": 0.48,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.56",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.56",
+      "numeric_value": 0.56,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     }
+    ],
+    "reason": "The Left and Right hippocampus rows of Table 2 (p5) print 0.45/0.53 and 0.48/0.56 (SRI-exposed/Unexposed) with Adjusted P 0.0004 each, as claimed.",
+    "notes": "Clinical group comparison (the paper's own finding). The leading section heading is excluded. 0.53 also appears as Sulcal depth Adjusted P; 0.0004 also at Curvedness Adjusted P. 'Adjusted Pa' is 'Adjusted P' with footnote superscript a."
+   },
+   {
+    "candidate_id": "C042",
+    "claim_text_exact": "Additionally, the SRI-exposed group showed reduced cerebral cortical local gyriﬁcation index (1.24 vs 1.28, adjusted p = 0.03), curvedness (0.21 vs 0.24 mm–1, adjusted p = 0.0004), and surface area (143.35 vs 151.36 cm2, adjusted p = 0.02) compared with controls (Table 2).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "1.24",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "1.24",
+      "numeric_value": 1.24,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "1.28",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "1.28",
+      "numeric_value": 1.28,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.03",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.03",
+      "numeric_value": 0.03,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.21",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.21",
+      "numeric_value": 0.21,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.24",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.24",
+      "numeric_value": 0.24,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "143.35",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "143.35",
+      "numeric_value": 143.35,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "151.36",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "151.36",
+      "numeric_value": 151.36,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.02",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.02",
+      "numeric_value": 0.02,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "Under Cerebral cortical folding in Table 2 (p5): Local gyrification index 1.24/1.28 (P 0.03), Curvedness 0.21/0.24 (P 0.0004) and Surface area 143.35/151.36 (P 0.02), exactly as claimed.",
+    "notes": "Clinical group comparison (the paper's own finding). 0.24 also appears twice as Adjusted P (White matter, Deep gray matter); 0.0004 also at both hippocampus rows; 0.02 also as the Brainstem difference '0.02 (–0.11 to 0.15)'."
+   },
+   {
+    "candidate_id": "C043",
+    "claim_text_exact": "In this sensitivity analysis (Table S1), in addition to the main ﬁndings (in Table 2), fetal cerebellar volume also differed between the SRI-exposed and unexposed groups (mean: 9.15 vs. 9.67 cm³; 95% CI: −1.03 to −0.004) before adjustment for multiple comparisons.",
+    "status": "WRONG_TABLE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The values (9.15 vs 9.67 cm³; 95% CI −1.03 to −0.004) come from the sensitivity analysis the sentence attributes to Table S1; Table 2's Cerebellum row prints 9.31/9.74 and none of the claim's values.",
+    "notes": "Table S1 is supplementary and not among the provided renders, so its cell could not be inspected; the harvester recorded only Table 2."
+   }
+  ]
+ },
+ {
+  "reader": "A_claim_first",
+  "group": "G2",
+  "labels": [
+   {
+    "candidate_id": "C044",
+    "claim_text_exact": "However, this difference was no longer statistically signiﬁcant after correction for multiple comparisons (adjusted p = 0.10), consistent with the main ﬁndings in Table 2.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The adjusted p = 0.10 is the cerebellar-volume result of the sensitivity analysis (supplementary Table S1, named in the preceding sentence); Table 2 prints Cerebellum Adjusted P = 0.16 and no cell with 0.10.",
+    "notes": "Only coincidental match: the CI bound '–0.10' inside the Left hippocampus 'Difference (95% CI)' cell '-0.07 (–0.10 to –0.04)' (different sign and quantity). Table S1 is not in the PDF pages, so WRONG_TABLE could not be confirmed."
+   },
+   {
+    "candidate_id": "C045",
+    "claim_text_exact": "Placenta volumes (753.11 cm3 vs 656.00 cm3, adjusted p = 0.004) and ADC_D (0.004 vs 0.003, adjusted p = 0.048) were higher in SRI-exposed group vs unexposed controls (Table 3).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "753.11",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed"
+      ],
+      "cell_text": "753.11",
+      "numeric_value": 753.11,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "656.00",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed"
+      ],
+      "cell_text": "656.00",
+      "numeric_value": 656,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.004",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.004",
+      "numeric_value": 0.004,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.004",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed"
+      ],
+      "cell_text": "0.004",
+      "numeric_value": 0.004,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.003",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed"
+      ],
+      "cell_text": "0.003",
+      "numeric_value": 0.003,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.048",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.048",
+      "numeric_value": 0.048,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "All six values are printed in Table 3 (Volume and ADC_D rows; SRI-exposed, Unexposed and Adjusted P columns) and agree with the claim's measure/group/statistic.",
+    "notes": "Heading 'Placenta measures in SRI-exposed group vs controls' is fused before the sentence. '0.004' occurs twice in the claim (Volume adjusted p and ADC_D SRI-exposed mean); the claim's wording singles out each cell. Header printed as 'Adjusted P' with superscript footnote 'a' (text layer 'Adjusted Pa'). Subject is the study cohort groups (clinical finding of the paper)."
+   },
+   {
+    "candidate_id": "C046",
+    "claim_text_exact": "Larger placenta volume was associated with larger volumes in fetal deep gray matter (β = 0.002, p = 0.02) and total brain (β = 0.05, p = 0.005) (Table S7) as well as larger cortical surface area (β = 0.03, p = 0.03) (Table S8).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The β/p values (0.002, 0.02, 0.05, 0.005, 0.03) come from supplementary Tables S7/S8, which the sentence itself cites; none is printed in Table 3 (referenced only via the context sentence).",
+    "notes": "0.02/0.03/0.05 on page 5 are coincidental Table 2 values (e.g., Surface area adjusted P 0.02, Local gyrification index adjusted P 0.03, CI bound 0.05). Supplementary tables are not in the PDF pages."
+   },
+   {
+    "candidate_id": "C047",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Data-acquisition (setup) description of a separate prospective multi-echo dataset that is not a row of Table 1; it only refers to the KCL row for 'similar parameters'.",
+    "notes": "Fused title/heading precede the sentence. '0.55T' matches the KCL (private) Scanner cell 'Siemens MAGNETOM FREE.MAX (0.55T)', but that row is a different dataset; GA values and TEs (300/397/600 ms) are not in Table 1."
+   },
+   {
+    "candidate_id": "C048",
+    "claim_text_exact": "Across all cross-validation splits, Fetal-SynthSeg achieves the highest global average Dice score of 74.9, consistently outperforming all other simulation-based approaches.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "74.9",
+      "table_label": "Table 2",
+      "table_page": 9,
+      "row_label_levels": [
+       "FetalSynthSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Global"
+      ],
+      "cell_text": "74.9±11.5∗",
+      "numeric_value": 74.9,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 2 prints 74.9±11.5∗ (bold, best) in the FetalSynthSeg row, Global column, matching the claimed highest global average Dice.",
+    "notes": "Global column spans both header rows (Testing split / Training split)."
+   },
+   {
+    "candidate_id": "C049",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The sentence naming Table 3 only describes what the table compares; it asserts no value. '4.3' is a section number.",
+    "notes": "Preceding sentence (plateau at six subclasses) refers to Figure 5, not Table 3."
+   },
+   {
+    "candidate_id": "C050",
+    "claim_text_exact": "On T2w datasets that are close to the training distribution (e.g., CHUVT2w; VIENT2w sharing both scanner/SRR; KCL with SVRTK being similar to IRTK), FetalRealSeg and Real-SynthHybrid remain slightly ahead of FetalSynthSeg, with differences typically within 0.1–2.5 Dice points.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The 0.1–2.5 Dice-point figures are derived differences between FetalRealSeg/RealSynthHybrid and FetalSynthSeg (e.g., VIEN 82.0 vs 79.5 = 2.5; dHCP T2w 84.1 vs 84.0 = 0.1), not printed cells.",
+    "notes": "'2.5' appears only as SDs in '13.5±2.5' (nnU-Net dHCPT1w) and '78.1±2.5' (RealSynthHybrid dHCPT1w), which is coincidental."
+   },
+   {
+    "candidate_id": "C051",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Pointer sentence ('...as summarized in Table 4.2') with no asserted value; '4.2' is the section/table number.",
+    "notes": "Preceding text is a qualitative limitation statement."
+   },
+   {
+    "candidate_id": "C052",
+    "claim_text_exact": "A contextual transformer block integrated into an encoder-decoder architecture with hybrid dilated convolutions achieved a DSC of 83.79% on a private dataset of 80 fetal MRIs (X.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "83.79",
+      "table_label": "Table 4.2",
+      "table_page": 22,
+      "row_label_levels": [
+       "(X. Huang et al., 2023a)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Results"
+      ],
+      "cell_text": "DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm",
+      "numeric_value": 83.79,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "80",
+      "table_label": "Table 4.2",
+      "table_page": 22,
+      "row_label_levels": [
+       "(X. Huang et al., 2023a)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dataset"
+      ],
+      "cell_text": "80 fetuses (private)",
+      "numeric_value": 80,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 4.2 row '(X. Huang et al., 2023a)' (Method: CoT-Block in encoder-decoder, hybrid dilated convolution) prints 'DSC: 83.79%' in Results and '80 fetuses (private)' in Dataset, matching the cited method's claim.",
+    "notes": "claim_text is cut at '(X.' (citation 'X. Huang et al., 2023' continues on the page). Table 4.2 appears to continue onto page 23, which was not provided; duplicate counts refer to the visible part."
+   },
+   {
+    "candidate_id": "C053",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Pointer sentence ('the results are summarized in Table 4.6') with no asserted value; '4.4' comes from the section number 4.4.5.",
+    "notes": "The following sentence (Adam best, not in claim_text) is qualitative."
+   },
+   {
+    "candidate_id": "C054",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Acquisition-protocol (setup) description, not a result sentence.",
+    "notes": "Consistent with Table 1: Siemens MAGNETOM Skyra row has Scanner Type '3.0-T' and Sequence Type 'HASTE' (another '3.0-T' cell is Philips Ingenia, external)."
+   },
+   {
+    "candidate_id": "C055",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Only a page number ('16') and the start of the Table 3 caption; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C056",
+    "claim_text_exact": "FreeHemoSeg also achieved the best case-level and slice-level diagnostic accuracy on external Validation Dataset B (Table 4, Table 5, Figure 5G-L).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The only real sentence (best case/slice-level accuracy, Tables 4 and 5) contains no numeric value; all numbers in claim_text are fused Table 6 cell content.",
+    "notes": "Table 4 does show FreeHemoSeg bold/best in External Validation, so the qualitative statement is consistent."
+   },
+   {
+    "candidate_id": "C057",
+    "claim_text_exact": "FreeHemoSeg achieved the best lesion segmentation performance (Table 6, Figure 6), achieving DSCs of 0.559 (95% CI, 0.546–0.571) and 0.512 (95% CI, 0.497–0.526) on the internal and external validation datasets, respectively.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.559",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "Internal Validation",
+       "DSC, (95% CI)",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1456 slices)"
+      ],
+      "cell_text": "0.559 (0.546, 0.571)",
+      "numeric_value": 0.559,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.546",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "Internal Validation",
+       "DSC, (95% CI)",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1456 slices)"
+      ],
+      "cell_text": "0.559 (0.546, 0.571)",
+      "numeric_value": 0.546,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.571",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "Internal Validation",
+       "DSC, (95% CI)",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1456 slices)"
+      ],
+      "cell_text": "0.559 (0.546, 0.571)",
+      "numeric_value": 0.571,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.512",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "External Validation",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1410 slices)"
+      ],
+      "cell_text": "0.512 (0.497, 0.526)",
+      "numeric_value": 0.512,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.497",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "External Validation",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1410 slices)"
+      ],
+      "cell_text": "0.512 (0.497, 0.526)",
+      "numeric_value": 0.497,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.526",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "External Validation",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1410 slices)"
+      ],
+      "cell_text": "0.512 (0.497, 0.526)",
+      "numeric_value": 0.526,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "Table 6 prints FreeHemoSeg Overall DSC 0.559 (0.546, 0.571) in the Internal Validation block and 0.512 (0.497, 0.526) in the External Validation block, matching the claim.",
+    "notes": "Figure caption fragment ('Lesion Segmentation Performance ... ***: P < 0.001') is fused before the sentence. CI bounds sit in the same cells as their point estimates. 0.497 also appears in internal SL Model Grade II CI; 0.526 also as internal FreeHemoSeg w/o SAM Overall mean. '95' is only in the '95% CI' label."
+   },
+   {
+    "candidate_id": "C058",
+    "claim_text_exact": "Compared with standard 2D stack interpretation, FreeHemoSeg’s assistance increased sensitivity from 0.882 to 1.000 for R1 and from 0.882 to 0.941 for R2, while reducing interpretation time from 43.1 ± 28.1 s to 36.2 ± 17.4 s for R1 (16.0% reduction) and from 63.9 ± 21.9 s to 30.2 ± 7.5 s for R2 (52.7% reduction), with specificity remaining high across all conditions (≥ 0.943).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.882",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.882",
+      "numeric_value": 0.882,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "1.000",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "1.000",
+      "numeric_value": 1,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.882",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.882",
+      "numeric_value": 0.882,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.941",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.941",
+      "numeric_value": 0.941,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "43.1",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "43.1±28.1",
+      "numeric_value": 43.1,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "28.1",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "43.1±28.1",
+      "numeric_value": 28.1,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "36.2",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "36.2±17.4",
+      "numeric_value": 36.2,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "17.4",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "36.2±17.4",
+      "numeric_value": 17.4,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "63.9",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "63.9±21.9",
+      "numeric_value": 63.9,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "21.9",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "63.9±21.9",
+      "numeric_value": 21.9,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "30.2",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "30.2±7.5",
+      "numeric_value": 30.2,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "7.5",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "30.2±7.5",
+      "numeric_value": 7.5,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.943",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "3D Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Specificity"
+      ],
+      "cell_text": "0.943",
+      "numeric_value": 0.943,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Every sensitivity and time value is printed in Table 7 in the reader (R1/R2) x method (2D Stacks / FreeHemoSeg) row and the Sensitivity / Time (s) column the claim names; 0.943 is the single (minimum) Specificity cell (R2, 3D Volume).",
+    "notes": "0.882 is printed in three Sensitivity cells and 1.000 in three cells; the claim's reader+condition singles each out. 16.0% and 52.7% reductions are derived and not printed. '≥ 0.943' is a lower bound over all conditions; its only matching cell is R2/3D Volume."
+   },
+   {
+    "candidate_id": "C059",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Training-setup statement (ensemble of 10 3D U-Nets), not a result; '10' is not a Table 2 value (only inside SDs such as (10.5)).",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C060",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Part of the Table 2 caption (what is reported); '95' belongs to the metric name HD95.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C061",
+    "claim_text_exact": "Table 3 shows that the performance of our method grows with the increase of the hyper-parameter γ of consistency loss, and achieves the best when γ = 200.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The only number is the hyper-parameter setting γ = 200, printed as a column header of the 'γ value' row, not a result cell; no performance value is stated.",
+    "notes": "Qualitatively consistent: the γ = 200 column holds the best Avg. DSC 78.5±0.1 (bold)."
+   },
+   {
+    "candidate_id": "C062",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Pointer sentence describing what Table 1 shows; '95' is part of the metric name (95% percentile), no result value.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C063",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Pre-processing (method/setup) description, not a result; 0.5 and 256 are processing settings.",
+    "notes": "'0.5' on page 4 occurs in the KISPI row (Resolution 0.5^3; acquisition 0.5×0.5×3.5 mm3), which is coincidental."
+   },
+   {
+    "candidate_id": "C064",
+    "claim_text_exact": "As shown in Table 8, sex and race effects can be observed in the full manual dataset (includes training and test data) on both sides, whereas in the smaller test datasets the sex effect on the right NAc volume loses significance (p=0.057).",
+    "status": "WRONG_ROW",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.057",
+      "table_label": "Table 8",
+      "table_page": 10,
+      "row_label_levels": [
+       "Left NAc",
+       "Manual (Test set)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sex",
+       "P-value"
+      ],
+      "cell_text": "0.057",
+      "numeric_value": 0.057,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "p = 0.057 is printed in Table 8 as the Sex P-value of Left NAc / Manual (Test set); the Right NAc / Manual (Test set) Sex P-value is 0.010 (bold, significant), so the claim's 'right NAc' contradicts the row.",
+    "notes": "Column (Sex, P-value) and test-set subrow agree; only the structure (Right vs Left NAc) is wrong."
+   },
+   {
+    "candidate_id": "C065",
+    "claim_text_exact": "Table 11 shows that the UNesT Baseline 120 model, trained on the largest and demographically diverse dataset, is the top performer, achieving the best accuracy and ESSP",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Qualitative claim with no result value; '120' is part of the row label 'Baseline120' and '799' is the page number.",
+    "notes": "Sentence continues on the next page. Table 11 does rank Baseline120 first (superscript 1) in most columns."
+   },
+   {
+    "candidate_id": "C066",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 4 cell content (DSC/ESSP/Δ for nnU-Net, CoTr, ANTs, UNesT) followed by the Table 5 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table."
+   },
+   {
+    "candidate_id": "C067",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 5 cell content (NSD/ESSP/Δ) followed by the Table 6 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table."
+   },
+   {
+    "candidate_id": "C068",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 7 cell content (β, Std Err, P-value) followed by the Table 8 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table."
+   },
+   {
+    "candidate_id": "C069",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 8 cell content (γ, Std Err, P-value for manual volumes) followed by the Table 9 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table."
+   },
+   {
+    "candidate_id": "C070",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 10 cell content followed by the Table 11 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table."
+   },
+   {
+    "candidate_id": "C071",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 11 caption fragment and cell content followed by the Table 12 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table. Text-layer values like '0.812' fuse a superscript rank with the value (printed 0.81 with superscript 2)."
+   },
+   {
+    "candidate_id": "C072",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 12 cell content followed by the Table 13 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table. Text-layer values like '0.812' fuse a superscript rank with the value (printed 0.81 with superscript 2)."
+   },
+   {
+    "candidate_id": "C073",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "No natural-language sentence: page header, Table 14 caption and cell content, then the Table 15 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table. Text-layer values like '0.812' fuse a superscript rank with the value (printed 0.81 with superscript 2)."
+   },
+   {
+    "candidate_id": "C074",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "No natural-language sentence: Table 15 cell content followed by the Table 16 caption.",
+    "notes": "Captions sit above their tables on the page, so the fused caption belongs to the next table. Text-layer values like '0.812' fuse a superscript rank with the value (printed 0.81 with superscript 2)."
+   },
+   {
+    "candidate_id": "C075",
+    "claim_text_exact": "The training dataset contains a total of 177 cases with a majority of 139 controls and only 38 abnormal cases which is typical in clinical datasets.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "177, 139 and 38 are sums of Table 1 training rows (18+5+116+28+10, 18+5+116, 28+10), not printed in any cell.",
+    "notes": "'38' on page 5 only occurs in the gestational-age range '[21, 38]' (Atlas row), which is coincidental."
+   },
+   {
+    "candidate_id": "C076",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Equation (20) followed by a pointer sentence to Table 1 (layer dimensions) with no asserted value; '20' is the equation number.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C077",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Equation (24), its variable definitions, a section heading and a pointer to Table 2; no result value.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C078",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Computing-environment (setup) description, not a result.",
+    "notes": "Consistent with Table 2 (GPU 'RTX 3080(10GB) * 1', OS 'ubuntu 20.04')."
+   },
+   {
+    "candidate_id": "C079",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Table 2 cell content, its caption and the page footer; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C080",
+    "claim_text_exact": "The Dice, mIoU, and Acc metrics improved by 1.33, 1.01, and 0.27, respectively, compared to MFER-Net and EGE-UNet.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "1.33, 1.01 and 0.27 are derived improvements of AS-WEC over other models (e.g., Dice 92.48-91.15 = 1.33, Acc 99.25-98.98 = 0.27), not printed cells.",
+    "notes": "'1.01' is coincidentally the Trans Deeplab MAE cell in Table 3."
+   },
+   {
+    "candidate_id": "C081",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "An unfinished sentence fragment without values fused with Tables 3 and 4 cell content, captions and page footer.",
+    "notes": "The fragment continues on the next page."
+   },
+   {
+    "candidate_id": "C082",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Running header, Table 2 caption and cell content, then a sentence fragment without values.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C083",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Sentence fragment ('Yan et al. proposed a new') fused with the Table 4 caption and cell content; no claim value.",
+    "notes": "'123' is the Springer page-footer number."
+   },
+   {
+    "candidate_id": "C084",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Running header plus the start of the Table 4 (continued) content; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C085",
+    "claim_text_exact": "Wen et al. achieved a mean DSC of 0.9010 using the FeTA 2021 dataset, which is higher than that reported in other stud-ies [45].",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.9010",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Wen et al.[43]"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Mean DSC"
+      ],
+      "cell_text": "0.9010",
+      "numeric_value": 0.901,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 2 prints Mean DSC 0.9010 in the Wen et al.[43] row (ExSwin-Unet, FeTA 2021), matching the claim.",
+    "notes": "Review paper: Wen et al. is a cited method."
+   }
+  ]
+ },
+ {
+  "reader": "B_cell_first",
+  "group": "G1",
+  "labels": [
+   {
+    "candidate_id": "C001",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "claim_text is only the body of Table 1 (N cascades x Dice / %|J|<=0 / GPU for both architectures) followed by its caption; there is no natural-language result sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C002",
+    "claim_text_exact": "Based on these results, we adopted a regularization parameter of λ = 1, which provides the best Dice score and significantly reduces the percentage of negative Jacobian values.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The real sentence's only number is the adopted setting lambda = 1, which is the row key of Table 2, not a reported value; the 'best Dice score' is stated without a number. All harvested numbers come from the fused Table 2 body and caption.",
+    "notes": "The implied supporting cell would be Dice 0.866 ± 0.020 in row 1, but the sentence does not state that value."
+   },
+   {
+    "candidate_id": "C003",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "claim_text is the running header, the Table 3 body and caption, and a sentence fragment ('registration, which can be computationally intensive...') continued from the previous page; no result sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C004",
+    "claim_text_exact": "Table 4 presents the segmentation results on the 20 fetal brain MRI scans of the IMPACT test set, nnU-Net [17] when trained and tested on the same sets of images, and two classical MAS methods that are the dHCP pipeline for neonatal brain segmentation [26] and the perinatal brain segmentation pipeline [33].",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Describes what Table 4 contains; its only number (20 test scans) is not printed in any Table 4 cell (Table 4 holds per-label Dice and Time).",
+    "notes": "The two '20' tokens on page 13 are in the prose about Table 5 ('20 fetal brain MRI scans', 'from 20 to 35 weeks')."
+   },
+   {
+    "candidate_id": "C005",
+    "claim_text_exact": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.926",
+      "table_label": "Table 4",
+      "table_page": 13,
+      "row_label_levels": [
+       "Average"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Ours"
+      ],
+      "cell_text": "0.926 ± 0.012",
+      "numeric_value": 0.926,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.920",
+      "table_label": "Table 4",
+      "table_page": 13,
+      "row_label_levels": [
+       "Average"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "nnU-Net"
+      ],
+      "cell_text": "0.920 ± 0.014",
+      "numeric_value": 0.92,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 4 row Average prints Ours = 0.926 ± 0.012 and nnU-Net = 0.920 ± 0.014, matching the claim's subjects and metric (average Dice).",
+    "notes": "The ± parts (0.012, 0.014) are inside the same cells; 0.012 is also the std in Grey Matter / nnU-Net (0.871 ± 0.012)."
+   },
+   {
+    "candidate_id": "C006",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "claim_text is only the Table 4 body plus its caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C007",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Running header, Table 1 (dataset summary) body and caption only; no claim sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C008",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Bodies of sub-tables (a) FeTA and (b) STA of Table 4 plus the caption start; no claim sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C009",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Figure 2 caption, Table 1 caption and body, and a section number '3.'; no natural-language claim sentence.",
+    "notes": "The prose sentence reporting 91.3 on BraTS (left column of page 3) is not part of this candidate."
+   },
+   {
+    "candidate_id": "C010",
+    "claim_text_exact": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "92.3",
+      "table_label": "Table 3",
+      "table_page": 6,
+      "row_label_levels": [
+       "Proposed Method"
+      ],
+      "row_index_cell": "04",
+      "column_header_levels": [
+       "Dice Score (%)"
+      ],
+      "cell_text": "92.3",
+      "numeric_value": 92.3,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 3 (ISLES comparison, page 6) row 04 'Proposed Method' prints 92.3 under 'Dice Score (%)'; it is the only 92.3 in the table.",
+    "notes": "The fused prefix is the Table 2 (BraTS) body from page 5. Figure 5 also shows '92,3' but it is a chart, not the table."
+   },
+   {
+    "candidate_id": "C011",
+    "claim_text_exact": "These quantitative results demonstrate the effectiveness of our proposed framework in accurately segmenting brain tumors and ischemic lesions from MRI scans, outperforming several state-of-the-art methods on benchmark datasets are shown in figure 4 and 5.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The real sentence is qualitative and contains no number (it points to figures 4 and 5); every harvested number (01-04, 89.7 ... 92.3) comes from the fused Table 3 body.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C012",
+    "claim_text_exact": "Quantitative evaluation results in the second section of Table 1 show that the network trained with UM-CAM and SPL supervision achieves an average DSC score of 89.76%, improving the DSC by 11.07% compared to the baseline model.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "89.76",
+      "table_label": "Table 1",
+      "table_page": 7,
+      "row_label_levels": [
+       "Segmentation",
+       "UM-CAM+SPL"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "DSC (%)"
+      ],
+      "cell_text": "89.76±5.09*",
+      "numeric_value": 89.76,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Second (Segmentation) section of Table 1, row UM-CAM+SPL, column DSC (%) prints 89.76±5.09*.",
+    "notes": "11.07 is a derived difference (89.76 - 78.69, baseline Grad-CAM row) and is not printed. 89.76 also appears in Table 2 (validation DSC, page 8), but the claim names Table 1."
+   },
+   {
+    "candidate_id": "C013",
+    "claim_text_exact": "Our proposed method achieves an average DSC of 90.22% and an average HD95 of 4.04 pixels, which is at least 3.02 pixels lower than other weakly-supervised methods on the testing set.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "90.22",
+      "table_label": "Table 2",
+      "table_page": 8,
+      "row_label_levels": [
+       "UM-CAM+SPL (ours)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Test set",
+       "DSC (%)"
+      ],
+      "cell_text": "90.22±3.75*",
+      "numeric_value": 90.22,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "4.04",
+      "table_label": "Table 2",
+      "table_page": 8,
+      "row_label_levels": [
+       "UM-CAM+SPL (ours)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Test set",
+       "HD95 (pixels)"
+      ],
+      "cell_text": "4.04±4.26*",
+      "numeric_value": 4.04,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 2 row 'UM-CAM+SPL (ours)', Test set group: DSC (%) = 90.22±3.75* and HD95 (pixels) = 4.04±4.26*.",
+    "notes": "3.02 is derived (DRS test HD95 7.06 - 4.04) and is not printed. HD95 is printed with a subscript 95."
+   },
+   {
+    "candidate_id": "C014",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Caption tail and body of Table 3 (CSPCNN local pathway layers) followed by the start of the next caption 'Table 4.'; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C015",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Caption tail and body of Table 4 (CSPCNN global pathway) followed by 'Table 5.'; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C016",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Caption tail and body of Table 5 (MRIPCNN local pathway layers); architecture table content, no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C017",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Caption tail and body of Table 6 (CSPCNN Global Pathway) followed by 'Table 7.'; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C018",
+    "claim_text_exact": "The architectures of the two CNNs are integrated by merging their respective feature maps show in Table 7.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The only sentence is a method description with no number; the harvested numbers (256, 21, 14,450,688, 128) come from the fused Table 7 body.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C019",
+    "claim_text_exact": "Table IV presents the recall performance evaluation of YOLOv5 and YOLOv7 on 827 labeled boxes and masks images.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "827 is printed twice in Table IV: the merged 'Images' cell and the 'Labels' cell of row All; '827 labeled boxes and masks images' does not decide between the image count and the label count.",
+    "notes": "Table IV caption and top header row are at the bottom of page 12; its body (Images/Labels/Box/Mask) is at the top of page 13. Sentence is a description of the evaluation data."
+   },
+   {
+    "candidate_id": "C020",
+    "claim_text_exact": "Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at the IoU threshold of 0.5.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "827 is printed in Table V both as the merged 'Images' cell and as 'Labels' for row All; the phrase does not single one out. 0.5 is the IoU threshold, printed only in the caption (MAP@.5).",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C021",
+    "claim_text_exact": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.947",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv5",
+       "Box"
+      ],
+      "cell_text": "0.947",
+      "numeric_value": 0.947,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.947",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv5",
+       "Mask"
+      ],
+      "cell_text": "0.947",
+      "numeric_value": 0.947,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.94",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv7",
+       "Box"
+      ],
+      "cell_text": "0.94",
+      "numeric_value": 0.94,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.941",
+      "table_label": "TABLE V",
+      "table_page": 14,
+      "row_label_levels": [
+       "All"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "YOLOv7",
+       "Mask"
+      ],
+      "cell_text": "0.941",
+      "numeric_value": 0.941,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table V row All: YOLOv5 Box 0.947, YOLOv5 Mask 0.947, YOLOv7 Box 0.94, YOLOv7 Mask 0.941; model and box/mask single out each cell.",
+    "notes": "The YOLOv5 Box cell is printed broken across lines ('0.94' / '7') and reads 0.947; the narrow headers 'Mas k', 'Image s', 'Label s' read Mask, Images, Labels. The two 0.947 cells are distinguished by Box vs Mask."
+   },
+   {
+    "candidate_id": "C022",
+    "claim_text_exact": "Table VI shows the mAP for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at IoU threshold of 0.5-0.95.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "827 is printed in Table VI both as the merged 'Images' cell and as 'Labels' for row All, and the sentence does not decide between them; 0.5-0.95 is the IoU range, printed only in the caption (MAP@.5:.95).",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C023",
+    "claim_text_exact": "Based on these results, it can be concluded that both models offer exceptional overall performance, with YOLOv7 demonstrates superior performance across numerous evaluation criteria, particularly with regard to mAP@0.5-0.95as evidence in Table VI.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Qualitative conclusion; its only numbers, 0.5 and 0.95, are the IoU range (caption 'MAP@.5:.95'), not cell values.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C024",
+    "claim_text_exact": "The RCNN models achieved a commendable high recall rate with 95%, though precision and mAP remain unspecified.",
+    "status": "AMBIGUOUS",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "TABLE VII prints Recall 95.0% for both 'RCNN [55]' and 'Mask RCNN [55]' (Faster RCNN [55] has 94.0%); 'The RCNN models' (plural, following a sentence listing all three RCNN variants) does not single one out.",
+    "notes": "If read as the single model 'RCNN [55]', the target would be row RCNN [55], column Recall, cell '95.0%' (TABLE VII, page 17)."
+   },
+   {
+    "candidate_id": "C025",
+    "claim_text_exact": "All ICC estimates exceed 0.922, indicating an excellent inter-rater agreement [36] (Table 3).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.922",
+      "table_label": "Table 3",
+      "table_page": 10,
+      "row_label_levels": [
+       "LCC"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "ICC3"
+      ],
+      "cell_text": "0.922",
+      "numeric_value": 0.922,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "0.922 is the smallest ICC3 in Table 3 and is printed once, in row LCC; it is the bound the claim states for all ICC estimates.",
+    "notes": "The claim says 'exceed' although LCC equals 0.922 exactly. The claim concerns inter-rater agreement of the manual measurements, not the proposed pipeline."
+   },
+   {
+    "candidate_id": "C026",
+    "claim_text_exact": "Our method achieved mean Dice of 0.87, 95HD of 0.96, and ASD of 0.28.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.87",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.87±0.06",
+      "numeric_value": 0.87,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.96",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "95HD(mm)↓"
+      ],
+      "cell_text": "0.96±0.38",
+      "numeric_value": 0.96,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.28",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "ASD(mm)↓"
+      ],
+      "cell_text": "0.28±0.14",
+      "numeric_value": 0.28,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "TABLE I row 'Ours': Dice 0.87±0.06, 95HD 0.96±0.38, ASD 0.28±0.14.",
+    "notes": "0.28 also appears in PAUNet [38] ASD (0.28±0.13); the subject 'Our method' disambiguates."
+   },
+   {
+    "candidate_id": "C027",
+    "claim_text_exact": "We observe that by adding 2.6% extra parameters, our attention module could improve the performance by 3% (from 0.84 by DSRNet to 0.87 by Ours) in terms of Dice.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.84",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "DSRNet"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.84±0.06",
+      "numeric_value": 0.84,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.87",
+      "table_label": "TABLE I",
+      "table_page": 7,
+      "row_label_levels": [
+       "Ours"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dice↑"
+      ],
+      "cell_text": "0.87±0.06",
+      "numeric_value": 0.87,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "TABLE I Dice column: DSRNet 0.84±0.06 and Ours 0.87±0.06, as the claim states.",
+    "notes": "2.6% (parameters 2.68M -> 2.75M) and 3% are derived and not printed."
+   },
+   {
+    "candidate_id": "C028",
+    "claim_text_exact": "For the similar-domain data, Table 3 shows that in experiments trained with dHCP (experiments 3,4,7,8), subjects generally had slightly better results compared to their counterparts without dHCP (experiments 1,2,5,6), respectively having average Dice improvements of 0.02, 0.04, 0.04, and 0.03 (all with p<1e-9).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.02, 0.04, 0.04, 0.03 are differences between paired experiments' similar-domain Dice (e.g. 0.82 - 0.80, 0.81 - 0.77); none is printed in Table 3, and p<1e-9 is prose-only.",
+    "notes": "claim_text also fuses the preceding in-domain sentence and the heading '3.2 Similar-domain'. Table 3 is on page 15; page 19 holds a second 'Table 3' (related works) whose cells also lack these values."
+   },
+   {
+    "candidate_id": "C029",
+    "claim_text_exact": "According to Table 3, the only noticeable increase in the overall mean Dice scores as a result of adding the dHCP occurred when comparing experiments 5 and 7 (improvement of 0.02, p<1e-8).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.02 is the derived out-of-domain difference between experiments 7 and 5 (0.76 - 0.74); it is not printed in Table 3, and p<1e-8 is prose-only.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C030",
+    "claim_text_exact": "We observed from Table 3 that the data-driven sampling has caused a notable improvement when the training data contains only the FeTA training set (experiments 1 and 2), with an average Dice score improvement of 0.07 (p<1e-4 for t-test and p<1e-5 for Wilcoxon test).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.07 is the derived most-pathological difference between experiments 2 and 1 (0.67 - 0.60); not printed in Table 3. The p-values are prose-only.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C031",
+    "claim_text_exact": "The data-driven sampling also slightly improved the average Dice scores when the training data contained FeTA+dHCP (0.03 improvement from experiment 3 to 4, p=0.07 for t-test and p=0.4 for Wilcoxon test, not statistically significant) or FeTA+synthetic (0.02 improvement from experiment 5 to 6, p < 0.01 for t-test and p<1e-5 for Wilcoxon test).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.03 (0.55 - 0.52) and 0.02 (0.66 - 0.64) are derived differences, and 0.07, 0.4, 0.01 are p-values given only in prose; none is printed in Table 3.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C032",
+    "claim_text_exact": "A batch of 17 MRI cases are passed to the model in Table 1 the abnormalities are localized and segmented in 318 Sec­ onds.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "318 s (total time) is not printed in Table 1, which lists only per-case times per batch; 17 is the case count, printed only as the last case index in the 'Case' column, not as a value.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C033",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Table 1 body and caption followed by a sentence fragment ('recently proved its good ability...') from the text column; no claim sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C034",
+    "claim_text_exact": "Dis-carding pathological and non-annotated brains, our training dataset results in 15 healthy fetal brains (see details summarized in Table 1).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "15",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "TRAINING"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Number of subjects"
+      ],
+      "cell_text": "15",
+      "numeric_value": 15,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 1 row TRAINING, column 'Number of subjects' prints 15, the training set size the sentence reports.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C035",
+    "claim_text_exact": "The normative spatiotemporal MRI atlas of the fetal brain [14] provides 3D high-quality isotropic smooth volumes along with tissue label maps for all gestational age between 21 and 38 weeks (see Table 1 for details).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "21",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "EVALUATION Quantitative"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Gestational age (weeks)"
+      ],
+      "cell_text": "21-38",
+      "numeric_value": 21,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "38",
+      "table_label": "Table 1",
+      "table_page": 2,
+      "row_label_levels": [
+       "EVALUATION Quantitative"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Gestational age (weeks)"
+      ],
+      "cell_text": "21-38",
+      "numeric_value": 38,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The atlas [14] is the quantitative-evaluation set (its reconstruction method is 'Gholipour et. al, 2017 [14]'); its 'Gestational age (weeks)' cell prints 21-38.",
+    "notes": "Both claim values sit in the same cell. The row label is printed on two lines ('EVALUATION' / 'Quantitative') inside one cell."
+   },
+   {
+    "candidate_id": "C036",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Table 2 body (Baseline U-Net vs TopoCP with p-values) plus caption only; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C037",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Running header and the Table 1 caption only; 1.5 is the field strength named in the caption.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C038",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Table 1 header and body followed by a fragment ('templates while preserving accurate individual registrations.') continued from the previous page; no claim sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C039",
+    "claim_text_exact": "Two model implementations are trained, in Ours-Disc the discriminator is in-cluded, while in Ours-Reg the optimization is performed solely by the registration framework.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The sentence is a method description without numbers; all harvested numbers come from the fused Table 2 body.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C040",
+    "claim_text_exact": "Our cohort consisted of 182 participants: 62 with SRI (59 SSRIs, 3 SNRIs) exposure and 120 unexposed controls (Table 1).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "62",
+      "table_label": "Table 1",
+      "table_page": 4,
+      "row_label_levels": [],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "SRI-exposed (n = 62)",
+      "numeric_value": 62,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "120",
+      "table_label": "Table 1",
+      "table_page": 4,
+      "row_label_levels": [],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "Unexposed (n = 120)",
+      "numeric_value": 120,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "The group sizes are printed in Table 1's column-header cells 'SRI-exposed (n = 62)' and 'Unexposed (n = 120)', which name the same groups as the claim.",
+    "notes": "Both values sit in header cells (header row, no body row), so row_label_levels is empty and cell_text equals the header. 182 (total) and 59 (SSRIs) are not printed in Table 1."
+   },
+   {
+    "candidate_id": "C041",
+    "claim_text_exact": "SRI-exposed fetuses showed signiﬁcantly smaller left (0.45 vs 0.53 cm3, adjusted p = 0.0004) and right (0.48 vs 0.56 cm3, adjusted p = 0.0004) hippocampal volumes compared with controls (Table 2).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.45",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.45",
+      "numeric_value": 0.45,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.53",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.53",
+      "numeric_value": 0.53,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Left hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.48",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.48",
+      "numeric_value": 0.48,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.56",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.56",
+      "numeric_value": 0.56,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Brain volume (cm3)",
+       "Right hippocampus"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     }
+    ],
+    "reason": "Table 2 rows Left/Right hippocampus: SRI-exposed 0.45/0.48, Unexposed 0.53/0.56, Adjusted P 0.0004/0.0004.",
+    "notes": "0.53 is also Sulcal depth's Adjusted P and 0.0004 is also Curvedness' Adjusted P; left/right and group single out each cell. 'Adjusted Pa' is printed as Adjusted P with a superscript footnote 'a'; the heading 'Fetal brain measures in SRI-exposed group vs controls' is fused before the sentence."
+   },
+   {
+    "candidate_id": "C042",
+    "claim_text_exact": "Additionally, the SRI-exposed group showed reduced cerebral cortical local gyriﬁcation index (1.24 vs 1.28, adjusted p = 0.03), curvedness (0.21 vs 0.24 mm–1, adjusted p = 0.0004), and surface area (143.35 vs 151.36 cm2, adjusted p = 0.02) compared with controls (Table 2).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "1.24",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "1.24",
+      "numeric_value": 1.24,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "1.28",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "1.28",
+      "numeric_value": 1.28,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.03",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Local gyriﬁcation index"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.03",
+      "numeric_value": 0.03,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.21",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "0.21",
+      "numeric_value": 0.21,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.24",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "0.24",
+      "numeric_value": 0.24,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.0004",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Curvedness (mm-1)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.0004",
+      "numeric_value": 0.0004,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "143.35",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed (n = 62)"
+      ],
+      "cell_text": "143.35",
+      "numeric_value": 143.35,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "151.36",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed (n = 120)"
+      ],
+      "cell_text": "151.36",
+      "numeric_value": 151.36,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.02",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Cerebral cortical folding",
+       "Surface area (cm2)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.02",
+      "numeric_value": 0.02,
+      "other_cells_with_same_value": 1
+     }
+    ],
+    "reason": "Table 2 'Cerebral cortical folding' rows: Local gyrification index 1.24 vs 1.28 (Adjusted P 0.03), Curvedness 0.21 vs 0.24 (0.0004), Surface area 143.35 vs 151.36 (0.02), all matching the claim.",
+    "notes": "0.24 is also the Adjusted P of White matter and Deep gray matter; 0.0004 is also the Adjusted P of both hippocampi; 0.02 is also the leading value of Brainstem's Difference cell '0.02 (–0.11 to 0.15)'. Row and column single out each target. Curvedness unit printed mm with superscript -1, surface area cm with superscript 2."
+   },
+   {
+    "candidate_id": "C043",
+    "claim_text_exact": "In this sensitivity analysis (Table S1), in addition to the main ﬁndings (in Table 2), fetal cerebellar volume also differed between the SRI-exposed and unexposed groups (mean: 9.15 vs. 9.67 cm³; 95% CI: −1.03 to −0.004) before adjustment for multiple comparisons.",
+    "status": "WRONG_TABLE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The cerebellar values 9.15 vs 9.67 cm³ and CI -1.03 to -0.004 come from the sensitivity analysis the sentence itself attributes to supplementary Table S1; the referenced Table 2 prints Cerebellum 9.31 / 9.74.",
+    "notes": "Table S1 is not among the provided pages, so its cells could not be viewed. In Table 2, '95' occurs only inside the header 'Difference (95% CI)'; 0.004 occurs only in Table 3 (placenta) on page 5."
+   }
+  ]
+ },
+ {
+  "reader": "B_cell_first",
+  "group": "G2",
+  "labels": [
+   {
+    "candidate_id": "C044",
+    "claim_text_exact": "However, this difference was no longer statistically signiﬁcant after correction for multiple comparisons (adjusted p = 0.10), consistent with the main ﬁndings in Table 2.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The adjusted p = 0.10 refers to the cerebellar-volume difference in the sensitivity analysis (Table S1); Table 2 prints no p-value of 0.10 (Cerebellum adjusted P is 0.16).",
+    "notes": "0.10 occurs in Table 2 only as the CI bound '–0.10' inside the Left hippocampus Difference cell '-0.07 (–0.10 to –0.04)' (different sign, row and metric). Study's own cohort finding."
+   },
+   {
+    "candidate_id": "C045",
+    "claim_text_exact": "Placenta volumes (753.11 cm3 vs 656.00 cm3, adjusted p = 0.004) and ADC_D (0.004 vs 0.003, adjusted p = 0.048) were higher in SRI-exposed group vs unexposed controls (Table 3).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "753.11",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed"
+      ],
+      "cell_text": "753.11",
+      "numeric_value": 753.11,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "656.00",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed"
+      ],
+      "cell_text": "656.00",
+      "numeric_value": 656,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.004",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.004",
+      "numeric_value": 0.004,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.004",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "SRI-exposed"
+      ],
+      "cell_text": "0.004",
+      "numeric_value": 0.004,
+      "other_cells_with_same_value": 1
+     },
+     {
+      "value_in_claim": "0.003",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Unexposed"
+      ],
+      "cell_text": "0.003",
+      "numeric_value": 0.003,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.048",
+      "table_label": "Table 3",
+      "table_page": 5,
+      "row_label_levels": [
+       "ADC_D"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Adjusted Pa"
+      ],
+      "cell_text": "0.048",
+      "numeric_value": 0.048,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "All five claim values are printed in Table 3: Volume row (SRI-exposed 753.11, Unexposed 656.00, Adjusted P 0.004) and ADC_D row (0.004, 0.003, 0.048); subject/metric single out each cell.",
+    "notes": "0.004 is printed in two cells (Volume/Adjusted P and ADC_D/SRI-exposed); the claim uses it once for each, and each use is disambiguated by its metric. 'a' in 'Adjusted Pa' is a superscript footnote marker. Claim_text starts with a fused section heading. Study's own cohort finding."
+   },
+   {
+    "candidate_id": "C046",
+    "claim_text_exact": "Larger placenta volume was associated with larger volumes in fetal deep gray matter (β = 0.002, p = 0.02) and total brain (β = 0.05, p = 0.005) (Table S7) as well as larger cortical surface area (β = 0.03, p = 0.03) (Table S8).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The beta/p values come from supplementary Tables S7 and S8 (cited in the sentence itself); none of 0.002, 0.02, 0.05, 0.005, 0.03 is printed in Table 3.",
+    "notes": "Table 3 is referenced only via the context sentence. Coincidental 0.02/0.03/0.05 on the page belong to Table 2 (adjusted P / CI bounds) with different meanings. Study's own cohort finding."
+   },
+   {
+    "candidate_id": "C047",
+    "claim_text_exact": "Data were prospec-tively acquired for this study from five fetuses (GA = 24, 32, 32, 33, 37 weeks) using SST2w sequences at St. Thomas’ Hospital, London, on a Siemens FreeMax 0.55T scanner, with similar parameters as the KCL dataset in Table 1, except for echo times (TEs), with data acquired at 300 ms, 397 ms, 600 ms, in order to do T2 mapping.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Acquisition/setup description of a separate prospective multi-echo dataset that has no row in Table 1; not a result claim.",
+    "notes": "0.55 is printed in the KCL row Scanner cell 'Siemens MAGNETOM FREE.MAX (0.55T)'; 24 and 33 occur only inside Nn/Np cells '24/16' and '33/7' (unrelated to the GA values). 32, 37, 300, 397, 600 are not in Table 1."
+   },
+   {
+    "candidate_id": "C048",
+    "claim_text_exact": "Across all cross-validation splits, Fetal-SynthSeg achieves the highest global average Dice score of 74.9, consistently outperforming all other simulation-based approaches.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "74.9",
+      "table_label": "Table 2",
+      "table_page": 9,
+      "row_label_levels": [
+       "FetalSynthSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Global"
+      ],
+      "cell_text": "74.9±11.5∗",
+      "numeric_value": 74.9,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "74.9 is printed once in Table 2, in the FetalSynthSeg row under the Global column, matching 'global average Dice score of 74.9' for FetalSynthSeg.",
+    "notes": "The 'Global' column header spans both header rows (Testing split / Training split). Claim spells the method 'Fetal-SynthSeg' due to line-break hyphenation."
+   },
+   {
+    "candidate_id": "C049",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The only number, 4.3, is the section heading '4.3 Comparison with state-of-the-art models'; the sentence 'Table 3 compares ...' reports no result value.",
+    "notes": "4.3 appears in Table 3 only as the SD in RealSynthHybrid VIEN DSC '80.1±4.3' (coincidental)."
+   },
+   {
+    "candidate_id": "C050",
+    "claim_text_exact": "On T2w datasets that are close to the training distribution (e.g., CHUVT2w; VIENT2w sharing both scanner/SRR; KCL with SVRTK being similar to IRTK), FetalRealSeg and Real-SynthHybrid remain slightly ahead of FetalSynthSeg, with differences typically within 0.1–2.5 Dice points.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "0.1–2.5 Dice points are derived differences between models, not values printed in Table 3.",
+    "notes": "2.5 appears in Table 3 only as the SD of the dHCP T1w DSC cells '13.5±2.5' (nnU-Net) and '78.1±2.5' (RealSynthHybrid), unrelated to the claim."
+   },
+   {
+    "candidate_id": "C051",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Harvested number 4.2 is the section/table number ('4.2 Comparison with state-of-the-art', 'Table 4.2'); the sentence only says what the table summarizes.",
+    "notes": "Paper numbers its tables 4.1, 4.2, ...; the referenced table is 'Table 4.2' on page 22."
+   },
+   {
+    "candidate_id": "C052",
+    "claim_text_exact": "A contextual transformer block integrated into an encoder-decoder architecture with hybrid dilated convolutions achieved a DSC of 83.79% on a private dataset of 80 fetal MRIs (X.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "83.79",
+      "table_label": "Table 4.2",
+      "table_page": 22,
+      "row_label_levels": [
+       "(X. Huang et al., 2023a)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Results"
+      ],
+      "cell_text": "DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm",
+      "numeric_value": 83.79,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "80",
+      "table_label": "Table 4.2",
+      "table_page": 22,
+      "row_label_levels": [
+       "(X. Huang et al., 2023a)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Dataset"
+      ],
+      "cell_text": "80 fetuses (private)",
+      "numeric_value": 80,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 4.2 (referenced by the context sentence) has a row for X. Huang et al. (CoT-Block in encoder-decoder, hybrid dilated convolution) whose Results cell prints DSC 83.79% and whose Dataset cell prints 80 fetuses (private).",
+    "notes": "Candidate table_refs '4' conflates the paper's Table 4.x series; the referenced table is 'Table 4.2'. Claim_text is truncated at the citation '(X.' by sentence splitting. Only the page-22 part of Table 4.2 was available (it likely continues on page 23); other-cell counts cover the visible part."
+   },
+   {
+    "candidate_id": "C053",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Harvested number 4.4 comes from the section heading '4.4.5 Effect of Optimizers'; the sentences report no numeric result.",
+    "notes": "Referenced table is 'Table 4. 6' (optimizers) on page 28."
+   },
+   {
+    "candidate_id": "C054",
+    "claim_text_exact": "On the 3.0-T Siemens MAGNETOM Skyra scanner (WCSUH), a half-Fourier acquired single-shot turbo spin-echo (HASTE) sequence was used.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Acquisition-protocol description (scanner field strength and sequence), a setup statement rather than a result claim.",
+    "notes": "3.0 is printed as '3.0-T' in the Scanner Type column for the Siemens MAGNETOM Skyra row (and also the Philips Ingenia row)."
+   },
+   {
+    "candidate_id": "C055",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Claim_text is only the page number '16' plus the caption label 'Table 3.'; no sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C056",
+    "claim_text_exact": "FreeHemoSeg also achieved the best case-level and slice-level diagnostic accuracy on external Validation Dataset B (Table 4, Table 5, Figure 5G-L).",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "The only natural-language sentence states a qualitative result for Tables 4 and 5 without any numeric value; all harvested numbers come from the fused Table 6 content.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C057",
+    "claim_text_exact": "FreeHemoSeg achieved the best lesion segmentation performance (Table 6, Figure 6), achieving DSCs of 0.559 (95% CI, 0.546–0.571) and 0.512 (95% CI, 0.497–0.526) on the internal and external validation datasets, respectively.",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.559",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "Internal Validation",
+       "DSC, (95% CI)",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1456 slices)"
+      ],
+      "cell_text": "0.559 (0.546, 0.571)",
+      "numeric_value": 0.559,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.512",
+      "table_label": "Table 6",
+      "table_page": 22,
+      "row_label_levels": [
+       "External Validation",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Overall (n = 1410 slices)"
+      ],
+      "cell_text": "0.512 (0.497, 0.526)",
+      "numeric_value": 0.512,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 6 prints FreeHemoSeg Overall DSC 0.559 (0.546, 0.571) in the Internal Validation panel and 0.512 (0.497, 0.526) in the External Validation panel, matching the claim.",
+    "notes": "CI bounds 0.546/0.571 and 0.497/0.526 are printed inside the same cells (not listed as separate targets). Claim_text starts with a fused figure caption."
+   },
+   {
+    "candidate_id": "C058",
+    "claim_text_exact": "Compared with standard 2D stack interpretation, FreeHemoSeg’s assistance increased sensitivity from 0.882 to 1.000 for R1 and from 0.882 to 0.941 for R2, while reducing interpretation time from 43.1 ± 28.1 s to 36.2 ± 17.4 s for R1 (16.0% reduction) and from 63.9 ± 21.9 s to 30.2 ± 7.5 s for R2 (52.7% reduction), with specificity remaining high across all conditions (≥ 0.943).",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.882",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.882",
+      "numeric_value": 0.882,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "1.000",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "1.000",
+      "numeric_value": 1,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.882",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.882",
+      "numeric_value": 0.882,
+      "other_cells_with_same_value": 2
+     },
+     {
+      "value_in_claim": "0.941",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sensitivity"
+      ],
+      "cell_text": "0.941",
+      "numeric_value": 0.941,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "43.1",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "43.1±28.1",
+      "numeric_value": 43.1,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "36.2",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R1",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "36.2±17.4",
+      "numeric_value": 36.2,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "63.9",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "2D Stacks"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "63.9±21.9",
+      "numeric_value": 63.9,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "30.2",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "FreeHemoSeg"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Time (s)"
+      ],
+      "cell_text": "30.2±7.5",
+      "numeric_value": 30.2,
+      "other_cells_with_same_value": 0
+     },
+     {
+      "value_in_claim": "0.943",
+      "table_label": "Table 7",
+      "table_page": 28,
+      "row_label_levels": [
+       "R2",
+       "3D Volume"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Specificity"
+      ],
+      "cell_text": "0.943",
+      "numeric_value": 0.943,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Sensitivities (0.882 to 1.000 for R1, 0.882 to 0.941 for R2) and times (43.1 to 36.2 s, 63.9 to 30.2 s) are printed in the 2D Stacks and FreeHemoSeg rows of each radiologist in Table 7; radiologist, method and metric single out each cell.",
+    "notes": "0.882 and 1.000 recur in other cells but reader + method + metric disambiguate. SDs (28.1, 17.4, 21.9, 7.5) are inside the same Time cells. 16.0% and 52.7% reductions are derived, not printed. '≥ 0.943' is the minimum specificity, printed only in R2 / 3D Volume."
+   },
+   {
+    "candidate_id": "C059",
+    "claim_text_exact": "For each method of Table 2, an ensemble of 10 3D U-Net is used.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Experimental setup statement (ensemble size); 10 is not a value printed in Table 2.",
+    "notes": "'10' matches only the leading digits of SD cells such as '(10.5)'."
+   },
+   {
+    "candidate_id": "C060",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is part of the Table 2 caption; 95 is the HD95 percentile in the metric name.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C061",
+    "claim_text_exact": "Table 3 shows that the performance of our method grows with the increase of the hyper-parameter γ of consistency loss, and achieves the best when γ = 200.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "The only number, gamma = 200, is a hyperparameter setting that appears only as a column label in the 'gamma value' header row of Table 3; the claim states no result value.",
+    "notes": "The best Avg. DSC in that column is 78.5±0.1, which the sentence does not mention."
+   },
+   {
+    "candidate_id": "C062",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Sentence only describes what TABLE 1 contains; 95 is part of the metric name (95% percentile Hausdorff distance).",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C063",
+    "claim_text_exact": "For each sub-ject, we used a super-resolution reconstructed T2-weighted MRI, resampled to an isotropic resolution of 0.5×0.5×0.5mm3 and padded or cropped to a fixed size of 256×256×256 voxels.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Preprocessing/setup description (resampling to 0.5 mm isotropic, 256^3 cropping); not a result claim.",
+    "notes": "0.5 appears in Table 1 only as KISPI resolution '0.5³' and acquisition parameters '0.5×0.5×3.5 mm³'; 256 is not in the table."
+   },
+   {
+    "candidate_id": "C064",
+    "claim_text_exact": "As shown in Table 8, sex and race effects can be observed in the full manual dataset (includes training and test data) on both sides, whereas in the smaller test datasets the sex effect on the right NAc volume loses significance (p=0.057).",
+    "status": "WRONG_ROW",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.057",
+      "table_label": "Table 8",
+      "table_page": 10,
+      "row_label_levels": [
+       "Left NAc",
+       "Manual (Test set)"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Sex",
+       "P-value"
+      ],
+      "cell_text": "0.057",
+      "numeric_value": 0.057,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "0.057 is printed in Table 8 as the Sex P-value for Manual (Test set) of the LEFT NAc, while the sentence attributes it to the right NAc (whose test-set Sex P-value is 0.010).",
+    "notes": "Column (Sex / P-value) and sub-row (Manual (Test set)) agree; only the structure (Right vs Left NAc) contradicts."
+   },
+   {
+    "candidate_id": "C065",
+    "claim_text_exact": "Table 11 shows that the UNesT Baseline 120 model, trained on the largest and demographically diverse dataset, is the top performer, achieving the best accuracy and ESSP",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Qualitative statement with no result value: 120 is part of the model name 'Baseline120' and 799 is the page number.",
+    "notes": "Sentence continues on the next page; claim_text_exact excludes the page number."
+   },
+   {
+    "candidate_id": "C066",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 4 fused with the Table 5 caption; no natural-language sentence.",
+    "notes": "Tables 4/5 cross training groups (rows) with models x metrics (columns)."
+   },
+   {
+    "candidate_id": "C067",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 5 fused with the Table 6 caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C068",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 7 fused with the Table 8 caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C069",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 8 fused with the Table 9 caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C070",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 10 fused with the Table 11 caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C071",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the Table 11 caption tail and content fused with the Table 12 caption; no natural-language sentence.",
+    "notes": "Harvested numbers such as '0.812' are values with superscript rank digits (0.81 with rank 2)."
+   },
+   {
+    "candidate_id": "C072",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 12 fused with the Table 13 caption; no natural-language sentence.",
+    "notes": "Harvested numbers include superscript rank digits (e.g. '0.831' = 0.83 with rank 1)."
+   },
+   {
+    "candidate_id": "C073",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Claim_text is a running header plus the Table 14 caption and content fused with the Table 15 caption; no natural-language sentence.",
+    "notes": "Table 14 has entities in rows, Table 15 has them in columns."
+   },
+   {
+    "candidate_id": "C074",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "columns_are_entities",
+    "targets": [],
+    "reason": "Claim_text is the content of Table 15 fused with the Table 16 caption; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C075",
+    "claim_text_exact": "The training dataset contains a total of 177 cases with a majority of 139 controls and only 38 abnormal cases which is typical in clinical datasets.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "dataset_or_cohort",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "177, 139 and 38 are sums over the Training rows of Table 1 (18+5+116+28+10, 18+5+116, 28+10); none is printed as a cell value.",
+    "notes": "38 appears in the table only as the upper GA bound '[21, 38]' of the Atlas row."
+   },
+   {
+    "candidate_id": "C076",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Harvested number 20 is an equation number; the sentence only says what Table 1 presents.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C077",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Harvested numbers are an equation number (24) and a section number (4.1); no result sentence.",
+    "notes": "Table 2 is a two-pair key/value layout (environment/configure, model parameter/configure)."
+   },
+   {
+    "candidate_id": "C078",
+    "claim_text_exact": "We used the Ubuntu 20.04 operating system and an NVIDIA RTX 3080 (10GB) GPU.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Experimental-environment (hardware/software) setup statement, not a result claim.",
+    "notes": "20.04 and 3080 are printed in Table 2 cells 'ubuntu 20.04' (OS) and 'RTX 3080(10GB) * 1' (GPU)."
+   },
+   {
+    "candidate_id": "C079",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "other",
+    "targets": [],
+    "reason": "Claim_text is the content and caption of Table 2 plus a page footer; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C080",
+    "claim_text_exact": "The Dice, mIoU, and Acc metrics improved by 1.33, 1.01, and 0.27, respectively, compared to MFER-Net and EGE-UNet.",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "own_method",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "1.33, 1.01 and 0.27 are derived improvements of AS-WEC over competing models, not values printed in Table 3.",
+    "notes": "1.01 occurs in Table 3 only as Trans Deeplab's MAE (unrelated row and column). 1.33 = 92.48 - 91.15 (Dice vs MSFR-Net); 0.27 = 99.25 - 98.98 (Acc vs EGE-UNet)."
+   },
+   {
+    "candidate_id": "C081",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is a truncated sentence fragment (about Fig. 10) fused with the full content of Tables 3 and 4; the fragment reports no value.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C082",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is a running header plus the Table 2 caption and content followed by a sentence fragment without result values.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C083",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is a sentence fragment ('Yan et al. proposed a new') fused with the Table 4 caption and content; no result sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C084",
+    "claim_text_exact": "",
+    "status": "WRONG_CLAIM",
+    "claim_subject_kind": "other",
+    "table_orientation": "rows_are_entities",
+    "targets": [],
+    "reason": "Claim_text is a running header plus the start of 'Table 4 (continued)' content; no natural-language sentence.",
+    "notes": ""
+   },
+   {
+    "candidate_id": "C085",
+    "claim_text_exact": "Wen et al. achieved a mean DSC of 0.9010 using the FeTA 2021 dataset, which is higher than that reported in other stud-ies [45].",
+    "status": "VERIFIED_POSITIVE",
+    "claim_subject_kind": "baseline_or_cited",
+    "table_orientation": "rows_are_entities",
+    "targets": [
+     {
+      "value_in_claim": "0.9010",
+      "table_label": "Table 2",
+      "table_page": 5,
+      "row_label_levels": [
+       "Wen et al.[43]"
+      ],
+      "row_index_cell": "",
+      "column_header_levels": [
+       "Mean DSC"
+      ],
+      "cell_text": "0.9010",
+      "numeric_value": 0.901,
+      "other_cells_with_same_value": 0
+     }
+    ],
+    "reason": "Table 2 prints 0.9010 in the Mean DSC column of the 'Wen et al.[43]' row (ExSwin-Unet, FeTA 2021), matching the claim.",
+    "notes": "The claim's comparison ('higher than ... other studies') is not supported by the table (several rows are higher), but the value-cell binding is correct."
+   }
+  ]
+ }
+]

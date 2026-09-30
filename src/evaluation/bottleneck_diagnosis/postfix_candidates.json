@@ -1,0 +1,4032 @@
+{
+ "rules": "Post-fix evaluation, step 1 -- deterministic harvest of CANDIDATE natural-language claim -> table pairs from the\n30 hash-pinned PDFs. The output is the input of the blind labelling pass; it is NOT gold.\n\n    PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -B src/evaluation/bottleneck_diagnosis/postfix_mine_claims.py <out_dir>\n\nRules, fixed before any labelling or evaluation:\n  text      page.get_text(\"text\") per page. A line break becomes a space, except after a hyphen (hyphen kept, no\n            space); whitespace collapsed. Sentences split at [.!?] + whitespace + capital/bracket/quote, never after a\n            listed abbreviation (et al., e.g., Fig., Tab., Eq., vs., ...).\n  claim     a sentence that references a table (\"Table 3\", \"Tables 2 and 3\", \"Tab. 2\", \"TABLE IV\"), is not itself a\n            caption (sentence starting \"Table 3:\" / \"Table 3.\" / \"TABLE IV\" + capital), lies before the References\n            heading, and carries a meaningful number (src.evidence.anchors.NUMERIC_ANCHOR_RE) once table / figure /\n            equation / section references, bracketed citations and 4-digit years are masked out.\n  table     the page(s) holding a text block whose first line is that table's caption (same shape as\n            represent._PDF_CAPTION_RE with the table number fixed).\n  context   a sentence with no table / figure reference whose immediately preceding sentence on the same page\n            references exactly one table is also a candidate for that table (reference = \"contextual\"; the\n            preceding sentence is recorded as context_sentence). Same number rule.\n  kept      at least one claim number occurs as a whole token on a table page outside the claim sentence itself.\nNothing here calls find_tables, the binder or the gate. Page renders (170 dpi) and table-page text layers are\nwritten next to candidates.json for the labellers.\n",
+ "per_paper_stats": {
+  "P001": {
+   "table_reference_sentences": 10,
+   "explicit:no_meaningful_number": 3,
+   "contextual:no_meaningful_number": 3,
+   "kept_explicit": 5,
+   "kept_contextual": 1,
+   "explicit:no_number_on_a_table_page": 2,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 6
+  },
+  "P002": {
+   "table_reference_sentences": 15,
+   "explicit:no_number_on_a_table_page": 9,
+   "kept_explicit": 2,
+   "contextual:no_number_on_a_table_page": 2,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 11,
+   "kept": 2
+  },
+  "P003": {
+   "table_reference_sentences": 14,
+   "kept_explicit": 2,
+   "contextual:no_meaningful_number": 2,
+   "explicit:no_number_on_a_table_page": 2,
+   "caption_sentences_skipped": 3,
+   "explicit:no_meaningful_number": 7,
+   "kept_contextual": 1,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 3
+  },
+  "P004": {
+   "table_reference_sentences": 5,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_number_on_a_table_page": 2,
+   "contextual:no_meaningful_number": 1,
+   "kept_explicit": 1,
+   "kept_contextual": 1,
+   "kept": 2
+  },
+  "P005": {
+   "table_reference_sentences": 13,
+   "explicit:no_meaningful_number": 5,
+   "caption_sentences_skipped": 4,
+   "contextual:no_meaningful_number": 2,
+   "kept_explicit": 4,
+   "kept_contextual": 1,
+   "kept": 5
+  },
+  "P006": {
+   "table_reference_sentences": 16,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 5,
+   "caption_sentences_skipped": 6,
+   "contextual:no_number_on_a_table_page": 3,
+   "explicit:no_number_on_a_table_page": 2,
+   "kept_explicit": 4,
+   "kept_contextual": 2,
+   "kept": 6
+  },
+  "P007": {
+   "table_reference_sentences": 15,
+   "explicit:no_meaningful_number": 9,
+   "caption_sentences_skipped": 5,
+   "kept_explicit": 1,
+   "contextual:no_meaningful_number": 5,
+   "kept": 1
+  },
+  "P008": {
+   "table_reference_sentences": 13,
+   "explicit:no_meaningful_number": 11,
+   "kept_contextual": 2,
+   "contextual:no_meaningful_number": 5,
+   "explicit:no_number_on_a_table_page": 1,
+   "caption_sentences_skipped": 1,
+   "kept": 2
+  },
+  "P009": {
+   "table_reference_sentences": 14,
+   "explicit:no_number_on_a_table_page": 3,
+   "contextual:no_meaningful_number": 4,
+   "caption_sentences_skipped": 4,
+   "explicit:no_meaningful_number": 4,
+   "kept_explicit": 3,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept_contextual": 1,
+   "kept": 4
+  },
+  "P010": {
+   "table_reference_sentences": 1,
+   "kept_explicit": 1,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 1
+  },
+  "P011": {
+   "table_reference_sentences": 5,
+   "kept_explicit": 4,
+   "contextual:no_meaningful_number": 5,
+   "explicit:no_meaningful_number": 1,
+   "kept": 4
+  },
+  "P012": {
+   "table_reference_sentences": 4,
+   "explicit:no_meaningful_number": 2,
+   "contextual:no_meaningful_number": 2,
+   "caption_sentences_skipped": 2,
+   "kept": 0
+  },
+  "P013": {
+   "table_reference_sentences": 5,
+   "kept_explicit": 1,
+   "kept_contextual": 2,
+   "explicit:no_meaningful_number": 3,
+   "contextual:no_meaningful_number": 1,
+   "explicit:no_number_on_a_table_page": 1,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 3
+  },
+  "P014": {
+   "table_reference_sentences": 11,
+   "kept_explicit": 6,
+   "contextual:no_meaningful_number": 3,
+   "explicit:no_meaningful_number": 4,
+   "kept_contextual": 1,
+   "caption_sentences_skipped": 1,
+   "kept": 7
+  },
+  "P015": {
+   "table_reference_sentences": 9,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 7,
+   "explicit:no_number_on_a_table_page": 3,
+   "kept_explicit": 2,
+   "kept_contextual": 2,
+   "kept": 4
+  },
+  "P016": {
+   "table_reference_sentences": 18,
+   "explicit:no_meaningful_number": 7,
+   "caption_sentences_skipped": 9,
+   "kept_explicit": 2,
+   "kept_contextual": 1,
+   "contextual:no_meaningful_number": 2,
+   "kept": 3
+  },
+  "P017": {
+   "table_reference_sentences": 14,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 5,
+   "explicit:no_number_on_a_table_page": 4,
+   "kept_contextual": 2,
+   "caption_sentences_skipped": 3,
+   "kept_explicit": 3,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 5
+  },
+  "P018": {
+   "table_reference_sentences": 8,
+   "explicit:no_meaningful_number": 6,
+   "contextual:no_meaningful_number": 4,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept_explicit": 1,
+   "explicit:no_number_on_a_table_page": 1,
+   "kept_contextual": 1,
+   "kept": 2
+  },
+  "P019": {
+   "table_reference_sentences": 6,
+   "explicit:no_number_on_a_table_page": 4,
+   "contextual:no_meaningful_number": 2,
+   "contextual:no_number_on_a_table_page": 1,
+   "explicit:no_meaningful_number": 1,
+   "caption_sentences_skipped": 1,
+   "kept": 0
+  },
+  "P020": {
+   "table_reference_sentences": 6,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 4,
+   "caption_sentences_skipped": 2,
+   "kept": 0
+  },
+  "P021": {
+   "table_reference_sentences": 6,
+   "explicit:no_meaningful_number": 3,
+   "contextual:no_meaningful_number": 5,
+   "explicit:no_number_on_a_table_page": 2,
+   "kept_explicit": 1,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept": 1
+  },
+  "P022": {
+   "table_reference_sentences": 5,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 5,
+   "kept_explicit": 1,
+   "kept": 1
+  },
+  "P023": {
+   "table_reference_sentences": 7,
+   "explicit:no_meaningful_number": 4,
+   "contextual:no_meaningful_number": 2,
+   "caption_sentences_skipped": 3,
+   "kept": 0
+  },
+  "P024": {
+   "table_reference_sentences": 6,
+   "explicit:no_meaningful_number": 4,
+   "kept_contextual": 1,
+   "contextual:no_meaningful_number": 3,
+   "explicit:no_number_on_a_table_page": 2,
+   "kept": 1
+  },
+  "P025": {
+   "table_reference_sentences": 7,
+   "explicit:no_meaningful_number": 5,
+   "caption_sentences_skipped": 2,
+   "contextual:no_meaningful_number": 3,
+   "kept": 0
+  },
+  "P026": {
+   "table_reference_sentences": 27,
+   "explicit:no_number_on_a_table_page": 3,
+   "contextual:no_meaningful_number": 17,
+   "explicit:no_meaningful_number": 13,
+   "contextual:no_number_on_a_table_page": 2,
+   "kept_explicit": 11,
+   "kept": 11
+  },
+  "P027": {
+   "table_reference_sentences": 3,
+   "explicit:no_number_on_a_table_page": 2,
+   "contextual:no_meaningful_number": 3,
+   "explicit:no_meaningful_number": 1,
+   "kept": 0
+  },
+  "P028": {
+   "table_reference_sentences": 7,
+   "explicit:no_meaningful_number": 6,
+   "contextual:no_meaningful_number": 5,
+   "kept_contextual": 1,
+   "explicit:no_number_on_a_table_page": 1,
+   "kept": 1
+  },
+  "P029": {
+   "table_reference_sentences": 16,
+   "kept_explicit": 4,
+   "explicit:no_number_on_a_table_page": 6,
+   "kept_contextual": 2,
+   "explicit:no_meaningful_number": 6,
+   "contextual:no_number_on_a_table_page": 2,
+   "contextual:no_meaningful_number": 4,
+   "kept": 6
+  },
+  "P030": {
+   "table_reference_sentences": 17,
+   "explicit:no_number_on_a_table_page": 4,
+   "contextual:no_meaningful_number": 11,
+   "explicit:no_meaningful_number": 10,
+   "kept_explicit": 3,
+   "contextual:no_number_on_a_table_page": 1,
+   "kept_contextual": 1,
+   "kept": 4
+  }
+ },
+ "candidates": [
+  {
+   "paper_id": "P001",
+   "claim_page": 7,
+   "claim_text": "Original architecture Contracted Architecture N cascades Dice %|Jϕ| ≤0 GPU Dice %|Jϕ| ≤0 GPU 1 0.818 ± 0.028 1.70 ± 0.06 4.6 0.805 ± 0.029 1.94 ± 0.06 3.3 2 0.844 ± 0.023 0.76 ± 0.06 7.9 0.836 ± 0.023 0.83 ± 0.05 4.5 3 0.856 ± 0.021 0.65 ± 0.06 11.1 0.854 ± 0.021 0.76 ± 0.07 5.6 4 --> 12 0.859 ± 0.020 0.73 ± 0.06 6.7 5 --> 12 0.866 ± 0.020 0.71 ± 0.06 8.1 Table 1: Average Dice scores, percentage of negative Jacobian’s determinant, and memory usage for the original VoxelMorph architecture and the contracted architecture, for different number of cascades. 7",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     7
+    ]
+   },
+   "numbers": [
+    "0.818",
+    "0.028",
+    "1.70",
+    "0.06",
+    "4.6",
+    "0.805",
+    "0.029",
+    "1.94",
+    "3.3",
+    "0.844",
+    "0.023",
+    "0.76",
+    "7.9",
+    "0.836",
+    "0.83",
+    "0.05",
+    "4.5",
+    "0.856",
+    "0.021",
+    "0.65",
+    "11.1",
+    "0.854",
+    "0.07",
+    "5.6",
+    "12",
+    "0.859",
+    "0.020",
+    "0.73",
+    "6.7",
+    "0.866",
+    "0.71",
+    "8.1"
+   ],
+   "numbers_on_table_pages": {
+    "12": {
+     "7": 2
+    }
+   },
+   "candidate_id": "C001"
+  },
+  {
+   "paper_id": "P001",
+   "claim_page": 8,
+   "claim_text": "Based on these results, we adopted a regularization parameter of λ = 1, which provides the best Dice score and significantly reduces the percentage of negative Jacobian values. λ %|Jφ| < 0 Dice 10−4 6.11 ± 0.07 0.849 ± 0.021 10−1 3.15 ± 0.06 0.859 ± 0.020 1 0.71 ± 0.06 0.866 ± 0.020 2 0.21 ± 0.03 0.852 ± 0.026 Table 2: Average Dice scores and percentage of negative Jacobian’s determinant for different regularization parameters.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     8
+    ]
+   },
+   "numbers": [
+    "10",
+    "6.11",
+    "0.07",
+    "0.849",
+    "0.021",
+    "3.15",
+    "0.06",
+    "0.859",
+    "0.020",
+    "0.71",
+    "0.866",
+    "0.21",
+    "0.03",
+    "0.852",
+    "0.026"
+   ],
+   "numbers_on_table_pages": {
+    "0.021": {
+     "8": 1
+    },
+    "0.020": {
+     "8": 1
+    },
+    "0.866": {
+     "8": 1
+    }
+   },
+   "candidate_id": "C002"
+  },
+  {
+   "paper_id": "P001",
+   "claim_page": 10,
+   "claim_text": "Unsupervised Segmentation of Fetal Brain MRI using Deep Learning Cascaded Registration Label Rigid VoxelMorph TransMorph CasReg CasReg-acc CSF 0.516 ± 0.008 0.802 ± 0.007 0.796 ± 0.009 0.823 ± 0.007 0.855 ± 0.008 Grey Matter 0.501 ± 0.003 0.724 ± 0.009 0.725 ± 0.011 0.754 ± 0.009 0.781 ± 0.006 White Matter 0.663 ± 0.003 0.782 ± 0.005 0.780 ± 0.007 0.821 ± 0.006 0.850 ± 0.004 ventricles 0.495 ± 0.011 0.761 ± 0.017 0.751 ± 0.016 0.787 ± 0.013 0.812 ± 0.012 Cerebellum 0.784 ± 0.010 0.881 ± 0.009 0.873 ± 0.014 0.899 ± 0.007 0.932 ± 0.005 Thalamus 0.812 ± 0.004 0.871 ± 0.008 0.871 ± 0.007 0.884 ± 0.007 0.915 ± 0.004 Brain Stem 0.767 ± 0.005 0.856 ± 0.011 0.853 ± 0.012 0.889 ± 0.009 0.919 ± 0.004 Average 0.648 ± 0.054 0.811 ± 0.023 0.807 ± 0.023 0.837 ± 0.021 0.866 ± 0.020 Table 3: Average Dice scores obtained using ANTs rigid registration [2], VoxelMorph [3], TransMorph[7] and the proposed method, with and without deformation field accumulation. registration, which can be computationally intensive and time-consuming.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     10
+    ]
+   },
+   "numbers": [
+    "0.516",
+    "0.008",
+    "0.802",
+    "0.007",
+    "0.796",
+    "0.009",
+    "0.823",
+    "0.855",
+    "0.501",
+    "0.003",
+    "0.724",
+    "0.725",
+    "0.011",
+    "0.754",
+    "0.781",
+    "0.006",
+    "0.663",
+    "0.782",
+    "0.005",
+    "0.780",
+    "0.821",
+    "0.850",
+    "0.004",
+    "0.495",
+    "0.761",
+    "0.017",
+    "0.751",
+    "0.016",
+    "0.787",
+    "0.013",
+    "0.812",
+    "0.012",
+    "0.784",
+    "0.010",
+    "0.881",
+    "0.873",
+    "0.014",
+    "0.899",
+    "0.932",
+    "0.871",
+    "0.884",
+    "0.915",
+    "0.767",
+    "0.856",
+    "0.853",
+    "0.889",
+    "0.919",
+    "0.648",
+    "0.054",
+    "0.811",
+    "0.023",
+    "0.807",
+    "0.837",
+    "0.021",
+    "0.866",
+    "0.020"
+   ],
+   "numbers_on_table_pages": {
+    "0.012": {
+     "10": 2
+    },
+    "0.915": {
+     "10": 1
+    }
+   },
+   "candidate_id": "C003"
+  },
+  {
+   "paper_id": "P001",
+   "claim_page": 12,
+   "claim_text": "Table 4 presents the segmentation results on the 20 fetal brain MRI scans of the IMPACT test set, nnU-Net [17] when trained and tested on the same sets of images, and two classical MAS methods that are the dHCP pipeline for neonatal brain segmentation [26] and the perinatal brain segmentation pipeline [33].",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     13
+    ]
+   },
+   "numbers": [
+    "20"
+   ],
+   "numbers_on_table_pages": {
+    "20": {
+     "13": 2
+    }
+   },
+   "candidate_id": "C004"
+  },
+  {
+   "paper_id": "P001",
+   "claim_page": 12,
+   "claim_text": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+   "reference": "contextual",
+   "context_sentence": "Table 4 presents the segmentation results on the 20 fetal brain MRI scans of the IMPACT test set, nnU-Net [17] when trained and tested on the same sets of images, and two classical MAS methods that are the dHCP pipeline for neonatal brain segmentation [26] and the perinatal brain segmentation pipeline [33].",
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     13
+    ]
+   },
+   "numbers": [
+    "0.926",
+    "0.012",
+    "0.920",
+    "0.014"
+   ],
+   "numbers_on_table_pages": {
+    "0.926": {
+     "13": 1
+    },
+    "0.012": {
+     "13": 4
+    },
+    "0.920": {
+     "13": 1
+    },
+    "0.014": {
+     "13": 2
+    }
+   },
+   "candidate_id": "C005"
+  },
+  {
+   "paper_id": "P001",
+   "claim_page": 13,
+   "claim_text": "Label Ours nnU-Net PP dHCP CSF 0.923 ± 0.006 0.897 ± 0.011 0.83 ± 0.04 0.79 ± 0.02 Grey Matter 0.877 ± 0.006 0.871 ± 0.012 0.85 ± 0.03 0.76 ± 0.05 White Matter 0.915 ± 0.006 0.919 ± 0.006 0.90 ± 0.02 0.85 ± 0.02 Ventricles 0.902 ± 0.005 0.879 ± 0.011 0.73 ± 0.05 0.66 ± 0.07 Cerebellum 0.964 ± 0.004 0.965 ± 0.004 0.93 ± 0.02 0.89 ± 0.03 Thalamus 0.950 ± 0.002 0.957 ± 0.004 0.92 ± 0.02 0.88 ± 0.03 Brain Stem 0.955 ± 0.003 0.953 ± 0.006 0.91 ± 0.01 0.90 ± 0.02 Average 0.926 ± 0.012 0.920 ± 0.014 0.87 ± 0.02 0.81 ± 0.03 Time 60s 80s > 30min > 1h Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33].",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     13
+    ]
+   },
+   "numbers": [
+    "0.923",
+    "0.006",
+    "0.897",
+    "0.011",
+    "0.83",
+    "0.04",
+    "0.79",
+    "0.02",
+    "0.877",
+    "0.871",
+    "0.012",
+    "0.85",
+    "0.03",
+    "0.76",
+    "0.05",
+    "0.915",
+    "0.919",
+    "0.90",
+    "0.902",
+    "0.005",
+    "0.879",
+    "0.73",
+    "0.66",
+    "0.07",
+    "0.964",
+    "0.004",
+    "0.965",
+    "0.93",
+    "0.89",
+    "0.950",
+    "0.002",
+    "0.957",
+    "0.92",
+    "0.88",
+    "0.955",
+    "0.003",
+    "0.953",
+    "0.91",
+    "0.01",
+    "0.926",
+    "0.920",
+    "0.014",
+    "0.87",
+    "0.81"
+   ],
+   "numbers_on_table_pages": {
+    "0.006": {
+     "13": 2
+    },
+    "0.897": {
+     "13": 1
+    },
+    "0.012": {
+     "13": 2
+    },
+    "0.902": {
+     "13": 2
+    },
+    "0.005": {
+     "13": 1
+    },
+    "0.003": {
+     "13": 1
+    },
+    "0.014": {
+     "13": 1
+    }
+   },
+   "candidate_id": "C006"
+  },
+  {
+   "paper_id": "P002",
+   "claim_page": 22,
+   "claim_text": "22 P. de Dumast et al. Dataset Number of subjects (Neurotypical / Pathological) Gestational age (weeks) SR reconstruction Image resolution (mm3) TRAINING FeTA [Payette et al., 2021] 24 (13/11) [20.9-34.8] (28.2±3.6) Simple-IRTK [Kuklisova-Murgasova et al., 2012] 0.863 TESTING FeTA [Payette et al., 2021] 9 (4/5) [22.9-34.8] (27.4±3.6) Simple-IRTK [Kuklisova-Murgasova et al., 2012] 0.863 STA [Gholipour et al., 2017] 18 (18/0) [21-38] Gholipour et. al, 2017 [Gholipour et al., 2017] 0.803 CHUV 33 (24/9) [21-35] (29.6±3.6) MIALSRTK [Tourbier et al., 2019] 0.803 Table 1: Summary of the data used for training and quantitative and qualitative evaluation.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     22
+    ]
+   },
+   "numbers": [
+    "22",
+    "24",
+    "13",
+    "11",
+    "20.9",
+    "34.8",
+    "28.2",
+    "3.6",
+    "0.863",
+    "22.9",
+    "27.4",
+    "18",
+    "0.803",
+    "33",
+    "29.6"
+   ],
+   "numbers_on_table_pages": {
+    "22": {
+     "22": 1
+    },
+    "24": {
+     "22": 1
+    },
+    "13": {
+     "22": 1
+    },
+    "11": {
+     "22": 1
+    },
+    "20.9": {
+     "22": 2
+    },
+    "34.8": {
+     "22": 3
+    },
+    "28.2": {
+     "22": 1
+    },
+    "3.6": {
+     "22": 2
+    },
+    "22.9": {
+     "22": 1
+    },
+    "27.4": {
+     "22": 1
+    },
+    "33": {
+     "22": 1
+    }
+   },
+   "candidate_id": "C007"
+  },
+  {
+   "paper_id": "P002",
+   "claim_page": 34,
+   "claim_text": "DSC ↑ ASSD ↓ HR ↓ Baseline 0.82 ± 0.02 0.22 ± 0.05 0.093 ± 0.03 Hybrid 0.82 ± 0.02 0.23 ± 0.06 0.10 ± 0.04 TopoCP 0.85 ± 0.01 (*, +) 0.19 ± 0.04 (*, +) 0.06 ± 0.03 (*, +) (a) FeTA DSC ↑ ASSD ↓ HR ↓ Baseline 0.77 ± 0.05 0.42 ± 0.14 0.25 ± 0.10 Hybrid 0.77 ± 0.05 0.42 ± 0.15 0.26 ± 0.11 TopoCP 0.79 ± 0.05 (*, +) 0.41 ± 0.18 (*, +) 0.23 ± 0.10 (*, +) (b) STA Table 4: Tables of the metrics computed on the pure testing sets FeTA 4a and STA 4b.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     34
+    ]
+   },
+   "numbers": [
+    "0.82",
+    "0.02",
+    "0.22",
+    "0.05",
+    "0.093",
+    "0.03",
+    "0.23",
+    "0.06",
+    "0.10",
+    "0.04",
+    "0.85",
+    "0.01",
+    "0.19",
+    "0.77",
+    "0.42",
+    "0.14",
+    "0.25",
+    "0.15",
+    "0.26",
+    "0.11",
+    "0.79",
+    "0.41",
+    "0.18"
+   ],
+   "numbers_on_table_pages": {
+    "0.05": {
+     "34": 1
+    }
+   },
+   "candidate_id": "C008"
+  },
+  {
+   "paper_id": "P003",
+   "claim_page": 3,
+   "claim_text": "Figure. 2: Comparison chat for Exiting Methods Table 1: Comparison Table for Exiting Method Method Dataset Modality Dice Score (%) Explanations U-Net [13] BraTS MRI 88.5 - Attention U-Net [14] BraTS MRI 90.1 - SegAN [16] LiTS CT 95.7 - Shen et al. [22] BraTS MRI 89.8 Grad-CAM Wang et al. [23] BraTS, LiTS MRI, CT 91.5, 96.2 Textual Guo et al. [24] BraTS MRI 91.3 Textual 3.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     3
+    ]
+   },
+   "numbers": [
+    "88.5",
+    "90.1",
+    "95.7",
+    "89.8",
+    "91.5",
+    "96.2",
+    "91.3"
+   ],
+   "numbers_on_table_pages": {
+    "91.3": {
+     "3": 1
+    }
+   },
+   "candidate_id": "C009"
+  },
+  {
+   "paper_id": "P003",
+   "claim_page": 5,
+   "claim_text": "Method Whole Tumor Dice (%) Tumor Core Dice (%) Enhancing Tumor Dice (%) U-Net [13] 85.7 82.1 75.4 Attention U-Net [14] 87.2 83.7 77.6 Dense U-Net [15] 86.9 84.2 78.1 SegAN [16] 87.8 84.6 77.9 Proposed Method 88.7 85.4 79.2 On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     6
+    ]
+   },
+   "numbers": [
+    "85.7",
+    "82.1",
+    "75.4",
+    "87.2",
+    "83.7",
+    "77.6",
+    "86.9",
+    "84.2",
+    "78.1",
+    "87.8",
+    "84.6",
+    "77.9",
+    "88.7",
+    "85.4",
+    "79.2",
+    "92.3"
+   ],
+   "numbers_on_table_pages": {
+    "92.3": {
+     "6": 1
+    }
+   },
+   "candidate_id": "C010"
+  },
+  {
+   "paper_id": "P003",
+   "claim_page": 6,
+   "claim_text": "S.no Method Dice Score (%) 01 3D U-Net [45] 89.7 02 Attention U-Net [46] 90.5 03 DualSeg [47] 91.2 04 Proposed Method 92.3 These quantitative results demonstrate the effectiveness of our proposed framework in accurately segmenting brain tumors and ischemic lesions from MRI scans, outperforming several state-of-the-art methods on benchmark datasets are shown in figure 4 and 5.",
+   "reference": "contextual",
+   "context_sentence": "M.Vinoth, V.Jayapradha, K.Anitha, Gowrisankar Kalakoti, Ezhil E Nithila / IJCESEN 10-4(2024)575-584 580 Figure. 4: Comparison of BraTs Dataset Table 3: Comparison with state-of-the-art methods on the ISLES dataset.",
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     6
+    ]
+   },
+   "numbers": [
+    "01",
+    "89.7",
+    "02",
+    "90.5",
+    "03",
+    "91.2",
+    "04",
+    "92.3"
+   ],
+   "numbers_on_table_pages": {
+    "01": {
+     "6": 1
+    },
+    "02": {
+     "6": 1
+    }
+   },
+   "candidate_id": "C011"
+  },
+  {
+   "paper_id": "P004",
+   "claim_page": 8,
+   "claim_text": "Quantitative evaluation results in the second section of Table 1 show that the network trained with UM-CAM and SPL supervision achieves an average DSC score of 89.76%, improving the DSC by 11.07% compared to the baseline model.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     7
+    ]
+   },
+   "numbers": [
+    "89.76",
+    "11.07"
+   ],
+   "numbers_on_table_pages": {
+    "89.76": {
+     "7": 1
+    }
+   },
+   "candidate_id": "C012"
+  },
+  {
+   "paper_id": "P004",
+   "claim_page": 8,
+   "claim_text": "Our proposed method achieves an average DSC of 90.22% and an average HD95 of 4.04 pixels, which is at least 3.02 pixels lower than other weakly-supervised methods on the testing set.",
+   "reference": "contextual",
+   "context_sentence": "Table 2 lists the segmentation results of these methods.",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     8
+    ]
+   },
+   "numbers": [
+    "90.22",
+    "4.04",
+    "3.02"
+   ],
+   "numbers_on_table_pages": {
+    "90.22": {
+     "8": 1
+    },
+    "4.04": {
+     "8": 1
+    }
+   },
+   "candidate_id": "C013"
+  },
+  {
+   "paper_id": "P005",
+   "claim_page": 12,
+   "claim_text": "Architectural detail of CSPCNN Local Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 3×3 1×1 64 - 4×33×33 64×31×31 Layer2 Convolution 3×3 1×1 64 - 64×31×31 64×29×29 Layer3 Convolution 3×3 1×1 64 - 64×29×29 64×27×27 Layer4 Max-pool 3×3 1×1 - - 64×27×27 64×25×25 Layer5 Convolution 3×3 1×1 64 - 64×25×25 64×23×23 Layer6 Convolution 3×3 1×1 64 - 64×23×23 64×21×21 Table 4.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     12
+    ]
+   },
+   "numbers": [
+    "64",
+    "33",
+    "31",
+    "29",
+    "27",
+    "25",
+    "23",
+    "21"
+   ],
+   "numbers_on_table_pages": {
+    "64": {
+     "12": 16
+    },
+    "33": {
+     "12": 4
+    },
+    "31": {
+     "12": 4
+    },
+    "29": {
+     "12": 4
+    },
+    "27": {
+     "12": 8
+    },
+    "25": {
+     "12": 4
+    },
+    "23": {
+     "12": 4
+    },
+    "21": {
+     "12": 4
+    }
+   },
+   "candidate_id": "C014"
+  },
+  {
+   "paper_id": "P005",
+   "claim_page": 12,
+   "claim_text": "Architectural detail of CSPCNN global Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 7×7 1×1 128 - 4×33×33 128×27×27 Layer2 Convolution 7×7 1×1 128 - 128 × 27×27 128×21×21 Table 5.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "5"
+   ],
+   "table_pages": {
+    "5": [
+     12
+    ]
+   },
+   "numbers": [
+    "128",
+    "33",
+    "27",
+    "21"
+   ],
+   "numbers_on_table_pages": {
+    "33": {
+     "12": 4
+    },
+    "27": {
+     "12": 8
+    },
+    "21": {
+     "12": 4
+    }
+   },
+   "candidate_id": "C015"
+  },
+  {
+   "paper_id": "P005",
+   "claim_page": 12,
+   "claim_text": "Architectural detail of MRIPCNN Local Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 3×3 1×1 64 - 4×33×33 64×31×31 Layer2 Convolution 3×3 1×1 64 - 64×31×31 64×29×29 Layer3 Convolution 3×3 1×1 64 - 64×29×29 64×27×27 Layer4 Max-pool 3×3 1×1 - - 64×27×27 64×25×25 Layer5 Convolution 3×3 1×1 64 - 64×25×25 64×23×23 Layer6 Convolution 3×3 1×1 64 - 64×23×23 64×21×21",
+   "reference": "contextual",
+   "context_sentence": "Architectural detail of CSPCNN global Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 7×7 1×1 128 - 4×33×33 128×27×27 Layer2 Convolution 7×7 1×1 128 - 128 × 27×27 128×21×21 Table 5.",
+   "table_refs": [
+    "5"
+   ],
+   "table_pages": {
+    "5": [
+     12
+    ]
+   },
+   "numbers": [
+    "64",
+    "33",
+    "31",
+    "29",
+    "27",
+    "25",
+    "23",
+    "21"
+   ],
+   "numbers_on_table_pages": {
+    "64": {
+     "12": 16
+    },
+    "33": {
+     "12": 4
+    },
+    "31": {
+     "12": 4
+    },
+    "29": {
+     "12": 4
+    },
+    "27": {
+     "12": 8
+    },
+    "25": {
+     "12": 4
+    },
+    "23": {
+     "12": 4
+    },
+    "21": {
+     "12": 4
+    }
+   },
+   "candidate_id": "C016"
+  },
+  {
+   "paper_id": "P005",
+   "claim_page": 13,
+   "claim_text": "Architectural detail of CSPCNN Global Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 7×7 1×1 128 - 4×33×33 128×27×27 Layer2 Convolution 7×7 1×1 128 - 128×27×27 128×21×21 Table 7.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "7"
+   ],
+   "table_pages": {
+    "7": [
+     13
+    ]
+   },
+   "numbers": [
+    "128",
+    "33",
+    "27",
+    "21"
+   ],
+   "numbers_on_table_pages": {
+    "128": {
+     "13": 1
+    },
+    "21": {
+     "13": 2
+    }
+   },
+   "candidate_id": "C017"
+  },
+  {
+   "paper_id": "P005",
+   "claim_page": 13,
+   "claim_text": "Architectural detail of Global CNN Type Filter size Strides Filters FC unit Input Output FC 256 256 × 21 × 21 14,450,688 FC 128 - SoftMax 5 - The architectures of the two CNNs are integrated by merging their respective feature maps show in Table 7.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "7"
+   ],
+   "table_pages": {
+    "7": [
+     13
+    ]
+   },
+   "numbers": [
+    "256",
+    "21",
+    "14",
+    "450",
+    "688",
+    "128"
+   ],
+   "numbers_on_table_pages": {
+    "21": {
+     "13": 2
+    },
+    "128": {
+     "13": 5
+    }
+   },
+   "candidate_id": "C018"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 12,
+   "claim_text": "RECALL PERFORMANCE Table IV presents the recall performance evaluation of YOLOv5 and YOLOv7 on 827 labeled boxes and masks images.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "IV"
+   ],
+   "table_pages": {
+    "IV": [
+     12
+    ]
+   },
+   "numbers": [
+    "827"
+   ],
+   "numbers_on_table_pages": {
+    "827": {
+     "12": 2
+    }
+   },
+   "candidate_id": "C019"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 13,
+   "claim_text": "MEAN AVERAGE PRECISION (mAP@.5) Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at the IoU threshold of 0.5.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "V"
+   ],
+   "table_pages": {
+    "V": [
+     14
+    ]
+   },
+   "numbers": [
+    "827",
+    "0.5"
+   ],
+   "numbers_on_table_pages": {
+    "827": {
+     "14": 2
+    }
+   },
+   "candidate_id": "C020"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 13,
+   "claim_text": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+   "reference": "contextual",
+   "context_sentence": "MEAN AVERAGE PRECISION (mAP@.5) Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at the IoU threshold of 0.5.",
+   "table_refs": [
+    "V"
+   ],
+   "table_pages": {
+    "V": [
+     14
+    ]
+   },
+   "numbers": [
+    "0.947",
+    "0.94",
+    "0.941"
+   ],
+   "numbers_on_table_pages": {
+    "0.947": {
+     "14": 1
+    },
+    "0.94": {
+     "14": 2
+    },
+    "0.941": {
+     "14": 1
+    }
+   },
+   "candidate_id": "C021"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 15,
+   "claim_text": "MEAN AVERAGE PRECISION (mAP@.5:.95) Table VI shows the mAP for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at IoU threshold of 0.5-0.95.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "VI"
+   ],
+   "table_pages": {
+    "VI": [
+     15
+    ]
+   },
+   "numbers": [
+    "95",
+    "827",
+    "0.5",
+    "0.95"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "15": 1
+    },
+    "827": {
+     "15": 2
+    }
+   },
+   "candidate_id": "C022"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 16,
+   "claim_text": "Based on these results, it can be concluded that both models offer exceptional overall performance, with YOLOv7 demonstrates superior performance across numerous evaluation criteria, particularly with regard to mAP@0.5-0.95as evidence in Table VI.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "VI"
+   ],
+   "table_pages": {
+    "VI": [
+     15
+    ]
+   },
+   "numbers": [
+    "0.5",
+    "0.95"
+   ],
+   "numbers_on_table_pages": {
+    "0.5": {
+     "15": 1
+    },
+    "0.95": {
+     "15": 1
+    }
+   },
+   "candidate_id": "C023"
+  },
+  {
+   "paper_id": "P006",
+   "claim_page": 16,
+   "claim_text": "The RCNN models achieved a commendable high recall rate with 95%, though precision and mAP remain unspecified.",
+   "reference": "contextual",
+   "context_sentence": "COMPARATIVE ANALYSIS OF SEGMENTATION MODELS Table VII showcase various segmentation models, including RCNN, Faster RCNN, and Mask RCNN [49], all of which employed the same dataset.",
+   "table_refs": [
+    "VII"
+   ],
+   "table_pages": {
+    "VII": [
+     17
+    ]
+   },
+   "numbers": [
+    "95"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "17": 2
+    }
+   },
+   "candidate_id": "C024"
+  },
+  {
+   "paper_id": "P007",
+   "claim_page": 10,
+   "claim_text": "This value is selected as the optimal parameter for all subsequent analyses (see Supplementary section S2). 3.1 Inter-observer agreement All ICC estimates exceed 0.922, indicating an excellent inter-rater agreement [36] (Table 3).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     10
+    ]
+   },
+   "numbers": [
+    "3.1",
+    "0.922"
+   ],
+   "numbers_on_table_pages": {
+    "0.922": {
+     "10": 1
+    }
+   },
+   "candidate_id": "C025"
+  },
+  {
+   "paper_id": "P008",
+   "claim_page": 6,
+   "claim_text": "Our method achieved mean Dice of 0.87, 95HD of 0.96, and ASD of 0.28.",
+   "reference": "contextual",
+   "context_sentence": "Evaluation Results As summarized in Table I, our method outperformed other methods based on almost all evaluation metrics.",
+   "table_refs": [
+    "I"
+   ],
+   "table_pages": {
+    "I": [
+     7
+    ]
+   },
+   "numbers": [
+    "0.87",
+    "0.96",
+    "0.28"
+   ],
+   "numbers_on_table_pages": {
+    "0.87": {
+     "7": 1
+    },
+    "0.96": {
+     "7": 1
+    },
+    "0.28": {
+     "7": 2
+    }
+   },
+   "candidate_id": "C026"
+  },
+  {
+   "paper_id": "P008",
+   "claim_page": 6,
+   "claim_text": "We observe that by adding 2.6% extra parameters, our attention module could improve the performance by 3% (from 0.84 by DSRNet to 0.87 by Ours) in terms of Dice.",
+   "reference": "contextual",
+   "context_sentence": "In Table I, we have also reported the number of parameters and running time for all compared models.",
+   "table_refs": [
+    "I"
+   ],
+   "table_pages": {
+    "I": [
+     7
+    ]
+   },
+   "numbers": [
+    "2.6",
+    "0.84",
+    "0.87"
+   ],
+   "numbers_on_table_pages": {
+    "0.84": {
+     "7": 1
+    },
+    "0.87": {
+     "7": 1
+    }
+   },
+   "candidate_id": "C027"
+  },
+  {
+   "paper_id": "P009",
+   "claim_page": 12,
+   "claim_text": "We also observed that in experiments 3,4,7, and 8, where the training set contains the dHCP training templates (with larger developmental ages), the models perform slightly better in the cortical gray matter. 3.2 Similar-domain For the similar-domain data, Table 3 shows that in experiments trained with dHCP (experiments 3,4,7,8), subjects generally had slightly better results compared to their counterparts without dHCP (experiments 1,2,5,6), respectively having average Dice improvements of 0.02, 0.04, 0.04, and 0.03 (all with p<1e-9).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     15,
+     19
+    ]
+   },
+   "numbers": [
+    "3.2",
+    "0.02",
+    "0.04",
+    "0.03"
+   ],
+   "numbers_on_table_pages": {
+    "0.02": {
+     "19": 1
+    },
+    "0.04": {
+     "19": 1
+    },
+    "0.03": {
+     "19": 2
+    }
+   },
+   "candidate_id": "C028"
+  },
+  {
+   "paper_id": "P009",
+   "claim_page": 13,
+   "claim_text": "According to Table 3, the only noticeable increase in the overall mean Dice scores as a result of adding the dHCP occurred when comparing experiments 5 and 7 (improvement of 0.02, p<1e-8).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     15,
+     19
+    ]
+   },
+   "numbers": [
+    "0.02"
+   ],
+   "numbers_on_table_pages": {
+    "0.02": {
+     "19": 1
+    }
+   },
+   "candidate_id": "C029"
+  },
+  {
+   "paper_id": "P009",
+   "claim_page": 13,
+   "claim_text": "We observed from Table 3 that the data-driven sampling has caused a notable improvement when the training data contains only the FeTA training set (experiments 1 and 2), with an average Dice score improvement of 0.07 (p<1e-4 for t-test and p<1e-5 for Wilcoxon test).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     15,
+     19
+    ]
+   },
+   "numbers": [
+    "0.07"
+   ],
+   "numbers_on_table_pages": {
+    "0.07": {
+     "19": 1
+    }
+   },
+   "candidate_id": "C030"
+  },
+  {
+   "paper_id": "P009",
+   "claim_page": 13,
+   "claim_text": "The data-driven sampling also slightly improved the average Dice scores when the training data contained FeTA+dHCP (0.03 improvement from experiment 3 to 4, p=0.07 for t-test and p=0.4 for Wilcoxon test, not statistically significant) or FeTA+synthetic (0.02 improvement from experiment 5 to 6, p < 0.01 for t-test and p<1e-5 for Wilcoxon test).",
+   "reference": "contextual",
+   "context_sentence": "We observed from Table 3 that the data-driven sampling has caused a notable improvement when the training data contains only the FeTA training set (experiments 1 and 2), with an average Dice score improvement of 0.07 (p<1e-4 for t-test and p<1e-5 for Wilcoxon test).",
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     15,
+     19
+    ]
+   },
+   "numbers": [
+    "0.03",
+    "0.07",
+    "0.4",
+    "0.02",
+    "0.01"
+   ],
+   "numbers_on_table_pages": {
+    "0.03": {
+     "19": 2
+    },
+    "0.07": {
+     "19": 1
+    },
+    "0.02": {
+     "19": 1
+    }
+   },
+   "candidate_id": "C031"
+  },
+  {
+   "paper_id": "P010",
+   "claim_page": 4,
+   "claim_text": "A batch of 17 MRI cases are passed to the model in Table 1 the abnormalities are localized and segmented in 318 Sec­ onds.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     5
+    ]
+   },
+   "numbers": [
+    "17",
+    "318"
+   ],
+   "numbers_on_table_pages": {
+    "17": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C032"
+  },
+  {
+   "paper_id": "P011",
+   "claim_page": 2,
+   "claim_text": "Dataset Magnetic ﬁeld strength (Tesla) Vendor Image resolution (mm3) Number of subjects Gestational age (weeks) Reconstruction method TRAINING 1.5T; 3T General Electric 0.5x0.5x0.5 15 [22.6 - 33.4] (28.7±3.5) mialSRTK [3, 13] EVALUATION Quantitative 1.5T; 3T Siemens; Philips 0.8x0.8x0.8 18 21-38 Gholipour et. al, 2017 [14] EVALUATION Qualitative 1.5T Siemens 1.12x1.12x1.12 26 [18-34] (27.3±4.1) mialSRTK [3, 13] Table 1: Summary of the data used for training and quantitative and qualitative evaluation. recently proved its good ability to deal with fetal brain MRI tissue segmentation [18].",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     2
+    ]
+   },
+   "numbers": [
+    "1.5",
+    "0.5",
+    "15",
+    "22.6",
+    "33.4",
+    "28.7",
+    "3.5",
+    "0.8",
+    "18",
+    "21",
+    "38",
+    "1.12",
+    "26",
+    "27.3",
+    "4.1"
+   ],
+   "numbers_on_table_pages": {
+    "0.5": {
+     "2": 1
+    },
+    "15": {
+     "2": 1
+    },
+    "21": {
+     "2": 2
+    },
+    "38": {
+     "2": 1
+    }
+   },
+   "candidate_id": "C033"
+  },
+  {
+   "paper_id": "P011",
+   "claim_page": 2,
+   "claim_text": "Dis-carding pathological and non-annotated brains, our training dataset results in 15 healthy fetal brains (see details summarized in Table 1).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     2
+    ]
+   },
+   "numbers": [
+    "15"
+   ],
+   "numbers_on_table_pages": {
+    "15": {
+     "2": 1
+    }
+   },
+   "candidate_id": "C034"
+  },
+  {
+   "paper_id": "P011",
+   "claim_page": 2,
+   "claim_text": "The normative spatiotemporal MRI atlas of the fetal brain [14] provides 3D high-quality isotropic smooth volumes along with tissue label maps for all gestational age between 21 and 38 weeks (see Table 1 for details).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     2
+    ]
+   },
+   "numbers": [
+    "21",
+    "38"
+   ],
+   "numbers_on_table_pages": {
+    "21": {
+     "2": 2
+    },
+    "38": {
+     "2": 1
+    }
+   },
+   "candidate_id": "C035"
+  },
+  {
+   "paper_id": "P011",
+   "claim_page": 3,
+   "claim_text": "Method DSC↑ ASD (mm)↓ HD95 (mm)↓ Betti Error↓ Baseline U-Net 0.54±0.16 <2e-16 2.51±2.34 <2e-16 7.32±6.57 <2e-16 0.74±1.3 0.023 TopoCP 0.70±0.14 1.41±1.64 5.31±5.20 0.68±1.27 Table 2: Segmentation performances (mean±standard deviation) for both methods.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     3
+    ]
+   },
+   "numbers": [
+    "0.54",
+    "0.16",
+    "16",
+    "2.51",
+    "2.34",
+    "7.32",
+    "6.57",
+    "0.74",
+    "1.3",
+    "0.023",
+    "0.70",
+    "0.14",
+    "1.41",
+    "1.64",
+    "5.31",
+    "5.20",
+    "0.68",
+    "1.27"
+   ],
+   "numbers_on_table_pages": {
+    "16": {
+     "3": 1
+    }
+   },
+   "candidate_id": "C036"
+  },
+  {
+   "paper_id": "P013",
+   "claim_page": 5,
+   "claim_text": "Conditional Atlas Learning in Fetal MRI 5 Table 1: Fetal MRI acquisition parameters, including echo time TE, repetition time TR, slice thickness, field of view (FOV), and image resolution for field strengths of 1.5 T and 3 T.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     5
+    ]
+   },
+   "numbers": [
+    "1.5"
+   ],
+   "numbers_on_table_pages": {
+    "1.5": {
+     "5": 2
+    }
+   },
+   "candidate_id": "C037"
+  },
+  {
+   "paper_id": "P013",
+   "claim_page": 5,
+   "claim_text": "TE TR slice thickness FOV image resolution (x,y,z) [ms] [ms] [mm] [mm] [mm] 1.5 T 0.126 14.699 3.559 249.844 0.771 / 0.771 / 3.826 std ± 0.023 6.332 0.664 44.808 0.124 / 0.124 / 0.937 3 T 0.181 7.811 2.877 262.408 0.805 / 0.805 / 2.946 std ± 0.037 4.445 1.253 44.787 0.152 / 0.152 / 1.407 templates while preserving accurate individual registrations.",
+   "reference": "contextual",
+   "context_sentence": "Conditional Atlas Learning in Fetal MRI 5 Table 1: Fetal MRI acquisition parameters, including echo time TE, repetition time TR, slice thickness, field of view (FOV), and image resolution for field strengths of 1.5 T and 3 T.",
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     5
+    ]
+   },
+   "numbers": [
+    "1.5",
+    "0.126",
+    "14.699",
+    "3.559",
+    "249.844",
+    "0.771",
+    "3.826",
+    "0.023",
+    "6.332",
+    "0.664",
+    "44.808",
+    "0.124",
+    "0.937",
+    "0.181",
+    "7.811",
+    "2.877",
+    "262.408",
+    "0.805",
+    "2.946",
+    "0.037",
+    "4.445",
+    "1.253",
+    "44.787",
+    "0.152",
+    "1.407"
+   ],
+   "numbers_on_table_pages": {
+    "1.5": {
+     "5": 2
+    }
+   },
+   "candidate_id": "C038"
+  },
+  {
+   "paper_id": "P013",
+   "claim_page": 7,
+   "claim_text": "Method tN ti |Jϕ| ||Def|| EFC DSC HD [min] [min] (↑) (↓) (↓) [%] (↑) [mm] (↓) SyNQuick [3] 1290 20 1.000±0.0 692±234 0.345 80.5±10.3 1.66±0.29 SyN [3] 1290 980 1.000±0.0 909±290 0.347 87.2±6.1 1.25±0.17 MultiMorph [1] 0 20 1.000±0.0 861±358 0.292 82.9±5.6 2.14±0.92 nnUnet [11] 3580 1 ---96.9±0.0 0.99 ± 0.13 Ours-Reg 4020 0.5 0.998±0.0 807±148 0.344 84.1±1.9 1.71±0.23 Ours-Disc 4020 0.5 0.995±0.0 775±240 0.326 86.3±5.2 1.60±0.20 Two model implementations are trained, in Ours-Disc the discriminator is in-cluded, while in Ours-Reg the optimization is performed solely by the registration framework.",
+   "reference": "contextual",
+   "context_sentence": "Conditional Atlas Learning in Fetal MRI 7 Table 2: Quantitative evaluation of atlas construction and segmentation per-formance: Our-Reg uses registration without a discriminator; Our-Disc adds adversarial training to improve atlas quality. tN denotes the training time, and ti denotes the total inference time for the test dataset.",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     7
+    ]
+   },
+   "numbers": [
+    "1290",
+    "20",
+    "1.000",
+    "0.0",
+    "692",
+    "234",
+    "0.345",
+    "80.5",
+    "10.3",
+    "1.66",
+    "0.29",
+    "980",
+    "909",
+    "290",
+    "0.347",
+    "87.2",
+    "6.1",
+    "1.25",
+    "0.17",
+    "861",
+    "358",
+    "0.292",
+    "82.9",
+    "5.6",
+    "2.14",
+    "0.92",
+    "3580",
+    "96.9",
+    "0.99",
+    "0.13",
+    "4020",
+    "0.5",
+    "0.998",
+    "807",
+    "148",
+    "0.344",
+    "84.1",
+    "1.9",
+    "1.71",
+    "0.23",
+    "0.995",
+    "775",
+    "240",
+    "0.326",
+    "86.3",
+    "5.2",
+    "1.60",
+    "0.20"
+   ],
+   "numbers_on_table_pages": {
+    "0.0": {
+     "7": 1
+    },
+    "0.5": {
+     "7": 3
+    }
+   },
+   "candidate_id": "C039"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 3,
+   "claim_text": "RESULTS Demographics Our cohort consisted of 182 participants: 62 with SRI (59 SSRIs, 3 SNRIs) exposure and 120 unexposed controls (Table 1).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     4
+    ]
+   },
+   "numbers": [
+    "182",
+    "62",
+    "59",
+    "120"
+   ],
+   "numbers_on_table_pages": {
+    "62": {
+     "4": 2
+    },
+    "120": {
+     "4": 1
+    }
+   },
+   "candidate_id": "C040"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 4,
+   "claim_text": "Fetal brain measures in SRI-exposed group vs controls SRI-exposed fetuses showed signiﬁcantly smaller left (0.45 vs 0.53 cm3, adjusted p = 0.0004) and right (0.48 vs 0.56 cm3, adjusted p = 0.0004) hippocampal volumes compared with controls (Table 2).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "0.45",
+    "0.53",
+    "0.0004",
+    "0.48",
+    "0.56"
+   ],
+   "numbers_on_table_pages": {
+    "0.45": {
+     "5": 1
+    },
+    "0.53": {
+     "5": 2
+    },
+    "0.0004": {
+     "5": 4
+    },
+    "0.48": {
+     "5": 1
+    },
+    "0.56": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C041"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 4,
+   "claim_text": "Additionally, the SRI-exposed group showed reduced cerebral cortical local gyriﬁcation index (1.24 vs 1.28, adjusted p = 0.03), curvedness (0.21 vs 0.24 mm–1, adjusted p = 0.0004), and surface area (143.35 vs 151.36 cm2, adjusted p = 0.02) compared with controls (Table 2).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "1.24",
+    "1.28",
+    "0.03",
+    "0.21",
+    "0.24",
+    "0.0004",
+    "143.35",
+    "151.36",
+    "0.02"
+   ],
+   "numbers_on_table_pages": {
+    "1.24": {
+     "5": 1
+    },
+    "1.28": {
+     "5": 1
+    },
+    "0.03": {
+     "5": 5
+    },
+    "0.21": {
+     "5": 1
+    },
+    "0.24": {
+     "5": 3
+    },
+    "0.0004": {
+     "5": 4
+    },
+    "143.35": {
+     "5": 1
+    },
+    "151.36": {
+     "5": 1
+    },
+    "0.02": {
+     "5": 4
+    }
+   },
+   "candidate_id": "C042"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 4,
+   "claim_text": "In this sensitivity analysis (Table S1), in addition to the main ﬁndings (in Table 2), fetal cerebellar volume also differed between the SRI-exposed and unexposed groups (mean: 9.15 vs. 9.67 cm³; 95% CI: −1.03 to −0.004) before adjustment for multiple comparisons.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "9.15",
+    "9.67",
+    "95",
+    "1.03",
+    "0.004"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "5": 2
+    },
+    "0.004": {
+     "5": 4
+    }
+   },
+   "candidate_id": "C043"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 4,
+   "claim_text": "However, this difference was no longer statistically signiﬁcant after correction for multiple comparisons (adjusted p = 0.10), consistent with the main ﬁndings in Table 2.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "0.10"
+   ],
+   "numbers_on_table_pages": {
+    "0.10": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C044"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 5,
+   "claim_text": "Placenta measures in SRI-exposed group vs controls Placenta volumes (753.11 cm3 vs 656.00 cm3, adjusted p = 0.004) and ADC_D (0.004 vs 0.003, adjusted p = 0.048) were higher in SRI-exposed group vs unexposed controls (Table 3).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     5
+    ]
+   },
+   "numbers": [
+    "753.11",
+    "656.00",
+    "0.004",
+    "0.003",
+    "0.048"
+   ],
+   "numbers_on_table_pages": {
+    "753.11": {
+     "5": 1
+    },
+    "656.00": {
+     "5": 1
+    },
+    "0.004": {
+     "5": 2
+    },
+    "0.003": {
+     "5": 1
+    },
+    "0.048": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C045"
+  },
+  {
+   "paper_id": "P014",
+   "claim_page": 5,
+   "claim_text": "Associations between placenta measures and fetal brain measures in SRI-exposed group Larger placenta volume was associated with larger volumes in fetal deep gray matter (β = 0.002, p = 0.02) and total brain (β = 0.05, p = 0.005) (Table S7) as well as larger cortical surface area (β = 0.03, p = 0.03) (Table S8).",
+   "reference": "contextual",
+   "context_sentence": "The placenta results in the sensitivity analyses (Tables S5 and S6) by excluding participants with alcohol use during pregnancy were consistent with the main ﬁndings in Table 3 and S4.",
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     5
+    ]
+   },
+   "numbers": [
+    "0.002",
+    "0.02",
+    "0.05",
+    "0.005",
+    "0.03"
+   ],
+   "numbers_on_table_pages": {
+    "0.02": {
+     "5": 3
+    },
+    "0.05": {
+     "5": 4
+    },
+    "0.03": {
+     "5": 3
+    }
+   },
+   "candidate_id": "C046"
+  },
+  {
+   "paper_id": "P015",
+   "claim_page": 6,
+   "claim_text": "Evaluating Synthetic Data Generation for Domain Generalization in Fetal Brain MRI Segmentation Prospective multi-echo KCL dataset Data were prospec-tively acquired for this study from five fetuses (GA = 24, 32, 32, 33, 37 weeks) using SST2w sequences at St. Thomas’ Hospital, London, on a Siemens FreeMax 0.55T scanner, with similar parameters as the KCL dataset in Table 1, except for echo times (TEs), with data acquired at 300 ms, 397 ms, 600 ms, in order to do T2 mapping.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     5
+    ]
+   },
+   "numbers": [
+    "24",
+    "32",
+    "33",
+    "37",
+    "0.55",
+    "300",
+    "397",
+    "600"
+   ],
+   "numbers_on_table_pages": {
+    "24": {
+     "5": 1
+    },
+    "32": {
+     "5": 1
+    },
+    "33": {
+     "5": 1
+    },
+    "0.55": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C047"
+  },
+  {
+   "paper_id": "P015",
+   "claim_page": 9,
+   "claim_text": "Across all cross-validation splits, Fetal-SynthSeg achieves the highest global average Dice score of 74.9, consistently outperforming all other simulation-based approaches.",
+   "reference": "contextual",
+   "context_sentence": "Results 4.1 Selecting an intensity generation strategy A global comparison of all intensity generation methods is reported in Table 2.",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     9
+    ]
+   },
+   "numbers": [
+    "74.9"
+   ],
+   "numbers_on_table_pages": {
+    "74.9": {
+     "9": 2
+    }
+   },
+   "candidate_id": "C048"
+  },
+  {
+   "paper_id": "P015",
+   "claim_page": 10,
+   "claim_text": "Furthermore, based on our experiments, performance improvements from additional subclass splitting plateau at six subclasses, so we use this setting for all following experiments involving FetalSynthSeg. 4.3 Comparison with state-of-the-art models Table 3 compares FetalSynthSeg, FetalRealSeg and RealSynthHybrid (trained on the full FeTA 2024 train-ing set) against BOUNTI, the FeTA24 winning method (cesne-digair), and an nnU-Net ensemble.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     11
+    ]
+   },
+   "numbers": [
+    "4.3"
+   ],
+   "numbers_on_table_pages": {
+    "4.3": {
+     "11": 1
+    }
+   },
+   "candidate_id": "C049"
+  },
+  {
+   "paper_id": "P015",
+   "claim_page": 10,
+   "claim_text": "On T2w datasets that are close to the training distribution (e.g., CHUVT2w; VIENT2w sharing both scanner/SRR; KCL with SVRTK being similar to IRTK), FetalRealSeg and Real-SynthHybrid remain slightly ahead of FetalSynthSeg, with differences typically within 0.1–2.5 Dice points.",
+   "reference": "contextual",
+   "context_sentence": "Furthermore, based on our experiments, performance improvements from additional subclass splitting plateau at six subclasses, so we use this setting for all following experiments involving FetalSynthSeg. 4.3 Comparison with state-of-the-art models Table 3 compares FetalSynthSeg, FetalRealSeg and RealSynthHybrid (trained on the full FeTA 2024 train-ing set) against BOUNTI, the FeTA24 winning method (cesne-digair), and an nnU-Net ensemble.",
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     11
+    ]
+   },
+   "numbers": [
+    "0.1",
+    "2.5"
+   ],
+   "numbers_on_table_pages": {
+    "2.5": {
+     "11": 2
+    }
+   },
+   "candidate_id": "C050"
+  },
+  {
+   "paper_id": "P016",
+   "claim_page": 22,
+   "claim_text": "Additionally, minor artifacts are sometimes observed in areas where the brainstem or ventricles are compressed or partially obscured, resulting in fragmented predictions or slight misalignment with the ground truth. 4.2 Comparison with state-of-the-art We compare the performance of our proposed model with several state-of-the-art fetal brain segmentation techniques, as summarized in Table 4.2.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     18,
+     22,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "numbers": [
+    "4.2"
+   ],
+   "numbers_on_table_pages": {
+    "4.2": {
+     "22": 1
+    }
+   },
+   "candidate_id": "C051"
+  },
+  {
+   "paper_id": "P016",
+   "claim_page": 22,
+   "claim_text": "A contextual transformer block integrated into an encoder-decoder architecture with hybrid dilated convolutions achieved a DSC of 83.79% on a private dataset of 80 fetal MRIs (X.",
+   "reference": "contextual",
+   "context_sentence": "Additionally, minor artifacts are sometimes observed in areas where the brainstem or ventricles are compressed or partially obscured, resulting in fragmented predictions or slight misalignment with the ground truth. 4.2 Comparison with state-of-the-art We compare the performance of our proposed model with several state-of-the-art fetal brain segmentation techniques, as summarized in Table 4.2.",
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     18,
+     22,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "numbers": [
+    "83.79",
+    "80"
+   ],
+   "numbers_on_table_pages": {
+    "83.79": {
+     "22": 1
+    },
+    "80": {
+     "18": 3,
+     "22": 1,
+     "27": 1
+    }
+   },
+   "candidate_id": "C052"
+  },
+  {
+   "paper_id": "P016",
+   "claim_page": 28,
+   "claim_text": "These observations underscore the sensitivity of boundary-aware segmentation to the optimization scale and demonstrate that an intermediate learning rate provides the most reliable balance between convergence efficiency and structural fidelity. 4.4.5 Effect of Optimizers The performance of the proposed model was indicated using two optimizers, Adam and SGD (Kingma & Ba, 2014; Ruder, 2016), and the results are summarized in Table 4.6.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     18,
+     22,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "numbers": [
+    "4.4"
+   ],
+   "numbers_on_table_pages": {
+    "4.4": {
+     "24": 1,
+     "25": 4,
+     "26": 1,
+     "27": 1
+    }
+   },
+   "candidate_id": "C053"
+  },
+  {
+   "paper_id": "P017",
+   "claim_page": 7,
+   "claim_text": "On the 3.0-T Siemens MAGNETOM Skyra scanner (WCSUH), a half-Fourier acquired single-shot turbo spin-echo (HASTE) sequence was used.",
+   "reference": "contextual",
+   "context_sentence": "This study is reported in accordance with the Standards for Reporting of Diagnostic Accuracy (STARD) 2015 guidelines, and adhered to the tenets of the Declaration of Helsinki. 2.1 Data Collection To minimize image artifacts caused by fetal motion, 2D imaging sequences were employed to acquire T2-weighted MR images (Table 1).",
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     6
+    ]
+   },
+   "numbers": [
+    "3.0"
+   ],
+   "numbers_on_table_pages": {
+    "3.0": {
+     "6": 2
+    }
+   },
+   "candidate_id": "C054"
+  },
+  {
+   "paper_id": "P017",
+   "claim_page": 16,
+   "claim_text": "16 Table 3.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     16
+    ]
+   },
+   "numbers": [
+    "16"
+   ],
+   "numbers_on_table_pages": {
+    "16": {
+     "16": 3
+    }
+   },
+   "candidate_id": "C055"
+  },
+  {
+   "paper_id": "P017",
+   "claim_page": 22,
+   "claim_text": "Internal Validation Method Overall (n = 1456 slices) Subgroup analysis Grade I (n = 914 slices) Grade II (n = 271 slices) Grade III (n = 123 slices) Grade IV (n = 148 slices) DSC, (95% CI) SL Model 0.479 (0.466, 0.493) 0.482 (0.466, 0.498) 0.463 (0.429, 0.497) 0.237 (0.194, 0.280) 0.693 (0.666, 0.721) FreeHemoSeg w/o SAM 0.526 (0.514, 0.538) 0.518 (0.504, 0.532) 0.476 (0.442, 0.510) 0.543 (0.514, 0.572) 0.649 (0.606, 0.692) FreeHemoSeg 0.559 (0.546, 0.571) 0.544 (0.530, 0.558) 0.520 (0.486, 0.553) 0.517 (0.472, 0.562) 0.754 (0.719, 0.789) p-value (vs. FreeHemoSeg) SL Model < .001 < .001 < .001 < .001 < .001 FreeHemoSeg w/o SAM < .001 < .001 < .001 0.496 < .001 External Validation Method Overall (n = 1410 slices) Subgroup analysis Grade I (n = 47 slices) Grade II (n = 294 slices) Grade III (n = 372 slices) Grade IV (n = 697 slices) SL Model 0.348 (0.335, 0.360) 0.316 (0.279, 0.352) 0.349 (0.327, 0.371) 0.373 (0.347, 0.398) 0.336 (0.317, 0.354) FreeHemoSeg w/o SAM 0.501 (0.487, 0.515) 0.454 (0.392, 0.517) 0.563 (0.535, 0.590) 0.531 (0.505, 0.557) 0.461 (0.440, 0.482) FreeHemoSeg 0.512 (0.497, 0.526) 0.430 (0.366, 0.495) 0.574 (0.544, 0.605) 0.527 (0.501, 0.553) 0.482 (0.460, 0.504) p-value (vs. FreeHemoSeg) SL Model < .001 < .001 < .001 < .001 < .001 FreeHemoSeg w/o SAM 0.062 0.560 0.046 0.140 0.003 FreeHemoSeg also achieved the best case-level and slice-level diagnostic accuracy on external Validation Dataset B (Table 4, Table 5, Figure 5G-L).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4",
+    "5"
+   ],
+   "table_pages": {
+    "4": [
+     19
+    ],
+    "5": [
+     20
+    ]
+   },
+   "numbers": [
+    "1456",
+    "914",
+    "271",
+    "123",
+    "148",
+    "95",
+    "0.479",
+    "0.466",
+    "0.493",
+    "0.482",
+    "0.498",
+    "0.463",
+    "0.429",
+    "0.497",
+    "0.237",
+    "0.194",
+    "0.280",
+    "0.693",
+    "0.666",
+    "0.721",
+    "0.526",
+    "0.514",
+    "0.538",
+    "0.518",
+    "0.504",
+    "0.532",
+    "0.476",
+    "0.442",
+    "0.510",
+    "0.543",
+    "0.572",
+    "0.649",
+    "0.606",
+    "0.692",
+    "0.559",
+    "0.546",
+    "0.571",
+    "0.544",
+    "0.530",
+    "0.558",
+    "0.520",
+    "0.486",
+    "0.553",
+    "0.517",
+    "0.472",
+    "0.562",
+    "0.754",
+    "0.719",
+    "0.789",
+    "001",
+    "0.496",
+    "1410",
+    "47",
+    "294",
+    "372",
+    "697",
+    "0.348",
+    "0.335",
+    "0.360",
+    "0.316",
+    "0.279",
+    "0.352",
+    "0.349",
+    "0.327",
+    "0.371",
+    "0.373",
+    "0.347",
+    "0.398",
+    "0.336",
+    "0.317",
+    "0.354",
+    "0.501",
+    "0.487",
+    "0.515",
+    "0.454",
+    "0.392",
+    "0.563",
+    "0.535",
+    "0.590",
+    "0.531",
+    "0.505",
+    "0.557",
+    "0.461",
+    "0.440",
+    "0.512",
+    "0.430",
+    "0.366",
+    "0.495",
+    "0.574",
+    "0.605",
+    "0.527",
+    "0.460",
+    "0.062",
+    "0.560",
+    "0.046",
+    "0.140",
+    "0.003"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "19": 8
+    },
+    "0.479": {
+     "19": 1
+    },
+    "0.497": {
+     "19": 1
+    },
+    "0.543": {
+     "19": 3
+    },
+    "0.544": {
+     "19": 1
+    },
+    "0.553": {
+     "19": 1
+    },
+    "0.517": {
+     "19": 1
+    },
+    "0.398": {
+     "19": 2
+    },
+    "0.590": {
+     "19": 1
+    },
+    "0.557": {
+     "19": 2
+    },
+    "0.605": {
+     "19": 1
+    },
+    "0.527": {
+     "19": 2
+    },
+    "0.003": {
+     "20": 3
+    }
+   },
+   "candidate_id": "C056"
+  },
+  {
+   "paper_id": "P017",
+   "claim_page": 23,
+   "claim_text": "Lesion Segmentation Performance of FreeHemoSeg across GMH-IVH Grades. ***: P < 0.001 FreeHemoSeg achieved the best lesion segmentation performance (Table 6, Figure 6), achieving DSCs of 0.559 (95% CI, 0.546–0.571) and 0.512 (95% CI, 0.497–0.526) on the internal and external validation datasets, respectively.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "6"
+   ],
+   "table_pages": {
+    "6": [
+     22
+    ]
+   },
+   "numbers": [
+    "0.001",
+    "0.559",
+    "95",
+    "0.546",
+    "0.571",
+    "0.512",
+    "0.497",
+    "0.526"
+   ],
+   "numbers_on_table_pages": {
+    "0.559": {
+     "22": 1
+    },
+    "95": {
+     "22": 11
+    },
+    "0.546": {
+     "22": 1
+    },
+    "0.571": {
+     "22": 1
+    },
+    "0.512": {
+     "22": 1
+    },
+    "0.497": {
+     "22": 2
+    },
+    "0.526": {
+     "22": 2
+    }
+   },
+   "candidate_id": "C057"
+  },
+  {
+   "paper_id": "P017",
+   "claim_page": 28,
+   "claim_text": "Compared with standard 2D stack interpretation, FreeHemoSeg’s assistance increased sensitivity from 0.882 to 1.000 for R1 and from 0.882 to 0.941 for R2, while reducing interpretation time from 43.1 ± 28.1 s to 36.2 ± 17.4 s for R1 (16.0% reduction) and from 63.9 ± 21.9 s to 30.2 ± 7.5 s for R2 (52.7% reduction), with specificity remaining high across all conditions (≥ 0.943).",
+   "reference": "contextual",
+   "context_sentence": "However, provided that the automatically generated point prompt was located within the hemorrhagic region, SAM was able to recover the complete lesion extent and deliver accurate segmentation results. 3.5 Results of the Reader Study FreeHemoSeg markedly improved diagnostic accuracy, efficiency, and confidence for two radiologists (Table 7).",
+   "table_refs": [
+    "7"
+   ],
+   "table_pages": {
+    "7": [
+     28
+    ]
+   },
+   "numbers": [
+    "0.882",
+    "1.000",
+    "0.941",
+    "43.1",
+    "28.1",
+    "36.2",
+    "17.4",
+    "16.0",
+    "63.9",
+    "21.9",
+    "30.2",
+    "7.5",
+    "52.7",
+    "0.943"
+   ],
+   "numbers_on_table_pages": {
+    "0.882": {
+     "28": 4
+    },
+    "1.000": {
+     "28": 3
+    },
+    "0.941": {
+     "28": 1
+    },
+    "43.1": {
+     "28": 1
+    },
+    "28.1": {
+     "28": 1
+    },
+    "36.2": {
+     "28": 1
+    },
+    "17.4": {
+     "28": 1
+    },
+    "63.9": {
+     "28": 1
+    },
+    "21.9": {
+     "28": 1
+    },
+    "30.2": {
+     "28": 1
+    },
+    "7.5": {
+     "28": 1
+    },
+    "0.943": {
+     "28": 1
+    }
+   },
+   "candidate_id": "C058"
+  },
+  {
+   "paper_id": "P018",
+   "claim_page": 6,
+   "claim_text": "For each method of Table 2, an ensemble of 10 3D U-Net is used.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     8
+    ]
+   },
+   "numbers": [
+    "10"
+   ],
+   "numbers_on_table_pages": {
+    "10": {
+     "8": 7
+    }
+   },
+   "candidate_id": "C059"
+  },
+  {
+   "paper_id": "P018",
+   "claim_page": 8,
+   "claim_text": "We report mean (standard deviation) for the Dice score (DSC) in percentages and the Hausdorﬀdistance at 95% (HD95) in millimeters for the eight tissue types.",
+   "reference": "contextual",
+   "context_sentence": "8 Lucas Fidon et al. Table 2: Evaluation on the Multi-centric Testing Data (100 3D MRI).",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     8
+    ]
+   },
+   "numbers": [
+    "95"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "8": 4
+    }
+   },
+   "candidate_id": "C060"
+  },
+  {
+   "paper_id": "P021",
+   "claim_page": 8,
+   "claim_text": "Table 3 shows that the performance of our method grows with the increase of the hyper-parameter γ of consistency loss, and achieves the best when γ = 200.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     9
+    ]
+   },
+   "numbers": [
+    "200"
+   ],
+   "numbers_on_table_pages": {
+    "200": {
+     "9": 1
+    }
+   },
+   "candidate_id": "C061"
+  },
+  {
+   "paper_id": "P022",
+   "claim_page": 7,
+   "claim_text": "Table 1 shows the results of the overall stratified evaluation in terms of Dice score and Hausdorff distances at 95% percentile for four different backbone AI models.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     7
+    ]
+   },
+   "numbers": [
+    "95"
+   ],
+   "numbers_on_table_pages": {
+    "95": {
+     "7": 1
+    }
+   },
+   "candidate_id": "C062"
+  },
+  {
+   "paper_id": "P024",
+   "claim_page": 3,
+   "claim_text": "All data were anonymized and approved by the appropriate ethics committees prior to inclusion.6 For each sub-ject, we used a super-resolution reconstructed T2-weighted MRI, resampled to an isotropic resolution of 0.5×0.5×0.5mm3 and padded or cropped to a fixed size of 256×256×256 voxels.",
+   "reference": "contextual",
+   "context_sentence": "An overview of the datasets is provided in Table 1; we refer readers to the original publications for full details on ac-quisition protocols and annotation procedures.",
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     4
+    ]
+   },
+   "numbers": [
+    "0.5",
+    "256"
+   ],
+   "numbers_on_table_pages": {
+    "0.5": {
+     "4": 2
+    }
+   },
+   "candidate_id": "C063"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 8,
+   "claim_text": "As shown in Table 8, sex and race effects can be observed in the full manual dataset (includes training and test data) on both sides, whereas in the smaller test datasets the sex effect on the right NAc volume loses significance (p=0.057).",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "8"
+   ],
+   "table_pages": {
+    "8": [
+     10
+    ]
+   },
+   "numbers": [
+    "0.057"
+   ],
+   "numbers_on_table_pages": {
+    "0.057": {
+     "10": 1
+    }
+   },
+   "candidate_id": "C064"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 8,
+   "claim_text": "Table 11 shows that the UNesT Baseline 120 model, trained on the largest and demographically diverse dataset, is the top performer, achieving the best accuracy and ESSP 799",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "11"
+   ],
+   "table_pages": {
+    "11": [
+     12
+    ]
+   },
+   "numbers": [
+    "120",
+    "799"
+   ],
+   "numbers_on_table_pages": {
+    "120": {
+     "12": 4
+    }
+   },
+   "candidate_id": "C065"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 9,
+   "claim_text": "Structure Train nnU-Net CoTr ANTs UNesT DSC ESSP (↑) ∆(↓) DSC ESSP (↑) ∆(↓) DSC ESSP (↑) ∆(↓) DSC ESSP (↑) ∆(↓) Right NAc WM 0.867 0.845 0.027 0.863 0.839 0.029 0.820 0.796 0.030 0.832 0.784 0.060 WF 0.862 0.838 0.028 0.859 0.832 0.032 0.816 0.793 0.029 0.817 0.791 0.032 BM 0.862 0.836 0.032 0.859 0.834 0.029 0.781 0.702 0.113 0.801 0.759 0.050 BF 0.862 0.841 0.025 0.858 0.836 0.027 0.792 0.720 0.100 0.809 0.780 0.037 Left NAc WM 0.861 0.849 0.013 0.856 0.843 0.016 0.810 0.794 0.021 0.825 0.773 0.066 WF 0.858 0.836 0.026 0.856 0.839 0.020 0.806 0.796 0.012 0.810 0.787 0.029 BM 0.854 0.832 0.026 0.851 0.831 0.024 0.758 0.688 0.102 0.800 0.748 0.070 BF 0.858 0.840 0.022 0.853 0.829 0.029 0.773 0.700 0.102 0.798 0.766 0.041 Table 5: Segmentation performance metrics (NSD (overall NSD coefficient across all test sets), ESSP, ∆) for right and left NAc across different models and training groups.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "5"
+   ],
+   "table_pages": {
+    "5": [
+     9
+    ]
+   },
+   "numbers": [
+    "0.867",
+    "0.845",
+    "0.027",
+    "0.863",
+    "0.839",
+    "0.029",
+    "0.820",
+    "0.796",
+    "0.030",
+    "0.832",
+    "0.784",
+    "0.060",
+    "0.862",
+    "0.838",
+    "0.028",
+    "0.859",
+    "0.032",
+    "0.816",
+    "0.793",
+    "0.817",
+    "0.791",
+    "0.836",
+    "0.834",
+    "0.781",
+    "0.702",
+    "0.113",
+    "0.801",
+    "0.759",
+    "0.050",
+    "0.841",
+    "0.025",
+    "0.858",
+    "0.792",
+    "0.720",
+    "0.100",
+    "0.809",
+    "0.780",
+    "0.037",
+    "0.861",
+    "0.849",
+    "0.013",
+    "0.856",
+    "0.843",
+    "0.016",
+    "0.810",
+    "0.794",
+    "0.021",
+    "0.825",
+    "0.773",
+    "0.066",
+    "0.026",
+    "0.020",
+    "0.806",
+    "0.012",
+    "0.787",
+    "0.854",
+    "0.851",
+    "0.831",
+    "0.024",
+    "0.758",
+    "0.688",
+    "0.102",
+    "0.800",
+    "0.748",
+    "0.070",
+    "0.840",
+    "0.022",
+    "0.853",
+    "0.829",
+    "0.700",
+    "0.798",
+    "0.766",
+    "0.041"
+   ],
+   "numbers_on_table_pages": {
+    "0.027": {
+     "9": 1
+    },
+    "0.030": {
+     "9": 1
+    },
+    "0.060": {
+     "9": 3
+    },
+    "0.050": {
+     "9": 2
+    },
+    "0.100": {
+     "9": 1
+    },
+    "0.810": {
+     "9": 1
+    },
+    "0.021": {
+     "9": 1
+    },
+    "0.020": {
+     "9": 2
+    },
+    "0.012": {
+     "9": 1
+    },
+    "0.070": {
+     "9": 2
+    },
+    "0.022": {
+     "9": 1
+    }
+   },
+   "candidate_id": "C066"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 9,
+   "claim_text": "Structure Train nnU-Net CoTr ANTs UNesT NSD ESSP (↑) ∆(↓) NSD ESSP (↑) ∆(↓) NSD ESSP (↑) ∆(↓) NSD ESSP (↑) ∆(↓) Right NAc WM 0.527 0.483 0.090 0.512 0.469 0.090 0.430 0.405 0.060 0.428 0.387 0.105 WF 0.527 0.492 0.070 0.525 0.468 0.120 0.432 0.412 0.050 0.407 0.382 0.064 BM 0.517 0.457 0.070 0.510 0.455 0.120 0.380 0.316 0.200 0.392 0.341 0.1500 BF 0.529 0.500 0.060 0.525 0.486 0.080 0.422 0.364 0.1600 0.387 0.357 0.084 Left NAc WM 0.538 0.511 0.052 0.515 0.500 0.031 0.419 0.411 0.020 0.428 0.387 0.106 WF 0.522 0.495 0.055 0.517 0.495 0.044 0.424 0.416 0.020 0.404 0.371 0.089 BM 0.517 0.474 0.090 0.505 0.459 0.100 0.395 0.338 0.170 0.392 0.341 0.1500 BF 0.539 0.509 0.060 0.509 0.472 0.079 0.387 0.337 0.150 0.392 0.358 0.094 Table 6: Effects of Same Sex, Same Race, and Interaction on Dice coefficient for right and left NAc. β1, β2, and β3. are the coefficients for a fixed factor term such as sameSex that describes the effect of the factor level on the Dice coefficient.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "6"
+   ],
+   "table_pages": {
+    "6": [
+     9
+    ]
+   },
+   "numbers": [
+    "0.527",
+    "0.483",
+    "0.090",
+    "0.512",
+    "0.469",
+    "0.430",
+    "0.405",
+    "0.060",
+    "0.428",
+    "0.387",
+    "0.105",
+    "0.492",
+    "0.070",
+    "0.525",
+    "0.468",
+    "0.120",
+    "0.432",
+    "0.412",
+    "0.050",
+    "0.407",
+    "0.382",
+    "0.064",
+    "0.517",
+    "0.457",
+    "0.510",
+    "0.455",
+    "0.380",
+    "0.316",
+    "0.200",
+    "0.392",
+    "0.341",
+    "0.1500",
+    "0.529",
+    "0.500",
+    "0.486",
+    "0.080",
+    "0.422",
+    "0.364",
+    "0.1600",
+    "0.357",
+    "0.084",
+    "0.538",
+    "0.511",
+    "0.052",
+    "0.515",
+    "0.031",
+    "0.419",
+    "0.411",
+    "0.020",
+    "0.106",
+    "0.522",
+    "0.495",
+    "0.055",
+    "0.044",
+    "0.424",
+    "0.416",
+    "0.404",
+    "0.371",
+    "0.089",
+    "0.474",
+    "0.505",
+    "0.459",
+    "0.100",
+    "0.395",
+    "0.338",
+    "0.170",
+    "0.539",
+    "0.509",
+    "0.472",
+    "0.079",
+    "0.337",
+    "0.150",
+    "0.358",
+    "0.094"
+   ],
+   "numbers_on_table_pages": {
+    "0.060": {
+     "9": 1
+    },
+    "0.070": {
+     "9": 1
+    },
+    "0.050": {
+     "9": 2
+    },
+    "0.020": {
+     "9": 1
+    },
+    "0.100": {
+     "9": 1
+    }
+   },
+   "candidate_id": "C067"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 10,
+   "claim_text": "Structure Model Same Sex Same Race Same Race × Same Sex β2 Std Err P-value β1 Std Err P-value β3 Std Err P-value Right NAc ANTs -0.001 0.010 0.889 0.040 0.010 0.000 0.003 0.015 0.818 CoTr 0.007 0.007 0.353 0.009 0.007 0.248 0.008 0.010 0.467 nnU-Net -0.005 0.008 0.533 0.005 0.008 0.498 0.017 0.011 0.129 UNesT 0.014 0.009 0.105 0.012 0.009 0.174 0.022 0.013 0.077 Left NAc ANTs -0.003 0.009 0.717 0.039 0.009 0.000 -0.001 0.010 0.907 CoTr 0.002 0.007 0.776 0.004 0.007 0.522 0.018 0.010 0.061 nnU-Net 0.006 0.008 0.436 0.009 0.008 0.259 0.010 0.011 0.392 UNesT 0.010 0.010 0.298 0.017 0.010 0.070 0.031 0.013 0.021 Table 8: Results for evaluating sex, race, and race × sex effects on volumes by manual annotation for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "8"
+   ],
+   "table_pages": {
+    "8": [
+     10
+    ]
+   },
+   "numbers": [
+    "0.001",
+    "0.010",
+    "0.889",
+    "0.040",
+    "0.000",
+    "0.003",
+    "0.015",
+    "0.818",
+    "0.007",
+    "0.353",
+    "0.009",
+    "0.248",
+    "0.008",
+    "0.467",
+    "0.005",
+    "0.533",
+    "0.498",
+    "0.017",
+    "0.011",
+    "0.129",
+    "0.014",
+    "0.105",
+    "0.012",
+    "0.174",
+    "0.022",
+    "0.013",
+    "0.077",
+    "0.717",
+    "0.039",
+    "0.907",
+    "0.002",
+    "0.776",
+    "0.004",
+    "0.522",
+    "0.018",
+    "0.061",
+    "0.006",
+    "0.436",
+    "0.259",
+    "0.392",
+    "0.298",
+    "0.070",
+    "0.031",
+    "0.021"
+   ],
+   "numbers_on_table_pages": {
+    "0.001": {
+     "10": 6
+    },
+    "0.010": {
+     "10": 3
+    },
+    "0.000": {
+     "10": 11
+    },
+    "0.003": {
+     "10": 1
+    },
+    "0.015": {
+     "10": 1
+    },
+    "0.007": {
+     "10": 1
+    },
+    "0.009": {
+     "10": 1
+    },
+    "0.005": {
+     "10": 1
+    },
+    "0.012": {
+     "10": 2
+    },
+    "0.002": {
+     "10": 1
+    },
+    "0.004": {
+     "10": 1
+    },
+    "0.006": {
+     "10": 1
+    }
+   },
+   "candidate_id": "C068"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 10,
+   "claim_text": "Structure Manual Sex Race Race × Sex γ2 Std Err P-value γ1 Std Err P-value γ3 Std Err P-value Right NAc Manual (whole dataset) 208.63 69.06 0.003 225.258 69.736 0.001 -59.781 97.202 0.539 Manual (Test set) 179.28 69.72 0.010 379.632 100.368 0.000 -71.332 140.284 0.611 Left NAc Manual (whole dataset) 232.674 66.677 0.000 252.66 67.321 0.000 7.667 93.836 0.935 Manual (Test set) 191.155 100.463 0.057 385.526 112.698 0.001 -53.176 155.119 0.732 Table 9: Results for evaluating Sex effects on volumes by segmentation models for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "9"
+   ],
+   "table_pages": {
+    "9": [
+     10
+    ]
+   },
+   "numbers": [
+    "208.63",
+    "69.06",
+    "0.003",
+    "225.258",
+    "69.736",
+    "0.001",
+    "59.781",
+    "97.202",
+    "0.539",
+    "179.28",
+    "69.72",
+    "0.010",
+    "379.632",
+    "100.368",
+    "0.000",
+    "71.332",
+    "140.284",
+    "0.611",
+    "232.674",
+    "66.677",
+    "252.66",
+    "67.321",
+    "7.667",
+    "93.836",
+    "0.935",
+    "191.155",
+    "100.463",
+    "0.057",
+    "385.526",
+    "112.698",
+    "53.176",
+    "155.119",
+    "0.732"
+   ],
+   "numbers_on_table_pages": {
+    "0.003": {
+     "10": 2
+    },
+    "0.001": {
+     "10": 6
+    },
+    "0.010": {
+     "10": 11
+    },
+    "0.000": {
+     "10": 10
+    }
+   },
+   "candidate_id": "C069"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 12,
+   "claim_text": "DSC (Dice) coefficients NSD coefficients Structure Same Sex Same Race Same Race × Same Sex Same Sex Same Race Same Race × Same Sex (β2) Std Err P (β1) Std Err P (β3) Std Err P (γ2) Std Err P (γ1) Std Err P (γ3) Std Err P Right NAc 0.005 0.004 0.185 0.007 0.004 0.083 0.003 0.006 0.584 0.014 0.009 0.103 0.008 0.009 0.375 0.008 0.012 0.526 Left NAc 0.002 0.004 0.587 0.014 0.004 0.001 0.004 0.006 0.546 0.009 0.008 0.231 0.022 0.008 0.005 0.007 0.011 0.542 Table 11: Segmentation performance metrics and fairness metric based on Dice coefficient for biased UNesT models for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "11"
+   ],
+   "table_pages": {
+    "11": [
+     12
+    ]
+   },
+   "numbers": [
+    "0.005",
+    "0.004",
+    "0.185",
+    "0.007",
+    "0.083",
+    "0.003",
+    "0.006",
+    "0.584",
+    "0.014",
+    "0.009",
+    "0.103",
+    "0.008",
+    "0.375",
+    "0.012",
+    "0.526",
+    "0.002",
+    "0.587",
+    "0.001",
+    "0.546",
+    "0.231",
+    "0.022",
+    "0.011",
+    "0.542"
+   ],
+   "numbers_on_table_pages": {
+    "0.375": {
+     "12": 1
+    },
+    "0.012": {
+     "12": 2
+    },
+    "0.001": {
+     "12": 1
+    },
+    "0.022": {
+     "12": 2
+    },
+    "0.011": {
+     "12": 1
+    }
+   },
+   "candidate_id": "C070"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 12,
+   "claim_text": "(1 shows best) (ESSP (Equity-Scaled Segmentation Performance) combines overall accuracy with a penalty for cross-group disparities; higher is better (↑). ∆quantifies differences of each demographic group from the overall mean; lower is better (↓).) Structure Train DSC ESSP(↑) ∆(↓) NSD ESSP(↑) ∆(↓) Right NAc WM 0.812 0.792 0.022 0.412 0.392 0.042 WF 0.812 0.783 0.033 0.412 0.374 0.084 BM 0.803 0.764 0.044 0.375 0.346 0.095 BF 0.803 0.783 0.033 0.394 0.365 0.073 Baseline30 0.812 0.792 0.022 0.403 0.383 0.073 Baseline120 0.821 0.811 0.011 0.421 0.401 0.031 Left NAc WM 0.811 0.801 0.001 0.402 0.392 0.021 WF 0.802 0.792 0.023 0.402 0.383 0.063 BM 0.793 0.744 0.065 0.393 0.345 0.155 BF 0.793 0.753 0.054 0.384 0.345 0.114 Baseline30 0.802 0.792 0.012 0.402 0.384 0.063 Baseline120 0.811 0.801 0.012 0.421 0.401 0.042 Table 12: Average and standard deviation of Dice coefficient (Avg±Std) for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "12"
+   ],
+   "table_pages": {
+    "12": [
+     12
+    ]
+   },
+   "numbers": [
+    "0.812",
+    "0.792",
+    "0.022",
+    "0.412",
+    "0.392",
+    "0.042",
+    "0.783",
+    "0.033",
+    "0.374",
+    "0.084",
+    "0.803",
+    "0.764",
+    "0.044",
+    "0.375",
+    "0.346",
+    "0.095",
+    "0.394",
+    "0.365",
+    "0.073",
+    "0.403",
+    "0.383",
+    "0.821",
+    "0.811",
+    "0.011",
+    "0.421",
+    "0.401",
+    "0.031",
+    "0.801",
+    "0.001",
+    "0.402",
+    "0.021",
+    "0.802",
+    "0.023",
+    "0.063",
+    "0.793",
+    "0.744",
+    "0.065",
+    "0.393",
+    "0.345",
+    "0.155",
+    "0.753",
+    "0.054",
+    "0.384",
+    "0.114",
+    "0.012"
+   ],
+   "numbers_on_table_pages": {
+    "0.812": {
+     "12": 10
+    },
+    "0.022": {
+     "12": 1
+    },
+    "0.412": {
+     "12": 2
+    },
+    "0.392": {
+     "12": 4
+    },
+    "0.374": {
+     "12": 1
+    },
+    "0.803": {
+     "12": 5
+    },
+    "0.375": {
+     "12": 1
+    },
+    "0.394": {
+     "12": 1
+    },
+    "0.365": {
+     "12": 1
+    },
+    "0.403": {
+     "12": 1
+    },
+    "0.383": {
+     "12": 3
+    },
+    "0.821": {
+     "12": 5
+    },
+    "0.811": {
+     "12": 4
+    },
+    "0.011": {
+     "12": 1
+    },
+    "0.421": {
+     "12": 4
+    },
+    "0.401": {
+     "12": 1
+    },
+    "0.001": {
+     "12": 1
+    },
+    "0.402": {
+     "12": 3
+    },
+    "0.802": {
+     "12": 5
+    },
+    "0.793": {
+     "12": 2
+    },
+    "0.393": {
+     "12": 1
+    },
+    "0.384": {
+     "12": 1
+    },
+    "0.012": {
+     "12": 1
+    }
+   },
+   "candidate_id": "C071"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 12,
+   "claim_text": "Structure Test UNesTWM UNesTWF UNesTBM UNesTBF Baseline (30) Baseline (120) Right NAc WM 0.831 ± 0.02 0.813 ± 0.02 0.804 ± 0.03 0.804 ± 0.04 0.813 ± 0.04 0.822 ± 0.03 WF 0.812 ± 0.04 0.812 ± 0.03 0.784 ± 0.04 0.793 ± 0.04 0.812 ± 0.04 0.821 ± 0.03 BM 0.803 ± 0.05 0.812 ± 0.04 0.812 ± 0.03 0.803 ± 0.04 0.821 ± 0.03 0.812 ± 0.04 BF 0.813 ± 0.04 0.831 ± 0.03 0.804 ± 0.03 0.822 ± 0.03 0.822 ± 0.03 0.831 ± 0.03 Left NAc WM 0.821 ± 0.02 0.803 ± 0.04 0.794 ± 0.04 0.794 ± 0.03 0.803 ± 0.04 0.812 ± 0.03 WF 0.811 ± 0.03 0.802 ± 0.02 0.775 ± 0.03 0.784 ± 0.03 0.793 ± 0.03 0.811 ± 0.02 BM 0.802 ± 0.05 0.802 ± 0.05 0.811 ± 0.03 0.802 ± 0.04 0.802 ± 0.05 0.811 ± 0.05 BF 0.812 ± 0.03 0.812 ± 0.03 0.812 ± 0.03 0.821 ± 0.03 0.803 ± 0.05 0.821 ± 0.03 Table 13: Average and standard deviation of NSD (Avg±Std) for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "13"
+   ],
+   "table_pages": {
+    "13": [
+     12
+    ]
+   },
+   "numbers": [
+    "30",
+    "120",
+    "0.831",
+    "0.02",
+    "0.813",
+    "0.804",
+    "0.03",
+    "0.04",
+    "0.822",
+    "0.812",
+    "0.784",
+    "0.793",
+    "0.821",
+    "0.803",
+    "0.05",
+    "0.794",
+    "0.811",
+    "0.802",
+    "0.775"
+   ],
+   "numbers_on_table_pages": {
+    "30": {
+     "12": 3
+    },
+    "120": {
+     "12": 3
+    },
+    "0.04": {
+     "12": 2
+    },
+    "0.812": {
+     "12": 3
+    },
+    "0.793": {
+     "12": 2
+    },
+    "0.821": {
+     "12": 1
+    },
+    "0.803": {
+     "12": 2
+    },
+    "0.05": {
+     "12": 7
+    },
+    "0.811": {
+     "12": 3
+    },
+    "0.802": {
+     "12": 2
+    }
+   },
+   "candidate_id": "C072"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 13,
+   "claim_text": "Danaee, Niethammer, Rushmore, Bouix, 2025 Table 14: Fairness metrics based on Dice coefficient for ANTs and baselines (1 shows the best)(ESSP (Equity-Scaled Segmentation Performance) combines overall accuracy with a penalty for cross-group disparities; higher is better (↑). ∆quantifies differences of each demographic group from the overall mean; lower is better (↓).) Structure Train DSC ESSP(↑) ∆(↓) NSD ESSP(↑) ∆(↓) Right NAc WM 0.821 0.791 0.032 0.432 0.402 0.062 WF 0.812 0.791 0.021 0.432 0.411 0.051 BM 0.784 0.703 0.115 0.386 0.316 0.206 BF 0.793 0.722 0.104 0.424 0.364 0.165 Baseline10 0.784 0.722 0.083 0.405 0.355 0.123 Baseline40 0.812 0.722 0.126 0.451 0.402 0.134 Left NAc WM 0.811 0.791 0.022 0.413 0.411 0.021 WF 0.802 0.791 0.011 0.422 0.412 0.021 BM 0.755 0.684 0.104 0.394 0.335 0.176 BF 0.774 0.703 0.104 0.386 0.335 0.155 Baseline 10 0.783 0.722 0.073 0.394 0.354 0.144 Baseline 40 0.802 0.722 0.116 0.451 0.393 0.133 Table 15: Average and standard deviation of Dice coefficient (Avg±Std) for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "14",
+    "15"
+   ],
+   "table_pages": {
+    "14": [
+     13
+    ],
+    "15": [
+     13
+    ]
+   },
+   "numbers": [
+    "0.821",
+    "0.791",
+    "0.032",
+    "0.432",
+    "0.402",
+    "0.062",
+    "0.812",
+    "0.021",
+    "0.411",
+    "0.051",
+    "0.784",
+    "0.703",
+    "0.115",
+    "0.386",
+    "0.316",
+    "0.206",
+    "0.793",
+    "0.722",
+    "0.104",
+    "0.424",
+    "0.364",
+    "0.165",
+    "0.083",
+    "0.405",
+    "0.355",
+    "0.123",
+    "0.126",
+    "0.451",
+    "0.134",
+    "0.811",
+    "0.022",
+    "0.413",
+    "0.802",
+    "0.011",
+    "0.422",
+    "0.412",
+    "0.755",
+    "0.684",
+    "0.394",
+    "0.335",
+    "0.176",
+    "0.774",
+    "0.155",
+    "10",
+    "0.783",
+    "0.073",
+    "0.354",
+    "0.144",
+    "40",
+    "0.116",
+    "0.393",
+    "0.133"
+   ],
+   "numbers_on_table_pages": {
+    "0.821": {
+     "13": 3
+    },
+    "0.432": {
+     "13": 2
+    },
+    "0.812": {
+     "13": 5
+    },
+    "0.784": {
+     "13": 1
+    },
+    "0.316": {
+     "13": 1
+    },
+    "0.364": {
+     "13": 1
+    },
+    "0.355": {
+     "13": 1
+    },
+    "0.811": {
+     "13": 1
+    },
+    "0.413": {
+     "13": 2
+    },
+    "0.802": {
+     "13": 3
+    },
+    "0.422": {
+     "13": 1
+    },
+    "0.412": {
+     "13": 1
+    },
+    "0.774": {
+     "13": 1
+    },
+    "10": {
+     "13": 2
+    },
+    "0.354": {
+     "13": 1
+    },
+    "40": {
+     "13": 2
+    }
+   },
+   "candidate_id": "C073"
+  },
+  {
+   "paper_id": "P026",
+   "claim_page": 13,
+   "claim_text": "Structure Test ANTsWM ANTsWF ANTsBM ANTsBF Baseline (10) Baseline (40) Right NAc WM 0.821±0.02 0.813±0.03 0.766±0.05 0.775±0.06 0.784±0.04 0.812±0.04 WF 0.811±0.04 0.802±0.04 0.746±0.04 0.753±0.05 0.745±0.05 0.744±0.18 BM 0.805±0.04 0.812±0.04 0.812±0.03 0.812±0.05 0.796±0.03 0.831±0.03 BF 0.822±0.04 0.822±0.04 0.806±0.03 0.822±0.04 0.815±0.04 0.841±0.03 Left NAc WM 0.821±0.03 0.812±0.03 0.736±0.06 0.765±0.06 0.774±0.05 0.803±0.05 WF 0.801±0.04 0.801±0.03 0.725±0.05 0.725±0.07 0.743±0.05 0.744±0.18 BM 0.803±0.06 0.803±0.06 0.786±0.06 0.795±0.06 0.802±0.06 0.821±0.05 BF 0.803±0.06 0.803±0.06 0.776±0.03 0.803±0.03 0.802±0.03 0.831±0.03 Table 16: Average and standard deviation of NSD (Avg±Std) for right and left NAc.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "16"
+   ],
+   "table_pages": {
+    "16": [
+     13
+    ]
+   },
+   "numbers": [
+    "10",
+    "40",
+    "0.821",
+    "0.02",
+    "0.813",
+    "0.03",
+    "0.766",
+    "0.05",
+    "0.775",
+    "0.06",
+    "0.784",
+    "0.04",
+    "0.812",
+    "0.811",
+    "0.802",
+    "0.746",
+    "0.753",
+    "0.745",
+    "0.744",
+    "0.18",
+    "0.805",
+    "0.796",
+    "0.831",
+    "0.822",
+    "0.806",
+    "0.815",
+    "0.841",
+    "0.736",
+    "0.765",
+    "0.774",
+    "0.803",
+    "0.801",
+    "0.725",
+    "0.07",
+    "0.743",
+    "0.786",
+    "0.795",
+    "0.776"
+   ],
+   "numbers_on_table_pages": {
+    "10": {
+     "13": 3
+    },
+    "40": {
+     "13": 3
+    },
+    "0.821": {
+     "13": 1
+    },
+    "0.05": {
+     "13": 2
+    },
+    "0.06": {
+     "13": 8
+    },
+    "0.784": {
+     "13": 2
+    },
+    "0.812": {
+     "13": 2
+    },
+    "0.811": {
+     "13": 1
+    },
+    "0.802": {
+     "13": 2
+    },
+    "0.774": {
+     "13": 1
+    },
+    "0.07": {
+     "13": 15
+    }
+   },
+   "candidate_id": "C074"
+  },
+  {
+   "paper_id": "P028",
+   "claim_page": 6,
+   "claim_text": "The training dataset contains a total of 177 cases with a majority of 139 controls and only 38 abnormal cases which is typical in clinical datasets.",
+   "reference": "contextual",
+   "context_sentence": "Separation of the Data into Training and Testing A summary of the number of fetal brain 3D MRIs used at training and testing for each central nervous system condition can be found in Table 1.",
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     5
+    ]
+   },
+   "numbers": [
+    "177",
+    "139",
+    "38"
+   ],
+   "numbers_on_table_pages": {
+    "38": {
+     "5": 2
+    }
+   },
+   "candidate_id": "C075"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 13,
+   "claim_text": "MapGRU i =Pool(Expand(LGRU i )) i=1, 2, 3, 4 \b (20) The dimensions of the feature map outputs for each network layer in the multilayer feature fusion process are presented in Table 1.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "1"
+   ],
+   "table_pages": {
+    "1": [
+     13
+    ]
+   },
+   "numbers": [
+    "20"
+   ],
+   "numbers_on_table_pages": {
+    "20": {
+     "13": 1
+    }
+   },
+   "candidate_id": "C076"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 14,
+   "claim_text": "Loss2= 1 N N∑ i=1 (yi·log(σ(pi))+(1 −yi)·log(1−σ(pi))) \b (24) In Eq. 24, pi represents the probability that the sample is predicted to be a positive example, N denotes the prediction category, and σ represents the Sigmoid activation function. yi indicates the true label of the sample, which aids the model in learning to match predictions with the true labels. 4 Experiment analysis 4.1 Experimental environment and settings The experimental environment and parameter configurations detailed in Table 2.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     14
+    ]
+   },
+   "numbers": [
+    "24",
+    "4.1"
+   ],
+   "numbers_on_table_pages": {
+    "24": {
+     "14": 1
+    }
+   },
+   "candidate_id": "C077"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 14,
+   "claim_text": "We used the Ubuntu 20.04 operating system and an NVIDIA RTX 3080 (10GB) GPU.",
+   "reference": "contextual",
+   "context_sentence": "Loss2= 1 N N∑ i=1 (yi·log(σ(pi))+(1 −yi)·log(1−σ(pi))) \b (24) In Eq. 24, pi represents the probability that the sample is predicted to be a positive example, N denotes the prediction category, and σ represents the Sigmoid activation function. yi indicates the true label of the sample, which aids the model in learning to match predictions with the true labels. 4 Experiment analysis 4.1 Experimental environment and settings The experimental environment and parameter configurations detailed in Table 2.",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     14
+    ]
+   },
+   "numbers": [
+    "20.04",
+    "3080"
+   ],
+   "numbers_on_table_pages": {
+    "20.04": {
+     "14": 1
+    },
+    "3080": {
+     "14": 1
+    }
+   },
+   "candidate_id": "C078"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 14,
+   "claim_text": "Experimental environment Configure Model parameter Con­ figure GPU RTX 3080(10GB) * 1 weights_init xavier OS ubuntu 20.04 optimizer Adam Framework PyTorch 1.11.0 Batch_size 16 Code language Python 3.8 lr 1e-4 Cuda 11.3 epoch 50 Table 2 Experimental environ­ ment and parameter settings 1 3 154 Page 14 of 25",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     14
+    ]
+   },
+   "numbers": [
+    "3080",
+    "20.04",
+    "1.11",
+    "16",
+    "3.8",
+    "11.3",
+    "50",
+    "154",
+    "14",
+    "25"
+   ],
+   "numbers_on_table_pages": {
+    "3080": {
+     "14": 1
+    },
+    "20.04": {
+     "14": 1
+    },
+    "1.11": {
+     "14": 1
+    },
+    "16": {
+     "14": 1
+    },
+    "11.3": {
+     "14": 1
+    },
+    "50": {
+     "14": 1
+    }
+   },
+   "candidate_id": "C079"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 18,
+   "claim_text": "The Dice, mIoU, and Acc metrics improved by 1.33, 1.01, and 0.27, respectively, compared to MFER-Net and EGE-UNet.",
+   "reference": "contextual",
+   "context_sentence": "Xiao et al. 4.5 Brain MRI tumor segmentation methods quantitative analysis The experimental results in Table 3 indicate that our proposed AS-WEC excels in five met­ rics: Dice, MAE, mIoU, Acc and HD95.",
+   "table_refs": [
+    "3"
+   ],
+   "table_pages": {
+    "3": [
+     18
+    ]
+   },
+   "numbers": [
+    "1.33",
+    "1.01",
+    "0.27"
+   ],
+   "numbers_on_table_pages": {
+    "1.01": {
+     "18": 1
+    }
+   },
+   "candidate_id": "C080"
+  },
+  {
+   "paper_id": "P029",
+   "claim_page": 18,
+   "claim_text": "In comparison with EGE-UNet and MFSR-Net models, although some metrics are slightly higher for these models than for AS-WEC, the Table 3 Brain MRI tumor segmentation results on LGG Model Metrics Dice Sen MAE mIoU mAP Acc HD95 DeepLab v3+ 83.15 86.23 1.66 85.78 92.37 98.34 7.63 UNet++ 72.96 67.48 6.16 69.33 94.6 93.84 8.62 Trans Deeplab 89.47 97.31 1.01 89.17 90.83 98.76 5.75 EGE-UNet 89.72 88.14 1.02 90.85 95.72 98.98 20.31 MSFR-Net 91.15 96.21 0.84 91.91 93.93 98.36 3.91 PVT-Fomer 86.07 91.63 1.34 87.52 90.77 98.66 4.49 AS-WEC 92.48 93.21 0.75 92.90 95.70 99.25 3.31 The best results are highlighted in bold Table 4 Brain MRI Tumor Segmentation Results on BraTS2019 Model Metrics Dice Sen MAE mIoU mAP Acc HD95 DeepLab v3+ 83.25 83.52 1.07 85.38 91.26 98.93 8.62 UNet++ 86.67 82.02 0.93 87.77 95.57 99.07 7.63 Trans Deeplab 90.72 89.16 0.61 91.27 95.81 99.39 5.75 EGE-UNet 91.92 91.58 0.60 92.11 95.86 99.41 20.31 MSFR-Net 93.25 93.97 0.60 92.44 96.00 99.50 3.42 PVT-Fomer 90.01 91.70 0.66 90.34 93.78 99.34 4.49 AS-WEC 93.43 90.23 0.58 93.34 97.58 99.83 3.31 The best results are highlighted in bold 1 3 154 Page 18 of 25",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "3",
+    "4"
+   ],
+   "table_pages": {
+    "3": [
+     18
+    ],
+    "4": [
+     18
+    ]
+   },
+   "numbers": [
+    "83.15",
+    "86.23",
+    "1.66",
+    "85.78",
+    "92.37",
+    "98.34",
+    "7.63",
+    "72.96",
+    "67.48",
+    "6.16",
+    "69.33",
+    "94.6",
+    "93.84",
+    "8.62",
+    "89.47",
+    "97.31",
+    "1.01",
+    "89.17",
+    "90.83",
+    "98.76",
+    "5.75",
+    "89.72",
+    "88.14",
+    "1.02",
+    "90.85",
+    "95.72",
+    "98.98",
+    "20.31",
+    "91.15",
+    "96.21",
+    "0.84",
+    "91.91",
+    "93.93",
+    "98.36",
+    "3.91",
+    "86.07",
+    "91.63",
+    "1.34",
+    "87.52",
+    "90.77",
+    "98.66",
+    "4.49",
+    "92.48",
+    "93.21",
+    "0.75",
+    "92.90",
+    "95.70",
+    "99.25",
+    "3.31",
+    "83.25",
+    "83.52",
+    "1.07",
+    "85.38",
+    "91.26",
+    "98.93",
+    "86.67",
+    "82.02",
+    "0.93",
+    "87.77",
+    "95.57",
+    "99.07",
+    "90.72",
+    "89.16",
+    "0.61",
+    "91.27",
+    "95.81",
+    "99.39",
+    "91.92",
+    "91.58",
+    "0.60",
+    "92.11",
+    "95.86",
+    "99.41",
+    "93.25",
+    "93.97",
+    "92.44",
+    "96.00",
+    "99.50",
+    "3.42",
+    "90.01",
+    "91.70",
+    "0.66",
+    "90.34",
+    "93.78",
+    "99.34",
+    "93.43",
+    "90.23",
+    "0.58",
+    "93.34",
+    "97.58",
+    "99.83",
+    "154",
+    "18",
+    "25"
+   ],
+   "numbers_on_table_pages": {
+    "1.01": {
+     "18": 1
+    }
+   },
+   "candidate_id": "C081"
+  },
+  {
+   "paper_id": "P030",
+   "claim_page": 5,
+   "claim_text": "Complex & Intelligent Systems (2025) 11 :64 Page 5 of 16 64 Table 2 A brief summary of the deep learn-based methods for fetal brain tissue segmentation Paper Architecture Dataset Mean DSC Fetit et al. [36] DeepMedic 0.7.0 dHCP 0.8186 Li et al. [37] CAS-Net dHCP 0.8520 Payette et al. [38] U-net University Childrens Hospital Zurich 0.7900 Khalili et al. [32] Two U-net University Medical Center (UMC) Utrecht 0.8840 Peng et al. [35] nnU-Net FeTA 2021 0.8420 Zhao et al. [39] 3D U-Net Discovery MR450 GE Healthcare 0.8819 Pei et al.[40] PETS-Nets Hospital 0.9153 Karimi et al. [41] nnU-Net Hospital 0.8720 Huang et al. [42] CNN University Childrens Hospital Zurich 0.8379 Wen et al.[43] ExSwin-Unet FeTA 2021 0.9010 Lee et al. [44] 3D UX-Net FeTA 2021 0.8740 Zhang et al. [45] U-Net Siemens 0.9239 Sun et al. [46] MSMHA-CNN Hospital 0.9478 proposed many CNN-based segmentation models for fetal brain images, such as Fetit et al. [36] and Li et al. [37].",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "11",
+    "64",
+    "16",
+    "0.7",
+    "0.8186",
+    "0.8520",
+    "0.7900",
+    "0.8840",
+    "0.8420",
+    "0.8819",
+    "0.9153",
+    "0.8720",
+    "0.8379",
+    "0.9010",
+    "0.8740",
+    "0.9239",
+    "0.9478"
+   ],
+   "numbers_on_table_pages": {
+    "0.7": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C082"
+  },
+  {
+   "paper_id": "P030",
+   "claim_page": 8,
+   "claim_text": "Yan et al. proposed a new Table 4 A brief summary of adult brain tissue segmentation methods with different network structures Paper Architecture Dataset Mean DSC Moeskops et al. [86] CNN OASIS – Park et al. [87] V-Net LPBA40 0.9640 Moeskops et al. [88] Multi-scale CNN MRBrainS13 0.8633 Fedorov et al. [91] MeshNet MRBrainS13 0.8650 Nguyen et al. [92] GMMs, CNNs, DNNs IBSR18 0.8600 Kumar et al. [97] U-SegNet IBSR18 0.8974 Rajchl et al. [110] NeuroNet UK Biobank 0.9400 Gottapu et al. [93] DenseNet IBSR18 0.6730 Cullen et al. [111] CNN DLBS 0.9001 Dey et al. [98] CompNet OASIS 0.9827 Kolak et al. [94] 3D Dense-U-Net The University Hospital Brno 0.9885 Ito et al. [90] DNN IBSR18 0.9400 Wang et al. [15] RP-Net CANDI, IBSR18, IBSR20 0.9070, 0.9049,0.8496 Mjica-Vargas et al. [99] CNNs BrainWeb 0.9310 Yan et al. [112] (2019) GCNs BrainWeb, IBSR18 0.9167, 0.8600 Kong et al. [89] CNNs private – Yogananda et al. [100] 3D Dense-Unets iTAKL study 0.9017 Ramzan et al. [95] 3D CNN MRBrainS18 0.9140 Yamanakkanavar et al. [114] M-net OASIS, IBSR18 0.9553, 0.8999 Mostapha et al. [101] 3D U-Net ADNI 0.9037 Wei et al. [115] CaNes-Net ADNI 0.8852 Zhang et al. [116] GSCFN BrainWeb, IBSR18 0.9200, 0.7933 Woo et al. [102] U-Net OASIS 0.9490 Weiss et al. [103] 3D U-Net MRBrainS18 0.8600 Prajapati et al. [104] SIP-UNet OASIS 0.9520 123",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     8,
+     9
+    ]
+   },
+   "numbers": [
+    "0.9640",
+    "0.8633",
+    "0.8650",
+    "0.8600",
+    "0.8974",
+    "0.9400",
+    "0.6730",
+    "0.9001",
+    "0.9827",
+    "0.9885",
+    "0.9070",
+    "0.9049",
+    "0.8496",
+    "0.9310",
+    "0.9167",
+    "0.9017",
+    "0.9140",
+    "0.9553",
+    "0.8999",
+    "0.9037",
+    "0.8852",
+    "0.9200",
+    "0.7933",
+    "0.9490",
+    "0.9520",
+    "123"
+   ],
+   "numbers_on_table_pages": {
+    "123": {
+     "9": 2
+    }
+   },
+   "candidate_id": "C083"
+  },
+  {
+   "paper_id": "P030",
+   "claim_page": 9,
+   "claim_text": "Complex & Intelligent Systems (2025) 11 :64 Page 9 of 16 64 Table 4 (continued) Paper Architecture Dataset Mean DSC Niu et al. [105] P-ResUnet IBSR18 0.9109 Dayanandaet al.",
+   "reference": "explicit",
+   "context_sentence": null,
+   "table_refs": [
+    "4"
+   ],
+   "table_pages": {
+    "4": [
+     8,
+     9
+    ]
+   },
+   "numbers": [
+    "11",
+    "64",
+    "16",
+    "0.9109"
+   ],
+   "numbers_on_table_pages": {
+    "11": {
+     "8": 1
+    },
+    "64": {
+     "8": 2,
+     "9": 1
+    },
+    "16": {
+     "8": 1
+    }
+   },
+   "candidate_id": "C084"
+  },
+  {
+   "paper_id": "P030",
+   "claim_page": 11,
+   "claim_text": "Wen et al. achieved a mean DSC of 0.9010 using the FeTA 2021 dataset, which is higher than that reported in other stud-ies [45].",
+   "reference": "contextual",
+   "context_sentence": "Table 2 presents a quantitative analysis of various state-of-the-art methods for fetal brain tissue segmentation via Dice.",
+   "table_refs": [
+    "2"
+   ],
+   "table_pages": {
+    "2": [
+     5
+    ]
+   },
+   "numbers": [
+    "0.9010"
+   ],
+   "numbers_on_table_pages": {
+    "0.9010": {
+     "5": 1
+    }
+   },
+   "candidate_id": "C085"
+  }
+ ]
+}

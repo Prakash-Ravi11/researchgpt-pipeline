@@ -1,0 +1,5442 @@
+{
+ "artifact": "pdf_identity_details_v2",
+ "provenance": {
+  "phase": "2.1",
+  "generated_at_utc": "2026-09-29T23:58:53+00:00",
+  "script": "src/evaluation/bottleneck_diagnosis/phase2_1_pdf_identity.py",
+  "git_head": "30fc85d75d9ec5aaf8d354d38c0cddab82930418",
+  "git_branch": "claude-code-verification",
+  "python": "3.10.18",
+  "pymupdf": "1.28.2",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "zip_sha256_before": "a11900f2ea572e89e9a4dd9424bf9279c256799f6cdbaca44ed0f60e0ee745ce",
+  "zip_sha256_after": "a11900f2ea572e89e9a4dd9424bf9279c256799f6cdbaca44ed0f60e0ee745ce",
+  "pdf_hashes_stable": true,
+  "phase2_artifact_sha256": {
+   "pdf_identity_manifest.csv": "909119d41c523e67f95494da5175b56d5da0e8eb1e20ac1faa1ab227cb004880",
+   "pdf_identity_details.json": "888f775186ee9728880270f9367489fc96bbee31e884ad1e3a49e33bc08d9b73",
+   "phase2_pdf_identity.py": "063c1b815625144b14e28c3c1ed52328968566f1ea0d3bd88ef7b4d23a3defa4"
+  },
+  "phase2_artifacts_unchanged": true,
+  "acquisition_record_sha256": "6324c7a1a2a28a3d3a1adfa5faad1f640a15c9b6b2e437c3523f3489ab0e69d9"
+ },
+ "rules": "Phase 2.1 -- corrected PDF identity evaluator (evaluator-only fix of T5, T6, T7).\n\n    PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe src/evaluation/bottleneck_diagnosis/phase2_1_pdf_identity.py\n\nPhase 2.1 corrects three defects in the Phase 2 evaluator (phase2_pdf_identity.py, imported here as `v1`).\nEvery other check, threshold and helper is taken unchanged from `v1`. The run refuses to write output\nunless the unchanged checks reproduce the Phase 2 values exactly. Phase 2 outputs are read, never written.\n\nInputs (read-only): the Phase 2 manifest and details (the PDF set and hashes to verify against), the\ncandidate ZIP, the acquisition record, and the PDFs. Outputs (new files next to this script):\n  pdf_identity_manifest_v2.csv   pdf_identity_details_v2.json   phase2_1_pdf_identity_report.md\n\nPre-run gate: every PDF copy recorded in Phase 2 must exist and hash to its Phase 2 SHA-256, otherwise\nthe run stops. PDFs are never substituted, downloaded, or searched for again.\n\nCorrected rules (the Phase 2 rule text is preserved in pdf_identity_details.json):\n  T5  A candidate title of NOT_REPORTED (or empty) gives N/A. Otherwise the rule is unchanged: the\n      normalized title must be a substring of normalized PDF pages 1-2 (T5p: >= 0.9 of title words present).\n  T6  Each candidate surname (`surnames()` is unchanged: the last token of each ';'-separated name) is\n      searched in the PyMuPDF span stream of pages 1-2, line by line, as a whole word only:\n        match_exact               identical text (NFC), word boundary on both sides\n        match_normalized          equal only after, as the first sufficient stage: case folding |\n                                  compatibility decomposition (ligatures, e.g. U+FB00 'ff') | diacritic\n                                  folding | removal of LaTeX spacing-accent glyphs (U+00B4 U+0060 U+00A8\n                                  U+02D8 U+00B8 ...) and unification of dash/apostrophe variants\n        match_trailing_marker     the surname is followed, with no space, by characters the PDF itself\n                                  marks as an affiliation superscript: a span with the MuPDF superscript\n                                  flag (flags & 1); a span <= 0.85x the line's largest font size whose\n                                  baseline is raised >= 0.1x that size; or Unicode superscript characters\n        ambiguous_unconfirmed_marker  followed by glued digits or single letters the PDF does NOT mark\n                                  as superscript (e.g. plain 'Smith1'); not a match\n        mismatch_candidate_includes_marker  the candidate surname only matches by absorbing a PDF\n                                  superscript marker (e.g. candidate 'Agarwala' vs PDF 'Agarwal' + sup 'a')\n        mismatch_not_found        no whole-word occurrence; a substring inside another word never counts\n      Only the three match_* classes count as found. T6 = found/total >= T6_MIN (0.5, unchanged). N/A\n      when the candidate reports no authors. The nearest PDF word (by edit distance) is recorded for\n      non-matches for audit only; it never influences a decision.\n  T7  The candidate arXiv id counts only if it equals the arXiv stamp on PAGE 1\n      ('arXiv:<id>[vN] [<category>]'). When the candidate states a version, that must agree too. Ids\n      found elsewhere (references, body, non-stamp mentions on page 1) are recorded for audit and never\n      pass. N/A when the candidate reports no arXiv id.\n  decide  Unchanged, except that an N/A title is neutral in the confidence clause instead of counting\n      as a title failure. With an N/A title, MISMATCH is decided by the content check (T9) alone.\n",
+ "prerun": [
+  {
+   "paper_id": "P001",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+   "exists": true,
+   "sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+   "phase2_sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+   "match": true
+  },
+  {
+   "paper_id": "P001",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+   "exists": true,
+   "sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+   "phase2_sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+   "match": true
+  },
+  {
+   "paper_id": "P002",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\350c919d4f9981639151e3c6351c2e4826b1e896.pdf",
+   "exists": true,
+   "sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+   "phase2_sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+   "match": true
+  },
+  {
+   "paper_id": "P002",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\350c919d4f9981639151e3c6351c2e4826b1e896.pdf",
+   "exists": true,
+   "sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+   "phase2_sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+   "match": true
+  },
+  {
+   "paper_id": "P003",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+   "exists": true,
+   "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+   "phase2_sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+   "match": true
+  },
+  {
+   "paper_id": "P003",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+   "exists": true,
+   "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+   "phase2_sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+   "match": true
+  },
+  {
+   "paper_id": "P004",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+   "exists": true,
+   "sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+   "phase2_sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+   "match": true
+  },
+  {
+   "paper_id": "P004",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+   "exists": true,
+   "sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+   "phase2_sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+   "match": true
+  },
+  {
+   "paper_id": "P005",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\4f08ac722cd79ba11fbf0636cc33964539d6b29a.pdf",
+   "exists": true,
+   "sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+   "phase2_sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+   "match": true
+  },
+  {
+   "paper_id": "P005",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\4f08ac722cd79ba11fbf0636cc33964539d6b29a.pdf",
+   "exists": true,
+   "sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+   "phase2_sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+   "match": true
+  },
+  {
+   "paper_id": "P006",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+   "exists": true,
+   "sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+   "phase2_sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+   "match": true
+  },
+  {
+   "paper_id": "P006",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+   "exists": true,
+   "sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+   "phase2_sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+   "match": true
+  },
+  {
+   "paper_id": "P007",
+   "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+   "exists": true,
+   "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "match": true
+  },
+  {
+   "paper_id": "P007",
+   "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline\\runs\\medical_reacquire\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+   "exists": true,
+   "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "match": true
+  },
+  {
+   "paper_id": "P007",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+   "exists": true,
+   "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "match": true
+  },
+  {
+   "paper_id": "P007",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+   "exists": true,
+   "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+   "match": true
+  },
+  {
+   "paper_id": "P008",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+   "exists": true,
+   "sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+   "phase2_sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+   "match": true
+  },
+  {
+   "paper_id": "P008",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+   "exists": true,
+   "sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+   "phase2_sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+   "match": true
+  },
+  {
+   "paper_id": "P009",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\7f23b87572087ffc54dec5dfe61c30b47f4dc3cd.pdf",
+   "exists": true,
+   "sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+   "phase2_sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+   "match": true
+  },
+  {
+   "paper_id": "P009",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\7f23b87572087ffc54dec5dfe61c30b47f4dc3cd.pdf",
+   "exists": true,
+   "sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+   "phase2_sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+   "match": true
+  },
+  {
+   "paper_id": "P010",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\805d2d0f3a5d8b8311b7af7db560961a5575ddd4.pdf",
+   "exists": true,
+   "sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+   "phase2_sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+   "match": true
+  },
+  {
+   "paper_id": "P010",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\805d2d0f3a5d8b8311b7af7db560961a5575ddd4.pdf",
+   "exists": true,
+   "sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+   "phase2_sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+   "match": true
+  },
+  {
+   "paper_id": "P011",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+   "exists": true,
+   "sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+   "phase2_sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+   "match": true
+  },
+  {
+   "paper_id": "P011",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+   "exists": true,
+   "sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+   "phase2_sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+   "match": true
+  },
+  {
+   "paper_id": "P012",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8986c3ff6369c2dda2ba6c84bda37c9ae257769b.pdf",
+   "exists": true,
+   "sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+   "phase2_sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+   "match": true
+  },
+  {
+   "paper_id": "P012",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8986c3ff6369c2dda2ba6c84bda37c9ae257769b.pdf",
+   "exists": true,
+   "sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+   "phase2_sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+   "match": true
+  },
+  {
+   "paper_id": "P013",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8c5db189d0ce3c8d1689cef38aa8628f57a639bf.pdf",
+   "exists": true,
+   "sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+   "phase2_sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+   "match": true
+  },
+  {
+   "paper_id": "P013",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8c5db189d0ce3c8d1689cef38aa8628f57a639bf.pdf",
+   "exists": true,
+   "sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+   "phase2_sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+   "match": true
+  },
+  {
+   "paper_id": "P014",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+   "exists": true,
+   "sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+   "phase2_sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+   "match": true
+  },
+  {
+   "paper_id": "P014",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+   "exists": true,
+   "sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+   "phase2_sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+   "match": true
+  },
+  {
+   "paper_id": "P015",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+   "exists": true,
+   "sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+   "phase2_sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+   "match": true
+  },
+  {
+   "paper_id": "P015",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+   "exists": true,
+   "sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+   "phase2_sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+   "match": true
+  },
+  {
+   "paper_id": "P016",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+   "exists": true,
+   "sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+   "phase2_sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+   "match": true
+  },
+  {
+   "paper_id": "P016",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+   "exists": true,
+   "sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+   "phase2_sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+   "match": true
+  },
+  {
+   "paper_id": "P017",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+   "exists": true,
+   "sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+   "phase2_sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+   "match": true
+  },
+  {
+   "paper_id": "P017",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+   "exists": true,
+   "sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+   "phase2_sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+   "match": true
+  },
+  {
+   "paper_id": "P018",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a3b66a1fe127f06d005ee999b7ade19be4ba507a.pdf",
+   "exists": true,
+   "sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+   "phase2_sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+   "match": true
+  },
+  {
+   "paper_id": "P018",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a3b66a1fe127f06d005ee999b7ade19be4ba507a.pdf",
+   "exists": true,
+   "sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+   "phase2_sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+   "match": true
+  },
+  {
+   "paper_id": "P019",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\aa901a8a5bd2fac9b54e7a8ded5b1289c4e337dc.pdf",
+   "exists": true,
+   "sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+   "phase2_sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+   "match": true
+  },
+  {
+   "paper_id": "P019",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\aa901a8a5bd2fac9b54e7a8ded5b1289c4e337dc.pdf",
+   "exists": true,
+   "sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+   "phase2_sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+   "match": true
+  },
+  {
+   "paper_id": "P020",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\c5539e51c9f362f94895bef46e89b204e51ef913.pdf",
+   "exists": true,
+   "sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+   "phase2_sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+   "match": true
+  },
+  {
+   "paper_id": "P020",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\c5539e51c9f362f94895bef46e89b204e51ef913.pdf",
+   "exists": true,
+   "sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+   "phase2_sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+   "match": true
+  },
+  {
+   "paper_id": "P021",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d17c4e953d890e24c7d3e39a2ba7acad2046751a.pdf",
+   "exists": true,
+   "sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+   "phase2_sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+   "match": true
+  },
+  {
+   "paper_id": "P021",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d17c4e953d890e24c7d3e39a2ba7acad2046751a.pdf",
+   "exists": true,
+   "sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+   "phase2_sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+   "match": true
+  },
+  {
+   "paper_id": "P022",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d27d14d2435f40168909da4958463aedd1e3f14d.pdf",
+   "exists": true,
+   "sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+   "phase2_sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+   "match": true
+  },
+  {
+   "paper_id": "P022",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d27d14d2435f40168909da4958463aedd1e3f14d.pdf",
+   "exists": true,
+   "sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+   "phase2_sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+   "match": true
+  },
+  {
+   "paper_id": "P023",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d2cf02a4dbbf16147b65620970f9fc018671262f.pdf",
+   "exists": true,
+   "sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+   "phase2_sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+   "match": true
+  },
+  {
+   "paper_id": "P023",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d2cf02a4dbbf16147b65620970f9fc018671262f.pdf",
+   "exists": true,
+   "sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+   "phase2_sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+   "match": true
+  },
+  {
+   "paper_id": "P024",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\db047a3076affe62ed552de4645292559903d153.pdf",
+   "exists": true,
+   "sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+   "phase2_sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+   "match": true
+  },
+  {
+   "paper_id": "P024",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\db047a3076affe62ed552de4645292559903d153.pdf",
+   "exists": true,
+   "sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+   "phase2_sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+   "match": true
+  },
+  {
+   "paper_id": "P025",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\db172af3515ca8eeb0e01533ca81743c4888cc1a.pdf",
+   "exists": true,
+   "sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+   "phase2_sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+   "match": true
+  },
+  {
+   "paper_id": "P025",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\db172af3515ca8eeb0e01533ca81743c4888cc1a.pdf",
+   "exists": true,
+   "sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+   "phase2_sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+   "match": true
+  },
+  {
+   "paper_id": "P026",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\eaa74650eaf466ae61bfc2837418f0614bebc4aa.pdf",
+   "exists": true,
+   "sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+   "phase2_sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+   "match": true
+  },
+  {
+   "paper_id": "P026",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\eaa74650eaf466ae61bfc2837418f0614bebc4aa.pdf",
+   "exists": true,
+   "sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+   "phase2_sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+   "match": true
+  },
+  {
+   "paper_id": "P027",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\eb5d3d6bb0bac47a8bcf186d6506cdc80bc3b59e.pdf",
+   "exists": true,
+   "sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+   "phase2_sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+   "match": true
+  },
+  {
+   "paper_id": "P027",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\eb5d3d6bb0bac47a8bcf186d6506cdc80bc3b59e.pdf",
+   "exists": true,
+   "sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+   "phase2_sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+   "match": true
+  },
+  {
+   "paper_id": "P028",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\ecbd1644ae4436d26cbf84a5d942d4fcb759dc97.pdf",
+   "exists": true,
+   "sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+   "phase2_sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+   "match": true
+  },
+  {
+   "paper_id": "P028",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\ecbd1644ae4436d26cbf84a5d942d4fcb759dc97.pdf",
+   "exists": true,
+   "sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+   "phase2_sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+   "match": true
+  },
+  {
+   "paper_id": "P029",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\f270e7fa3a491fe8fe99d674ffba2b64bf445f78.pdf",
+   "exists": true,
+   "sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+   "phase2_sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+   "match": true
+  },
+  {
+   "paper_id": "P029",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\f270e7fa3a491fe8fe99d674ffba2b64bf445f78.pdf",
+   "exists": true,
+   "sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+   "phase2_sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+   "match": true
+  },
+  {
+   "paper_id": "P030",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+   "exists": true,
+   "sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+   "phase2_sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+   "match": true
+  },
+  {
+   "paper_id": "P030",
+   "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+   "exists": true,
+   "sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+   "phase2_sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+   "match": true
+  }
+ ],
+ "papers": [
+  {
+   "paper_id": "P001",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 13,
+    "total": 13,
+    "surnames": [
+     {
+      "surname": "Comte",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Comte[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Alenya",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Alenya[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Urru",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Urru[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Recober",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Recober[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Nakaki",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Nakaki[sup:2,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Crovetto",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Crovetto[sup:2,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Camara",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Camara[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Gratacós",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gratacós[sup:2,4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Eixarch",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Eixarch[sup:2,4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Crispi",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Crispi[sup:2,4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Piella",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Piella[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ceresa",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ceresa[sup:1,6]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ballester",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ballester[sup:1,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2307.03579v1",
+    "page1_stamps": [
+     {
+      "id": "2307.03579",
+      "version": "v1",
+      "text": "arXiv:2307.03579v1 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2307.03579",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "ques produce low-resolution images with minimized arXiv:2307.03579v1 [cs.CV] 7 Jul 202"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P001",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+     "exists": true,
+     "sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+     "phase2_sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+     "match": true
+    },
+    {
+     "paper_id": "P001",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+     "exists": true,
+     "sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+     "phase2_sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 27,
+    "found": 27,
+    "on_stated_page": 27
+   }
+  },
+  {
+   "paper_id": "P002",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 5,
+    "total": 5,
+    "surnames": [
+     {
+      "surname": "Dumast",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dumast",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kebiri",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kebiri[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Dunet",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dunet[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Koob",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Koob[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Cuadra",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Cuadra[sup:2,1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2208.07566v1",
+    "page1_stamps": [
+     {
+      "id": "2208.07566",
+      "version": "v1",
+      "text": "arXiv:2208.07566v1 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2208.07566",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "onding author, priscille.guerrierdedumast@unil.ch arXiv:2208.07566v1 [eess.IV] 16 Aug"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P002",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\350c919d4f9981639151e3c6351c2e4826b1e896.pdf",
+     "exists": true,
+     "sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+     "phase2_sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+     "match": true
+    },
+    {
+     "paper_id": "P002",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\350c919d4f9981639151e3c6351c2e4826b1e896.pdf",
+     "exists": true,
+     "sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+     "phase2_sha256": "390f070a7c036f907725c629584672acd224d3423562dd697af528762b100897",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 28,
+    "found": 28,
+    "on_stated_page": 28
+   }
+  },
+  {
+   "paper_id": "P003",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 5,
+    "total": 5,
+    "surnames": [
+     {
+      "surname": "Jayapradha",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Jayapradha",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Vinoth",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Vinoth",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Anitha",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Anitha",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kalakoti",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Kalakoti",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Nithila",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Nithila",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P003",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+     "exists": true,
+     "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+     "phase2_sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+     "match": true
+    },
+    {
+     "paper_id": "P003",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+     "exists": true,
+     "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+     "phase2_sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 22,
+    "found": 22,
+    "on_stated_page": 22
+   }
+  },
+  {
+   "paper_id": "P004",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 4,
+    "total": 4,
+    "surnames": [
+     {
+      "surname": "Fu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Fu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Lu",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Lu[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Zhang",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zhang[sup:1,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Wang",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wang[sup:1,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2306.11490v1",
+    "page1_stamps": [
+     {
+      "id": "2306.11490",
+      "version": "v1",
+      "text": "arXiv:2306.11490v1 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2306.11490",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "cale pixel-wise annotated dataset, especially for arXiv:2306.11490v1 [cs.CV] 20 Jun 20"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P004",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+     "exists": true,
+     "sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+     "phase2_sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+     "match": true
+    },
+    {
+     "paper_id": "P004",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+     "exists": true,
+     "sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+     "phase2_sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 24,
+    "found": 24,
+    "on_stated_page": 24
+   }
+  },
+  {
+   "paper_id": "P005",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 3,
+    "total": 3,
+    "surnames": [
+     {
+      "surname": "Ullah",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Ullah",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Nadeem",
+      "class": "match_normalized",
+      "rule": "case_folded",
+      "page": 1,
+      "pdf_raw": "nadeem",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Abrar",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Abrar",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 20,
+      "id": "1701.03056",
+      "version": "",
+      "kind": "later_page",
+      "context": "CNN-based segmentation of medical imaging data,” arXiv preprint arXiv:1701.03056, 2017. Article (Cro"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P005",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\4f08ac722cd79ba11fbf0636cc33964539d6b29a.pdf",
+     "exists": true,
+     "sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+     "phase2_sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+     "match": true
+    },
+    {
+     "paper_id": "P005",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\4f08ac722cd79ba11fbf0636cc33964539d6b29a.pdf",
+     "exists": true,
+     "sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+     "phase2_sha256": "95c36581f8d9763f431f63220e42b7da12519480b13f69531d97e0bafdeef5ff",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 22,
+    "found": 22,
+    "on_stated_page": 22
+   }
+  },
+  {
+   "paper_id": "P006",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": false
+   },
+   "status": "MATCH_WITH_DISCREPANCY",
+   "confidence": "medium",
+   "failed": [
+    "T7"
+   ],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 5,
+    "total": 5,
+    "surnames": [
+     {
+      "surname": "Almufareh",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Almufareh[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Imran",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Imran",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Khan",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Khan[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Humayun",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Humayun[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Asim",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Asim[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "1804.02767",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 19,
+      "id": "1804.02767",
+      "version": "",
+      "kind": "later_page",
+      "context": ", A. (2018). Yolov3: An incremental improvement. arXiv preprint arXiv:1804.02767. [55] Masood, M.,"
+     }
+    ],
+    "T7": false,
+    "outcome": "fail_no_page1_stamp",
+    "reason": "no arXiv stamp on page 1; candidate 1804.02767 occurs on pages [19]"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P006",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+     "exists": true,
+     "sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+     "phase2_sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+     "match": true
+    },
+    {
+     "paper_id": "P006",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+     "exists": true,
+     "sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+     "phase2_sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 27,
+    "found": 27,
+    "on_stated_page": 27
+   }
+  },
+  {
+   "paper_id": "P007",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 9,
+    "total": 10,
+    "surnames": [
+     {
+      "surname": "Maccarone",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Maccarone[sup:a,b]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Stefano",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Stefano[sup:a,c]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Longari",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Longari[sup:b]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Frigerio",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Frigerio[sup:a]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Rizzato",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Rizzato[sup:a]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Prudentino",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Prudentino[sup:a]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Agarwala",
+      "class": "mismatch_candidate_includes_marker",
+      "rule": null,
+      "page": 1,
+      "pdf_raw": "Agarwal[sup:a]",
+      "marker_evidence": null,
+      "nearest_pdf_word_audit_only": {
+       "word": "Agarwala",
+       "page": 1
+      }
+     },
+     {
+      "surname": "Ciceri",
+      "class": "match_normalized",
+      "rule": "case_folded",
+      "page": 1,
+      "pdf_raw": "ciceri",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Peruzzo",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Peruzzo[sup:a]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Melzi",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Melzi[sup:b ]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 19,
+      "id": "2206.14678",
+      "version": "",
+      "kind": "later_page",
+      "context": "metry estimation from standard ultrasound planes. arXiv:2206.14678. https://doi.org/1"
+     },
+     {
+      "page": 19,
+      "id": "2206.14678",
+      "version": "",
+      "kind": "later_page",
+      "context": "asound planes. arXiv:2206.14678. https://doi.org/10.48550/arXiv.2206.14678. [47] Tilea, B., A"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P007",
+     "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\data\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+     "exists": true,
+     "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "match": true
+    },
+    {
+     "paper_id": "P007",
+     "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline\\runs\\medical_reacquire\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+     "exists": true,
+     "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "match": true
+    },
+    {
+     "paper_id": "P007",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+     "exists": true,
+     "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "match": true
+    },
+    {
+     "paper_id": "P007",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+     "exists": true,
+     "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "phase2_sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 26,
+    "found": 26,
+    "on_stated_page": 26
+   }
+  },
+  {
+   "paper_id": "P008",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 10,
+    "total": 10,
+    "surnames": [
+     {
+      "surname": "Dou",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dou",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Karimi",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Karimi",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Rollins",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Rollins",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Ortinau",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ortinau",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Vasung",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Vasung",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Velasco-Annis",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Velasco-Annis",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Ouaalam",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ouaalam",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Yang",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Yang",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Ni",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ni",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Gholipour",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gholipour",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [
+     {
+      "id": "2004.12847",
+      "version": "v3",
+      "text": "arXiv:2004.12847v3 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2004.12847",
+      "version": "v3",
+      "kind": "page1_stamp",
+      "context": "ds. These issues, however, have been addressed in arXiv:2004.12847v3 [cs.CV] 2 Apr 202"
+     },
+     {
+      "page": 11,
+      "id": "1804.03999",
+      "version": "",
+      "kind": "later_page",
+      "context": "u-net: Learning where to look for the pancreas,” arXiv preprint arXiv:1804.03999, 2018. [40] A. G. R"
+     },
+     {
+      "page": 11,
+      "id": "1502.03167",
+      "version": "",
+      "kind": "later_page",
+      "context": "k training by reducing internal covariate shift,” arXiv preprint arXiv:1502.03167, 2015. [46] K. He,"
+     },
+     {
+      "page": 11,
+      "id": "1412.6980",
+      "version": "",
+      "kind": "later_page",
+      "context": "Ba, “Adam: A method for stochastic optimization,” arXiv preprint arXiv:1412.6980, 2014. [51] O. Ronn"
+     },
+     {
+      "page": 11,
+      "id": "2001.05566",
+      "version": "",
+      "kind": "later_page",
+      "context": "mage segmentation using deep learning: A survey,” arXiv preprint arXiv:2001.05566, 2020. [56] S. J´eg"
+     },
+     {
+      "page": 12,
+      "id": "1805.08318",
+      "version": "",
+      "kind": "later_page",
+      "context": "elf-attention gen- erative adversarial networks,” arXiv preprint arXiv:1805.08318, 2018. [68] C. Szeg"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P008",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+     "exists": true,
+     "sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+     "phase2_sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+     "match": true
+    },
+    {
+     "paper_id": "P008",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+     "exists": true,
+     "sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+     "phase2_sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 23,
+    "found": 23,
+    "on_stated_page": 23
+   }
+  },
+  {
+   "paper_id": "P009",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 12,
+    "total": 12,
+    "surnames": [
+     {
+      "surname": "Shang",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Shang[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kaandorp",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kaandorp[sup:1,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Payette",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Payette",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Garcia",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Garcia[sup:1,11]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Licandro",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Licandro[sup:4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Langs",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Langs[sup:4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Verdera",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Verdera[sup:8,9]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Hutter",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hutter[sup:8,9,10]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Menze",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Menze[sup:12]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kasprian",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kasprian[sup:4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Cuadra",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Cuadra[sup:6,7]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Jakab",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Jakab",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 23,
+      "id": "2209.09696",
+      "version": "",
+      "kind": "later_page",
+      "context": "a6ve Adversarial Networks. arXiv. hMps://doi.org/10.48550/ARXIV.2209.09696 Garel, C., Chantre"
+     },
+     {
+      "page": 23,
+      "id": "2501.19338",
+      "version": "",
+      "kind": "later_page",
+      "context": "n in Fetuses and Neonates. arXiv. hMps://doi.org/10.48550/arXiv.2501.19338 Makropoulos, A., R"
+     },
+     {
+      "page": 23,
+      "id": "1907.12941",
+      "version": "",
+      "kind": "later_page",
+      "context": "e Brain Tumor Segmenta6on. arXiv. hMps://doi.org/10.48550/arXiv.1907.12941 Moab, C., 2022. Do"
+     },
+     {
+      "page": 24,
+      "id": "1703.06907",
+      "version": "",
+      "kind": "later_page",
+      "context": "mula6on to the Real World. arXiv. hMps://doi.org/10.48550/ARXIV.1703.06907 Tourbier, S., Bres"
+     },
+     {
+      "page": 25,
+      "id": "2309.05306",
+      "version": "",
+      "kind": "later_page",
+      "context": "tal brain MRI segmenta6on. arXiv. hMps://doi.org/10.48550/arXiv.2309.05306 Wachinger, C., Rie"
+     },
+     {
+      "page": 25,
+      "id": "2505.02784",
+      "version": "",
+      "kind": "later_page",
+      "context": "hts from the FeTA 2024 Challenge. hMps://doi.org/10.48550/ARXIV.2505.02784 Zalevskyi, V., San"
+     },
+     {
+      "page": 25,
+      "id": "2411.06842",
+      "version": "",
+      "kind": "later_page",
+      "context": "r Fetal Brain Tissue Segmenta6on. hMps://doi.org/10.48550/arXiv.2411.06842 Zhang, L., Wang, X"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P009",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\7f23b87572087ffc54dec5dfe61c30b47f4dc3cd.pdf",
+     "exists": true,
+     "sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+     "phase2_sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+     "match": true
+    },
+    {
+     "paper_id": "P009",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\7f23b87572087ffc54dec5dfe61c30b47f4dc3cd.pdf",
+     "exists": true,
+     "sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+     "phase2_sha256": "ff23d69d855df6eec71a9c16f9bfe198cb1499bf793f5a409764342759f90355",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 28,
+    "found": 28,
+    "on_stated_page": 28
+   }
+  },
+  {
+   "paper_id": "P010",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 3,
+    "total": 3,
+    "surnames": [
+     {
+      "surname": "Kumar",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kumar",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Goel",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Goel[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kumar",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kumar",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P010",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\805d2d0f3a5d8b8311b7af7db560961a5575ddd4.pdf",
+     "exists": true,
+     "sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+     "phase2_sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+     "match": true
+    },
+    {
+     "paper_id": "P010",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\805d2d0f3a5d8b8311b7af7db560961a5575ddd4.pdf",
+     "exists": true,
+     "sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+     "phase2_sha256": "4daf406743e21a8ce47ea2ac02ddf80273ae95ea0d4cd50b91b6795e62397b1a",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 14,
+    "found": 14,
+    "on_stated_page": 14
+   }
+  },
+  {
+   "paper_id": "P011",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 6,
+    "total": 6,
+    "surnames": [
+     {
+      "surname": "Dumast",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dumast[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kebiri",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kebiri[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Atat",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Atat[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Dunet",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dunet[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Koob",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Koob[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Cuadra",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Cuadra[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2010.12391v2",
+    "page1_stamps": [
+     {
+      "id": "2010.12391",
+      "version": "v2",
+      "text": "arXiv:2010.12391v2 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2010.12391",
+      "version": "v2",
+      "kind": "page1_stamp",
+      "context": "pular U-Net [17] image segmentation method, as it arXiv:2010.12391v2 [eess.IV] 24 Nov"
+     },
+     {
+      "page": 4,
+      "id": "2004.12847",
+      "version": "",
+      "kind": "later_page",
+      "context": "omatic cortical plate segmentation in fetal mri,” arXiv: 2004.12847, 2020. [12] X. Hu e"
+     },
+     {
+      "page": 4,
+      "id": "2010.15526",
+      "version": "",
+      "kind": "later_page",
+      "context": "of the human fetal brain using the feta dataset,” arXiv: 2010.15526, 2020. [21] Lee R."
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P011",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+     "exists": true,
+     "sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+     "phase2_sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+     "match": true
+    },
+    {
+     "paper_id": "P011",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+     "exists": true,
+     "sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+     "phase2_sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 19,
+    "found": 19,
+    "on_stated_page": 19
+   }
+  },
+  {
+   "paper_id": "P012",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": null,
+    "T5p": null,
+    "T6": null,
+    "T7": false
+   },
+   "status": "MATCH_WITH_DISCREPANCY",
+   "confidence": "medium",
+   "failed": [
+    "T7"
+   ],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": null,
+    "T5p": null,
+    "coverage": null,
+    "outcome": "na_title_not_reported"
+   },
+   "t6": {
+    "T6": null,
+    "found": 0,
+    "total": 0,
+    "surnames": [],
+    "outcome": "na_authors_not_reported"
+   },
+   "t7": {
+    "candidate": "1809.07786",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 9,
+      "id": "1809.07786",
+      "version": "",
+      "kind": "later_page",
+      "context": "deep learning by type-specific sorting of images. arXiv preprint arXiv:1809.07786. 5. Pan, Y., Huang,"
+     }
+    ],
+    "T7": false,
+    "outcome": "fail_no_page1_stamp",
+    "reason": "no arXiv stamp on page 1; candidate 1809.07786 occurs on pages [9]"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P012",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8986c3ff6369c2dda2ba6c84bda37c9ae257769b.pdf",
+     "exists": true,
+     "sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+     "phase2_sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+     "match": true
+    },
+    {
+     "paper_id": "P012",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8986c3ff6369c2dda2ba6c84bda37c9ae257769b.pdf",
+     "exists": true,
+     "sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+     "phase2_sha256": "6b2937d75325018a335403b72fd4a50293c97e09cb798d07060f05a8a9ec744b",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 19,
+    "found": 19,
+    "on_stated_page": 19
+   }
+  },
+  {
+   "paper_id": "P013",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 6,
+    "total": 6,
+    "surnames": [
+     {
+      "surname": "Tischer",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Tischer",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kienast",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kienast[sup:3[0000−0001−6407−9561]]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Stümpflen",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Stümpflen[sup:3[0000−0001−9763−9422]]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kasprian",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kasprian[sup:3[0000−0003−3858−3347]]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Langs",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Langs[sup:1,2,4[0000−0002−5536−6873]]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Licandro",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Licandro[sup:1,2,4[0000−0001−9066−4473]]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2508.04522v1",
+    "page1_stamps": [
+     {
+      "id": "2508.04522",
+      "version": "v1",
+      "text": "arXiv:2508.04522v1 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2508.04522",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "the utility of fetal MRI, offering complementary arXiv:2508.04522v1 [eess.IV] 6 Aug 2"
+     },
+     {
+      "page": 11,
+      "id": "2504.00247",
+      "version": "",
+      "kind": "later_page",
+      "context": "atlas construction. CVPR (2025). https://doi.org/ 10.48550/arXiv.2504.00247 2. Atkinson, D., Hi"
+     },
+     {
+      "page": 11,
+      "id": "1908.02738",
+      "version": "",
+      "kind": "later_page",
+      "context": "al networks. In: NeurIPS (2019). https: //doi.org/10.48550/arXiv.1908.02738 7. Dannecker, M., K"
+     },
+     {
+      "page": 11,
+      "id": "2105.04349",
+      "version": "",
+      "kind": "later_page",
+      "context": "able templates. In: ICCV (2021). https://doi.org/ 10.48550/arXiv.2105.04349 9. Gholipour, A., R"
+     },
+     {
+      "page": 11,
+      "id": "1506.02025",
+      "version": "",
+      "kind": "later_page",
+      "context": "mer networks. In: NeurIPS (2015). https://doi.org/10.48550/arXiv.1506.02025 13. Li, L., Sinclai"
+     },
+     {
+      "page": 11,
+      "id": "1802.05637",
+      "version": "",
+      "kind": "later_page",
+      "context": "rojection discriminator. In: ICRL (2018), https://arxiv.org/abs/1802.05637 15. Pei, Y., Chen,"
+     },
+     {
+      "page": 12,
+      "id": "1709.07871",
+      "version": "",
+      "kind": "later_page",
+      "context": "itioning layer. In: AAAI (2018). https://doi.org/ 10.48550/arXiv.1709.07871 17. Prayer, D., Mal"
+     },
+     {
+      "page": 12,
+      "id": "2111.01007",
+      "version": "",
+      "kind": "later_page",
+      "context": "verge faster. In: NeurIPS (2021). https://doi.org/10.48550/arXiv.2111.01007 19. Stuempflen, M.,"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P013",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8c5db189d0ce3c8d1689cef38aa8628f57a639bf.pdf",
+     "exists": true,
+     "sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+     "phase2_sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+     "match": true
+    },
+    {
+     "paper_id": "P013",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8c5db189d0ce3c8d1689cef38aa8628f57a639bf.pdf",
+     "exists": true,
+     "sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+     "phase2_sha256": "98e1887310374af3c0ad9b72131e9237b261738359d7a8a446cdc8da6511ed69",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 26,
+    "found": 26,
+    "on_stated_page": 26
+   }
+  },
+  {
+   "paper_id": "P014",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 7,
+    "total": 7,
+    "surnames": [
+     {
+      "surname": "Wu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Wu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Andescavage",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Andescavage[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Wisner",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wisner[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kapse",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kapse[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Murnick",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Murnick[sup:3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ngwa",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ngwa[sup:1 ]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Limperopoulos",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Limperopoulos",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P014",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+     "exists": true,
+     "sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+     "phase2_sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+     "match": true
+    },
+    {
+     "paper_id": "P014",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+     "exists": true,
+     "sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+     "phase2_sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 18,
+    "found": 18,
+    "on_stated_page": 18
+   }
+  },
+  {
+   "paper_id": "P015",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 13,
+    "total": 13,
+    "surnames": [
+     {
+      "surname": "Zalevskyi",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zalevskyi",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Sanchez",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Sanchez",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Roulet",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Roulet",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Bulut",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Bulut",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Lajous",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Lajous",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Verdera",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Verdera",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Silva",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Silva",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Langs",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Langs",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kasprian",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kasprian",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Licandro",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Licandro",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Hutter",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hutter",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kebiri",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kebiri",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Cuadra",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Cuadra",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2411.06842v4",
+    "page1_stamps": [
+     {
+      "id": "2411.06842",
+      "version": "v4",
+      "text": "arXiv:2411.06842v4 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2411.06842",
+      "version": "v4",
+      "kind": "page1_stamp",
+      "context": "arXiv:2411.06842v4 [eess.IV] 1 Jul 2"
+     },
+     {
+      "page": 15,
+      "id": "2107.09559",
+      "version": "",
+      "kind": "later_page",
+      "context": "on of brain scans of any contrast and resolution. arXiv preprint arXiv:2107.09559, 2021. Benjamin Bil"
+     },
+     {
+      "page": 16,
+      "id": "2211.02701",
+      "version": "",
+      "kind": "later_page",
+      "context": "source framework for deep learning in healthcare. arXiv preprint arXiv:2211.02701, 2022. Lucilio Cord"
+     },
+     {
+      "page": 17,
+      "id": "2501.19338",
+      "version": "",
+      "kind": "later_page",
+      "context": "ation in fetuses and neonates, 2025a. URL https://arxiv.org/abs/2501.19338. Misha PT Kaandorp,"
+     },
+     {
+      "page": 17,
+      "id": "2501.19338",
+      "version": "",
+      "kind": "later_page",
+      "context": "ological data generation in fetuses and neonates. arXiv preprint arXiv:2501.19338, 2025b. Vyacheslav"
+     },
+     {
+      "page": 17,
+      "id": "2402.16634",
+      "version": "",
+      "kind": "later_page",
+      "context": "ce for pediatric brain images, 2024. URL http s://arxiv.org/abs/2402.16634. Maria Kuklisova-Mu"
+     },
+     {
+      "page": 20,
+      "id": "2505.02784",
+      "version": "",
+      "kind": "later_page",
+      "context": "s from the feta 2024 challenge, 2025. URL https://arxiv.org/abs/2505.02784. Kaiyang Zhou, Yong"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P015",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+     "exists": true,
+     "sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+     "phase2_sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+     "match": true
+    },
+    {
+     "paper_id": "P015",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+     "exists": true,
+     "sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+     "phase2_sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 26,
+    "found": 26,
+    "on_stated_page": 26
+   }
+  },
+  {
+   "paper_id": "P016",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 6,
+    "total": 6,
+    "surnames": [
+     {
+      "surname": "Rahman",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Rahman[sup:1,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Chowdhury",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Chowdhury[sup:2, *]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Sayed",
+      "class": "match_normalized",
+      "rule": "case_folded",
+      "page": 1,
+      "pdf_raw": "sayed",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Wadud",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wadud[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Arafat",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Arafat[sup:3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Prince",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Prince[sup:3 ]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 31,
+      "id": "2105.05537",
+      "version": "",
+      "kind": "later_page",
+      "context": "omputer Science, 13803 LNCS, 205–218. http://arxiv.org/abs/2105.05537 Chen, J., Lu, Y.,"
+     },
+     {
+      "page": 31,
+      "id": "2102.04306",
+      "version": "v1",
+      "kind": "later_page",
+      "context": "Encoders for Medical Image Segmentation. https://arxiv.org/abs/2102.04306v1 Chen, J., Lu, Y.,"
+     },
+     {
+      "page": 31,
+      "id": "2102.04306",
+      "version": "",
+      "kind": "later_page",
+      "context": "Encoders for Medical Image Segmentation. https://arxiv.org/pdf/2102.04306 Chen, L. C., Zhu,"
+     },
+     {
+      "page": 31,
+      "id": "1706.05587",
+      "version": "v3",
+      "kind": "later_page",
+      "context": "olution for Semantic Image Segmentation. https://arxiv.org/abs/1706.05587v3 De Asis-Cruz, J.,"
+     },
+     {
+      "page": 31,
+      "id": "2205.01675",
+      "version": "",
+      "kind": "later_page",
+      "context": "tes in Bioinformatics), 13575 LNCS, 60–70. http://arxiv.org/abs/2205.01675"
+     },
+     {
+      "page": 32,
+      "id": "2308.06762",
+      "version": "",
+      "kind": "later_page",
+      "context": "dance from High-Quality Isotropic Volumes. http://arxiv.org/abs/2308.06762 Huang, X., Liu, Y."
+     },
+     {
+      "page": 32,
+      "id": "1412.6980",
+      "version": "v9",
+      "kind": "later_page",
+      "context": "ICLR 2015 - Conference Track Proceedings. https://arxiv.org/abs/1412.6980v9 Kuran, U., & Kuran"
+     },
+     {
+      "page": 32,
+      "id": "2304.07288",
+      "version": "v2",
+      "kind": "later_page",
+      "context": "hine Learning Research, 202, 23803–23828. https://arxiv.org/abs/2304.07288v2"
+     },
+     {
+      "page": 33,
+      "id": "1811.12808",
+      "version": "",
+      "kind": "later_page",
+      "context": "Algorithm Selection in Machine Learning. http://arxiv.org/abs/1811.12808 Ronneberger, O., F"
+     },
+     {
+      "page": 33,
+      "id": "1609.04747",
+      "version": "v2",
+      "kind": "later_page",
+      "context": "gradient descent optimization algorithms. https://arxiv.org/abs/1609.04747v2"
+     },
+     {
+      "page": 34,
+      "id": "2105.15203",
+      "version": "v3",
+      "kind": "later_page",
+      "context": "ion Processing Systems, 15, 12077–12090. https://arxiv.org/abs/2105.15203v3 Zhao, L., Asis-Cru"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P016",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+     "exists": true,
+     "sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+     "phase2_sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+     "match": true
+    },
+    {
+     "paper_id": "P016",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+     "exists": true,
+     "sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+     "phase2_sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 30,
+    "found": 30,
+    "on_stated_page": 30
+   }
+  },
+  {
+   "paper_id": "P017",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": false
+   },
+   "status": "MATCH_WITH_DISCREPANCY",
+   "confidence": "medium",
+   "failed": [
+    "T7"
+   ],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 20,
+    "total": 20,
+    "surnames": [
+     {
+      "surname": "Liu",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Liu[sup:1,2#]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Hao",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hao[sup:2#]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Liao",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Liao[sup:1#]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Zhu",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zhu[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Li",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Yang",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Yang[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Chen",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Chen[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Li",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Anmahapong",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Anmahapong[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Li",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Zheng",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zheng[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kang",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kang[sup:3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Song",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Song[sup:3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Lai",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Lai[sup:4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Zhou",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zhou[sup:4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Sun",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Sun[sup:5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Hu",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hu[sup:6]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ning",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ning[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Qu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Qu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Tian",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Tian",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2509.17925",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 39,
+      "id": "2509.17925",
+      "version": "",
+      "kind": "later_page",
+      "context": "Tumor Segmentation in MRI. ArXiv E-Prints arXiv:2509.17925. https://doi.org/1"
+     },
+     {
+      "page": 39,
+      "id": "2509.17925",
+      "version": "",
+      "kind": "later_page",
+      "context": "Xiv E-Prints arXiv:2509.17925. https://doi.org/10.48550/arXiv.2509.17925 Xu, J., Moyer, D.,"
+     }
+    ],
+    "T7": false,
+    "outcome": "fail_no_page1_stamp",
+    "reason": "no arXiv stamp on page 1; candidate 2509.17925 occurs on pages [39]"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P017",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+     "exists": true,
+     "sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+     "phase2_sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+     "match": true
+    },
+    {
+     "paper_id": "P017",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+     "exists": true,
+     "sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+     "phase2_sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 27,
+    "found": 27,
+    "on_stated_page": 27
+   }
+  },
+  {
+   "paper_id": "P018",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 12,
+    "total": 12,
+    "surnames": [
+     {
+      "surname": "Fidon",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Fidon",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Aertsen",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Aertsen[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Emam",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Emam[sup:4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Mufti",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Mufti[sup:1,3,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Guffens",
+      "class": "match_trailing_marker",
+      "rule": "compatibility_decomposed",
+      "page": 1,
+      "pdf_raw": "Guﬀens[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Demaerel",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Demaerel[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "David",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "David[sup:3,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Melbourne",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Melbourne[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ourselin",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ourselin[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Vercauteren",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Vercauteren[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2107.03846",
+    "page1_stamps": [
+     {
+      "id": "2107.03846",
+      "version": "v2",
+      "text": "arXiv:2107.03846v2 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2107.03846",
+      "version": "v2",
+      "kind": "page1_stamp",
+      "context": "ires highly skilled raters and is time-consuming. arXiv:2107.03846v2 [eess.IV] 9 Jul 2"
+     },
+     {
+      "page": 10,
+      "id": "1412.6980",
+      "version": "",
+      "kind": "later_page",
+      "context": ", J.: Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980 (2014) 15. Milletar"
+     },
+     {
+      "page": 10,
+      "id": "2010.15526",
+      "version": "",
+      "kind": "later_page",
+      "context": "of the human fetal brain using the FeTA dataset. arXiv preprint arXiv:2010.15526 (2020) 18. Payette,"
+     },
+     {
+      "page": 10,
+      "id": "2103.13314",
+      "version": "",
+      "kind": "later_page",
+      "context": "based fetal brain MRI deep learning segmentation. arXiv preprint arXiv:2103.13314 (2021)"
+     },
+     {
+      "page": 11,
+      "id": "1607.08022",
+      "version": "",
+      "kind": "later_page",
+      "context": "n: The missing in- gredient for fast stylization. arXiv preprint arXiv:1607.08022 (2016) 25. Zarutski"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P018",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\a3b66a1fe127f06d005ee999b7ade19be4ba507a.pdf",
+     "exists": true,
+     "sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+     "phase2_sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+     "match": true
+    },
+    {
+     "paper_id": "P018",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a3b66a1fe127f06d005ee999b7ade19be4ba507a.pdf",
+     "exists": true,
+     "sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+     "phase2_sha256": "82621f7a91c9f50e9d9f56293b21c40c2c75ecc56025f4844deee09b613456e9",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 23,
+    "found": 23,
+    "on_stated_page": 23
+   }
+  },
+  {
+   "paper_id": "P019",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 6,
+    "total": 6,
+    "surnames": [
+     {
+      "surname": "Zeng",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zeng",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Liu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Liu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Li",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Didier",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Didier",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Grant",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Grant",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Karimi",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Karimi",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2601.15759v1",
+    "page1_stamps": [
+     {
+      "id": "2601.15759",
+      "version": "v1",
+      "text": "arXiv:2601.15759v1 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2601.15759",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "substantial efforts by the research community to arXiv:2601.15759v1 [cs.CV] 22 Jan 20"
+     },
+     {
+      "page": 14,
+      "id": "2304.02643",
+      "version": "",
+      "kind": "later_page",
+      "context": "r Doll´ar, and Ross Gir- shick. Segment anything. arXiv:2304.02643, 2023. [22] Yichi Z"
+     },
+     {
+      "page": 15,
+      "id": "2502.00630",
+      "version": "",
+      "kind": "later_page",
+      "context": "segmentation via automatic prompt sam adaptation. arXiv preprint arXiv:2502.00630, 2025. [26] Yiqing"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P019",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\aa901a8a5bd2fac9b54e7a8ded5b1289c4e337dc.pdf",
+     "exists": true,
+     "sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+     "phase2_sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+     "match": true
+    },
+    {
+     "paper_id": "P019",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\aa901a8a5bd2fac9b54e7a8ded5b1289c4e337dc.pdf",
+     "exists": true,
+     "sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+     "phase2_sha256": "7649001945d00df71b132597486b49218509c4b69b1114884f76f690bbb9c9a1",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 27,
+    "found": 27,
+    "on_stated_page": 27
+   }
+  },
+  {
+   "paper_id": "P020",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": false
+   },
+   "status": "MATCH_WITH_DISCREPANCY",
+   "confidence": "medium",
+   "failed": [
+    "T7"
+   ],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 7,
+    "total": 7,
+    "surnames": [
+     {
+      "surname": "Karim",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Karim[sup:1,2,3,4,⸸]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Tong",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Tong[sup:1,2,3,4,⸸]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Yu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Yu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Laghari",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Laghari[sup:6,7]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Khan",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Khan[sup:6]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ibrar",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ibrar[sup:7]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Mehmood",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Mehmood[sup:8]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2006.01632",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 17,
+      "id": "2006.01632",
+      "version": "",
+      "kind": "later_page",
+      "context": "n and overall survival prediction,” arXiv Prepr. arXiv2006.01632, 2020. [27] S. Da"
+     },
+     {
+      "page": 18,
+      "id": "1409.1556",
+      "version": "",
+      "kind": "later_page",
+      "context": "for large-scale image recognition,” arXiv Prepr. arXiv1409.1556, 2014. [48] C. S"
+     },
+     {
+      "page": 19,
+      "id": "1412.7062",
+      "version": "",
+      "kind": "later_page",
+      "context": "nal nets and fully connected crfs,” arXiv Prepr. arXiv1412.7062, 2014. [84] L.-C."
+     },
+     {
+      "page": 19,
+      "id": "1706.05587",
+      "version": "",
+      "kind": "later_page",
+      "context": "n for semantic image segmentation,” arXiv Prepr. arXiv1706.05587, 2017. [85] L.-C."
+     },
+     {
+      "page": 19,
+      "id": "1511.06434",
+      "version": "",
+      "kind": "later_page",
+      "context": "l generative adversarial networks,” arXiv Prepr. arXiv1511.06434, 2015. [95] E. L."
+     },
+     {
+      "page": 19,
+      "id": "1710.10196",
+      "version": "",
+      "kind": "later_page",
+      "context": "quality, stability, and variation,” arXiv Prepr. arXiv1710.10196, 2017. [97] Z. Hu"
+     },
+     {
+      "page": 19,
+      "id": "1411.1784",
+      "version": "",
+      "kind": "later_page",
+      "context": "ional generative adversarial nets,” arXiv Prepr. arXiv1411.1784, 2014. [99] M. Zh"
+     },
+     {
+      "page": 19,
+      "id": "1705.02894",
+      "version": "",
+      "kind": "later_page",
+      "context": "Lim and J. C. Ye, “Geometric gan,” arXiv Prepr. arXiv1705.02894, 2017. [106] M. S."
+     },
+     {
+      "page": 19,
+      "id": "1804.03999",
+      "version": "",
+      "kind": "later_page",
+      "context": "ng where to look for the pancreas,” arXiv Prepr. arXiv1804.03999, 2018. [114] J. Hu"
+     },
+     {
+      "page": 21,
+      "id": "1701.03056",
+      "version": "",
+      "kind": "later_page",
+      "context": "ion of medical imaging data,” arXiv Prepr. arXiv1701.03056, 2017. [169] F. Is"
+     },
+     {
+      "page": 21,
+      "id": "2105.09511",
+      "version": "",
+      "kind": "later_page",
+      "context": "queeze-and-expansion transformers,” arXiv Prepr. arXiv2105.09511, 2021. [186] W. Wa"
+     }
+    ],
+    "T7": false,
+    "outcome": "fail_no_page1_stamp",
+    "reason": "no arXiv stamp on page 1; candidate 2006.01632 occurs on pages [17]"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P020",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\c5539e51c9f362f94895bef46e89b204e51ef913.pdf",
+     "exists": true,
+     "sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+     "phase2_sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+     "match": true
+    },
+    {
+     "paper_id": "P020",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\c5539e51c9f362f94895bef46e89b204e51ef913.pdf",
+     "exists": true,
+     "sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+     "phase2_sha256": "033edb3052da771fb1ee12d83e15f17f7f0210499c83827ce02752c694f24bd5",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 30,
+    "found": 30,
+    "on_stated_page": 30
+   }
+  },
+  {
+   "paper_id": "P021",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 4,
+    "total": 4,
+    "surnames": [
+     {
+      "surname": "Xu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Xu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Gong",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gong",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Wan",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wan[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Li",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2310.14172",
+    "page1_stamps": [
+     {
+      "id": "2310.14172",
+      "version": "v1",
+      "text": "arXiv:2310.14172v1 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2310.14172",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "and Haifan Gong contribute equally to this work. arXiv:2310.14172v1 [eess.IV] 22 Oct"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P021",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d17c4e953d890e24c7d3e39a2ba7acad2046751a.pdf",
+     "exists": true,
+     "sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+     "phase2_sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+     "match": true
+    },
+    {
+     "paper_id": "P021",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d17c4e953d890e24c7d3e39a2ba7acad2046751a.pdf",
+     "exists": true,
+     "sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+     "phase2_sha256": "ca6dd7f0eab6c8d1dfa067736bba081bd7aca25a702bdd3686e468c3a318201c",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 23,
+    "found": 23,
+    "on_stated_page": 23
+   }
+  },
+  {
+   "paper_id": "P022",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 21,
+    "total": 21,
+    "surnames": [
+     {
+      "surname": "Fidon",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Fidon",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Aertsen",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Aertsen",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kofler",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kofler",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Bink",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Bink",
+      "marker_evidence": null
+     },
+     {
+      "surname": "David",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "David",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Emam",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Emam",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Guffens",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Guffens",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Jakab",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Jakab",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kasprian",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kasprian",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Kienast",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kienast",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Melbourne",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Melbourne",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Menze",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Menze",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Mufti",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Mufti",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Pogledic",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Pogledic",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Prayer",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Prayer",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Stuempflen",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Stuempflen",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Elslander",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Elslander",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Ourselin",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ourselin",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Vercauteren",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Vercauteren",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2204.02779v4",
+    "page1_stamps": [
+     {
+      "id": "2204.02779",
+      "version": "v4",
+      "text": "arXiv:2204.02779v4 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2204.02779",
+      "version": "v4",
+      "kind": "page1_stamp",
+      "context": "theory allows to model partial information about arXiv:2204.02779v4 [eess.IV] 17 Jan"
+     },
+     {
+      "page": 12,
+      "id": "2111.02408",
+      "version": "",
+      "kind": "later_page",
+      "context": "Partial supervision for the feta challenge 2021,” arXiv preprint arXiv:2111.02408, 2021. [35] J. Hong"
+     },
+     {
+      "page": 12,
+      "id": "2103.06205",
+      "version": "",
+      "kind": "later_page",
+      "context": "NN training beyond rolling the DICE coefficient,” arXiv preprint arXiv:2103.06205, 2021. [49] M. Aert"
+     },
+     {
+      "page": 22,
+      "id": "2103.13314",
+      "version": "",
+      "kind": "later_page",
+      "context": "ed fetal brain MRI deep learning seg- mentation,” arXiv preprint arXiv:2103.13314, 2021. [62] L. Fido"
+     },
+     {
+      "page": 22,
+      "id": "2111.02408",
+      "version": "",
+      "kind": "later_page",
+      "context": "Partial supervision for the feta challenge 2021,” arXiv preprint arXiv:2111.02408, 2021. [63] J. E. I"
+     },
+     {
+      "page": 22,
+      "id": "1607.08022",
+      "version": "",
+      "kind": "later_page",
+      "context": "on: The missing ingredient for fast stylization,” arXiv preprint arXiv:1607.08022, 2016. [67] M. Moda"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P022",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d27d14d2435f40168909da4958463aedd1e3f14d.pdf",
+     "exists": true,
+     "sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+     "phase2_sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+     "match": true
+    },
+    {
+     "paper_id": "P022",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d27d14d2435f40168909da4958463aedd1e3f14d.pdf",
+     "exists": true,
+     "sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+     "phase2_sha256": "fba2c45699241f66584b7eb6753a4fd23b32e367b2d2ce8bf21ae8fffa9920eb",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 26,
+    "found": 26,
+    "on_stated_page": 26
+   }
+  },
+  {
+   "paper_id": "P023",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 14,
+    "total": 14,
+    "surnames": [
+     {
+      "surname": "Kaandorp",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kaandorp",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Payette",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Payette[sup:1,2,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Speckert",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Speckert[sup:1,2,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Steger",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Steger[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ji",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ji[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ull",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ull[sup:6]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Tuura",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Tuura[sup:1,2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Hagmann",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hagmann[sup:2,7]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Knirsch",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Knirsch[sup:2,8]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Latal",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Latal[sup:2,3,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ren",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ren[sup:9]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Dong",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dong[sup:9]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kim",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kim[sup:6,†]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Jakab",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Jakab[sup:1,2,3,5,†   ]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 15,
+      "id": "1412.6980",
+      "version": "",
+      "kind": "later_page",
+      "context": ". arXiv. Preprint posted online January 30, 2017:arXiv:1412.6980. doi:10.48550/arXi"
+     },
+     {
+      "page": 15,
+      "id": "1412.6980",
+      "version": "",
+      "kind": "later_page",
+      "context": "ted online January 30, 2017:arXiv:1412.6980. doi:10.48550/arXiv.1412.6980 43. Simonyan K, Ve"
+     },
+     {
+      "page": 15,
+      "id": "1312.6034",
+      "version": "v2",
+      "kind": "later_page",
+      "context": "er 20, 2013. Accessed February 15, 2026. https://arxiv.org/abs/1312.6034v2 44. Avants BB, Tus"
+     },
+     {
+      "page": 15,
+      "id": "2501.19338",
+      "version": "",
+      "kind": "later_page",
+      "context": ". arXiv. Preprint posted online January 31, 2025:arXiv:2501.19338. doi:10.48550/arXiv"
+     },
+     {
+      "page": 15,
+      "id": "2501.19338",
+      "version": "",
+      "kind": "later_page",
+      "context": "ed online January 31, 2025:arXiv:2501.19338. doi:10.48550/arXiv.2501.19338 47. Cole JH, Ritch"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P023",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\d2cf02a4dbbf16147b65620970f9fc018671262f.pdf",
+     "exists": true,
+     "sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+     "phase2_sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+     "match": true
+    },
+    {
+     "paper_id": "P023",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\d2cf02a4dbbf16147b65620970f9fc018671262f.pdf",
+     "exists": true,
+     "sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+     "phase2_sha256": "3769e20a6d0a7b1225bbabe921f94efebe892e9d53279a12baa0b21d289f1eef",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 27,
+    "found": 27,
+    "on_stated_page": 27
+   }
+  },
+  {
+   "paper_id": "P024",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 9,
+    "total": 9,
+    "surnames": [
+     {
+      "surname": "Plana",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Plana",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Zalevskyi",
+      "class": "match_normalized",
+      "rule": "case_folded",
+      "page": 1,
+      "pdf_raw": "zalevskyi",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Schmidt",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Schmidt[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Gomez",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gomez[sup:4,5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Sanchez",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Sanchez[sup:2,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Dunet",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Dunet[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Koob",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Koob[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Siffredi",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Siffredi[sup:2,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Cuadra",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Cuadra[sup:2,3]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2508.20475v2",
+    "page1_stamps": [
+     {
+      "id": "2508.20475",
+      "version": "v2",
+      "text": "arXiv:2508.20475v2 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2508.20475",
+      "version": "v2",
+      "kind": "page1_stamp",
+      "context": "andomization · Deep Learning · Data Augmentation. arXiv:2508.20475v2 [cs.CV] 2 Oct 202"
+     },
+     {
+      "page": 11,
+      "id": "2504.10244",
+      "version": "",
+      "kind": "later_page",
+      "context": "cal fetal brain mri segmentation using synthseg,” arXiv preprint arXiv:2504.10244, 2025. 19. M. Ebner"
+     },
+     {
+      "page": 12,
+      "id": "2411.06842",
+      "version": "",
+      "kind": "later_page",
+      "context": "intensity clustering and real image fine-tuning,” arXiv preprint arXiv:2411.06842, 2024. 34. C. Manor"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P024",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\db047a3076affe62ed552de4645292559903d153.pdf",
+     "exists": true,
+     "sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+     "phase2_sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+     "match": true
+    },
+    {
+     "paper_id": "P024",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\db047a3076affe62ed552de4645292559903d153.pdf",
+     "exists": true,
+     "sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+     "phase2_sha256": "8f5ebb9702b9f1e8eb80436cb2f77ac2f2b9ad60011c6cb2714d141ba1eb09c5",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 18,
+    "found": 18,
+    "on_stated_page": 18
+   }
+  },
+  {
+   "paper_id": "P025",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 13,
+    "total": 13,
+    "surnames": [
+     {
+      "surname": "Bagheri",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Bagheri",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Velasco-Annis",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Velasco-Annis",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Wang",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wang",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Faghihpirayesh",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Faghihpirayesh",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Khan",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Khan",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Calixto",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Calixto",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Jaimes",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Jaimes",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Vasung",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Vasung",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Ouaalam",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ouaalam",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Afacan",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Afacan",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Warfield",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Warfield",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Rollins",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Rollins",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Gholipour",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gholipour",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 18,
+      "id": "2103.10504",
+      "version": "",
+      "kind": "later_page",
+      "context": "rs for 3D medical image segmentation. arXiv 2021. arXiv preprint arXiv:2103.10504. (2021). 60. Hatami"
+     },
+     {
+      "page": 18,
+      "id": "2403.05246",
+      "version": "",
+      "kind": "later_page",
+      "context": "lightweight unet for medical image segmentation. arXiv preprint arXiv:2403.05246. (2024). 63. Tustis"
+     },
+     {
+      "page": 19,
+      "id": "2211.02701",
+      "version": "",
+      "kind": "later_page",
+      "context": "source framework for deep learning in healthcare. arXiv preprint arXiv:2211.02701. (2022). 79. Loshch"
+     },
+     {
+      "page": 19,
+      "id": "1711.05101",
+      "version": "",
+      "kind": "later_page",
+      "context": "er, Frank. Decoupled weight decay regularization. arXiv preprint arXiv:1711.05101. (2017). 80. Bagher"
+     }
+    ],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P025",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\db172af3515ca8eeb0e01533ca81743c4888cc1a.pdf",
+     "exists": true,
+     "sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+     "phase2_sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+     "match": true
+    },
+    {
+     "paper_id": "P025",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\db172af3515ca8eeb0e01533ca81743c4888cc1a.pdf",
+     "exists": true,
+     "sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+     "phase2_sha256": "6320846afe1fa663bf5ce15161fe54d8373f596da07781bba42dba40aefdfe05",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 24,
+    "found": 24,
+    "on_stated_page": 24
+   }
+  },
+  {
+   "paper_id": "P026",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 0.9230769230769231,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 4,
+    "total": 4,
+    "surnames": [
+     {
+      "surname": "Danaee",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Danaee",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Niethammer",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Niethammer",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Rushmore",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Rushmore",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Bouix",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Bouix",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2510.17999v2",
+    "page1_stamps": [
+     {
+      "id": "2510.17999",
+      "version": "v2",
+      "text": "arXiv:2510.17999v2 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2510.17999",
+      "version": "v2",
+      "kind": "page1_stamp",
+      "context": "arXiv:2510.17999v2 [cs.CV] 19 Feb 20"
+     },
+     {
+      "page": 15,
+      "id": "2208.06613",
+      "version": "",
+      "kind": "later_page",
+      "context": "brain mr segmen- tation, August 2022. URL https://arxiv.org/abs/2208.06613. doi:10.48550/arXiv"
+     },
+     {
+      "page": 15,
+      "id": "2208.06613",
+      "version": "",
+      "kind": "later_page",
+      "context": "t 2022. URL https://arxiv.org/abs/2208.06613. doi:10.48550/arXiv.2208.06613. Nneka Isamah, Wara"
+     },
+     {
+      "page": 16,
+      "id": "1908.09635",
+      "version": "",
+      "kind": "later_page",
+      "context": "fairness in ma- chine learning, 2022. URL https://arxiv.org/abs/1908.09635. doi:10.48550/arXiv"
+     },
+     {
+      "page": 16,
+      "id": "1908.09635",
+      "version": "",
+      "kind": "later_page",
+      "context": ", 2022. URL https://arxiv.org/abs/1908.09635. doi:10.48550/arXiv.1908.09635. Stanislav Nikolov,"
+     },
+     {
+      "page": 16,
+      "id": "2311.02189",
+      "version": "",
+      "kind": "later_page",
+      "context": "with fair error- bound scaling, 2024. URL https://arxiv.org/abs/2311.02189. doi:10.48550/arXiv"
+     },
+     {
+      "page": 16,
+      "id": "2311.02189",
+      "version": "",
+      "kind": "later_page",
+      "context": ", 2024. URL https://arxiv.org/abs/2311.02189. doi:10.48550/arXiv.2311.02189. Hongzhi Wang, Jung"
+     },
+     {
+      "page": 17,
+      "id": "2103.03024",
+      "version": "",
+      "kind": "later_page",
+      "context": "3d medical image segmentation, 2021. URL https://arxiv.org/abs/2103.03024. doi:10.48550/arXiv"
+     },
+     {
+      "page": 17,
+      "id": "2103.03024",
+      "version": "",
+      "kind": "later_page",
+      "context": ", 2021. URL https://arxiv.org/abs/2103.03024. doi:10.48550/arXiv.2103.03024. Zikang Xu, Jun Li,"
+     },
+     {
+      "page": 17,
+      "id": "2209.14378",
+      "version": "",
+      "kind": "later_page",
+      "context": "2023. URL https://arxiv.org/abs/2209. 14378. doi:10.48550/arXiv.2209.14378. 808"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P026",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\eaa74650eaf466ae61bfc2837418f0614bebc4aa.pdf",
+     "exists": true,
+     "sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+     "phase2_sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+     "match": true
+    },
+    {
+     "paper_id": "P026",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\eaa74650eaf466ae61bfc2837418f0614bebc4aa.pdf",
+     "exists": true,
+     "sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+     "phase2_sha256": "e3a635243d6e83a6d7c0ac81da35ce2e4f4b50c16f079b6ff979622120de6fc1",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 22,
+    "found": 22,
+    "on_stated_page": 22
+   }
+  },
+  {
+   "paper_id": "P027",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 3,
+    "total": 4,
+    "surnames": [
+     {
+      "surname": "Faghihpirayesh",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Faghihpirayesh",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Karimi",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Karimi[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Erdoğan",
+      "class": "mismatch_not_found",
+      "rule": null,
+      "page": null,
+      "pdf_raw": null,
+      "marker_evidence": null,
+      "nearest_pdf_word_audit_only": {
+       "word": "Erdo˘gmu¸s1",
+       "page": 1
+      }
+     },
+     {
+      "surname": "Gholipour",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Gholipour[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2205.01675v1",
+    "page1_stamps": [
+     {
+      "id": "2205.01675",
+      "version": "v1",
+      "text": "arXiv:2205.01675v1 [eess.IV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2205.01675",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "tion, motion tracking, and slice navigation [25]. arXiv:2205.01675v1 [eess.IV] 2 May 2"
+     },
+     {
+      "page": 10,
+      "id": "1803.03816",
+      "version": "",
+      "kind": "later_page",
+      "context": "ﬄeseg: Real-time semantic segmenta- tion network. arXiv preprint arXiv:1803.03816 (2018) 6. Gholipour"
+     },
+     {
+      "page": 10,
+      "id": "1704.04861",
+      "version": "",
+      "kind": "later_page",
+      "context": "l neural networks for mobile vision applications. arXiv preprint arXiv:1704.04861 (2017) 8. Kainz, B."
+     },
+     {
+      "page": 10,
+      "id": "1412.6980",
+      "version": "",
+      "kind": "later_page",
+      "context": ", J.: Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980 (2014) 12. Kuklisov"
+     },
+     {
+      "page": 11,
+      "id": "1606.02147",
+      "version": "",
+      "kind": "later_page",
+      "context": "architecture for real-time semantic segmentation. arXiv preprint arXiv:1606.02147 (2016) 19. Poudel,"
+     },
+     {
+      "page": 11,
+      "id": "1805.04554",
+      "version": "",
+      "kind": "later_page",
+      "context": "nd detail for semantic segmentation in real-time. arXiv preprint arXiv:1805.04554 (2018) 20. Poudel,"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P027",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\eb5d3d6bb0bac47a8bcf186d6506cdc80bc3b59e.pdf",
+     "exists": true,
+     "sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+     "phase2_sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+     "match": true
+    },
+    {
+     "paper_id": "P027",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\eb5d3d6bb0bac47a8bcf186d6506cdc80bc3b59e.pdf",
+     "exists": true,
+     "sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+     "phase2_sha256": "aba85760cc1a95500c88d53d61a1bf5db8e0edba5638c5b401e5815494522c2f",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 16,
+    "found": 16,
+    "on_stated_page": 16
+   }
+  },
+  {
+   "paper_id": "P028",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": true
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_WITH_DISCREPANCY",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 16,
+    "total": 16,
+    "surnames": [
+     {
+      "surname": "Fidon",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 2,
+      "pdf_raw": "Fidon",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Aertsen",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Aertsen[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Mufti",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Mufti[sup:1,3,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Emam",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Emam[sup:4,6]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Guffens",
+      "class": "match_trailing_marker",
+      "rule": "compatibility_decomposed",
+      "page": 1,
+      "pdf_raw": "Guﬀens[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Schwartz",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Schwartz[sup:5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ebner",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ebner[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Prayer",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Prayer[sup:5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Kasprian",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Kasprian[sup:5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "David",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "David[sup:3,4]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Melbourne",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Melbourne[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Ourselin",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Ourselin[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Deprest",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Deprest[sup:2]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Langs",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Langs[sup:5]",
+      "marker_evidence": "mupdf_superscript_flag"
+     },
+     {
+      "surname": "Vercauteren",
+      "class": "match_trailing_marker",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Vercauteren[sup:1]",
+      "marker_evidence": "mupdf_superscript_flag"
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2108.04175v1",
+    "page1_stamps": [
+     {
+      "id": "2108.04175",
+      "version": "v1",
+      "text": "arXiv:2108.04175v1 [cs.CV]"
+     }
+    ],
+    "observed": [
+     {
+      "page": 1,
+      "id": "2108.04175",
+      "version": "v1",
+      "kind": "page1_stamp",
+      "context": "ts [2]. Fetal brain structures segmentation could arXiv:2108.04175v1 [cs.CV] 9 Aug 202"
+     },
+     {
+      "page": 10,
+      "id": "2107.03846",
+      "version": "",
+      "kind": "later_page",
+      "context": ": Application to fetal brain 3d mri parcellation. arXiv preprint arXiv:2107.03846 (2021) 9. Fidon, L."
+     },
+     {
+      "page": 11,
+      "id": "2001.02658",
+      "version": "",
+      "kind": "later_page",
+      "context": "t deep learning using hardness weighted sampling. arXiv preprint arXiv:2001.02658 (2020) 11. Fidon, L"
+     },
+     {
+      "page": 11,
+      "id": "2103.13314",
+      "version": "",
+      "kind": "later_page",
+      "context": "based fetal brain MRI deep learning segmentation. arXiv preprint arXiv:2103.13314 (2021) 21. Sacco, A"
+     }
+    ],
+    "T7": true,
+    "outcome": "pass_page1_stamp"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P028",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\ecbd1644ae4436d26cbf84a5d942d4fcb759dc97.pdf",
+     "exists": true,
+     "sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+     "phase2_sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+     "match": true
+    },
+    {
+     "paper_id": "P028",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\ecbd1644ae4436d26cbf84a5d942d4fcb759dc97.pdf",
+     "exists": true,
+     "sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+     "phase2_sha256": "5594e2f48d3015155f36b1f938d836928714a8d098ff353ec159d76c37548bc8",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 25,
+    "found": 25,
+    "on_stated_page": 25
+   }
+  },
+  {
+   "paper_id": "P029",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": null
+   },
+   "status": "MATCH_VERIFIED",
+   "confidence": "high",
+   "failed": [],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 3,
+    "total": 3,
+    "surnames": [
+     {
+      "surname": "Xiao",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Xiao",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Zhou",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zhou",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Fan",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Fan",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "NOT_REPORTED",
+    "page1_stamps": [],
+    "observed": [],
+    "T7": null,
+    "outcome": "na_not_reported"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P029",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\f270e7fa3a491fe8fe99d674ffba2b64bf445f78.pdf",
+     "exists": true,
+     "sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+     "phase2_sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+     "match": true
+    },
+    {
+     "paper_id": "P029",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\f270e7fa3a491fe8fe99d674ffba2b64bf445f78.pdf",
+     "exists": true,
+     "sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+     "phase2_sha256": "780766ba3e8344afb5e8876ab29710d762af4e92abdb18e1f150ef1a5c6e8708",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 28,
+    "found": 28,
+    "on_stated_page": 28
+   }
+  },
+  {
+   "paper_id": "P030",
+   "checks": {
+    "T1": true,
+    "T2": true,
+    "T3": true,
+    "T4": true,
+    "T8": true,
+    "T9_rate": 1.0,
+    "T9": true,
+    "T5": true,
+    "T5p": true,
+    "T6": true,
+    "T7": false
+   },
+   "status": "MATCH_WITH_DISCREPANCY",
+   "confidence": "medium",
+   "failed": [
+    "T7"
+   ],
+   "phase2_status": "MATCH_VERIFIED",
+   "t5": {
+    "T5": true,
+    "T5p": true,
+    "coverage": 1.0,
+    "outcome": "found"
+   },
+   "t6": {
+    "T6": true,
+    "found": 11,
+    "total": 11,
+    "surnames": [
+     {
+      "surname": "Wu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Wang",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Wang",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Liu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Liu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Hou",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Hou",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Li",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Li",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Su",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Su",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Yang",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Yang",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Lu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Lu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Qiu",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Qiu",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Zhang",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Zhang",
+      "marker_evidence": null
+     },
+     {
+      "surname": "Song",
+      "class": "match_exact",
+      "rule": "exact",
+      "page": 1,
+      "pdf_raw": "Song",
+      "marker_evidence": null
+     }
+    ],
+    "outcome": "pass"
+   },
+   "t7": {
+    "candidate": "2209.15076",
+    "page1_stamps": [],
+    "observed": [
+     {
+      "page": 13,
+      "id": "2209.15076",
+      "version": "",
+      "kind": "later_page",
+      "context": "hical Transformer for Medical Image Segmentation. arXiv preprint arXiv:2209.15076 (2022) 45. Zhang W,"
+     },
+     {
+      "page": 15,
+      "id": "1806.04224",
+      "version": "",
+      "kind": "later_page",
+      "context": "n of multiple brain image segmentation pipelines. arXiv preprint arXiv:1806.04224 111. Cullen NC, Ava"
+     },
+     {
+      "page": 16,
+      "id": "1808.00457",
+      "version": "",
+      "kind": "later_page",
+      "context": "retrieval for accurate brain tissue segmentation. arXiv preprint arXiv:1808.00457 129. Chen Y, Chen J"
+     },
+     {
+      "page": 16,
+      "id": "2302.09516",
+      "version": "",
+      "kind": "later_page",
+      "context": "rosis lesions detection methods using brain MRIs. arXiv preprint arXiv:2302.09516 163. Wu,C.,Feng,Z.,"
+     }
+    ],
+    "T7": false,
+    "outcome": "fail_no_page1_stamp",
+    "reason": "no arXiv stamp on page 1; candidate 2209.15076 occurs on pages [13]"
+   },
+   "prerun_copies": [
+    {
+     "paper_id": "P030",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\_staging\\f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+     "exists": true,
+     "sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+     "phase2_sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+     "match": true
+    },
+    {
+     "paper_id": "P030",
+     "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+     "exists": true,
+     "sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+     "phase2_sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+     "match": true
+    }
+   ],
+   "unchanged_check_diffs": {},
+   "t9": {
+    "checkable": 28,
+    "found": 28,
+    "on_stated_page": 28
+   }
+  }
+ ]
+}

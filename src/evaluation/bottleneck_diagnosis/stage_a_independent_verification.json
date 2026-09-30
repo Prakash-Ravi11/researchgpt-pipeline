@@ -1,0 +1,3514 @@
+{
+ "artifact": "stage_a_independent_verification",
+ "labels_are": "machine-assisted, unvalidated",
+ "method": "4 independent read-only agents (workflow wf_3013f182-e36), same written rules, physical PDFs + candidate pairs only; no access to the primary adjudications",
+ "groups": [
+  {
+   "group": "g1",
+   "papers": [
+    "P001",
+    "P002",
+    "P003",
+    "P005"
+   ],
+   "result": {
+    "pairs": [
+     {
+      "paper_id": "P001",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 7,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 7,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R2_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.818 ± 0.028",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Original architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R2_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.70 ± 0.06",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Original architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R2_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "4.6",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Original architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R2_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.805 ± 0.029",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Contracted Architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R2_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.94 ± 0.06",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Contracted Architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R2_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.3",
+        "pdf_row": "N cascades = 1",
+        "pdf_column": "Contracted Architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.844 ± 0.023",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Original architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.76 ± 0.06",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Original architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "7.9",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Original architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.836 ± 0.023",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Contracted Architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.83 ± 0.05",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Contracted Architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "4.5",
+        "pdf_row": "N cascades = 2",
+        "pdf_column": "Contracted Architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.856 ± 0.021",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Original architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R4_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.65 ± 0.06",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Original architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "11.1",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Original architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.854 ± 0.021",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Contracted Architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.76 ± 0.07",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Contracted Architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.6",
+        "pdf_row": "N cascades = 3",
+        "pdf_column": "Contracted Architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R5_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.859 ± 0.020",
+        "pdf_row": "N cascades = 4",
+        "pdf_column": "Contracted Architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R5_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.73 ± 0.06",
+        "pdf_row": "N cascades = 4",
+        "pdf_column": "Contracted Architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R5_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "6.7",
+        "pdf_row": "N cascades = 4",
+        "pdf_column": "Contracted Architecture / GPU"
+       },
+       {
+        "cell_id": "T001_R6_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.866 ± 0.020",
+        "pdf_row": "N cascades = 5",
+        "pdf_column": "Contracted Architecture / Dice"
+       },
+       {
+        "cell_id": "T001_R6_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.71 ± 0.06",
+        "pdf_row": "N cascades = 5",
+        "pdf_column": "Contracted Architecture / %|Jϕ| ≤0"
+       },
+       {
+        "cell_id": "T001_R6_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "8.1",
+        "pdf_row": "N cascades = 5",
+        "pdf_column": "Contracted Architecture / GPU"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 1's own header row, all cell values and its caption on p7, extracted as if it were a sentence. No natural-language sentence asserts any value, so this is WRONG_CLAIM (b). The candidate T001 region (y540-674) is the real Table 1 and all 24 cells match the PDF, but nothing asserts them. The surrounding body text ('Table 1 presents ...', 'slightly worse results') is qualitative only.",
+      "evidence_excerpt": "Original architecture Contracted Architecture N cascades Dice %|Jϕ| ≤0 GPU Dice %|Jϕ| ≤0 GPU 1 0.818 ± 0.028 1.70 ± 0.06 4.6 0.805 ± 0.029 1.94 ± 0.06 3.3 2 0.844",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P001",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 8,
+      "claim_kind": "qualitative_only",
+      "claim_values_asserted": [
+       "λ = 1 (row key / parameter setting, not a cell value)"
+      ],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 8,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T002_R2_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "6.11 ± 0.07",
+        "pdf_row": "λ = 10−4",
+        "pdf_column": "%|Jφ| < 0"
+       },
+       {
+        "cell_id": "T002_R2_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.849 ± 0.021",
+        "pdf_row": "λ = 10−4",
+        "pdf_column": "Dice"
+       },
+       {
+        "cell_id": "T002_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.15 ± 0.06",
+        "pdf_row": "λ = 10−1",
+        "pdf_column": "%|Jφ| < 0"
+       },
+       {
+        "cell_id": "T002_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.859 ± 0.020",
+        "pdf_row": "λ = 10−1",
+        "pdf_column": "Dice"
+       },
+       {
+        "cell_id": "T002_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.71 ± 0.06",
+        "pdf_row": "λ = 1",
+        "pdf_column": "%|Jφ| < 0"
+       },
+       {
+        "cell_id": "T002_R4_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.866 ± 0.020",
+        "pdf_row": "λ = 1",
+        "pdf_column": "Dice"
+       },
+       {
+        "cell_id": "T002_R5_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.21 ± 0.03",
+        "pdf_row": "λ = 2",
+        "pdf_column": "%|Jφ| < 0"
+       },
+       {
+        "cell_id": "T002_R5_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.852 ± 0.026",
+        "pdf_row": "λ = 2",
+        "pdf_column": "Dice"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The only natural-language sentence says λ = 1 'provides the best Dice score and significantly reduces the percentage of negative Jacobian values'. That is qualitative and comparative. λ = 1 is the row key (a parameter choice), and no Dice or %|Jφ|<0 cell value is stated, so this is WRONG_CLAIM (e). The rest of the claim text is Table 2's content and caption. The candidate T002 is the real Table 2 on p8 and its 8 cells are correct, but none is asserted.",
+      "evidence_excerpt": "Based on these results, we adopted a regularization parameter of λ = 1, which provides the best Dice score and significantly reduces the percentage of negative Jacobian values.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P001",
+      "pair_id": "G003",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 13,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 5",
+      "pdf_table_page": 13,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T005_R2_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.923 ± 0.006 (Table 4; Table 5 CSF/Ours is 0.903 ± 0.006)",
+        "pdf_row": "CSF (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R2_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.897 ± 0.011 (Table 4)",
+        "pdf_row": "CSF (Table 4, IMPACT)",
+        "pdf_column": "nnU-Net"
+       },
+       {
+        "cell_id": "T005_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.877 ± 0.006 (Table 4)",
+        "pdf_row": "Grey Matter (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R3_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.871 ± 0.012 (Table 4)",
+        "pdf_row": "Grey Matter (Table 4, IMPACT)",
+        "pdf_column": "nnU-Net"
+       },
+       {
+        "cell_id": "T005_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.915 ± 0.006 (Table 4)",
+        "pdf_row": "White Matter (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R4_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.919 ± 0.006 (Table 4)",
+        "pdf_row": "White Matter (Table 4, IMPACT)",
+        "pdf_column": "nnU-Net"
+       },
+       {
+        "cell_id": "T005_R5_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.902 ± 0.005 (Table 4 Ventricles; only coincides with Table 5 Cerebellum/Ours, Table 5 Ventricles/Ours is 0.816 ± 0.023)",
+        "pdf_row": "Ventricles (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R8_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.955 ± 0.003 (Table 4)",
+        "pdf_row": "Brain Stem (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R8_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.953 ± 0.006 (Table 4)",
+        "pdf_row": "Brain Stem (Table 4, IMPACT)",
+        "pdf_column": "nnU-Net"
+       },
+       {
+        "cell_id": "T005_R9_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.926 ± 0.012 (Table 4)",
+        "pdf_row": "Average (Table 4, IMPACT)",
+        "pdf_column": "Ours"
+       },
+       {
+        "cell_id": "T005_R9_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.920 ± 0.014 (Table 4)",
+        "pdf_row": "Average (Table 4, IMPACT)",
+        "pdf_column": "nnU-Net"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 5's labels, cell values and caption (FeTa, p13) with no natural-language sentence, so this is WRONG_CLAIM (b). Separately, the candidate 'Table 5' region (y64-261), whose caption was taken from the body sentence 'Table 5 showcases...', is actually Table 4 (IMPACT, with PP/dHCP columns). All 11 candidate cells are Table 4 values, so the table step would also fail.",
+      "evidence_excerpt": "Brain Stem 0.814 ± 0.017 0.841 ± 0.013 Average 0.847 ± 0.008 0.866 ± 0.013 Table 5: Average Dice scores obtained using MAS, nnU-Net [17], on the FeTa dataset [27].",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P002",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 22,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 22,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R1_C2",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: 'Murgasova et al., 2012] SR-reconstructions at isotropic resolution of 0.86mm.'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T001_R5_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: 'subjects, in the gestational age (GA) range of 20.9 to 34.8 weeks.'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T001_R7_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: '20.9 to 34.8 weeks, 28.2±3.6) were randomly selected'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T001_R7_C2",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: '20.9 to 34.8 weeks, 28.2±3.6) were randomly selected'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T001_R9_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: 'subjects in the GA range of 22.9 to 34.8 weeks, 27.4±3.6) were retained for'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T001_R9_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "body text: 'subjects in the GA range of 22.9 to 34.8 weeks, 27.4±3.6) were retained for'",
+        "pdf_row": "body paragraph below Table 1 (not a table row)",
+        "pdf_column": "n/a"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 1's full content and caption on p22 ('0.863' is the 0.86³ superscript, flattened), not a sentence, so this is WRONG_CLAIM (b). The candidate T001 bbox (y321-573) covers the body paragraph under the table, which really sits at y~120-285. All 6 candidate cells are fragments of that body text ('et al., 2012] SR-re', 'eeks, 27.4±3.6'), so the region and cells are wrong as well.",
+      "evidence_excerpt": "CHUV 33 (24/9) [21-35] (29.6±3.6) MIALSRTK [Tourbier et al., 2019] 0.803 Table 1: Summary of the data used for training and quantitative and qualitative evaluation.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P002",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 31,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 3",
+      "pdf_table_page": 31,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T003_R2_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "whole row merged: 'Baseline 0.748 ± 0.009 0.292 ± 0.02 29.8 ± 14.5' (candidate truncated)",
+        "pdf_row": "Baseline",
+        "pdf_column": "Configuration+DSC+ASSD+BNE1 merged"
+       },
+       {
+        "cell_id": "T003_R3_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "whole row merged: 'Hybrid 0.744 ± 0.004 0.297 ± 0.01 31 ± 13.4' (candidate truncated)",
+        "pdf_row": "Hybrid",
+        "pdf_column": "Configuration+DSC+ASSD+BNE1 merged"
+       },
+       {
+        "cell_id": "T003_R4_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "whole row merged: '0.0002 0.758 ± 0.007 (5) 0.274 ± 0.01 (5) 22.1 ± 10 (4) 5' (candidate truncated)",
+        "pdf_row": "TopoCP λtopo = 0.0002",
+        "pdf_column": "λtopo+DSC+ASSD+BNE1 merged"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 3's header, rows and the first caption sentence on p31. The caption only describes the metrics, and no sentence asserts a value, so this is WRONG_CLAIM (b). The candidate T003 is Table 3, but its region is cut off after the λtopo=0.001 row. Its 3 'cells' are whole-row merged strings, not single cells.",
+      "evidence_excerpt": "0.2 0.760 ± 0.005 (4) 0.272 ± 0.01 (4) 21.6 ± 7.9 (3) 4 Table 3: Table of the validation scores (mean ± standard deviation) of the dice similarity coeﬃcient (DSC), the average symmetric surface distance (ASSD) and the 1-dimensional Betti number error (BNE1).",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P002",
+      "pair_id": "G003",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 34,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4",
+      "pdf_table_page": 34,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T004_R14_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "caption fragment: 'are considered statistically significant for p < 0.05.'",
+        "pdf_row": "caption (not a table row)",
+        "pdf_column": "n/a"
+       },
+       {
+        "cell_id": "T004_R2_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.82 ± 0.02 | 0.22 ± 0.05 | 0.093 ± 0.03",
+        "pdf_row": "Baseline, (a) FeTA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       },
+       {
+        "cell_id": "T004_R2_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.77 ± 0.05 | 0.42 ± 0.14 | 0.25 ± 0.10",
+        "pdf_row": "Baseline, (b) STA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       },
+       {
+        "cell_id": "T004_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.82 ± 0.02 | 0.23 ± 0.06 | 0.10 ± 0.04",
+        "pdf_row": "Hybrid, (a) FeTA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       },
+       {
+        "cell_id": "T004_R3_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.77 ± 0.05 | 0.42 ± 0.15 | 0.26 ± 0.11",
+        "pdf_row": "Hybrid, (b) STA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       },
+       {
+        "cell_id": "T004_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.85 ± 0.01 (*, +) | 0.19 ± 0.04 (*, +) | 0.06 ± 0.03 (*, +)",
+        "pdf_row": "TopoCP, (a) FeTA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       },
+       {
+        "cell_id": "T004_R4_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged 3 cells: 0.79 ± 0.05 (*, +) | 0.41 ± 0.18 (*, +) | 0.23 ± 0.10 (*, +)",
+        "pdf_row": "TopoCP, (b) STA",
+        "pdf_column": "DSC+ASSD+HR merged"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is the content of sub-tables 4a (FeTA) and 4b (STA), their subcaptions and the first caption sentence on p34. No natural-language sentence asserts a value, so this is WRONG_CLAIM (b). The candidate T004 region is the real Table 4, but its cells each merge three metric values, and one is a caption fragment ('ficant for p<0.05.'). The body sentence on p32 ('DSC goes from 0.85 in FeTA to 0.79 in STA...') is a different span and not the candidate claim.",
+      "evidence_excerpt": "TopoCP 0.79 ± 0.05 (*, +) 0.41 ± 0.18 (*, +) 0.23 ± 0.10 (*, +) (b) STA Table 4: Tables of the metrics computed on the pure testing sets FeTA 4a and STA 4b.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P002",
+      "pair_id": "G004",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 40,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 7",
+      "pdf_table_page": 40,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T007_R6_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "100 %",
+        "pdf_row": "Percentage agreement",
+        "pdf_column": "Best (spans Baseline/Hybrid/TopoCP sub-columns)"
+       },
+       {
+        "cell_id": "T007_R7_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.68 (0.10)",
+        "pdf_row": "Gwet’s AC (SE)",
+        "pdf_column": "Medium (spans sub-columns)"
+       },
+       {
+        "cell_id": "T007_R7_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.68 (0.10)",
+        "pdf_row": "Gwet’s AC (SE)",
+        "pdf_column": "Worst (spans sub-columns)"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 7's full grid and first caption sentence on p40 ('...as Best, Medium and Worst.'), with no value-asserting sentence, so this is WRONG_CLAIM (b). The 3 candidate cells are real Table 7 cells. A separate body sentence higher on p40 ('The estimated Gwet’s AC between the three experts was 0.68 (standard error (SE): 0.10) for Worst, 0.68 (SE: 0.10) for Medium and 1 for Best ... percentage agreement of 100 %') would assert them, but that sentence is not the candidate claim text.",
+      "evidence_excerpt": "Percentage agreement 100 % 78 % 78 % Gwet’s AC (SE) 1 (-) 0.68 (0.10) 0.68 (0.10) Consensus 0 0 31 26 5 0 5 26 0 Table 7: Table of the three experts (two radiologists and one engineer) qualitative",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P003",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 3,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 3,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R10_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "91.3",
+        "pdf_row": "Guo et al. [24]",
+        "pdf_column": "Dice Score (%) (candidate header '95.7' is a data value)"
+       },
+       {
+        "cell_id": "T001_R1_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "95.7",
+        "pdf_row": "SegAN [16]",
+        "pdf_column": "Dice Score (%)"
+       },
+       {
+        "cell_id": "T001_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "89.8",
+        "pdf_row": "Shen et al. [22]",
+        "pdf_column": "Dice Score (%)"
+       },
+       {
+        "cell_id": "T001_R6_C6",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "91.5, 96.2 (one two-value cell; candidate is a fragment)",
+        "pdf_row": "Wang et al. [23]",
+        "pdf_column": "Dice Score (%)"
+       },
+       {
+        "cell_id": "T001_R8_C6",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "91.5, 96.2 (one two-value cell; candidate is a fragment)",
+        "pdf_row": "Wang et al. [23]",
+        "pdf_column": "Dice Score (%)"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is a Figure 2 caption fragment, the Table 1 caption, all of Table 1's rows and the section number '3.' on p3. There is no natural-language sentence, so this is WRONG_CLAIM (b). The candidate region (y334-463) holds only the lower half of Table 1 plus the Figure 1 image. Its grid uses a data value ('95.7') as the column header and splits Wang et al.'s two-value cell '91.5, 96.2' into two cells. The body sentence '...mean Dice score of 91.3 in the BraTS dataset' is a different span.",
+      "evidence_excerpt": "Table 1: Comparison Table for Exiting Method Method Dataset Modality Dice Score (%) Explanations U-Net [13] BraTS MRI 88.5 - Attention U-Net [14] BraTS MRI 90.1 - SegAN [16] LiTS CT 95.7 -",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P003",
+      "pair_id": "G002",
+      "status": "VERIFIED_POSITIVE",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 5,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "92.3"
+      ],
+      "pdf_table_label": "Table 3",
+      "pdf_table_page": 6,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T004_R6_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": true,
+        "pdf_cell_text": "92.3",
+        "pdf_row": "04 Proposed Method",
+        "pdf_column": "Dice Score (%)"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Only the natural-language sentence on p5 was judged; the Table 2 text in front of it was ignored. The sentence asserts that the proposed method's average Dice on ISLES is 92.3% 'as shown in Table 3'. Table 3 on p6 ('Comparison with state-of-the-art methods on the ISLES dataset') has row '04 Proposed Method', column 'Dice Score (%)' = 92.3, and that value is unique in the table. The candidate T004 has label Table 3, a matching caption and page 6. Its bbox is full-width, picking up right-column Table 4 text, and slightly clips the header and last row, but cell R6_C3 (row '04', column 'Dice Score') is the right cell. Table 6 on p7 also lists ISLES 92.3 ± 2.8, but the claim explicitly cites Table 3's comparison with other methods.",
+      "evidence_excerpt": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P005",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 13,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 6",
+      "pdf_table_page": 13,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T008_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128",
+        "pdf_row": "Layer1 (Table 6)",
+        "pdf_column": "Filters (candidate header 'CSP' is garbage)"
+       },
+       {
+        "cell_id": "T008_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128",
+        "pdf_row": "Layer2 (Table 6)",
+        "pdf_column": "Filters (candidate header 'CSP' is garbage)"
+       },
+       {
+        "cell_id": "T008_R8_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128 (Table 7, not Table 6)",
+        "pdf_row": "FC, second row (Table 7)",
+        "pdf_column": "Filter size"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim text is Table 6's caption ('Architectural detail of CSPCNN Global Pathway'), its header and Layer1/Layer2 rows, plus the next caption's 'Table 7.' on p13. There is no natural-language sentence, so this is WRONG_CLAIM (b). The candidate T008 is labelled 'Table 7', but its region (y240-414) merges Table 6, Table 7 and body text. Two of its cells are Table 6 Filters values and one is from Table 7.",
+      "evidence_excerpt": "Table 6. Architectural detail of CSPCNN Global Pathway Layer Type Filter size Strides Filters FC unit Input Output Layer1 Convolution 7×7 1×1 128 - 4×33×33 128×27×27 Layer2 Convolution 7×7 1×1 128 - 128×27×27 128×21×21 Table 7.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P005",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 13,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 7",
+      "pdf_table_page": 13,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T008_R3_C7",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128 (Table 6 Layer1 Filters, not Table 7)",
+        "pdf_row": "Layer1 (Table 6)",
+        "pdf_column": "Filters"
+       },
+       {
+        "cell_id": "T008_R4_C7",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128 (Table 6 Layer2 Filters, not Table 7)",
+        "pdf_row": "Layer2 (Table 6)",
+        "pdf_column": "Filters"
+       },
+       {
+        "cell_id": "T008_R7_C12",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "14,450,688 (candidate ',450,688' is a fragment)",
+        "pdf_row": "FC, first row (Table 7)",
+        "pdf_column": "Output"
+       },
+       {
+        "cell_id": "T008_R7_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "256",
+        "pdf_row": "FC, first row (Table 7)",
+        "pdf_column": "Filter size"
+       },
+       {
+        "cell_id": "T008_R7_C9",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "256 × 21 × 21 (candidate '256 × 21' is a fragment)",
+        "pdf_row": "FC, first row (Table 7)",
+        "pdf_column": "Input"
+       },
+       {
+        "cell_id": "T008_R8_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "128",
+        "pdf_row": "FC, second row (Table 7)",
+        "pdf_column": "Filter size"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The only natural-language sentence, 'The architectures of the two CNNs are integrated by merging their respective feature maps show in Table 7.', just points to Table 7 and asserts no value, so this is WRONG_CLAIM (c). The rest of the claim text is Table 7's caption and content. The candidate T008 region merges Tables 6 and 7 plus body text. Its cells include Table 6 values (R3_C7, R4_C7) and fragments ('256 × 21', ',450,688').",
+      "evidence_excerpt": "The architectures of the two CNNs are integrated by merging their respective feature maps show in Table 7. Subsequently, the amalgamated feature maps are processed through two densely connected layers.",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "group": "g2",
+   "papers": [
+    "P006",
+    "P007",
+    "P009",
+    "P011",
+    "P013",
+    "P015"
+   ],
+   "result": {
+    "pairs": [
+     {
+      "paper_id": "P006",
+      "pair_id": "G001",
+      "status": "WRONG_TABLE",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 12,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "827"
+      ],
+      "pdf_table_label": "TABLE IV: RECALL PERFORMANCE OF THE YOLO MODELS (caption and header at the bottom of p12's right column; data rows at the top left of p13)",
+      "pdf_table_page": 12,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T003_R2_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Body text 'YOLOv5 and YOLOv7 on 827 labeled boxes and masks' (p12, Sec. D, left column). A fragment of the claim's own sentence, not a table cell.",
+        "pdf_row": "n/a (body text)",
+        "pdf_column": "n/a (body text)"
+       }
+      ],
+      "reason": "Step 1 passes: the sentence gives the evaluation-set size of 827 labeled images, and 827 is in Table IV (Images and All-row Labels). Step 2 fails. The candidate 'Table IV' is anchored on the body sentence (its caption field is 'Table IV presents the recall performance evaluation of'). Its p12 bbox covers the tail rows of Table III (All/Meningioma precision values), the Sec. D body text and the Fig. 10 caption. Only the real TABLE IV caption and header row sit at the bottom right of p12; its data rows are on p13. The reconstructed cell is body text.",
+      "evidence_excerpt": "Table IV presents the recall performance evaluation of YOLOv5 and YOLOv7 on 827 labeled boxes and masks images. [...] TABLE IV: RECALL PERFORMANCE OF THE YOLO MODELS Class YOLOv5 YOLOv7 [p13:] All 827 0.90 5 0.906 0.90 4 0.903",
+      "confidence": "medium"
+     },
+     {
+      "paper_id": "P006",
+      "pair_id": "G002",
+      "status": "WRONG_TABLE",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 13,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "827",
+       "0.5 (IoU threshold)"
+      ],
+      "pdf_table_label": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)",
+      "pdf_table_page": 14,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T004_R4_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "827: the merged Images cell of TABLE IV (recall) on p13, not of Table V",
+        "pdf_row": "All to Pituitary (merged), Table IV",
+        "pdf_column": "Images (Table IV)"
+       }
+      ],
+      "reason": "The claim asserts 827 labeled images (IoU 0.5), and that value is in the real Table V on p14. The candidate 'Table V' is on p13 (bbox y 98.8 to 131.3) and is anchored on the body sentence 'Table V shows the mean Average Precision (mAP) for the'. Its region holds the Meningioma and Glioma rows of TABLE IV (recall) plus right-column body text. The candidate '827' is Table IV's merged Images cell. The real Table V is on another page (p14, top left).",
+      "evidence_excerpt": "(p13) Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at the IoU threshold of 0.5. (p14) TABLE V: MEAN AVERAGE PRECISION (MAP@.5)",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P006",
+      "pair_id": "G003",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 14,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)",
+      "pdf_table_page": 14,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T004_R2_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.947 from p13 body text 'YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection'"
+       },
+       {
+        "cell_id": "T004_R3_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "'202 a' is the Meningioma row-label fragment plus Labels 202 of TABLE IV on p13"
+       },
+       {
+        "cell_id": "T004_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "'0.97 0.97' is TABLE IV (p13) Meningioma YOLOv7 Box 0.97 and Mask 0.97 merged"
+       },
+       {
+        "cell_id": "T004_R3_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "p13 body text fragment 'for box detection and 0.947 for mask detection,'"
+       },
+       {
+        "cell_id": "T004_R4_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "827: the merged Images cell of TABLE IV on p13"
+       },
+       {
+        "cell_id": "T004_R5_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "'Glioma 382' is the TABLE IV row label and Labels value merged"
+       },
+       {
+        "cell_id": "T004_R5_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "p13 body text fragment 'YOLOv7 has a mAP score of 0.94 for box detectio'"
+       }
+      ],
+      "reason": "Rule (b). The claim text is the p14 page number '14' followed by the TABLE V caption, headers and every cell value, extracted as if it were a sentence. Its only natural-language sentence, 'Figure 11 presents the F1-confidence curves for YOLOv5 and YOLOv7.', asserts no table value. The candidate cells are also Table IV fragments and body text from p13, not Table V.",
+      "evidence_excerpt": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5) Class Image s Label s YOLOv5 YOLOv7 Box Mas k Box Mas k All 827 827 0.94 7 0.947 0.94 0.941 [...] Figure 11 presents the F1-confidence curves for YOLOv5 and YOLOv7.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P006",
+      "pair_id": "G004",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 15,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "827",
+       "0.5-0.95 (IoU range)"
+      ],
+      "pdf_table_label": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)",
+      "pdf_table_page": 15,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T006_R2_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Body text 'The combine classes mAP@.5 score for YOLOv5 has 0.666' (p15 left column): a metric-name fragment"
+       },
+       {
+        "cell_id": "T006_R3_C6",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Body text 'while YOLOv7 has mAP@.5 score of 0.677' (p15): a metric-name fragment"
+       }
+      ],
+      "reason": "Rules (c) and (d). The sentence asserts 827 images and an IoU range of 0.5 to 0.95. Neither value is in the candidate cells. Those cells ('mAP@.5 s', 'mAP@.5') are metric-name fragments from the next body sentences, and the only overlap is the '.5' substring of 'mAP@.5:.95'. The table is also wrong: the candidate bbox (p15, y 209.9 to 378.5) covers the Fig. 13 caption and Sec. F body text, while the real TABLE VI is at about y 403 to 533 on the same page.",
+      "evidence_excerpt": "Table VI shows the mAP for the YOLOv5 and YOLOv7 models on 827 labeled boxes and masks images, evaluated at IoU threshold of 0.5-0.95. [...] The combine classes mAP@.5 score for YOLOv5 has 0.666 for box detection and 0.657 for mask detection, while YOLOv7 has mAP@.5 score",
+      "confidence": "medium"
+     },
+     {
+      "paper_id": "P007",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 10,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "0.922"
+      ],
+      "pdf_table_label": "Table 3. Inter-rater agreement results for dHCP dataset.",
+      "pdf_table_page": 10,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R7_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Section heading '3.1 Inter-observer agreement' (body text above the table)",
+        "pdf_row": "n/a (body text)",
+        "pdf_column": "n/a (body text)"
+       }
+      ],
+      "reason": "Rule (d). The claim is a real sentence asserting ICC estimates of at least 0.922; LCC ICC3 = 0.922 in Table 3. But the only candidate cell is the section heading '3.1 Inter-observer ag', and the only number it shares with the claim is the section number 3.1. The candidate region is also wrong: its bbox (y 91 to 247) covers the Results text, the claim and the caption, while the Table 3 grid is at about y 260 to 440.",
+      "evidence_excerpt": "3.1 Inter-observer agreement All ICC estimates exceed 0.922, indicating an excellent inter-rater agreement [36] (Table 3). [...] Measurement ICC3 p-value CI95% LCC 0.922 2.60E-05 [0.72, 0.98]",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P009",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 4,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1: General information about datasets used for training and testing.",
+      "pdf_table_page": 5,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "28.7 ± 3.9 (21.1-38.3)",
+        "pdf_row": "Training / dHCP fetal train",
+        "pdf_column": "Age at scan (GA, weeks): mean ± SD (range)"
+       }
+      ],
+      "reason": "Rules (c) and (d). The claim only points to Table 1 ('metadata information listed in Table 1') and to Figure 1. Its only numbers are the section number 2.1.1 and the figure and table numbers. The candidate age range (21.1-38.3), from the dHCP fetal train row, exists in Table 1 on p5 but is not asserted; its overlap with '2.1.1' is spurious.",
+      "evidence_excerpt": "2.1.1 MRI datasets and rationale of data pooling for test diversification An illustration of our datasets and domain divisions can be found in Figure 1, with their metadata information listed in Table 1.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P011",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 2,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1: Summary of the data used for training and quantitative and qualitative evaluation.",
+      "pdf_table_page": 2,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R10_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "[18-34] (27.3±4.1) (candidate holds the second line only)",
+        "pdf_row": "EVALUATION Qualitative",
+        "pdf_column": "Gestational age (weeks)"
+       },
+       {
+        "cell_id": "T001_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.5T; 3T",
+        "pdf_row": "TRAINING",
+        "pdf_column": "Magnetic field strength (Tesla)"
+       },
+       {
+        "cell_id": "T001_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.5x0.5x0.5",
+        "pdf_row": "TRAINING",
+        "pdf_column": "Image resolution (mm3)"
+       },
+       {
+        "cell_id": "T001_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "[22.6 - 33.4] (28.7±3.5) (first line only)",
+        "pdf_row": "TRAINING",
+        "pdf_column": "Gestational age (weeks)"
+       },
+       {
+        "cell_id": "T001_R5_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "[22.6 - 33.4] (28.7±3.5) (second line, split into its own row by the candidate)",
+        "pdf_row": "TRAINING",
+        "pdf_column": "Gestational age (weeks)"
+       },
+       {
+        "cell_id": "T001_R6_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.5T; 3T",
+        "pdf_row": "EVALUATION Quantitative",
+        "pdf_column": "Magnetic field strength (Tesla)"
+       },
+       {
+        "cell_id": "T001_R6_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.8x0.8x0.8",
+        "pdf_row": "EVALUATION Quantitative",
+        "pdf_column": "Image resolution (mm3)"
+       },
+       {
+        "cell_id": "T001_R6_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "21-38",
+        "pdf_row": "EVALUATION Quantitative",
+        "pdf_column": "Gestational age (weeks)"
+       },
+       {
+        "cell_id": "T001_R7_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Gholipour et. al, 2017 [14] (fragment)",
+        "pdf_row": "EVALUATION Quantitative",
+        "pdf_column": "Reconstruction method"
+       },
+       {
+        "cell_id": "T001_R8_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.5T",
+        "pdf_row": "EVALUATION Qualitative",
+        "pdf_column": "Magnetic field strength (Tesla)"
+       },
+       {
+        "cell_id": "T001_R8_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.12x1.12x1.12",
+        "pdf_row": "EVALUATION Qualitative",
+        "pdf_column": "Image resolution (mm3)"
+       }
+      ],
+      "reason": "Rule (b). The claim text is Table 1's header row, all its cell values and its caption, extracted as a sentence, plus a truncated body fragment ('recently proved its good ability to deal with fetal brain MRI tissue segmentation [18].') that asserts no table value. The cells do exist in Table 1, but no natural-language sentence asserts any of them.",
+      "evidence_excerpt": "TRAINING 1.5T; 3T General Electric 0.5x0.5x0.5 15 [22.6 - 33.4] (28.7±3.5) mialSRTK [3, 13] [...] Table 1: Summary of the data used for training and quantitative and qualitative evaluation. recently proved its good ability to deal with fetal brain MRI tissue segmentation [18].",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P011",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 4,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 3: Experts' qualitative evaluation results in the comparison of Baseline U-Net and TopoCP automatic segmentations.",
+      "pdf_table_page": 4,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T003_R2_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "12%",
+        "pdf_row": "Acceptable (50)",
+        "pdf_column": "Baseline U-Net"
+       },
+       {
+        "cell_id": "T003_R2_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "84%",
+        "pdf_row": "Acceptable (50)",
+        "pdf_column": "TopoCP"
+       },
+       {
+        "cell_id": "T003_R2_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "4%",
+        "pdf_row": "Acceptable (50)",
+        "pdf_column": "Equal"
+       },
+       {
+        "cell_id": "T003_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "17%",
+        "pdf_row": "Excellent (80)",
+        "pdf_column": "Baseline U-Net"
+       },
+       {
+        "cell_id": "T003_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "79%",
+        "pdf_row": "Excellent (80)",
+        "pdf_column": "TopoCP"
+       },
+       {
+        "cell_id": "T003_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "4%",
+        "pdf_row": "Excellent (80)",
+        "pdf_column": "Equal"
+       },
+       {
+        "cell_id": "T003_R4_C1",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "All (130) (row header, not a value)",
+        "pdf_row": "All (130)",
+        "pdf_column": "SR quality (# of slices)"
+       },
+       {
+        "cell_id": "T003_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "15%",
+        "pdf_row": "All (130)",
+        "pdf_column": "Baseline U-Net"
+       },
+       {
+        "cell_id": "T003_R4_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "81%",
+        "pdf_row": "All (130)",
+        "pdf_column": "TopoCP"
+       },
+       {
+        "cell_id": "T003_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "4%",
+        "pdf_row": "All (130)",
+        "pdf_column": "Equal"
+       }
+      ],
+      "reason": "Rule (b). The claim text is Table 3's header, cells and caption, followed by the reference-list fragment '[8] B.'. No natural-language sentence in it asserts any value. The prose discussion of Table 3 is a different sentence on p3. The candidate cells do exist in Table 3 on p4.",
+      "evidence_excerpt": "Acceptable (50) 12% 84% 4% Excellent (80) 17% 79% 4% All (130) 15% 81% 4% Table 3: Experts’ qualitative evaluation results in the comparison of Baseline U-Net and TopoCP automatic segmentations. [8] B. Caldairou et. al,",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P013",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 5,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1: Fetal MRI acquisition parameters",
+      "pdf_table_page": 5,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R2_C2",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Caption fragment '...for field strengths of 1.5 T and 3 T.'",
+        "pdf_row": "n/a (caption)",
+        "pdf_column": "n/a (caption)"
+       },
+       {
+        "cell_id": "T001_R6_C1",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.5 T (row stub, a label rather than a value)",
+        "pdf_row": "1.5 T",
+        "pdf_column": "row-label column"
+       }
+      ],
+      "reason": "Rule (b). The claim text is the running header ('Conditional Atlas Learning in Fetal MRI 5', where 5 is the page number) followed by the Table 1 caption. It has no natural-language sentence asserting any cell value. '1.5 T' occurs only as caption text and as a row label. The candidate cells are a caption fragment and that row stub.",
+      "evidence_excerpt": "Conditional Atlas Learning in Fetal MRI 5 Table 1: Fetal MRI acquisition parameters, including echo time TE, repetition time TR, slice thickness, field of view (FOV), and image resolution for field strengths of 1.5 T and 3 T.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P015",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 6,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "0.55T",
+       "300 ms",
+       "397 ms",
+       "600 ms"
+      ],
+      "pdf_table_label": "Table 1: Dataset properties.",
+      "pdf_table_page": 5,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R1_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.5 × 0.5 × 0.5",
+        "pdf_row": "KISPI (public), MIAL",
+        "pdf_column": "Resolution (mm3)"
+       },
+       {
+        "cell_id": "T001_R2_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.5 × 0.5 × 0.5",
+        "pdf_row": "KISPI (public), IRTK",
+        "pdf_column": "Resolution (mm3)"
+       },
+       {
+        "cell_id": "T001_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.5 × 0.5 × 3.5 mm3",
+        "pdf_row": "KISPI (public)",
+        "pdf_column": "Acquisition Parameters"
+       },
+       {
+        "cell_id": "T001_R5_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "SS-FSR, TR/TE: 6000–22000/80–140 ms",
+        "pdf_row": "VIEN (private)",
+        "pdf_column": "Acquisition Parameters"
+       }
+      ],
+      "reason": "Rule (d). The sentence describes a separate, prospectively acquired multi-echo KCL dataset (0.55T FreeMax, TEs of 300, 397 and 600 ms). It refers to Table 1's KCL row only for 'similar parameters', and says the TEs differ. The candidate cells are KISPI resolutions and the VIEN TR/TE, none of them asserted. The only shared digits are substrings of longer numbers: 0.5 inside 0.55, and 600 inside 6000. The KCL row it references lies outside the candidate bbox.",
+      "evidence_excerpt": "using SST2w sequences at St. Thomas’ Hospital, London, on a Siemens FreeMax 0.55T scanner, with similar parameters as the KCL dataset in Table 1, except for echo times (TEs), with data acquired at 300 ms, 397 ms, 600 ms, in order to do T2 mapping.",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "group": "g3",
+   "papers": [
+    "P014",
+    "P016",
+    "P017"
+   ],
+   "result": {
+    "pairs": [
+     {
+      "paper_id": "P014",
+      "pair_id": "G001",
+      "status": "WRONG_CELL",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 3,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "182",
+       "62",
+       "59",
+       "3",
+       "120"
+      ],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 4,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R2_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": true,
+        "pdf_row": "column header (2nd line of header cell)",
+        "pdf_column": "Unexposed",
+        "pdf_cell_text": "Unexposed (n = 120)"
+       }
+      ],
+      "incomplete_missing_values": [
+       "182",
+       "62",
+       "59",
+       "3"
+      ],
+      "reason": "Claim (p3) asserts cohort sizes incl. '120 unexposed controls', citing Table 1 (p4). Candidate is Table 1 (same table; bbox truncated to header + first ~9 rows). The only candidate cell '(n=120)' is the second line of the 'Unexposed (n = 120)' column header, i.e. a header fragment rather than a data cell; per rules header fragments are WRONG_CELL. 182, 59 and 3 do not appear in Table 1 at all.",
+      "evidence_excerpt": "Our cohort consisted of 182 participants: 62 with SRI (59 SSRIs, 3 SNRIs) exposure and 120 unexposed controls (Table 1). ... Table 1. Demographic and clinical characteristics. Clinical Variables SRI-exposed (n = 62) Unexposed (n = 120) P values",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P014",
+      "pair_id": "G002",
+      "status": "WRONG_TABLE",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 4,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "0.45",
+       "0.53",
+       "0.0004",
+       "0.48",
+       "0.56",
+       "0.0004"
+      ],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 5,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T002_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_row": "ADC_D (this row is in Table 3, not Table 2)",
+        "pdf_column": "Difference (95% CI) of Table 3",
+        "pdf_cell_text": "0.0004 (0.000003 to 0.0008)"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Claim (p4) asserts left/right hippocampal volumes and adjusted p=0.0004 from Table 2. Real Table 2 is on p5 at y~63-292. The candidate is labelled 'Table 2' but its p5 bbox [35,328.7,560.3,381.5] is Table 3 (Placenta measures); its cell '0.0004 (0.000003 to 0.0008)' is Table 3's ADC_D Difference (95% CI) (row_label 0.004 = ADC_D SRI-exposed value). The shared 0.0004 is only a numeric coincidence with the Table 2 adjusted p.",
+      "evidence_excerpt": "SRI-exposed fetuses showed signiﬁcantly smaller left (0.45 vs 0.53 cm3, adjusted p = 0.0004) and right (0.48 vs 0.56 cm3, adjusted p = 0.0004) hippocampal volumes ... Table 3. ... ADC_D 0.004 0.003 0.0004 (0.000003 to 0.0008) 0.048",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P014",
+      "pair_id": "G003",
+      "status": "WRONG_TABLE",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 4,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "1.24",
+       "1.28",
+       "0.03",
+       "0.21",
+       "0.24",
+       "0.0004",
+       "143.35",
+       "151.36",
+       "0.02"
+      ],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 5,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T002_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_row": "ADC_D (this row is in Table 3, not Table 2)",
+        "pdf_column": "Difference (95% CI) of Table 3",
+        "pdf_cell_text": "0.0004 (0.000003 to 0.0008)"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Claim (p4) asserts local gyrification index, curvedness and surface area values from Table 2 (p5, y~63-292). The candidate 'Table 2' bbox on p5 [35,328.7,560.3,381.5] is actually Table 3 (Placenta measures); its cell '0.0004 (0.000003 to 0.0008)' is Table 3's ADC_D Difference (95% CI). The claim's 0.0004 is the curvedness adjusted p in Table 2, so the match is only a numeric coincidence.",
+      "evidence_excerpt": "reduced cerebral cortical local gyriﬁcation index (1.24 vs 1.28, adjusted p = 0.03), curvedness (0.21 vs 0.24 mm–1, adjusted p = 0.0004), and surface area (143.35 vs 151.36 cm2, adjusted p = 0.02) compared with controls (Table 2). ... ADC_D 0.004 0.003 0.0004 (0.000003 to 0.0008)",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 17,
+      "claim_kind": "qualitative_only",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.1",
+      "pdf_table_page": 18,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T001_R11_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet++ – IoU",
+        "pdf_column": "CB",
+        "pdf_cell_text": "84.13"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The claim sentence (p17) only points to Table 4.1 and says, without numbers, that performance is 'superior'. Its only number is the table number 4.1. The candidate cell 84.13 (UNet++ IoU, CB) is not asserted. The averages 97.37/90.33/86.93/90.83 appear only in the next sentence on p18, which is outside the candidate claim text.",
+      "evidence_excerpt": "The results, summarized in Table 4.1, demonstrate the superior performance of our proposed model across multiple tissue types,",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 23,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.3 (Computational complexity comparison)",
+      "pdf_table_page": 24,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R9_C11",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet++ – DSC",
+        "pdf_column": "Average",
+        "pdf_cell_text": "84.35"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Pointer-only sentence (p23) with no value asserted; the only number is the table number 4.3. It cites Table 4.3 (computational complexity, p24), not the candidate Table 4.1 (p18). Candidate cell 84.35 (UNet++ DSC Average in Table 4.1) is not asserted.",
+      "evidence_excerpt": "The quantitative comparison is summarized in Table 4.3. ... Table 4.3: Computational complexity comparison of the proposed model with baseline architectures.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G003",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 25,
+      "claim_kind": "qualitative_only",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.4 (Impact of CLAHE preprocessing)",
+      "pdf_table_page": 25,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R24_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/MLP* – DSC",
+        "pdf_column": "GM",
+        "pdf_cell_text": "84.48"
+       },
+       {
+        "cell_id": "T001_R9_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet++ – DSC",
+        "pdf_column": "BS",
+        "pdf_cell_text": "84.49"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "The sentence (p25) points to Table 4.4 and only says accuracy declines, with no numbers; 4.4 is a table number. The cited table is Table 4.4 on p25 (No CLAHE vs CLAHE), not the candidate Table 4.1. The candidate cells 84.48 (MLP* DSC GM) and 84.49 (UNet++ DSC BS) are real Table 4.1 cells, but the claim does not assert either.",
+      "evidence_excerpt": "As summarized in Table 4.4, the absence of CLAHE leads to a substantial decline in segmentation accuracy across all metrics. Table 4.4: Impact of CLAHE preprocessing on the performance of the suggested fetal brain tissue segmentation model.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G004",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 26,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.5 (Contrast-stratified performance across models; label duplicated on p28)",
+      "pdf_table_page": 26,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R11_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet++ – IoU",
+        "pdf_column": "WM",
+        "pdf_cell_text": "84.56"
+       },
+       {
+        "cell_id": "T001_R7_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet – Precision",
+        "pdf_column": "GM",
+        "pdf_cell_text": "84.51"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Pointer-only sentence (p26) with no values. It cites Table 4.5 on p26 (contrast-stratified DSC), which is a different table from the candidate Table 4.1 (p18). The label 'Table 4.5' is also used again on p28. Candidate cells 84.56 (UNet++ IoU WM) and 84.51 (UNet Precision GM) are not asserted.",
+      "evidence_excerpt": "The quantitative results are presented in Table 4.5. Table 4.5: Contrast-stratified performance across models.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G005",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 28,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.5 (Impact of learning rates; duplicate of p26 label)",
+      "pdf_table_page": 28,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R11_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet++ – IoU",
+        "pdf_column": "WM",
+        "pdf_cell_text": "84.56"
+       },
+       {
+        "cell_id": "T001_R7_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "ResNet34/UNet – Precision",
+        "pdf_column": "GM",
+        "pdf_cell_text": "84.51"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Pointer-only sentence (p28) with no values. It cites the learning-rate Table 4.5 on p28, which shares its label with the p26 Table 4.5, and is not the candidate Table 4.1. Candidate cells 84.56 and 84.51 from Table 4.1 are not asserted.",
+      "evidence_excerpt": "The resulting performance metrics are summarized in Table 4.5. Table 4. 5: Impact of learning rates on the performance of the proposed fetal brain tissue segmentation model.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P016",
+      "pair_id": "G006",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 28,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 4.6 (Impact of optimizers; duplicate of p27 label)",
+      "pdf_table_page": 28,
+      "table_matches_candidate": false,
+      "cells": [
+       {
+        "cell_id": "T001_R11_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – IoU",
+        "pdf_column": "BS",
+        "pdf_cell_text": "82.50"
+       },
+       {
+        "cell_id": "T001_R11_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – IoU",
+        "pdf_column": "WM",
+        "pdf_cell_text": "84.56"
+       },
+       {
+        "cell_id": "T001_R12_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – Precision",
+        "pdf_column": "eCSF",
+        "pdf_cell_text": "82.58"
+       },
+       {
+        "cell_id": "T001_R13_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3 – Accuracy",
+        "pdf_column": "BS",
+        "pdf_cell_text": "96.53"
+       },
+       {
+        "cell_id": "T001_R16_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3 – IoU",
+        "pdf_column": "eCSF",
+        "pdf_cell_text": "75.55"
+       },
+       {
+        "cell_id": "T001_R17_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3 – Precision",
+        "pdf_column": "BS",
+        "pdf_cell_text": "89.52"
+       },
+       {
+        "cell_id": "T001_R17_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3 – Precision",
+        "pdf_column": "GM",
+        "pdf_cell_text": "83.56"
+       },
+       {
+        "cell_id": "T001_R18_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3+ – Accuracy",
+        "pdf_column": "GM",
+        "pdf_cell_text": "96.59"
+       },
+       {
+        "cell_id": "T001_R19_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3+ – DSC",
+        "pdf_column": "BS",
+        "pdf_cell_text": "88.59"
+       },
+       {
+        "cell_id": "T001_R19_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3+ – DSC",
+        "pdf_column": "CB",
+        "pdf_cell_text": "90.59"
+       },
+       {
+        "cell_id": "T001_R22_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3+ – Precision",
+        "pdf_column": "WM",
+        "pdf_cell_text": "90.54"
+       },
+       {
+        "cell_id": "T001_R22_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "DeepLabV3+ – Precision",
+        "pdf_column": "DGM",
+        "pdf_cell_text": "91.52"
+       },
+       {
+        "cell_id": "T001_R24_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "MLP* – DSC",
+        "pdf_column": "GM",
+        "pdf_cell_text": "84.48"
+       },
+       {
+        "cell_id": "T001_R24_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "MLP* – DSC",
+        "pdf_column": "CB",
+        "pdf_cell_text": "91.57"
+       },
+       {
+        "cell_id": "T001_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – Accuracy",
+        "pdf_column": "WM",
+        "pdf_cell_text": "97.53"
+       },
+       {
+        "cell_id": "T001_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – Accuracy",
+        "pdf_column": "GM",
+        "pdf_cell_text": "96.57"
+       },
+       {
+        "cell_id": "T001_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – DSC",
+        "pdf_column": "GM",
+        "pdf_cell_text": "81.56"
+       },
+       {
+        "cell_id": "T001_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – DSC",
+        "pdf_column": "eCSF",
+        "pdf_cell_text": "81.52"
+       },
+       {
+        "cell_id": "T001_R6_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – IoU",
+        "pdf_column": "GM",
+        "pdf_cell_text": "75.56"
+       },
+       {
+        "cell_id": "T001_R7_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet – Precision",
+        "pdf_column": "GM",
+        "pdf_cell_text": "84.51"
+       },
+       {
+        "cell_id": "T001_R8_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – Accuracy",
+        "pdf_column": "WM",
+        "pdf_cell_text": "97.59"
+       },
+       {
+        "cell_id": "T001_R9_C10",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – DSC",
+        "pdf_column": "BS",
+        "pdf_cell_text": "84.49"
+       },
+       {
+        "cell_id": "T001_R9_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "UNet++ – DSC",
+        "pdf_column": "LV",
+        "pdf_cell_text": "85.55"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "A section heading plus a pointer sentence (p28). The only numbers are structural: section 4.4.5, citation years 2014 and 2016, and table number 4.6. No cell value is asserted. The cited table is the optimizer Table 4.6 on p28, which shares its label with the motion Table 4.6 on p27, and is not Table 4.1. All 23 candidate cells are real Table 4.1 cells, but the claim asserts none of them.",
+      "evidence_excerpt": "4.4.5 Effect of Optimizers The performance of the proposed model was indicated using two optimizers, Adam and SGD (Kingma & Ba, 2014; Ruder, 2016), and the results are summarized in Table 4.6.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P017",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 22,
+      "claim_kind": "qualitative_only",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 5 (sentence also cites Table 4, p19)",
+      "pdf_table_page": 20,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T003_R10_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/IKD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R10_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/IKD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R10_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/IKD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R10_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/IKD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R11_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/SL Model",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R11_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/SL Model",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R11_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/SL Model",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R11_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/SL Model",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R15_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/Skip-TS",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R16_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/RD4AD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R16_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/RD4AD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "0.001"
+       },
+       {
+        "cell_id": "T003_R16_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/RD4AD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "0.001"
+       },
+       {
+        "cell_id": "T003_R16_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/RD4AD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R17_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/IKD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R17_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/IKD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "0.003"
+       },
+       {
+        "cell_id": "T003_R17_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/IKD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R18_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Case/SL Model",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R20_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/Skip-TS",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R20_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/Skip-TS",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R20_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/Skip-TS",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R20_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/Skip-TS",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R21_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/RD4AD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R21_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/RD4AD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R21_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/RD4AD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R21_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/RD4AD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R22_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/IKD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R22_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/IKD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R22_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/IKD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R22_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/IKD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R23_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/SL Model",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R23_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/SL Model",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R23_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/SL Model",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R23_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Ext/Slice/SL Model",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/Skip-TS",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "0.003"
+       },
+       {
+        "cell_id": "T003_R4_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/RD4AD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "0.001"
+       },
+       {
+        "cell_id": "T003_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/RD4AD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/RD4AD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "0.001"
+       },
+       {
+        "cell_id": "T003_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/RD4AD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R5_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/IKD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R5_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/IKD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R5_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/IKD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R5_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/IKD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R6_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Case/SL Model",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "0.003"
+       },
+       {
+        "cell_id": "T003_R8_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/Skip-TS",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R8_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/Skip-TS",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R8_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/Skip-TS",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R9_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/RD4AD",
+        "pdf_column": "AUROC",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R9_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/RD4AD",
+        "pdf_column": "AUPR",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R9_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/RD4AD",
+        "pdf_column": "Sensitivity",
+        "pdf_cell_text": "< 0.001"
+       },
+       {
+        "cell_id": "T003_R9_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Int/Slice/RD4AD",
+        "pdf_column": "Specificity",
+        "pdf_cell_text": "< 0.001"
+       }
+      ],
+      "incomplete_missing_values": [],
+      "reason": "Most of the claim text is Table 6 content, namely the external-validation p-value rows: 'SL Model < .001 x5; FreeHemoSeg w/o SAM 0.062 0.560 0.046 0.140 0.003'. It is followed by one sentence that only says the method did best ('achieved the best ... diagnostic accuracy'). Its only numbers are structural references (Table 4, Table 5, Figure 5G-L), so no value is asserted in natural language. The 50 candidate '< 0.001'/'0.001'/'0.003' cells are real Table 5 cells, but they match the Table 6 text only by coincidence.",
+      "evidence_excerpt": "FreeHemoSeg w/o SAM 0.062 0.560 0.046 0.140 0.003 FreeHemoSeg also achieved the best case-level and slice-level diagnostic accuracy on external Validation Dataset B (Table 4, Table 5, Figure 5G-L).",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P017",
+      "pair_id": "G002",
+      "status": "WRONG_CELL",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 23,
+      "claim_kind": "natural_language_value_claim",
+      "claim_values_asserted": [
+       "0.559",
+       "0.546",
+       "0.571",
+       "0.512",
+       "0.497",
+       "0.526"
+      ],
+      "pdf_table_label": "Table 6",
+      "pdf_table_page": 22,
+      "table_matches_candidate": true,
+      "cells": [
+       {
+        "cell_id": "T004_R12_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": true,
+        "pdf_row": "Internal Validation / FreeHemoSeg",
+        "pdf_column": "Overall (n = 1456 slices), DSC",
+        "pdf_cell_text": "0.559"
+       },
+       {
+        "cell_id": "T004_R14_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": true,
+        "pdf_row": "Internal Validation / FreeHemoSeg (95% CI line)",
+        "pdf_column": "Overall (n = 1456 slices)",
+        "pdf_cell_text": "(0.546, 0.571)"
+       },
+       {
+        "cell_id": "T004_R5_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_row": "'DSC, (95% CI)' sub-header row (internal block), clipped by bbox x0=35",
+        "pdf_column": "Method",
+        "pdf_cell_text": "DSC, (95% CI)"
+       },
+       {
+        "cell_id": "T004_R8_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_row": "Internal Validation / SL Model (95% CI line)",
+        "pdf_column": "Grade II (n = 271 slices)",
+        "pdf_cell_text": "(0.429, 0.497)"
+       },
+       {
+        "cell_id": "T004_R9_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_row": "Internal Validation / FreeHemoSeg w/o SAM",
+        "pdf_column": "Overall (n = 1456 slices)",
+        "pdf_cell_text": "0.526"
+       }
+      ],
+      "incomplete_missing_values": [
+       "0.512",
+       "(0.497, 0.526)"
+      ],
+      "reason": "The claim (p23) asserts FreeHemoSeg overall DSC 0.559 (0.546–0.571) internal and 0.512 (0.497–0.526) external, citing Table 6 (p22). The candidate is Table 6, but its bbox covers only the clipped internal-validation block. Cells 0.559 and (0.546, 0.571) are correct (Internal/FreeHemoSeg/Overall). The other three are not: 'SC, (95% CI)' is a clipped sub-header fragment; '0.497)' is part of the SL Model Grade II internal CI (0.429, 0.497); '0.526' is the FreeHemoSeg w/o SAM internal Overall DSC. Those two only match the external CI (0.497, 0.526) by coincidence, and that CI sits at p22 y~617, outside the bbox. The external 0.512 cell is missing.",
+      "evidence_excerpt": "FreeHemoSeg achieved the best lesion segmentation performance (Table 6, Figure 6), achieving DSCs of 0.559 (95% CI, 0.546–0.571) and 0.512 (95% CI, 0.497–0.526) on the internal and external validation datasets, respectively.",
+      "confidence": "high"
+     }
+    ]
+   }
+  },
+  {
+   "group": "g4",
+   "papers": [
+    "P019",
+    "P021",
+    "P024",
+    "P026",
+    "P029"
+   ],
+   "result": {
+    "pairs": [
+     {
+      "paper_id": "P019",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 9,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 9,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T001_R2_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.252",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T001_R2_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.188",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "DHCP Jaccard"
+       },
+       {
+        "cell_id": "T001_R2_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "9.803",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "DHCP HD95"
+       },
+       {
+        "cell_id": "T001_R2_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.186",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "DHCP MSD"
+       },
+       {
+        "cell_id": "T001_R2_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.393",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T001_R2_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.280",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T001_R2_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.352",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T001_R2_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.291",
+        "pdf_row": "Med-SAM",
+        "pdf_column": "CRL MSD"
+       },
+       {
+        "cell_id": "T001_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.600",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T001_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.478",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "DHCP Jaccard"
+       },
+       {
+        "cell_id": "T001_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.057",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "DHCP HD95"
+       },
+       {
+        "cell_id": "T001_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.082",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "DHCP MSD"
+       },
+       {
+        "cell_id": "T001_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.493",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T001_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.365",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T001_R3_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.508",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T001_R3_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.486",
+        "pdf_row": "Med-SAM-FT",
+        "pdf_column": "CRL MSD"
+       },
+       {
+        "cell_id": "T001_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.882",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T001_R4_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.794",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP Jaccard"
+       },
+       {
+        "cell_id": "T001_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.044",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP HD95"
+       },
+       {
+        "cell_id": "T001_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.389",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP MSD"
+       },
+       {
+        "cell_id": "T001_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.801",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T001_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.684",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T001_R4_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.014",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T001_R4_C9",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.387",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL MSD"
+       }
+      ],
+      "reason": "Step 1 fails (b). The only natural-language text is a sentence fragment ('Even though FeTal-SAM has equipped with rich priors ... without the'), which continues on p10 with 'support of 3D spatial prior...'. It states no numeric value. Everything after it is Table 1's caption, headers and all 24 values, extracted in reading order. The candidate Table 1 (p9, bottom) and its 24 cells do exist and match the PDF, but no sentence asserts any of them.",
+      "evidence_excerpt": "Even though FeTal-SAM has equipped with rich priors from the registered age matching image atlas, without the Table 1: FeTal-SAM fine tuning results with DHCP and CRL datasets",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P019",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 10,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 10,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T002_R2_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.902",
+        "pdf_row": "nnUNet",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T002_R2_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: 0.830 (DHCP Jaccard) + '1.1' of 1.155 (DHCP HD95)",
+        "pdf_row": "nnUNet",
+        "pdf_column": "DHCP Jaccard / DHCP HD95 (split)"
+       },
+       {
+        "cell_id": "T002_R2_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: '55' of 1.155 (DHCP HD95) + 0.430 (DHCP MSD)",
+        "pdf_row": "nnUNet",
+        "pdf_column": "DHCP HD95 / DHCP MSD (split)"
+       },
+       {
+        "cell_id": "T002_R2_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.918",
+        "pdf_row": "nnUNet",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T002_R2_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.854",
+        "pdf_row": "nnUNet",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T002_R2_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.827",
+        "pdf_row": "nnUNet",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T002_R2_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.180",
+        "pdf_row": "nnUNet",
+        "pdf_column": "CRL MSD"
+       },
+       {
+        "cell_id": "T002_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.911",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T002_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: 0.840 (DHCP Jaccard) + '0.9' of 0.958 (DHCP HD95)",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "DHCP Jaccard / DHCP HD95 (split)"
+       },
+       {
+        "cell_id": "T002_R3_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: '58' of 0.958 (DHCP HD95) + 0.298 (DHCP MSD)",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "DHCP HD95 / DHCP MSD (split)"
+       },
+       {
+        "cell_id": "T002_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.911",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T002_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.840",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T002_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.958",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T002_R3_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.298",
+        "pdf_row": "SwinUNetR",
+        "pdf_column": "CRL MSD"
+       },
+       {
+        "cell_id": "T002_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.882",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP DSC"
+       },
+       {
+        "cell_id": "T002_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: 0.794 (DHCP Jaccard) + '1.0' of 1.044 (DHCP HD95)",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP Jaccard / DHCP HD95 (split)"
+       },
+       {
+        "cell_id": "T002_R4_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment: '44' of 1.044 (DHCP HD95) + 0.389 (DHCP MSD)",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "DHCP HD95 / DHCP MSD (split)"
+       },
+       {
+        "cell_id": "T002_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.801",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL DSC"
+       },
+       {
+        "cell_id": "T002_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.684",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL Jaccard"
+       },
+       {
+        "cell_id": "T002_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.014",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL HD95"
+       },
+       {
+        "cell_id": "T002_R4_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.387",
+        "pdf_row": "FeTal-SAM",
+        "pdf_column": "CRL MSD"
+       }
+      ],
+      "reason": "Step 1 fails (b)/(e). The natural-language part ('...FeTal-SAM achieves performance comparable to 3D segmentation models specifically', which continues on p11 with 'trained for each dataset.') is only a qualitative comparison with no numeric value. The rest of the claim is Table 2's caption, headers and values. Separately, 6 candidate cells (the C3/C4 cells of rows R2-R4) are split or merged fragments, such as '0.830 1.1' and '55 0.430'.",
+      "evidence_excerpt": "For tissue structures that present good contrast in the MR images, FeTal-SAM achieves performance comparable to 3D segmentation models specifically Table 2: FeTal-SAM comparison to 3D SOTA models",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P021",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 7,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 6,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T001_R6_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged fragment of OLVA [1] row: venue 'MICCAI’21' tail + DSC_A 73.3±0.6 + DSC_N 79.1±0.3",
+        "pdf_row": "OLVA [1] (UDA)",
+        "pdf_column": "Venue / DSC_A / DSC_N (merged)"
+       }
+      ],
+      "reason": "Step 1 fails (c)/(d). The sentence only lists the compared methods and points to Table 1. It asserts no value. Its only numbers are the section number 3.3 and the citation numbers [19], [26], [1], [8], [28] and [12]. '3.3' matches the cell only as a substring of 73.3. The candidate cell is also a merged fragment of the OLVA row (venue text plus two values).",
+      "evidence_excerpt": "Adaptatopm (UDA) (FDA [26], OLVA [1] and DSA [8]) and Semi-supervised Learning (CUTMIX [28], ASE-NET [12]) in Table 1. It reports the segmentation performance of UDA of adapting atlas to the fetal brain on FeTA2021",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P024",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 8,
+      "claim_kind": "reference_only_no_value",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 8,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T002_R5_C10",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.12* ± 2.09 is only in the text layer, in the dHCP sub-table's ∆Growth(global)(↓) row under SimPath100. Fig. 2 images cover that row, so it is not visible when the page renders. The stated ∆Length (CC) row (CHUV-CC) holds 7.83 ± 8.63 for SimPath100.",
+        "pdf_row": "∆Growth(global)(↓) (dHCP sub-table; hidden by the figure), not ∆Length (CC)",
+        "pdf_column": "SimPath100 (dHCP)"
+       }
+      ],
+      "reason": "Step 1 fails (c)/(d). 'Table 2 summarizes the performance of models trained with and without pathology-informed augmentations.' only points to the table and asserts no value. The shared '3.1' is the section number, a substring of 3.12. Also, the candidate cell is not at its stated ∆Length(CC) row: it sits in a text-layer-only row that Fig. 2 images hide.",
+      "evidence_excerpt": "3 Results and discussion 3.1 Effect of Pathology-Informed Augmentations Table 2 summarizes the performance of models trained with and without pathology- informed augmentations.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P024",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 9,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 3",
+      "pdf_table_page": 9,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T003_R1_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "2.0 is a Fig. 3 y-axis tick (Volume Predicted), not a Table 3 cell",
+        "pdf_row": "n/a (figure)",
+        "pdf_column": "n/a (figure)"
+       },
+       {
+        "cell_id": "T003_R2_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: row label 'DSC (global) (↑)' + BReal 0.75 ±0.21 + BSynth 0.75 ±0.15",
+        "pdf_row": "DSC (global) (↑)",
+        "pdf_column": "label / BReal / BSynth (merged)"
+       },
+       {
+        "cell_id": "T003_R2_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.75 ±0.14",
+        "pdf_row": "DSC (global) (↑)",
+        "pdf_column": "SimPath100"
+       },
+       {
+        "cell_id": "T003_R2_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.75 ±0.14",
+        "pdf_row": "DSC (global) (↑)",
+        "pdf_column": "SimPath50"
+       },
+       {
+        "cell_id": "T003_R3_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.5 is a Fig. 3 y-axis tick, not a Table 3 cell",
+        "pdf_row": "n/a (figure)",
+        "pdf_column": "n/a (figure)"
+       },
+       {
+        "cell_id": "T003_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: 'HD95 (global) (↓)' + 4.19 ±5.02 + 3.01 ±2.27",
+        "pdf_row": "HD95 (global) (↓)",
+        "pdf_column": "label / BReal / BSynth (merged)"
+       },
+       {
+        "cell_id": "T003_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.28 ±2.71",
+        "pdf_row": "HD95 (global) (↓)",
+        "pdf_column": "SimPath100"
+       },
+       {
+        "cell_id": "T003_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "3.07 ±2.32",
+        "pdf_row": "HD95 (global) (↓)",
+        "pdf_column": "SimPath50"
+       },
+       {
+        "cell_id": "T003_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: 'VS (global) (↑)' + 0.96 ±0.05 + 0.96 ±0.04",
+        "pdf_row": "VS (global) (↑)",
+        "pdf_column": "label / BReal / BSynth (merged)"
+       },
+       {
+        "cell_id": "T003_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.97 ±0.03",
+        "pdf_row": "VS (global) (↑)",
+        "pdf_column": "SimPath100"
+       },
+       {
+        "cell_id": "T003_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.97 ±0.02",
+        "pdf_row": "VS (global) (↑)",
+        "pdf_column": "SimPath50"
+       },
+       {
+        "cell_id": "T003_R5_C1",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.0 is a Fig. 3 y-axis tick, not a Table 3 cell",
+        "pdf_row": "n/a (figure)",
+        "pdf_column": "n/a (figure)"
+       },
+       {
+        "cell_id": "T003_R5_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: 'ED (global) (↓)' + 2.23 ±2.89 + 1.85 ±3.75",
+        "pdf_row": "ED (global) (↓)",
+        "pdf_column": "label / BReal / BSynth (merged)"
+       },
+       {
+        "cell_id": "T003_R5_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "2.76 ±2.48",
+        "pdf_row": "ED (global) (↓)",
+        "pdf_column": "SimPath100"
+       },
+       {
+        "cell_id": "T003_R5_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.31 ±2.31",
+        "pdf_row": "ED (global) (↓)",
+        "pdf_column": "SimPath50"
+       }
+      ],
+      "reason": "Step 1 fails (b). The claim text is the running header, the Fig. 3 axis ticks and legend, Table 3's headers and values, and the Table 3 caption. No natural-language sentence asserts a value. The candidate region (full width, y 126-161) also takes in Fig. 3. Its cells include figure axis ticks (2.0, 1.5, 1.0) and merged label+value cells.",
+      "evidence_excerpt": "2.0 Volume Predicted (cm^3) Model Reference BSynth SimPath50 SimPath100 KISPI-PATH Metrics BReal BSynth SimPath100 SimPath50 DSC (global) (↑) 0.75 ±0.21 0.75 ±0.15 0.75 ±0.14 0.75 ±0.14",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P026",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 10,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 8",
+      "pdf_table_page": 10,
+      "table_matches_candidate": false,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T011_R11_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Left NAc nnU-Net",
+        "pdf_column": "Trained on BF P"
+       },
+       {
+        "cell_id": "T011_R12_C14",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.010",
+        "pdf_row": "Left NAc UNesT",
+        "pdf_column": "Trained on WF P"
+       },
+       {
+        "cell_id": "T011_R12_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.010",
+        "pdf_row": "Left NAc UNesT",
+        "pdf_column": "Trained on BF P"
+       },
+       {
+        "cell_id": "T011_R3_C11",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Right NAc ANTs",
+        "pdf_column": "Trained on BM P"
+       },
+       {
+        "cell_id": "T011_R3_C17",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Right NAc ANTs",
+        "pdf_column": "Trained on WM P"
+       },
+       {
+        "cell_id": "T011_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Right NAc ANTs",
+        "pdf_column": "Trained on BF P"
+       },
+       {
+        "cell_id": "T011_R4_C11",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.001",
+        "pdf_row": "Right NAc CoTr",
+        "pdf_column": "Trained on BM P"
+       },
+       {
+        "cell_id": "T011_R4_C17",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.001",
+        "pdf_row": "Right NAc CoTr",
+        "pdf_column": "Trained on WM P"
+       },
+       {
+        "cell_id": "T011_R6_C17",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.001",
+        "pdf_row": "Right NAc nnU-Net",
+        "pdf_column": "Trained on WM P"
+       },
+       {
+        "cell_id": "T011_R6_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.001",
+        "pdf_row": "Right NAc nnU-Net",
+        "pdf_column": "Trained on BF P"
+       },
+       {
+        "cell_id": "T011_R7_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Right NAc UNesT",
+        "pdf_column": "Trained on BF P"
+       },
+       {
+        "cell_id": "T011_R8_C11",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Left NAc ANTs",
+        "pdf_column": "Trained on BM P"
+       },
+       {
+        "cell_id": "T011_R8_C17",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Left NAc ANTs",
+        "pdf_column": "Trained on WM P"
+       },
+       {
+        "cell_id": "T011_R8_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.000",
+        "pdf_row": "Left NAc ANTs",
+        "pdf_column": "Trained on BF P"
+       }
+      ],
+      "reason": "Step 1 fails (b). The claim text is Table 8's headers and all of its values (manual-annotation Sex/Race/Race×Sex effects), followed by the first sentence of the Table 9 caption. There is no natural-language sentence. The candidate is Table 9. Its 14 unlabeled P-value cells (0.000/0.001/0.010) do exist in Table 9, but they only coincide numerically with the Table 8 p-values in the claim text.",
+      "evidence_excerpt": "Manual (Test set) 191.155 100.463 0.057 385.526 112.698 0.001 -53.176 155.119 0.732 Table 9: Results for evaluating Sex effects on volumes by segmentation models for right and left NAc.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G001",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 13,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 1",
+      "pdf_table_page": 13,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T001_R3_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,128)",
+        "pdf_row": "Layer 1",
+        "pdf_column": "GRU"
+       },
+       {
+        "cell_id": "T001_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,64,128,128)",
+        "pdf_row": "Layer 1",
+        "pdf_column": "Encoder"
+       },
+       {
+        "cell_id": "T001_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,512, 16,16)",
+        "pdf_row": "Layer 1",
+        "pdf_column": "Decoder"
+       },
+       {
+        "cell_id": "T001_R4_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,128)",
+        "pdf_row": "Layer 2",
+        "pdf_column": "GRU"
+       },
+       {
+        "cell_id": "T001_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,64,64)",
+        "pdf_row": "Layer 2",
+        "pdf_column": "Encoder"
+       },
+       {
+        "cell_id": "T001_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,256,32,32)",
+        "pdf_row": "Layer 2",
+        "pdf_column": "Decoder"
+       },
+       {
+        "cell_id": "T001_R5_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,128)",
+        "pdf_row": "Layer 3",
+        "pdf_column": "GRU"
+       },
+       {
+        "cell_id": "T001_R5_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,256,32,32)",
+        "pdf_row": "Layer 3",
+        "pdf_column": "Encoder"
+       },
+       {
+        "cell_id": "T001_R5_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,64,64)",
+        "pdf_row": "Layer 3",
+        "pdf_column": "Decoder"
+       },
+       {
+        "cell_id": "T001_R6_C2",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,128,128)",
+        "pdf_row": "Layer 4",
+        "pdf_column": "GRU"
+       },
+       {
+        "cell_id": "T001_R6_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,512,16,16)",
+        "pdf_row": "Layer 4",
+        "pdf_column": "Encoder"
+       },
+       {
+        "cell_id": "T001_R6_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "(1,64,128,128)",
+        "pdf_row": "Layer 4",
+        "pdf_column": "Decoder"
+       }
+      ],
+      "reason": "Step 1 fails (b). The natural-language fragment 'Consequently, MF-Max facilitates comprehensive feature' (continued on p14 by 'extraction of brain MRI tumor lesions from multiple perspectives') asserts no value. The rest is Table 1's headers, all 20 cells, the caption and the page footer ('1 3 Page 13 of 25 154'). The candidate cells exist in Table 1, but no sentence asserts them.",
+      "evidence_excerpt": "Consequently, MF-Max facilitates comprehensive feature Layer GRU Pool (ken- nel, Stride) Encoder Decoder 1 (1,128,128) (8,8) (1,64,128,128) (1,512, 16,16)",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G002",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 14,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 2",
+      "pdf_table_page": 14,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T002_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "RTX 3080(10GB) * 1 (candidate text omits '* 1')",
+        "pdf_row": "GPU",
+        "pdf_column": "Configure (experimental environment)"
+       },
+       {
+        "cell_id": "T002_R5_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "ubuntu 20.04",
+        "pdf_row": "OS",
+        "pdf_column": "Configure (experimental environment)"
+       },
+       {
+        "cell_id": "T002_R6_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "PyTorch 1.11.0",
+        "pdf_row": "Framework",
+        "pdf_column": "Configure (experimental environment)"
+       },
+       {
+        "cell_id": "T002_R7_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Python 3.8",
+        "pdf_row": "Code language",
+        "pdf_column": "Configure (experimental environment)"
+       },
+       {
+        "cell_id": "T002_R7_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1e-4",
+        "pdf_row": "lr (same row as Code language)",
+        "pdf_column": "Configure (model parameter)"
+       },
+       {
+        "cell_id": "T002_R8_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "11.3",
+        "pdf_row": "Cuda",
+        "pdf_column": "Configure (experimental environment)"
+       }
+      ],
+      "reason": "Step 1 fails (b). The claim text is only Table 2's headers and cells, its caption and the page footer ('1 3 154 Page 14 of 25'). There is no natural-language sentence in it. A separate body sentence on p14 does state Ubuntu 20.04, RTX 3080 (10GB), PyTorch 1.11.0 and CUDA 11.3, but that sentence is not the candidate claim.",
+      "evidence_excerpt": "GPU RTX 3080(10GB) * 1 weights_init xavier OS ubuntu 20.04 optimizer Adam Framework PyTorch 1.11.0 Batch_size 16 Code language Python 3.8 lr 1e-4 Cuda 11.3 epoch 50 Table 2 Experimental environ- ment and parameter settings",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G003",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 20,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 5",
+      "pdf_table_page": 20,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T005_R3_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.25",
+        "pdf_row": "Sobel",
+        "pdf_column": "P"
+       },
+       {
+        "cell_id": "T005_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.23",
+        "pdf_row": "Sobel",
+        "pdf_column": "R"
+       },
+       {
+        "cell_id": "T005_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.24",
+        "pdf_row": "Sobel",
+        "pdf_column": "F1"
+       },
+       {
+        "cell_id": "T005_R5_C3",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.39 (Prewitt P is also 0.39)",
+        "pdf_row": "TEED",
+        "pdf_column": "P"
+       },
+       {
+        "cell_id": "T005_R5_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.58",
+        "pdf_row": "TEED",
+        "pdf_column": "R"
+       },
+       {
+        "cell_id": "T005_R5_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.46",
+        "pdf_row": "TEED",
+        "pdf_column": "F1"
+       }
+      ],
+      "reason": "Step 1 fails (b). The only natural-language text is the end of the Fig. 12 caption, which describes the rows of feature maps and contains no value. The rest is Table 5's headers and values, its caption and the page footer. Table 5 is at the top of p20 (y 51-121). The candidate bbox (y 24-86) covers only the page header and the top rows.",
+      "evidence_excerpt": "The first row displays the intermediate layer feature maps pro- cessed through GRU-EB and MF-Max, while the second row shows the results without these modules Method P R F1 Sobel 0.25 0.23 0.24 TEED 0.39 0.58 0.46",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G004",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 21,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 7",
+      "pdf_table_page": 22,
+      "table_matches_candidate": false,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T006_R3_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: Dice 91.65 + Sen 94.84",
+        "pdf_row": "Loss1=Loss2 (BCEW)",
+        "pdf_column": "Dice / Sen (merged)"
+       },
+       {
+        "cell_id": "T006_R3_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "0.87",
+        "pdf_row": "Loss1=Loss2 (BCEW)",
+        "pdf_column": "MAE"
+       },
+       {
+        "cell_id": "T006_R3_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "91.67",
+        "pdf_row": "Loss1=Loss2 (BCEW)",
+        "pdf_column": "mIoU"
+       },
+       {
+        "cell_id": "T006_R3_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "93.74",
+        "pdf_row": "Loss1=Loss2 (BCEW)",
+        "pdf_column": "mAP"
+       },
+       {
+        "cell_id": "T006_R3_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "99.13",
+        "pdf_row": "Loss1=Loss2 (BCEW)",
+        "pdf_column": "Acc"
+       },
+       {
+        "cell_id": "T006_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "merged: Dice 83.26 + Sen 82.35",
+        "pdf_row": "Loss1=Loss2 (Dice loss)",
+        "pdf_column": "Dice / Sen (merged)"
+       },
+       {
+        "cell_id": "T006_R4_C4",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.99",
+        "pdf_row": "Loss1=Loss2 (Dice loss)",
+        "pdf_column": "MAE"
+       },
+       {
+        "cell_id": "T006_R4_C5",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "83.63",
+        "pdf_row": "Loss1=Loss2 (Dice loss)",
+        "pdf_column": "mIoU"
+       },
+       {
+        "cell_id": "T006_R4_C6",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "93.51",
+        "pdf_row": "Loss1=Loss2 (Dice loss)",
+        "pdf_column": "mAP"
+       },
+       {
+        "cell_id": "T006_R4_C7",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "97.24",
+        "pdf_row": "Loss1=Loss2 (Dice loss)",
+        "pdf_column": "Acc"
+       }
+      ],
+      "reason": "Step 1 fails (b)/(e). The natural-language fragment 'The efficiency of Trans Deeplab and Deeplab v3+ is moderate among the' continues on p22 with 'compared models, largely due to the complexity of the Transformer structure.' It is qualitative, has no numeric value, and concerns Table 7 (model efficiency), not Table 6. The rest of the claim is Table 6's caption and values. Two candidate cells merge the Dice and Sen values.",
+      "evidence_excerpt": "The efficiency of Trans Deeplab and Deeplab v3+ is moderate among the Table 6 Evaluation results of the impact on AS-WEC with different loss functions, and the best values are marked in bold",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G005",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 22,
+      "claim_kind": "qualitative_only",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 8",
+      "pdf_table_page": 22,
+      "table_matches_candidate": true,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T008_R4_C8",
+        "in_pdf_table": true,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.43",
+        "pdf_row": "No. 1 (Otsu-WD only)",
+        "pdf_column": "HD95"
+       }
+      ],
+      "reason": "Step 1 fails (e)/(d). The sentence only says that group 1 outperforms groups 2 and 3 in Table 8. It states no metric value. '5.4' is the section number and matches only as a substring of 5.43, and 1-3 are group (row) IDs. The candidate cell 5.43 (No. 1, HD95) exists in Table 8, but the claim does not assert it.",
+      "evidence_excerpt": "As shown in Table 8, evaluation results for groups 1–3 indicate that group 1 outperforms both groups 2 and 3. This suggests that edge features are crucial for effective brain MRI tumor segmentation.",
+      "confidence": "high"
+     },
+     {
+      "paper_id": "P029",
+      "pair_id": "G006",
+      "status": "WRONG_CLAIM",
+      "claim_found_in_pdf": true,
+      "claim_pdf_page": 22,
+      "claim_kind": "table_text_not_a_claim",
+      "claim_values_asserted": [],
+      "pdf_table_label": "Table 7 (claim text also contains the full Table 8 body)",
+      "pdf_table_page": 22,
+      "table_matches_candidate": false,
+      "incomplete_missing_values": [],
+      "cells": [
+       {
+        "cell_id": "T007_R4_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Table 8 No.1 Dice 87.61 + Sen 86.42 merged; not in Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "Dice / Sen (merged)"
+       },
+       {
+        "cell_id": "T007_R4_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.31 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "MAE"
+       },
+       {
+        "cell_id": "T007_R4_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "89.21 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "MIoU"
+       },
+       {
+        "cell_id": "T007_R4_C6",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "93.74 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "mAP"
+       },
+       {
+        "cell_id": "T007_R4_C7",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "97.32 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "Acc"
+       },
+       {
+        "cell_id": "T007_R4_C8",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.43 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 1",
+        "pdf_column": "HD95"
+       },
+       {
+        "cell_id": "T007_R5_C3",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "Table 8 No.2 Dice 87.21 + Sen 86.74 merged; not in Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "Dice / Sen (merged)"
+       },
+       {
+        "cell_id": "T007_R5_C4",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "1.48 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "MAE"
+       },
+       {
+        "cell_id": "T007_R5_C5",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "88.62 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "MIoU"
+       },
+       {
+        "cell_id": "T007_R5_C6",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "92.62 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "mAP"
+       },
+       {
+        "cell_id": "T007_R5_C7",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "97.15 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "Acc"
+       },
+       {
+        "cell_id": "T007_R5_C8",
+        "in_pdf_table": false,
+        "asserted_by_claim": false,
+        "pdf_cell_text": "5.82 is in Table 8, not Table 7",
+        "pdf_row": "Table 8, No. 2",
+        "pdf_column": "HD95"
+       }
+      ],
+      "reason": "Step 1 fails (b). The claim text is the Table 8 body (rows 1-7), then the Table 7 body (GFLOPs, inference speed and params per model), then the Table 7 caption ('Table 7 Evaluation results of model efficiency Fig.'). There is no natural-language sentence. The candidate labeled 'Table 7' is also mislabeled: its bbox (y 354-405) is the top of Table 8, the same bbox as candidate T008. Its cells are Table 8 rows 1-2, with Table 8 caption fragments as column labels.",
+      "evidence_excerpt": "MSFR-Net 4065 87.91 15.02 PVT-Fomer 86.15 45.41 45.51 AS-WEC 26.3 30.28 34.75 Table 7 Evaluation results of model efficiency",
+      "confidence": "high"
+     }
+    ]
+   }
+  }
+ ]
+}

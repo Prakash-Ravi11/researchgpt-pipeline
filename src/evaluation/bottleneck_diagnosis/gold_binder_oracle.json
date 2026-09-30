@@ -1,0 +1,680 @@
+{
+ "artifact": "gold_binder_oracle",
+ "run": {
+  "stage": "B",
+  "generated_at_utc": "2026-09-30T00:40:57+00:00",
+  "script": "src/evaluation/bottleneck_diagnosis/stage_b_gold_binder_oracle.py",
+  "git_head": "30fc85d75d9ec5aaf8d354d38c0cddab82930418",
+  "git_branch": "claude-code-verification",
+  "python": "3.10.18",
+  "pymupdf": "1.28.2",
+  "input": "verified_gold_pairs.json",
+  "input_sha256": "e75d8ef53047e5542100535bb575cc5d5257c7a8ba68fcdbff26609fa07465dc",
+  "input_pairs": [
+   "P003/G002"
+  ],
+  "input_statuses": [
+   "VERIFIED_POSITIVE"
+  ],
+  "deterministic": "no LLM / retrieval / network; structural_bind and gate_paper are deterministic",
+  "reproducible_in_process_double_run": true,
+  "configs": {
+   "configs/config.yaml": {
+    "evidence_grounding.enabled": false,
+    "llm.temperature": 0.2,
+    "llm.seed": null
+   },
+   "configs/staging_config.yaml": {
+    "evidence_grounding.enabled": true,
+    "llm.temperature": 0,
+    "llm.seed": 42
+   }
+  },
+  "pdfs": {
+   "P003": {
+    "path": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+    "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f"
+   }
+  },
+  "code_path_pdf_representation": [
+   [
+    "src/evidence/represent.py:12-15",
+    "module contract: 'PDF table blocks do not [carry table_cells] (that is the bindability loss)'"
+   ],
+   [
+    "src/evidence/represent.py:172-176",
+    "blocks_from_pdf types a block 'table' from its first line and attaches no table_cells"
+   ],
+   [
+    "src/evidence/represent.py:436-437",
+    "build_document routes representation 'pdf' to blocks_from_pdf"
+   ],
+   [
+    "src/processing/pdf_parser.py:193-196",
+    "Stage 2 copies table_cells onto chunk records only when the block has them"
+   ],
+   [
+    "src/evidence/chunker.py:50-52",
+    "chunk_document carries table_cells only from blocks that have them"
+   ],
+   [
+    "src/evidence/gate.py:273-284",
+    "paper_table_cells pools table_cells from the chunks (empty for a PDF paper)"
+   ],
+   [
+    "src/evidence/gate.py:432-434",
+    "structural_bind returns status 'pdf_only' when no cells exist"
+   ],
+   [
+    "src/evidence/gate.py:528-531",
+    "_gate_value abstains with 'unverifiable_binding' on pdf_only"
+   ],
+   [
+    "src/summarization/summarize.py:1344-1346",
+    "the gate runs only when evidence_grounding.enabled"
+   ]
+  ],
+  "rules": "Stage B -- GOLD->BINDER oracle, run on the VERIFIED_POSITIVE pairs of Stage A only.\n\n    PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -B src/evaluation/bottleneck_diagnosis/stage_b_gold_binder_oracle.py\n\nProduction code is imported and called, never modified. The calls, in order:\n  process_paper_grounded (the Stage 2 grounded path), blocks_from_jats / _jats_table_cells (the structured\n  table -> table_cells converter), chunk_document, structural_bind, gate_paper.\nNo LLM, retrieval, embedding or network is used; every step is deterministic, and the whole oracle is run\ntwice in-process and compared.\n\nOnly the evidence representation is varied:\n  R0 current       process_paper_grounded(paper) on the hash-pinned canonical PDF: exactly the chunks Stage 2\n                   hands to the binder (Stage 5) when evidence grounding is enabled\n  R1 gold/prod     R0 + the physically verified table, written as a JATS <table> in the PDF's own column order\n                   and converted by the production JATS path (row label = first column, header = first row)\n  R2 gold/entity   as R1, but with the verified entity column moved first, so the row label is the entity\n                   the claim talks about (e.g. 'Proposed Method' rather than the index '04')\nClaims:\n  REAL             the verified claim sentence from the PDF (Stage A claim_text_verified)\n  CANONICAL        \"<entity> achieves a <column header> of <value>.\" -- only verified cell content, phrased\n                   with the subject + verb + metric + number pattern the binder parses\n  CANONICAL_ROWLABEL  \"Row <row label> achieves a <column header> of <value>.\" -- the row named the way R1\n                   labels it (the binder's subject regex needs a leading letter; 'Row' adds no fact)\nSupplementary, reported separately and never counted as pairs: the CANONICAL probe for every row of the\nverified table, so that row matching is seen on more than one row.\n"
+ },
+ "r0_representation": {
+  "P003": {
+   "chunks": 221,
+   "chunks_with_table_cells": 0,
+   "table_blocks": 6,
+   "table_block_heads": [
+    [
+     "p3",
+     "Table 1: Comparison Table for Exiting Method"
+    ],
+    [
+     "p5",
+     "Table 2: BraTS dataset compared to state-of-the-art"
+    ],
+    [
+     "p6",
+     "Table 3: Comparison with state-of-the-art methods on"
+    ],
+    [
+     "p6",
+     "Table 4: Examples of generated natural language"
+    ],
+    [
+     "p6",
+     "Table 5: Evaluation of natural language explanations"
+    ],
+    [
+     "p7",
+     "Table 6: Segmentation performance on BraTS and"
+    ]
+   ],
+   "target_value_in_chunk_text": [
+    "p1",
+    "p5",
+    "p6",
+    "p7",
+    "p8"
+   ],
+   "representation": [
+    "pdf"
+   ]
+  }
+ },
+ "pairs": [
+  {
+   "key": "P003/G002",
+   "paper_id": "P003",
+   "claim_id": "C010",
+   "gold": {
+    "pdf_table_label": "Table 3",
+    "pdf_table_page": 6,
+    "claim_pdf_page": 5,
+    "cells": [
+     {
+      "cell_id": "T004_R6_C3",
+      "pdf_row_label": "04 | Proposed Method",
+      "pdf_column_header": "Dice Score (%)",
+      "pdf_observed_cell_text": "92.3"
+     }
+    ]
+   },
+   "cases": {
+    "REAL|R0_current_pdf": {
+     "claim_variant": "REAL",
+     "representation": "R0_current_pdf",
+     "claim": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+     "target": null,
+     "binder_input_cells": 0,
+     "metric_column_cells": 0,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": false,
+      "status": "pdf_only"
+     },
+     "binder_status": "pdf_only",
+     "bound_to_gold_cell": false,
+     "gate_items": [
+      {
+       "value": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+       "final": "ABSTAINED",
+       "abstain_reason": "unverifiable_binding",
+       "evidence_status": "UNSUPPORTED",
+       "attribution": "UNKNOWN",
+       "attribution_confidence": 0.0,
+       "section": null,
+       "page_or_node": null,
+       "block_id": null,
+       "provenance_valid": false,
+       "structural_binding_status": "pdf_only"
+      }
+     ],
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "unverifiable_binding"
+     ],
+     "first_failure": "stage2_representation: PDF table has no structured cells (pdf_only)"
+    },
+    "CANONICAL|R0_current_pdf": {
+     "claim_variant": "CANONICAL",
+     "representation": "R0_current_pdf",
+     "claim": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+     "target": null,
+     "binder_input_cells": 0,
+     "metric_column_cells": 0,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": false,
+      "status": "pdf_only"
+     },
+     "binder_status": "pdf_only",
+     "bound_to_gold_cell": false,
+     "gate_items": [
+      {
+       "value": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+       "final": "ABSTAINED",
+       "abstain_reason": "unverifiable_binding",
+       "evidence_status": "UNSUPPORTED",
+       "attribution": "UNKNOWN",
+       "attribution_confidence": 0.0,
+       "section": null,
+       "page_or_node": null,
+       "block_id": null,
+       "provenance_valid": false,
+       "structural_binding_status": "pdf_only"
+      }
+     ],
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "unverifiable_binding"
+     ],
+     "first_failure": "stage2_representation: PDF table has no structured cells (pdf_only)"
+    },
+    "REAL|R1_gold_production_convention": {
+     "claim_variant": "REAL",
+     "representation": "R1_gold_production_convention",
+     "claim": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+     "target": {
+      "row_label": "04",
+      "column_header": "Dice Score (%)",
+      "value": "92.3"
+     },
+     "binder_input_cells": 8,
+     "metric_column_cells": 4,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": true,
+      "status": "wrong_cell",
+      "number": "92.3",
+      "reason": "value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN",
+      "candidate": {
+       "row": "04",
+       "col": "Dice Score (%)"
+      }
+     },
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "gate_items": [
+      {
+       "value": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+       "final": "ABSTAINED",
+       "abstain_reason": "binding_wrong_cell",
+       "evidence_status": "UNSUPPORTED",
+       "attribution": "UNKNOWN",
+       "attribution_confidence": 0.0,
+       "section": null,
+       "page_or_node": null,
+       "block_id": null,
+       "provenance_valid": false,
+       "structural_binding_status": "wrong_cell"
+      }
+     ],
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ],
+     "first_failure": "binder: wrong_cell (value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN)"
+    },
+    "CANONICAL|R1_gold_production_convention": {
+     "claim_variant": "CANONICAL",
+     "representation": "R1_gold_production_convention",
+     "claim": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+     "target": {
+      "row_label": "04",
+      "column_header": "Dice Score (%)",
+      "value": "92.3"
+     },
+     "binder_input_cells": 8,
+     "metric_column_cells": 4,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": true,
+      "status": "wrong_cell",
+      "number": "92.3",
+      "reason": "value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN",
+      "candidate": {
+       "row": "04",
+       "col": "Dice Score (%)"
+      }
+     },
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "gate_items": [
+      {
+       "value": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+       "final": "ABSTAINED",
+       "abstain_reason": "binding_wrong_cell",
+       "evidence_status": "UNSUPPORTED",
+       "attribution": "UNKNOWN",
+       "attribution_confidence": 0.0,
+       "section": null,
+       "page_or_node": null,
+       "block_id": null,
+       "provenance_valid": false,
+       "structural_binding_status": "wrong_cell"
+      }
+     ],
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ],
+     "first_failure": "binder: wrong_cell (value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN)"
+    },
+    "CANONICAL_ROWLABEL|R1_gold_production_convention": {
+     "claim_variant": "CANONICAL_ROWLABEL",
+     "representation": "R1_gold_production_convention",
+     "claim": "Row 04 achieves a Dice Score (%) of 92.3.",
+     "target": {
+      "row_label": "04",
+      "column_header": "Dice Score (%)",
+      "value": "92.3"
+     },
+     "binder_input_cells": 8,
+     "metric_column_cells": 4,
+     "parse": {
+      "numbers": [
+       "04",
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "Row 04"
+     },
+     "binder": {
+      "structured": true,
+      "status": "bound",
+      "number": "92.3",
+      "table_type": "results",
+      "cell": {
+       "row": "04",
+       "col": "Dice Score (%)",
+       "value": "92.3",
+       "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+      }
+     },
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "gate_items": [
+      {
+       "value": "Row 04 achieves a Dice Score (%) of 92.3.",
+       "final": "ABSTAINED",
+       "abstain_reason": "ownership_unverified",
+       "evidence_status": "EXPLICIT",
+       "attribution": "UNKNOWN",
+       "attribution_confidence": 0.3,
+       "section": "results",
+       "page_or_node": "body/sec[0]/table-wrap[1]",
+       "block_id": "P003:0",
+       "provenance_valid": true,
+       "structural_binding_status": "bound"
+      }
+     ],
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "ownership_unverified"
+     ],
+     "first_failure": "gate: ownership_unverified"
+    },
+    "REAL|R2_gold_entity_first": {
+     "claim_variant": "REAL",
+     "representation": "R2_gold_entity_first",
+     "claim": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+     "target": {
+      "row_label": "Proposed Method",
+      "column_header": "Dice Score (%)",
+      "value": "92.3"
+     },
+     "binder_input_cells": 8,
+     "metric_column_cells": 4,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": true,
+      "status": "bound",
+      "number": "92.3",
+      "table_type": "results",
+      "cell": {
+       "row": "Proposed Method",
+       "col": "Dice Score (%)",
+       "value": "92.3",
+       "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+      }
+     },
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "gate_items": [
+      {
+       "value": "On the ISLES dataset for ischemic stroke lesion segmentation, our method achieves a remarkable average Dice score of 92.3%, outperforming several state-of-the-art methods, as shown in Table 3.",
+       "final": "RETURNED",
+       "abstain_reason": null,
+       "evidence_status": "EXPLICIT",
+       "attribution": "OWN_PAPER",
+       "attribution_confidence": 0.65,
+       "section": "experimental_setup",
+       "page_or_node": "p8",
+       "block_id": "380729d6b9650ea4b8cb7e4325606e30cdd3b727:157",
+       "provenance_valid": true,
+       "structural_binding_status": "bound"
+      }
+     ],
+     "gate_final": [
+      "RETURNED"
+     ],
+     "gate_abstain_reasons": [
+      null
+     ],
+     "first_failure": "none (bound to the gold cell and RETURNED)"
+    },
+    "CANONICAL|R2_gold_entity_first": {
+     "claim_variant": "CANONICAL",
+     "representation": "R2_gold_entity_first",
+     "claim": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+     "target": {
+      "row_label": "Proposed Method",
+      "column_header": "Dice Score (%)",
+      "value": "92.3"
+     },
+     "binder_input_cells": 8,
+     "metric_column_cells": 4,
+     "parse": {
+      "numbers": [
+       "92.3"
+      ],
+      "metric_tokens": [
+       "dice",
+       "score"
+      ],
+      "subject": "OWN (implicit)"
+     },
+     "binder": {
+      "structured": true,
+      "status": "bound",
+      "number": "92.3",
+      "table_type": "results",
+      "cell": {
+       "row": "Proposed Method",
+       "col": "Dice Score (%)",
+       "value": "92.3",
+       "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+      }
+     },
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "gate_items": [
+      {
+       "value": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+       "final": "RETURNED",
+       "abstain_reason": null,
+       "evidence_status": "EXPLICIT",
+       "attribution": "OWN_PAPER",
+       "attribution_confidence": 0.7,
+       "section": "experimental_setup",
+       "page_or_node": "p8",
+       "block_id": "380729d6b9650ea4b8cb7e4325606e30cdd3b727:157",
+       "provenance_valid": true,
+       "structural_binding_status": "bound"
+      }
+     ],
+     "gate_final": [
+      "RETURNED"
+     ],
+     "gate_abstain_reasons": [
+      null
+     ],
+     "first_failure": "none (bound to the gold cell and RETURNED)"
+    }
+   },
+   "verdict": {
+    "production_path": "PDF_ONLY_NO_STRUCTURED_CELLS",
+    "R1_gold_production_convention": {
+     "class": "REAL_FAIL_CANONICAL_FAIL",
+     "cells_available_but_gate_rejected": [],
+     "real_first_failure": "binder: wrong_cell (value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN)",
+     "canonical_first_failure": "binder: wrong_cell (value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN)"
+    },
+    "R2_gold_entity_first": {
+     "class": "REAL_BOUND_CANONICAL_BOUND",
+     "cells_available_but_gate_rejected": [],
+     "real_first_failure": "none (bound to the gold cell and RETURNED)",
+     "canonical_first_failure": "none (bound to the gold cell and RETURNED)"
+    }
+   },
+   "supplementary_row_sweep": [
+    {
+     "row": 0,
+     "representation": "R1_gold_production_convention",
+     "claim": "The 3D U-Net achieves a Dice Score (%) of 89.7.",
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "bound_cell": null,
+     "reason": "value is under column 'Dice Score (%)' but for row '01', not the claim's subject 'The 3D U-Net'",
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ]
+    },
+    {
+     "row": 0,
+     "representation": "R2_gold_entity_first",
+     "claim": "The 3D U-Net achieves a Dice Score (%) of 89.7.",
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "bound_cell": {
+      "row": "3D U-Net [45]",
+      "col": "Dice Score (%)",
+      "value": "89.7",
+      "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+     },
+     "reason": null,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "ownership_unverified"
+     ]
+    },
+    {
+     "row": 1,
+     "representation": "R1_gold_production_convention",
+     "claim": "The Attention U-Net achieves a Dice Score (%) of 90.5.",
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "bound_cell": null,
+     "reason": "value is under column 'Dice Score (%)' but for row '02', not the claim's subject 'The Attention U-Net'",
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ]
+    },
+    {
+     "row": 1,
+     "representation": "R2_gold_entity_first",
+     "claim": "The Attention U-Net achieves a Dice Score (%) of 90.5.",
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "bound_cell": {
+      "row": "Attention U-Net [46]",
+      "col": "Dice Score (%)",
+      "value": "90.5",
+      "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+     },
+     "reason": null,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "ownership_unverified"
+     ]
+    },
+    {
+     "row": 2,
+     "representation": "R1_gold_production_convention",
+     "claim": "The DualSeg achieves a Dice Score (%) of 91.2.",
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "bound_cell": null,
+     "reason": "value is under column 'Dice Score (%)' but for row '03', not the claim's subject 'The DualSeg'",
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ]
+    },
+    {
+     "row": 2,
+     "representation": "R2_gold_entity_first",
+     "claim": "The DualSeg achieves a Dice Score (%) of 91.2.",
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "bound_cell": {
+      "row": "DualSeg [47]",
+      "col": "Dice Score (%)",
+      "value": "91.2",
+      "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+     },
+     "reason": null,
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "ownership_unverified"
+     ]
+    },
+    {
+     "row": 3,
+     "representation": "R1_gold_production_convention",
+     "claim": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+     "binder_status": "wrong_cell",
+     "bound_to_gold_cell": false,
+     "bound_cell": null,
+     "reason": "value is under column 'Dice Score (%)' but for row '04', not the claim's subject OWN",
+     "gate_final": [
+      "ABSTAINED"
+     ],
+     "gate_abstain_reasons": [
+      "binding_wrong_cell"
+     ]
+    },
+    {
+     "row": 3,
+     "representation": "R2_gold_entity_first",
+     "claim": "The Proposed Method achieves a Dice Score (%) of 92.3.",
+     "binder_status": "bound",
+     "bound_to_gold_cell": true,
+     "bound_cell": {
+      "row": "Proposed Method",
+      "col": "Dice Score (%)",
+      "value": "92.3",
+      "caption": "Table 3: Comparison with state-of-the-art methods on the ISLES dataset."
+     },
+     "reason": null,
+     "gate_final": [
+      "RETURNED"
+     ],
+     "gate_abstain_reasons": [
+      null
+     ]
+    }
+   ]
+  }
+ ]
+}
