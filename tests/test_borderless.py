@@ -132,11 +132,11 @@ def pdf_bytes():
 
 def test_flag_resolution(monkeypatch):
     monkeypatch.delenv("RGPT_BORDERLESS_POLICY", raising=False)
-    assert R._borderless_policy() == "consensus"        # the default since phase 09B (configs/staging_config.yaml)
-    monkeypatch.setenv("RGPT_BORDERLESS_POLICY", "off")
-    assert R._borderless_policy() == "off"              # the variable wins over the config
-    monkeypatch.setenv("RGPT_BORDERLESS_POLICY", "bogus")
+    assert R._borderless_policy() == "off"
+    monkeypatch.setenv("RGPT_BORDERLESS_POLICY", "consensus")
     assert R._borderless_policy() == "consensus"
+    monkeypatch.setenv("RGPT_BORDERLESS_POLICY", "bogus")
+    assert R._borderless_policy() == "off"
 
 
 def test_flag_off_output_is_identical_and_the_backend_is_never_called(monkeypatch, pdf_bytes):

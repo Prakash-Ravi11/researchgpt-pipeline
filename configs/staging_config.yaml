@@ -72,4 +72,3 @@ evidence_grounding:
   # numeric values is >= the paired PDF's, minus this tolerance. 0.0 = strict.
   latex_parity_tolerance: 0.0
   fallthrough_policy: table_value_guard   # phase 09B: Q1-Q3 PASS (src/evaluation/fallthrough_09b/PHASE09B_REPORT.md)
-  borderless_policy: consensus   # phase 09B: E1-E5 PASS; needs requirements-borderless.txt (src/evaluation/fallthrough_09b/PHASE09B_REPORT.md)
