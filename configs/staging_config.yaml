@@ -71,3 +71,4 @@ evidence_grounding:
   # acquired as LaTeX is kept only if verbatim survival of its ground-truth
   # numeric values is >= the paired PDF's, minus this tolerance. 0.0 = strict.
   latex_parity_tolerance: 0.0
+  fallthrough_policy: table_value_guard   # phase 09B: Q1-Q3 PASS (src/evaluation/fallthrough_09b/PHASE09B_REPORT.md)
