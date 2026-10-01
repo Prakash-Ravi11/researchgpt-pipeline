@@ -32,3 +32,7 @@ web/dist/
 
 # Phase 09A isolated venv for the borderless-table backend (requirements-borderless.txt).
 .venv-09a/
+
+# Phase 10 package: regenerable run outputs (09B child records) and the acceptance-run data.
+runs/
+data_acceptance/
