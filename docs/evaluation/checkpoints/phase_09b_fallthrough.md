@@ -126,8 +126,27 @@ Files:
 The scratchpad was emptied after `results.json` and the report were committed.
 
 ## Current State
-**Phase 09B complete.** On the branch tip, `fallthrough_policy = table_value_guard` and
-`borderless_policy = consensus` are the defaults. The branch is pushed to origin.
+**Phase 09B complete and frozen** (phase 10 package, Part 1, 2026-10-01). Report §14 has the details.
+- `42c08c8` reverts `d1b7506`, so `borderless_policy` is back to `off`. Reasons:
+  - 171 unbound returns outside E3 vs L0 with borderless on;
+  - the production `.venv` has no docling.
+- `fallthrough_policy = table_value_guard` stays the default (`534dd4b`). Full suite: 201 passed.
+- Guard recall check, L0→G0, 33 removed returns, two independent agent checks each against the PDF
+  (machine-assisted):
+
+  | Verdict | Count |
+  |---|---|
+  | correct abstention | 20 |
+  | coincidental: different quantity | 6 |
+  | coincidental: prose typed as a table | 3 |
+  | coincidental: section/table/page number | 3 |
+  | coincidental: date | 1 |
+  | unclear | 0 |
+
+- Phase 09C (Region Guard) is DEFERRED; PROGRESS.md has the reason.
+- The child records were regenerated into `runs/p09b_run/` (gitignored). Re-analysis gives 0 differences from
+  the committed results.
+- The branch is fast-forwarded into `claude-code-verification`. Both branches are pushed.
 
 ## Next Step
 Phase 10: the binder. Its scope includes:

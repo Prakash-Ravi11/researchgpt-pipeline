@@ -1,6 +1,8 @@
 # Phase 09B — Fall-through guard (`table_value_guard`) and the borderless re-decision
 
 **Decision (mechanical, STEP 4): enable both defaults.**
+> **Superseded by §14 Freeze:** `borderless_policy` was reverted to `off` (`42c08c8`); the guard stays enabled.
+
 - Q1–Q3 all PASS → `fallthrough_policy = table_value_guard`.
 - E1–E5 all PASS → `borderless_policy = consensus`.
 
@@ -299,6 +301,80 @@ Phase 10 is the binder. 09B adds two measured items to its scope:
 - the D5 gap, which lets the values of a pdf_only table's body through once the paper has any cells (§8);
 - the guard's recall cost: dates, years, section numbers and prose typed as a table matched by token
   (§7).
+
+## 14. Freeze (phase 10 package, Part 1, 2026-10-01)
+- **Borderless default reverted.** `42c08c8` reverts `d1b7506` ("enable borderless_policy=consensus by
+  default"). Reasons:
+  - with borderless on, G1 vs L0 has 171 unbound returns outside E3's scope (§8);
+  - the production `.venv` has no docling, so consensus there records `borderless_error` and attaches no
+    cells.
+
+  `borderless_policy` is back to its code default, `off`, and `tests/test_borderless.py::test_flag_resolution`
+  is back to the `off` default. The guard (`534dd4b`) stays enabled. Full suite: 201 passed, 0 failed.
+- **Phase 09C — Region Guard. STATUS: DEFERRED.** Borderless consensus produced 171 unverified returns vs
+  L0 (legacy, borderless off). The guard alone added 0 unbound returns in all four unit kinds (Sweep B
+  528 -> 496 = exactly its 32 removals). A region guard can only remove returns; it is needed only to
+  enable borderless, which Phase 10 does not require.
+- **Guard recall check (L0 → G0, read-only).** These are the 33 returns the guard removed without borderless
+  (`run.returns_removed_by_guard["L0->G0"]`: 1 pair, 32 Sweep B items).
+  - Each item had two independent agent checks against the PDF (crop + text layer).
+  - **correct abstention**: the same quantity is printed in a table.
+  - **coincidental**: a date, section/table/page number, prose typed as a table, or a different quantity.
+  - **unclear**: the two checks disagree.
+  - The verdicts are machine-assisted and not human-validated.
+
+  | Verdict | Count |
+  |---|---|
+  | correct abstention | **20** |
+  | coincidental | **13**: different quantity 6, prose typed as a table 3, section/table/page number 3, date 1 |
+  | unclear (the checks disagree) | **0** |
+
+  Every item:
+
+| # | Unit | Paper | Compared tokens | Verdict (both checkers) | Kind | Checker 1: why | Checker 2: why |
+|---|---|---|---|---|---|---|---|
+| 1 | PF013 | P008 | 0.96, 95 | correct abstention | — | The probe's 0.96 is the 95HD (mm) of 'Ours', and Table I (p7) prints Ours 95HD(mm)↓ = 0.96±0.38. The extra '95' match is the same metric name '95HD' i… | The synthetic probe's 0.96 is Ours' 95HD (mm), and the matched cell is Table I Ours / 95HD(mm)↓ = 0.96±0.38, the same quantity (its '95' token also hi… |
+| 2 | Sweep B 380729d6:125#0#0 | P003 | 0.38, 0.41, 0.44, 0.47, 0.56, 0.59… | correct abstention | — | The item is Table 5 body text (p6): rows '01 BraTS 0.41 0.62 0.47 0.59' and '02 ISLES 0.38 0.59 0.44 0.56' are the S.no and the BLEU/ROUGE-1/ROUGE-2/R… | The item is Table 5 body text (01 BraTS BLEU 0.41, ROUGE-1 0.62, ROUGE-2 0.47, ROUGE-L 0.59; 02 ISLES 0.38/0.59/0.44/0.56) and matches those same Tabl… |
+| 3 | Sweep B 380729d6:147#0#0 | P003 | 2.1, 3.2, 4.6, 88.7 | correct abstention | — | The item is Table 6 body text (p7), row BraTS Whole Tumor: Dice 88.7 ± 3.2 and Hausdorff 4.6 ± 2.1. These are the same as the Table 6 cells and as Tab… | The item is Table 6 body text for BraTS Whole Tumor (Dice 88.7 ± 3.2 %, Hausdorff 4.6 ± 2.1 mm) and matches the same Table 6 cells, plus Table 2's Pro… |
+| 4 | Sweep B 380729d6:148#0#0 | P003 | 3.4, 4.7, 5.9, 85.4 | correct abstention | — | The item is the Table 6 row BraTS Tumor Core (Dice 85.4 ± 4.7, HD 5.9 ± 3.4), the same quantities as the matched Table 6 cells and Table 2's Proposed … | The item is Table 6 body text for BraTS Tumor Core (Dice 85.4 ± 4.7 %, Hausdorff 5.9 ± 3.4 mm) and matches the same Table 6 cells, plus Table 2's Prop… |
+| 5 | Sweep B 380729d6:150#0#0 | P003 | 4.2, 6.8, 7.1, 79.2 | correct abstention | — | The item is the Table 6 row BraTS Enhancing Tumor (Dice 79.2 ± 6.8, HD 7.1 ± 4.2), the same quantities as the matched Table 6 cells and Table 2's Prop… | The item is Table 6 body text for BraTS Enhancing Tumor (Dice 79.2 ± 6.8 %, Hausdorff 7.1 ± 4.2 mm) and matches the same Table 6 cells, plus Table 2's… |
+| 6 | Sweep B 380729d6:152#0#0 | P003 | 1.7, 2.8, 3.1, 92.3 | correct abstention | — | The item is the Table 6 row ISLES Ischemic Lesion (Dice 92.3 ± 2.8, HD 3.1 ± 1.7), the same quantities as the matched Table 6 cells and Table 3's Prop… | The item is Table 6 body text for ISLES Ischemic Lesion (Dice 92.3 ± 2.8 %, Hausdorff 3.1 ± 1.7 mm) and matches the same Table 6 cells, plus Table 3's… |
+| 7 | Sweep B 380729d6:19#0#0 | P003 | 02, 03, 10.22399, 2024 | coincidental | date | The item's 02 and 03 are the days in 'Received: 02 October 2024' and 'Accepted: 03 October 2024' (p1 front matter). They matched the row serial number… | The item's 02 and 03 are the days of the month in the page-1 article dates 'Received: 02 October 2024 / Accepted: 03 October 2024', while the matched … |
+| 8 | Sweep B 380729d6:37#0#0 | P003 | 90.1 | correct abstention | — | The item is Table 1 body text (p3), row Attention U-Net [14]: 'BraTS MRI 90.1 -'. Its 90.1 is the matched Dice Score (%) cell 90.1. | The item is Table 1 body text for Attention U-Net [14] (BraTS, MRI, Dice 90.1 %, '-') and matches that same Dice Score (%) cell, 90.1. |
+| 9 | Sweep B 380729d6:41#0#0 | P003 | 91.5, 96.2 | correct abstention | — | The item is Table 1 body text (p3), row Wang et al. [23]: BraTS, LiTS / MRI, CT / 91.5, 96.2 / Textual. Its 91.5 and 96.2 are the matched Dice Score (… | The item is Table 1 body text for Wang et al. [23] (BraTS, LiTS / MRI, CT / Dice 91.5, 96.2 % / Textual) and matches that same Dice Score (%) cell, '9… |
+| 10 | Sweep B 562fa0fc:10#1#0 | P006 | 0.657, 0.666 | correct abstention | — | The abstract gives YOLOv5 mAP@0.5:0.95 as 0.666 (box) and 0.657 (mask). Table VI (p15), row All, prints YOLOv5 Box 0.666 and Mask 0.657, so the matche… | The abstract's 0.657 is YOLOv5's all-class mask-segmentation mAP@.5:.95, the same as Table VI row All / YOLOv5 Mask = 0.657; the paired 0.666 is the B… |
+| 11 | Sweep B 562fa0fc:33#0#4 | P006 | 2018, 2019, 95 | coincidental | different quantity | The item's 95% is the accuracy of ref [37] (DenseNet201 DSS with SVM), which has no row in Table I. It matched the 95% accuracy/recall of the differen… | The item's 95% is the accuracy of ref [37]'s DenseNet201+SVM DSS, which has no TABLE I row, while the matched 95% cells are the accuracies of other wo… |
+| 12 | Sweep B 562fa0fc:36#0#5 | P006 | 95 | correct abstention | — | The item reports 95% accuracy on the BT dataset for ref [39] (residual network with transfer learning). Table I row [39], 'Deep residual network with … | The item's 95% is the accuracy of ref [39]'s deep residual transfer-learning model on the BT dataset, the same quantity as TABLE I row [39] Performanc… |
+| 13 | Sweep B 6890f2eb:101#0#0 | P008 | 15 | coincidental | prose typed as table | The item's 15 (fetal MRI scans in the blind expert evaluation, p6) matched the 15 in the p7 Results paragraph 'Table IV shows ... for 15 test subjects… | The item's 15 (fetal MRI scans in the blind expert evaluation) matched only '15 test subjects' in the 'Table IV shows…' prose paragraph that the parse… |
+| 14 | Sweep B 6890f2eb:128#0#1 | P008 | 10 | correct abstention | — | The item is Table II body text (p7, inside the table bbox), row '3D U-Net vs. Ours': p-values 10−5, 10−3, 10−10. The compared '10' is the base of thos… | The item is Table II body text, the '3D U-Net vs. Ours' p-value row (10−5, 10−3, 10−10), and its '10' token matched exactly those same Table II cells … |
+| 15 | Sweep B 6890f2eb:129#0#0 | P008 | 15 | coincidental | prose typed as table | The item is the first sentence of the 'Table IV shows ...' Results paragraph (p7). Its 15 (test subjects) matched that same paragraph, which the parse… | The item is the first sentence of the 'Table IV shows… for 15 test subjects' prose paragraph, and its 15 matched that same paragraph (typed as a table… |
+| 16 | Sweep B 6890f2eb:129#0#3 | P008 | 20 | coincidental | prose typed as table | The item's 20 (MAS took about 20 minutes) matched the '20 minutes' in the same 'Table IV shows ...' prose paragraph on p7, which was typed as a table.… | The item's 20 (MAS took approximately 20 minutes) matched its own 'Table IV shows…' prose paragraph, which was typed as a table; no table prints 20 (T… |
+| 17 | Sweep B 6890f2eb:130#0#0 | P008 | 0.21, 0.92, 10 | correct abstention | — | The item is Table II body text, row 'PAUNet vs. Ours': Dice 10−3, 95HD 0.21, ASD 0.92. These are exactly the matched Table II p-value cells. | The item is Table II body text for 'PAUNet vs. Ours' (p = 10−3, 0.21, 0.92) and matches those same cells: Dice 10−3, 95HD 0.21, ASD 0.92. |
+| 18 | Sweep B 6890f2eb:130#0#1 | P008 | 0.12, 0.70, 10 | correct abstention | — | The item is Table II body text, row 'Attention UNet vs. Ours': p = 0.12 (Dice), 0.70 (95HD), 10−3 (ASD), the same as the matched cells. | The item is Table II body text for 'Attention UNet vs. Ours' (p = 0.12, 0.70, 10−3) and matches those same cells: Dice 0.12, 95HD 0.70, ASD 10−3. |
+| 19 | Sweep B 6890f2eb:131#0#0 | P008 | 0.01, 10 | correct abstention | — | The item is Table II body text, row 'SE-FCN vs. Ours': p = 10−3 (Dice), 0.01 (95HD), 10−4 (ASD), the same as the matched cells. | The item is Table II body text for 'SE-FCN vs. Ours' (p = 10−3, 0.01, 10−4) and matches those same cells: Dice 10−3, 95HD 0.01, ASD 10−4. |
+| 20 | Sweep B 6890f2eb:132#0#0 | P008 | 0.02, 0.09, 10 | correct abstention | — | The item is Table II body text, row 'DSRNet vs. Ours': p = 0.02 (Dice), 0.09 (95HD), 10−3 (ASD), the same as the matched cells. The extra match to the… | The item is Table II body text for 'DSRNet vs. Ours' (p = 0.02, 0.09, 10−3) and matches those same cells, Dice 0.02 and 95HD 0.09, plus a coincidental… |
+| 21 | Sweep B 6890f2eb:158#0#0 | P008 | 0.443, 0.83, 1.13, 95 | coincidental | different quantity | The item is the Figure 6 (p9) single-case label for UNet (Dice 0.83, 95HD 1.13, ASD 0.443). Only its '95', the percentile prefix of the metric name 95… | The item is a Fig. 6 overlay label for the UNet representative case (Dice 0.83, 95HD 1.13, ASD 0.443, values found in no table), and its only match is… |
+| 22 | Sweep B 6890f2eb:176#0#0 | P008 | 10 | coincidental | section table or page number | The item's 10 is the page number in the running header 'ACCEPTED BY IEEE TRANSACTIONS ON MEDICAL IMAGING 10'. It matched the base 10 of the exponent-f… | The item's 10 is the page number in the page-10 running header, matched against the base '10' of Table II's p-value notation (10−5, 10−3, 10−10, …). |
+| 23 | Sweep B 8edc7465:118#0#0 | P014 | 10, 29 | coincidental | different quantity | The item's 10 is the EPDS score cut-off (≥10, with 29% of SRI women above it). It matched Table 1 cells where 10 is a participant count (alcohol use, … | The item's 10 is the EPDS screening cutoff (score ≥10; the 29% proportion appears only in prose), while the matched Table 1 cells are counts (alcohol … |
+| 24 | Sweep B 8edc7465:122#0#0 | P014 | 20, 40 | coincidental | different quantity | The item's 40 is the upper bound of the imaging span (40 weeks' gestation). It matched Table 1 Primigravida, SRI-exposed '25 (40)', which is 40% of mo… | The item's 40 is the upper bound of the 20–40 weeks' gestation imaging span, while the matched Table 1 cell 25 (40) is the 40% primigravida rate in th… |
+| 25 | Sweep B 8edc7465:126#0#0 | P014 | 38, 40 | coincidental | section table or page number | The item's 40 is a citation number in '[38–40]'. It matched Table 1 Primigravida, SRI-exposed '25 (40)', which is 40%. | The item's 40 is a citation reference number in '[38–40]', while the matched Table 1 cell 25 (40) is the 40% primigravida rate in the SRI-exposed grou… |
+| 26 | Sweep B 8edc7465:17#0#1 | P014 | 10 | coincidental | different quantity | The item's 10 is the EPDS high-symptom cut-off (≥10). It matched Table 1 counts and percentages that happen to equal 10 (alcohol use n=10, Non-Hispani… | The item's 10 is the EPDS high-symptom category cutoff (≥10), while the matched Table 1 cells are counts (alcohol use 10 (16), other/unknown race 10 (… |
+| 27 | Sweep B 8edc7465:17#0#2 | P014 | 38, 40 | coincidental | section table or page number | The item's 40 is a citation number in '[38–40]'. It matched Table 1 Primigravida, SRI-exposed '25 (40)', which is 40%. | The item's 40 is a citation reference number in '[38–40]', while the matched Table 1 cell 25 (40) is the 40% primigravida rate in the SRI-exposed grou… |
+| 28 | Sweep B 8edc7465:33#0#1 | P014 | 20.0, 23.57, 31.72, 32.04, 38.57, 39.71… | correct abstention | — | The item restates the Table 1 row 'GA at MRI, mean (SD) [range], week': SRI-exposed 31.72 (4.05) [20.0–38.57] and Unexposed 32.04 (4.32) [23.57–39.71]… | The item restates Table 1 row 'GA at MRI, mean (SD) [range], week': SRI-exposed 31.72 (4.05) [20.0–38.57] and unexposed 32.04 (4.32) [23.57–39.71]. |
+| 29 | Sweep B 8edc7465:33#0#2 | P014 | 27, 44, 56, 67 | correct abstention | — | The item restates the Table 1 row 'Male, N (%)': SRI-exposed 27 (44) and Unexposed 67 (56). The extra 44 matches to Primigravida and Non-Hispanic Whit… | The item's male-fetus counts, 27 (44%) and 67 (56%), restate Table 1 row 'Male, N (%)': SRI-exposed 27 (44) and unexposed 67 (56). |
+| 30 | Sweep B 8edc7465:33#0#3 | P014 | 0.0001, 76.58, 86.21 | correct abstention | — | The item restates the Table 1 row 'Maternal weight at MRI': SRI 86.21 kg, Unexposed 76.58 kg, P = 0.0001. | The item's maternal weight of 86.21 vs 76.58 kg with p = 0.0001 restates Table 1 row 'Maternal weight at MRI' (86.21, 76.58, P = 0.0001). |
+| 31 | Sweep B 8edc7465:33#0#4 | P014 | 0.02, 16 | correct abstention | — | The item restates the Table 1 row 'Maternal alcohol use during pregnancy': SRI 10 (16), i.e. 16%, with P = 0.02. The extra 0.02 matches in Table 2 are… | The item's 16% alcohol use and p = 0.02 restate Table 1 row 'Maternal alcohol use during pregnancy, N (%)' (SRI-exposed 10 (16), P = 0.02). |
+| 32 | Sweep B 8edc7465:33#0#5 | P014 | 82, 84, 90 | correct abstention | — | The item's 82% and 84% professional employment restate Table 1 'Professional': SRI 51 (82) and Unexposed 101 (84). | The item's 82% and 84% professional employment restate the Table 1 'Professional' cells, 51 (82) for SRI-exposed and 101 (84) for unexposed. |
+| 33 | Sweep B 8edc7465:74#0#0 | P014 | 0.0001 | coincidental | different quantity | The item's p < 0.0001 is the significance of fetal brain measures increasing with gestational age. It matched Table 1's P value of 0.0001 for the betw… | The item's p < 0.0001 is the significance of the GA-related increase in fetal brain volume and folding, while the matched Table 1 cell 0.0001 is the P… |
+
+- **Child records.** The 09B child outputs were deleted in the 09B scratchpad cleanup.
+  - They were regenerated with the unmodified harness (`validate_09b.py children`, 64/64 return code 0) into
+    `runs/p09b_run/`.
+  - `.gitignore` excludes that folder (`6d53d4b`), and `git check-ignore` confirms it.
+  - The unmodified harness re-analysed the regenerated records: 0 differences from the committed `run` and
+    `reproduction` sections, with timing and generation timestamps excluded. The package versions are
+    identical.
+- **Branch.** After this commit, `exp/phase09b-fallthrough` is fast-forwarded into `claude-code-verification`.
 
 ---
 
