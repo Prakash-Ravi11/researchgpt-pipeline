@@ -12,8 +12,11 @@
 ## Current Phase
 **Phase 10 package, in progress.** It has three parts:
 1. Freeze 09B: **complete**.
-2. Product acceptance before Phase 10: next.
-3. Binder v2.
+2. Product acceptance before Phase 10: **complete** on `acceptance/pre-phase10`.
+   - 0 RETURNED-with-verified-bind in either arm.
+   - Gold coverage 3/18.
+   - `src/evaluation/acceptance_pre10/ACCEPTANCE_REPORT.md`.
+3. Binder v2: next.
 
 ## Status
 - Phases 00–08 are complete. Their checkpoints were audited on 2026-09-30: 384 facts, 5 discrepancies found
@@ -32,9 +35,14 @@
 `phase_09b_fallthrough` (frozen by phase 10 package Part 1), 2026-10-01.
 
 ## Next Action
-**Phase 10 package, Part 2: product acceptance.** It runs on branch `acceptance/pre-phase10`, created from
-`claude-code-verification`, as the phase 10 package brief describes. Part 3, Binder v2, follows on
-`exp/phase10-binder`.
+**Phase 10 package, Part 3: Binder v2**, on `exp/phase10-binder`, created from `acceptance/pre-phase10`. Its
+steps, from the phase 10 package brief:
+- STEP 0: failure map;
+- STEP 1: pre-registration;
+- STEP 2: tests;
+- STEP 3: run;
+- STEP 4: decision;
+- STEP 5: report.
 
 ## Repository State
 - `claude-code-verification` is the default branch. It now contains `exp/phase09b-fallthrough`
@@ -165,4 +173,5 @@
 - Do not enable `borderless_policy` without a region guard and a new pre-registered evaluation.
 
 ## Last Checkpoint
-`docs/evaluation/checkpoints/phase_09b_fallthrough.md` (2026-10-01, Current State updated by the freeze).
+`docs/evaluation/checkpoints/phase_acceptance_pre10.md` (2026-10-01). The 09B freeze is recorded in
+`phase_09b_fallthrough.md` (Current State).

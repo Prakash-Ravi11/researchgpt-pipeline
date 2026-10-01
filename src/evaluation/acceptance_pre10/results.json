@@ -1,0 +1,829 @@
+{
+ "artifact": "acceptance_pre10",
+ "seed": {
+  "generated_at_utc": "2026-10-01T10:39:46+00:00",
+  "config": "configs\\acceptance_config.yaml",
+  "papers": [
+   {
+    "paper": "P001",
+    "paperId": "291198a6c58f36f37af3215a9a5270db92925bf9",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+    "copied_to": "data_acceptance/pdfs/291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+    "sha256": "2753bb92ae2c388282f6a6d528f668de4c01c2328539af2dc9605143b1140971",
+    "sha256_verified": true,
+    "bytes": 26781081,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P003",
+    "paperId": "380729d6b9650ea4b8cb7e4325606e30cdd3b727",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+    "copied_to": "data_acceptance/pdfs/380729d6b9650ea4b8cb7e4325606e30cdd3b727.pdf",
+    "sha256": "f9851af3b85510d3b90df2c4b95ea0e97f329d436ba982a0173cca959b1f2e5f",
+    "sha256_verified": true,
+    "bytes": 1164949,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P004",
+    "paperId": "3c9b838a0b36d032a86ffe582f55b3583fd4a815",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+    "copied_to": "data_acceptance/pdfs/3c9b838a0b36d032a86ffe582f55b3583fd4a815.pdf",
+    "sha256": "0f6344418c2897b567ae63015f9ed3ce672ca6207cd64e9a5f8dea92b3205077",
+    "sha256_verified": true,
+    "bytes": 880609,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P006",
+    "paperId": "562fa0fc542863477a8d86985bf4ac02654fb4f8",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+    "copied_to": "data_acceptance/pdfs/562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+    "sha256": "003e4123a7444e31945f2cf567e424646c88015705994f8438251ee6da1ef348",
+    "sha256_verified": true,
+    "bytes": 2950543,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P007",
+    "paperId": "67d7236f524dae3bcf88b8f2726261d1acb5206b",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+    "copied_to": "data_acceptance/pdfs/67d7236f524dae3bcf88b8f2726261d1acb5206b.pdf",
+    "sha256": "49ca8e71d316741cb01f43f754ac3768b6e34ccbc8fea13440643a3dc594f3e8",
+    "sha256_verified": true,
+    "bytes": 1747940,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P008",
+    "paperId": "6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+    "copied_to": "data_acceptance/pdfs/6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+    "sha256": "3e50adc782cd8c1b1ca2f0e92e742da1aefef71697f4d477f9453fdded894a7d",
+    "sha256_verified": true,
+    "bytes": 3108220,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P011",
+    "paperId": "86359e887f98737c2ccdb5c0b25840cdb3edb719",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+    "copied_to": "data_acceptance/pdfs/86359e887f98737c2ccdb5c0b25840cdb3edb719.pdf",
+    "sha256": "57f21dffcc5c4d5796ba4561e33c39fa44c94133badf4603f799e1f675beb0f9",
+    "sha256_verified": true,
+    "bytes": 750675,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P014",
+    "paperId": "8edc746500c5c033a80aee9b7890c8ec610e5988",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+    "copied_to": "data_acceptance/pdfs/8edc746500c5c033a80aee9b7890c8ec610e5988.pdf",
+    "sha256": "cf84b0f0876ca3a9338f4d02b602a285fb62d99d6d46243e497cb608679e0655",
+    "sha256_verified": true,
+    "bytes": 1494760,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P015",
+    "paperId": "902ac09c780901e1645101f2b5b817093381dcc8",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+    "copied_to": "data_acceptance/pdfs/902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+    "sha256": "fb2f45464774042a16c0fa661591a0e170f7001a5f151b3f174c10eb20e8ecc1",
+    "sha256_verified": true,
+    "bytes": 14433599,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P016",
+    "paperId": "a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+    "copied_to": "data_acceptance/pdfs/a363d05b9e3fefe1c99929d3b867d9cc7c33d7ec.pdf",
+    "sha256": "11d8e806ab19dace5e33c0da2c6a8e00494ea9670a816cfeb2d67faf76cc696f",
+    "sha256_verified": true,
+    "bytes": 542732,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P017",
+    "paperId": "a365d1ad28cc97045dd2acf60f9dc5740683dbe3",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+    "copied_to": "data_acceptance/pdfs/a365d1ad28cc97045dd2acf60f9dc5740683dbe3.pdf",
+    "sha256": "7dcbc2a8a95202340598be756c3cae1df97777e7045164911f8ca564818e14d2",
+    "sha256_verified": true,
+    "bytes": 26392107,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   },
+   {
+    "paper": "P030",
+    "paperId": "f316788f8eb2050e14f8d803e1b4ff4a3fe25811",
+    "source": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+    "copied_to": "data_acceptance/pdfs/f316788f8eb2050e14f8d803e1b4ff4a3fe25811.pdf",
+    "sha256": "cf7f1eddef844f0cab1ac9ab7f5f7871482db82102713576d3bf324431ae70f1",
+    "sha256_verified": true,
+    "bytes": 1152112,
+    "representation_type": "pdf",
+    "acquisition_status": "FULL_TEXT"
+   }
+  ],
+  "all_sha256_verified": true,
+  "collected_papers": "data_acceptance/raw_metadata/collected_papers.json"
+ },
+ "stages": {
+  "generated_at_utc": "2026-10-01T10:51:58+00:00",
+  "stage_functions_ran": [
+   {
+    "stage": 2,
+    "function": "src.processing.pdf_parser.run_processing",
+    "seconds": 20.9
+   },
+   {
+    "stage": 3,
+    "function": "src.embedding.build_index.run_embedding",
+    "seconds": 102.3
+   },
+   {
+    "stage": 4,
+    "function": "src.summarization.summarize.run_summarization (evidence_grounding.enabled=False in the dict passed: its Stage 5 hook does not run)",
+    "seconds": 586.6
+   }
+  ],
+  "ollama": {
+   "model": "qwen2.5:7b",
+   "digest": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+   "temperature": 0,
+   "seed": 42
+  },
+  "hf_hub_offline": "1",
+  "chunks": 4579,
+  "chunks_equal_to_L0_records_of_the_55_pair_evaluation": {
+   "P001": true,
+   "P003": true,
+   "P004": true,
+   "P006": true,
+   "P007": true,
+   "P008": true,
+   "P011": true,
+   "P014": true,
+   "P015": true,
+   "P016": true,
+   "P017": true,
+   "P030": true
+  },
+  "pre_gate_summaries": "src\\evaluation\\acceptance_pre10\\pre_gate_summaries.json",
+  "papers_summarised": 12,
+  "extraction_failed": []
+ },
+ "gate": {
+  "generated_at_utc": "2026-10-01T15:53:50+00:00",
+  "arms": {
+   "A": {
+    "environment": {
+     "RGPT_FALLTHROUGH_POLICY": "legacy",
+     "RGPT_BORDERLESS_POLICY": "off"
+    },
+    "resolved": {
+     "fallthrough_policy": "legacy",
+     "borderless_policy": "off"
+    },
+    "gate_stats": {
+     "papers": 12,
+     "returned": {
+      "datasets": 26,
+      "metrics": 6,
+      "results": 2
+     },
+     "abstained": {
+      "datasets": 6,
+      "metrics": 23,
+      "results": 12
+     },
+     "no_full_text_quant_fields": 0,
+     "no_full_text_quant_abstained": 0,
+     "provenance_checked": 48,
+     "provenance_valid": 48,
+     "attribution": {
+      "OWN_PAPER": 8,
+      "CITED_PAPER": 4,
+      "UNKNOWN": 10
+     },
+     "provenance_valid_rate": 1.0,
+     "no_full_text_quant_abstention_rate": null,
+     "metric_range_rejections": 0
+    },
+    "dir": "data_acceptance/gate_A"
+   },
+   "B": {
+    "environment": "unset (frozen config)",
+    "resolved": {
+     "fallthrough_policy": "table_value_guard",
+     "borderless_policy": "off"
+    },
+    "gate_stats": {
+     "papers": 12,
+     "returned": {
+      "datasets": 26,
+      "metrics": 6,
+      "results": 1
+     },
+     "abstained": {
+      "datasets": 6,
+      "metrics": 23,
+      "results": 13
+     },
+     "no_full_text_quant_fields": 0,
+     "no_full_text_quant_abstained": 0,
+     "provenance_checked": 43,
+     "provenance_valid": 43,
+     "attribution": {
+      "OWN_PAPER": 7,
+      "CITED_PAPER": 4,
+      "UNKNOWN": 6
+     },
+     "provenance_valid_rate": 1.0,
+     "no_full_text_quant_abstention_rate": null,
+     "metric_range_rejections": 0
+    },
+    "dir": "data_acceptance/gate_B"
+   }
+  },
+  "per_arm_field_counts": {
+   "A": {
+    "datasets": {
+     "items": 32,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 26,
+     "ABSTAINED": 6,
+     "ABSTAINED_by_reason": {
+      "evidence_span_not_found_in_paper_chunks": 6
+     },
+     "binder_status": {
+      "None": 32
+     }
+    },
+    "metrics": {
+     "items": 29,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 6,
+     "ABSTAINED": 23,
+     "ABSTAINED_by_reason": {
+      "attributed_to_cited_work": 4,
+      "value_failed_sanity_check": 9,
+      "evidence_span_not_found_in_paper_chunks": 3,
+      "ownership_unverified": 7
+     },
+     "binder_status": {
+      "None": 26,
+      "not_a_table_claim": 2,
+      "not_bindable": 1
+     }
+    },
+    "results": {
+     "items": 14,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 2,
+     "ABSTAINED": 12,
+     "ABSTAINED_by_reason": {
+      "unverifiable_binding": 6,
+      "ownership_unverified": 3,
+      "evidence_span_not_found_in_paper_chunks": 3
+     },
+     "binder_status": {
+      "pdf_only": 6,
+      "not_bindable": 4,
+      "not_a_table_claim": 1,
+      "None": 3
+     }
+    }
+   },
+   "B": {
+    "datasets": {
+     "items": 32,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 26,
+     "ABSTAINED": 6,
+     "ABSTAINED_by_reason": {
+      "evidence_span_not_found_in_paper_chunks": 6
+     },
+     "binder_status": {
+      "None": 32
+     }
+    },
+    "metrics": {
+     "items": 29,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 6,
+     "ABSTAINED": 23,
+     "ABSTAINED_by_reason": {
+      "attributed_to_cited_work": 4,
+      "value_failed_sanity_check": 9,
+      "evidence_span_not_found_in_paper_chunks": 3,
+      "ownership_unverified": 4,
+      "table_value_unbound": 3
+     },
+     "binder_status": {
+      "None": 26,
+      "not_a_table_claim": 2,
+      "not_bindable": 1
+     }
+    },
+    "results": {
+     "items": 14,
+     "RETURNED_with_verified_bind": 0,
+     "RETURNED_without_bind": 1,
+     "ABSTAINED": 13,
+     "ABSTAINED_by_reason": {
+      "unverifiable_binding": 6,
+      "ownership_unverified": 2,
+      "table_value_unbound": 2,
+      "evidence_span_not_found_in_paper_chunks": 3
+     },
+     "binder_status": {
+      "pdf_only": 6,
+      "not_bindable": 4,
+      "not_a_table_claim": 1,
+      "None": 3
+     }
+    }
+   }
+  },
+  "changes_A_to_B": [
+   {
+    "paper": "P006",
+    "field": "metrics",
+    "index": 2,
+    "value": "Mean Average Precision (mAP) at IoU threshold of 0.5",
+    "A": {
+     "final": "ABSTAINED",
+     "reason": "ownership_unverified",
+     "binding": "not_a_table_claim"
+    },
+    "B": {
+     "final": "ABSTAINED",
+     "reason": "table_value_unbound",
+     "binding": "not_a_table_claim"
+    },
+    "matched": {
+     "0.5": [
+      "table block 562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0: 'Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLO'"
+     ]
+    }
+   },
+   {
+    "paper": "P006",
+    "field": "metrics",
+    "index": 3,
+    "value": "Mean Average Precision (mAP) at IoU threshold of 0.5-0.95",
+    "A": {
+     "final": "ABSTAINED",
+     "reason": "ownership_unverified",
+     "binding": "not_a_table_claim"
+    },
+    "B": {
+     "final": "ABSTAINED",
+     "reason": "table_value_unbound",
+     "binding": "not_a_table_claim"
+    },
+    "matched": {
+     "0.5": [
+      "table block 562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0: 'Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLO'"
+     ]
+    }
+   },
+   {
+    "paper": "P006",
+    "field": "results",
+    "index": 1,
+    "value": "The mAP scores were also higher at both IoU thresholds of 0.5 and 0.5-0.95, with YOLOv7 showing the highest performance for meningioma.",
+    "A": {
+     "final": "ABSTAINED",
+     "reason": "ownership_unverified",
+     "binding": "not_a_table_claim"
+    },
+    "B": {
+     "final": "ABSTAINED",
+     "reason": "table_value_unbound",
+     "binding": "not_a_table_claim"
+    },
+    "matched": {
+     "0.5": [
+      "table block 562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0: 'Table V shows the mean Average Precision (mAP) for the YOLOv5 and YOLO'"
+     ]
+    }
+   },
+   {
+    "paper": "P008",
+    "field": "metrics",
+    "index": 1,
+    "value": "95 percent Hausdorff Distance",
+    "A": {
+     "final": "ABSTAINED",
+     "reason": "ownership_unverified",
+     "binding": "not_bindable"
+    },
+    "B": {
+     "final": "ABSTAINED",
+     "reason": "table_value_unbound",
+     "binding": "not_bindable"
+    },
+    "matched": {
+     "95": [
+      "table block 6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:118#0: 'TABLE I COMPARING SEGMENTATION RESULTS OF DIFFERENT METHODS (3D UNET, '"
+     ]
+    }
+   },
+   {
+    "paper": "P008",
+    "field": "results",
+    "index": 1,
+    "value": "It also generated CP segmentations faster than MAS, which took about 20 minutes compared to less than a minute for the proposed model.",
+    "A": {
+     "final": "RETURNED",
+     "reason": null,
+     "binding": "not_bindable"
+    },
+    "B": {
+     "final": "ABSTAINED",
+     "reason": "table_value_unbound",
+     "binding": "not_bindable"
+    },
+    "matched": {
+     "20": [
+      "table block 6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:129#0: 'Table IV shows the expert evaluation results of CP segmen- tation usin'"
+     ]
+    }
+   }
+  ],
+  "n_changes_A_to_B": 5,
+  "unaligned_fields": []
+ },
+ "gold_coverage": {
+  "rule": "gold value_in_claim tokens vs pre-gate field tokens; gate.numeric_tokens (the guard's token rule, PREREG_09B D3)",
+  "claims": [
+   {
+    "claim": "C005",
+    "paper": "P001",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.920",
+     "0.926"
+    ],
+    "extraction_paper_present": true,
+    "covered": true,
+    "pre_gate_fields_with_gold_value": [
+     {
+      "field": "results",
+      "tokens": [
+       "0.926"
+      ],
+      "value": "The proposed method with deformation field accumulation achieves the best results, with an average Dice score of 0.866 ± 0.020 compared to VoxelMorph (0.811) and TransMorph (0.807). On the IMPACT test set, it outperforms nnU-Net for all anatomical labels, achieving a similar average Dice score of 0."
+     }
+    ],
+    "gated_items": {
+     "A": [
+      {
+       "field": "results",
+       "tokens": [
+        "0.926"
+       ],
+       "value": "On the IMPACT test set, it outperforms nnU-Net for all anatomical labels, achieving a similar average Dice score of 0.926 ± 0.012.",
+       "final": "ABSTAINED",
+       "reason": "unverifiable_binding",
+       "binding": "pdf_only"
+      }
+     ],
+     "B": [
+      {
+       "field": "results",
+       "tokens": [
+        "0.926"
+       ],
+       "value": "On the IMPACT test set, it outperforms nnU-Net for all anatomical labels, achieving a similar average Dice score of 0.926 ± 0.012.",
+       "final": "ABSTAINED",
+       "reason": "unverifiable_binding",
+       "binding": "pdf_only"
+      }
+     ]
+    }
+   },
+   {
+    "claim": "C010",
+    "paper": "P003",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "92.3"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C012",
+    "paper": "P004",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "89.76"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C013",
+    "paper": "P004",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "4.04",
+     "90.22"
+    ],
+    "extraction_paper_present": true,
+    "covered": true,
+    "pre_gate_fields_with_gold_value": [
+     {
+      "field": "results",
+      "tokens": [
+       "4.04",
+       "90.22"
+      ],
+      "value": "UM-CAM achieved an average Dice Similarity Coefficient (DSC) of 90.22% and an average Hausdorff Distance at 95th percentile (HD95) of 4.04 pixels, outperforming other weakly-supervised methods by at least 3.02 pixels in HD95."
+     }
+    ],
+    "gated_items": {
+     "A": [
+      {
+       "field": "results",
+       "tokens": [
+        "4.04",
+        "90.22"
+       ],
+       "value": "UM-CAM achieved an average Dice Similarity Coefficient (DSC) of 90.22% and an average Hausdorff Distance at 95th percentile (HD95) of 4.04 pixels, outperforming other weakly-supervised methods by at least 3.02 pixels in HD95.",
+       "final": "ABSTAINED",
+       "reason": "unverifiable_binding",
+       "binding": "pdf_only"
+      }
+     ],
+     "B": [
+      {
+       "field": "results",
+       "tokens": [
+        "4.04",
+        "90.22"
+       ],
+       "value": "UM-CAM achieved an average Dice Similarity Coefficient (DSC) of 90.22% and an average Hausdorff Distance at 95th percentile (HD95) of 4.04 pixels, outperforming other weakly-supervised methods by at least 3.02 pixels in HD95.",
+       "final": "ABSTAINED",
+       "reason": "unverifiable_binding",
+       "binding": "pdf_only"
+      }
+     ]
+    }
+   },
+   {
+    "claim": "C021",
+    "paper": "P006",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.94",
+     "0.941",
+     "0.947"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C025",
+    "paper": "P007",
+    "claim_subject_kind": "dataset_or_cohort",
+    "gold_value_tokens": [
+     "0.922"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C026",
+    "paper": "P008",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.28",
+     "0.87",
+     "0.96"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C027",
+    "paper": "P008",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.84",
+     "0.87"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C034",
+    "paper": "P011",
+    "claim_subject_kind": "dataset_or_cohort",
+    "gold_value_tokens": [
+     "15"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C035",
+    "paper": "P011",
+    "claim_subject_kind": "dataset_or_cohort",
+    "gold_value_tokens": [
+     "21",
+     "38"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C041",
+    "paper": "P014",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.0004",
+     "0.45",
+     "0.48",
+     "0.53",
+     "0.56"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C042",
+    "paper": "P014",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.0004",
+     "0.02",
+     "0.03",
+     "0.21",
+     "0.24",
+     "1.24",
+     "1.28",
+     "143.35",
+     "151.36"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C045",
+    "paper": "P014",
+    "claim_subject_kind": "dataset_or_cohort",
+    "gold_value_tokens": [
+     "0.003",
+     "0.004",
+     "0.048",
+     "656.00",
+     "753.11"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C048",
+    "paper": "P015",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "74.9"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C052",
+    "paper": "P016",
+    "claim_subject_kind": "baseline_or_cited",
+    "gold_value_tokens": [
+     "80",
+     "83.79"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C057",
+    "paper": "P017",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.512",
+     "0.559"
+    ],
+    "extraction_paper_present": true,
+    "covered": true,
+    "pre_gate_fields_with_gold_value": [
+     {
+      "field": "results",
+      "tokens": [
+       "0.559"
+      ],
+      "value": "The internal validation achieved an AUROC of 0.928, an AUPR of 0.884, and a sensitivity at fixed specificity of 0.559. The external validation set also showed promising results with an AUROC of 0.930."
+     }
+    ],
+    "gated_items": {
+     "A": [
+      {
+       "field": "results",
+       "tokens": [
+        "0.559"
+       ],
+       "value": "The internal validation achieved an AUROC of 0.928, an AUPR of 0.884, and a sensitivity at fixed specificity of 0.559.",
+       "final": "ABSTAINED",
+       "reason": "evidence_span_not_found_in_paper_chunks",
+       "binding": "not_bindable"
+      }
+     ],
+     "B": [
+      {
+       "field": "results",
+       "tokens": [
+        "0.559"
+       ],
+       "value": "The internal validation achieved an AUROC of 0.928, an AUPR of 0.884, and a sensitivity at fixed specificity of 0.559.",
+       "final": "ABSTAINED",
+       "reason": "evidence_span_not_found_in_paper_chunks",
+       "binding": "not_bindable"
+      }
+     ]
+    }
+   },
+   {
+    "claim": "C058",
+    "paper": "P017",
+    "claim_subject_kind": "own_method",
+    "gold_value_tokens": [
+     "0.882",
+     "0.941",
+     "0.943",
+     "1.000",
+     "30.2",
+     "36.2",
+     "43.1",
+     "63.9"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   },
+   {
+    "claim": "C085",
+    "paper": "P030",
+    "claim_subject_kind": "baseline_or_cited",
+    "gold_value_tokens": [
+     "0.9010"
+    ],
+    "extraction_paper_present": true,
+    "covered": false,
+    "pre_gate_fields_with_gold_value": [],
+    "gated_items": {}
+   }
+  ],
+  "covered": 3,
+  "of": 18
+ }
+}
