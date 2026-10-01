@@ -25,8 +25,9 @@ CLAIM = {
     "token": "Our model reaches 15 points overall on the benchmark.",              # cells hold 0.15, 150, 15.2
     "plus_minus": "Our model reaches 0.87±0.06 overall on the benchmark.",         # cell "0.87 ± 0.06"
     "bound": "Our method achieves a Dice of 0.87 ± 0.06.",                          # bound to (Ours, Dice)
+    "wrong_cell": "U-Net achieves a Dice of 0.150 on the test set.",                # 0.150 is Baseline's cell
 }
-PROSE = "We propose a segmentation method. " + " ".join(v for k, v in CLAIM.items() if k != "bound")
+PROSE = "We propose a segmentation method. " + " ".join(v for k, v in CLAIM.items() if k not in ("bound", "wrong_cell"))
 
 
 def _chunk(i, text, btype="paragraph", cells=None):
@@ -90,6 +91,18 @@ def test_minus_and_plus_minus_normalisation_match(monkeypatch):
     assert G.claim_value_tokens("Dice 0.87±0.06") == {"0.87", "0.06"} <= G.numeric_tokens("0.87 ± 0.06")
     _, after = _both(monkeypatch, CLAIM["plus_minus"])
     assert (after["final"], after["abstain_reason"]) == (G.ABSTAINED, "table_value_unbound")
+
+
+def test_bound_and_wrong_cell_claims_are_untouched_by_the_guard(monkeypatch):
+    for claim, status in ((CLAIM["bound"], "bound"), (CLAIM["wrong_cell"], "wrong_cell")):
+        before, after = _both(monkeypatch, claim)
+        assert after == before and after["structural_binding"]["status"] == status
+
+
+def test_token_equality_also_holds_for_table_block_text():
+    text_only = [_chunk(9, "Table 3: Full 15.2 w/o attention 0.15 and 150", "table")]
+    assert G.table_value_tokens(text_only) >= {"15.2", "0.15", "150"}
+    assert not G.claim_value_tokens(CLAIM["token"]) & G.table_value_tokens(text_only)
 
 
 def test_legacy_output_is_identical_to_864f2e8(monkeypatch):
