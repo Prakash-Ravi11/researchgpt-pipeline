@@ -1,0 +1,79 @@
+# ACCEPTANCE config (phase 10 package, Part 2) — a copy of configs/staging_config.yaml with
+# its own data paths (data_acceptance/, gitignored), its own Chroma collection, and the
+# frozen 09B flags written out. Seeded offline with the 12 hash-pinned gold PDFs by
+# src/evaluation/acceptance_pre10/run_acceptance.py; the collection stage never runs.
+# NOTE: gate._fallthrough_policy and represent._borderless_policy read their default
+# from configs/staging_config.yaml only (gate.py:515, represent.py:419), not from this
+# file. The two flag lines below record the intended values; they equal what staging
+# resolves (table_value_guard, off).
+# No secret in this file.
+
+collection:
+  api_key: null
+  domain_query: "large language model reasoning benchmarks"
+  fields_of_study: ["Computer Science"]
+  year_range: [2022, 2026]
+  candidate_pool_size: 20
+  target_corpus_size: 8
+  relevance_threshold: 0.55
+
+processing:
+  chunk_size: 800
+  chunk_overlap: 100
+
+embedding:
+  model: "BAAI/bge-m3"
+  device: "cuda"
+
+llm:
+  provider: "ollama"
+  model: "qwen2.5:7b"
+  base_url: "http://localhost:11434"
+  max_context_words: 2500
+  temperature: 0            # greedy decoding — reproducibility (was 0.2, non-deterministic)
+  seed: 42                 # generation RNG seed, passed to Ollama options; see call_ollama_json
+  timeout_seconds: 300     # requests connect/read-gap timeout (NOT a total-duration bound)
+  extraction_deadline_seconds: 240   # HARD total wall-clock bound per extraction call
+  extraction_output_reservation: 768 # num_predict cap == output term of num_ctx (schema-derived; see summarize.py)
+
+summarization:
+  context_selection: "retrieval_aware"
+
+# Stage-3/4 chunk selection (src/summarization/retrieval_aware.py).
+# Production default is "legacy" (unchanged); staging opts into content_aware.
+# max_passages sized for Qwen2.5:7b sharing a 6 GB card with BGE-M3 — ~10 is the
+# OpenScholar ceiling for untrained ~7B RAG (beyond it correctness/citation degrade).
+selection:
+  mode: "content_aware"
+  max_passages: 10
+  token_budget_chars: 9000
+
+categorization:
+  num_clusters: 2
+
+paths:
+  raw_metadata_dir: "data_acceptance/raw_metadata"
+  pdf_dir: "data_acceptance/pdfs"
+  processed_dir: "data_acceptance/processed"
+  chroma_dir: "data_acceptance/chroma_db"
+  figures_dir: "data_acceptance/figures"
+
+system:
+  seed: 42
+  collection_name: "researchgpt_acceptance_pre10"
+
+evidence_grounding:
+  enabled: true   # STAGING ONLY — do not copy this line into configs/config.yaml
+  # arXiv LaTeX e-print ingestion (Phase 4). DISABLED: it reached numeric parity
+  # (M1) but regressed downstream extraction — the structured table text drives
+  # qwen2.5:7b past the 768 num_predict cap (retained-subset mean fields
+  # 9.91 -> 5.82 at reservation 768; recovers to ~9.09 only at 4096). The
+  # negative result is the Phase-4 deliverable; see
+  # experiments/document_evidence_pipeline/LATEX_ACQUISITION_REPORT.md.
+  latex_ingestion_enabled: false
+  # Parity gate (used only if latex_ingestion_enabled is flipped on): a paper
+  # acquired as LaTeX is kept only if verbatim survival of its ground-truth
+  # numeric values is >= the paired PDF's, minus this tolerance. 0.0 = strict.
+  latex_parity_tolerance: 0.0
+  fallthrough_policy: table_value_guard   # frozen 09B default (staging_config.yaml)
+  borderless_policy: off                  # frozen 09B default (42c08c8)
