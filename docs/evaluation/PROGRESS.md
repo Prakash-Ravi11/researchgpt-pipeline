@@ -45,7 +45,7 @@ candidates:
   | `189a037` | backend |
   | `6e39fbe` | tests |
   | `671afb8` | validation run |
-  | final commit | report + this file |
+  | `864f2e8` | report, checkpoint, this file (a docs-only follow-up commit records this hash) |
 
 - Production code on the branch:
   - `src/evidence/represent.py`: ruled path (phase 04) plus 09A additions (+44/−0);

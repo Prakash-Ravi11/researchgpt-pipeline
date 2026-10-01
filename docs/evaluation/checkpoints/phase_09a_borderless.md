@@ -79,7 +79,8 @@ Tests: `tests/test_borderless.py`.
 
 ## Changes
 Branch `exp/phase09a-borderless` commits: `4d3c183` (bottleneck_diagnosis), `797a922` (baseline), `6c1a8b9`
-(prereg), `189a037` (backend), `6e39fbe` (tests), `671afb8` (validation run), then the report commit.
+(prereg), `189a037` (backend), `6e39fbe` (tests), `671afb8` (validation run), `864f2e8` (report, checkpoint,
+progress), then a docs-only commit that records this hash.
 - Production files changed: `src/evidence/represent.py` (+44/−0) and the new `src/evidence/borderless.py`.
 - Also changed: `.gitignore` (+ `.venv-09a/`) and the new `requirements-borderless.txt`.
 - Unchanged: `gate.py`, the binder, `requirements.txt`, configs and the gold.
