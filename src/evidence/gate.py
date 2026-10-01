@@ -493,6 +493,65 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
                       "(prose aggregate / overall figure)"}
 
 
+# --------------------------------------------------------------------------
+# FALL-THROUGH GUARD (phase 09B), behind `fallthrough_policy`, default "legacy".
+# Read like represent._borderless_policy: RGPT_FALLTHROUGH_POLICY wins, then the
+# `fallthrough_policy:` line of configs/staging_config.yaml, then "legacy".
+# "legacy" leaves _gate_value exactly as before. "table_value_guard" abstains a
+# not_bindable / not_a_table_claim claim whose value is a numeric token of the
+# paper's tables (see _gate_value). Definitions: src/evaluation/fallthrough_09b/PREREG_09B.md.
+# --------------------------------------------------------------------------
+_FALLTHROUGH_POLICIES = ("legacy", "table_value_guard")
+# a whole, unsigned numeric token: "15" is not a token of "0.15", "150" or "15.2",
+# and none is read after a letter ("BraTS2020", "T1", "v1.2").
+_TABLE_VALUE_TOKEN = re.compile(r"(?<![\w.])(?:\d+(?:\.\d+)?|\.\d+)(?!\d|\.\d)")
+
+
+def _fallthrough_policy() -> str:
+    import os
+    env = os.environ.get("RGPT_FALLTHROUGH_POLICY", "").strip().lower()
+    if env in _FALLTHROUGH_POLICIES:
+        return env
+    cfg = Path(__file__).resolve().parents[2] / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "fallthrough_policy":
+                v = val.split("#")[0].strip().lower()
+                if v in _FALLTHROUGH_POLICIES:
+                    return v
+    except OSError:
+        pass
+    return "legacy"
+
+
+def numeric_tokens(text: Any) -> set[str]:
+    """Numeric tokens of `text`. Each whitespace-separated word is read after
+    borderless.norm (the G1 normalisation: U+2212, markup, trailing */† markers,
+    nbsp / thin spaces); '±' and every other non-digit separate tokens.
+    ponytail: ',' separates too, so "1,500" gives 1 and 500; add a thousands-group
+    rule if that ever matches a claim it should not."""
+    from .borderless import norm
+    return {t for w in str(text or "").split() for t in _TABLE_VALUE_TOKEN.findall(norm(w))}
+
+
+def claim_value_tokens(value: str) -> set[str]:
+    """The claim's numeric values: its tokens of the anchor shape (a decimal, or an
+    integer of >= 2 digits; anchors.py)."""
+    return {t for t in numeric_tokens(value) if "." in t or len(t) >= 2}
+
+
+def table_value_tokens(chunks: list[dict[str, Any]]) -> set[str]:
+    """Numeric tokens of every attached cell value and of the text of every table
+    block. A PDF table block is its caption block (represent.py:193-195), so the
+    body of a pdf_only table, in ordinary text blocks, is not seen."""
+    toks = {t for cell in paper_table_cells(chunks) for t in numeric_tokens(cell.get("value"))}
+    for c in chunks:
+        if c.get("block_type") == "table":
+            toks |= numeric_tokens(c.get("text"))
+    return toks
+
+
 def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 6000) -> str:
     parts, used = [], 0
     for c in chunks:
@@ -544,6 +603,16 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
             # cases 2 (not_bindable) & 5 (not_a_table_claim): the claim is not a
             # table-cell claim — fall through to grounding + attribution + the 5a
             # range check, exactly as before structural binding existed.
+            # FALL-THROUGH GUARD (phase 09B, fallthrough_policy=table_value_guard): a value
+            # that lives in a table must be verified by binding to that table; only values
+            # absent from every table may be grounded in prose. Both statuses mean the
+            # paper has attached cells (structural_bind returns pdf_only otherwise).
+            if (sb["status"] in ("not_bindable", "not_a_table_claim")
+                    and _fallthrough_policy() == "table_value_guard"
+                    and claim_value_tokens(value) & table_value_tokens(chunks)):
+                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                            abstain_reason="table_value_unbound")
+                return item
     grounded = _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
