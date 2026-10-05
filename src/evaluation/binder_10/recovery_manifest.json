@@ -1,0 +1,686 @@
+﻿[
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\binder_v2.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\binder_v2.py",
+        "bytes":  62827,
+        "created_utc":  "2026-10-02T03:01:17.1185279Z",
+        "modified_utc":  "2026-10-02T03:02:55.7885965Z",
+        "sha256":  "52702fb251905f1a0edf7a499c499fb521a6e80f3fcd0d47ee150a5489c37677",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\test_binder_v2.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\test_binder_v2.py",
+        "bytes":  13811,
+        "created_utc":  "2026-10-02T02:54:07.5191019Z",
+        "modified_utc":  "2026-10-02T02:54:07.5191019Z",
+        "sha256":  "fb3a4dc0a9dc13fb02b67514c73960d4b633ee3f8aff7f82d19aca784af51627",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\regress.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\regress.py",
+        "bytes":  21034,
+        "created_utc":  "2026-10-02T02:59:18.4287661Z",
+        "modified_utc":  "2026-10-02T03:01:16.1713217Z",
+        "sha256":  "7de18d8be60809c43dbb3f77bd9e015199d933ffd9a881cc50fdc5364ca253f6",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\validate_10.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\validate_10.py",
+        "bytes":  29294,
+        "created_utc":  "2026-10-01T16:20:57.6949985Z",
+        "modified_utc":  "2026-10-02T03:04:13.6207093Z",
+        "sha256":  "777b80a2db413b215b08018642a849782bc8a8911589f37eac0d23d82b97a110",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\validate_10_modes.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\validate_10_modes.py",
+        "bytes":  13651,
+        "created_utc":  "2026-10-01T16:23:46.1719877Z",
+        "modified_utc":  "2026-10-01T16:23:46.1719877Z",
+        "sha256":  "657acbdb9aad38423700a600563eab79d07a470221b15016fe78788bb19526fa",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\dev_run.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\dev_run.py",
+        "bytes":  670,
+        "created_utc":  "2026-10-01T16:16:30.1824258Z",
+        "modified_utc":  "2026-10-01T16:16:30.2019612Z",
+        "sha256":  "fe839909c897feeab73805e81c5ba2fbb033c96fc940a42fea3a899709484ccc",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\regress_out.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\regress_out.txt",
+        "bytes":  6840,
+        "created_utc":  "2026-10-02T03:01:30.4446694Z",
+        "modified_utc":  "2026-10-02T03:01:35.4669820Z",
+        "sha256":  "2ea4b7330ba618087aaa0d60d95a6830a7777ab7f237089998bfe952d19d3308",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\prof.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\prof.py",
+        "bytes":  649,
+        "created_utc":  "2026-10-02T03:02:20.4162089Z",
+        "modified_utc":  "2026-10-02T03:02:20.4172133Z",
+        "sha256":  "231622b669950a621c2a0dbf62217ce3110d389413e9b53fc846344ad200fdd9",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\dbg.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\dbg.py",
+        "bytes":  1449,
+        "created_utc":  "2026-10-02T03:00:03.4756094Z",
+        "modified_utc":  "2026-10-02T03:00:03.5107672Z",
+        "sha256":  "6b1658b981b8dc07083042a97d4ac6d9c66d9cb6612223df48c817e308792482",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\fix1.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\fix1.py",
+        "bytes":  2072,
+        "created_utc":  "2026-10-01T16:13:28.3577671Z",
+        "modified_utc":  "2026-10-01T16:13:28.3805985Z",
+        "sha256":  "0aaef0039331ca83835cf6f820373c76aebd491691c195d9e244ea9d47c8a5e9",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\fix2.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\fix2.py",
+        "bytes":  2081,
+        "created_utc":  "2026-10-01T16:14:38.1379114Z",
+        "modified_utc":  "2026-10-01T16:14:38.1665822Z",
+        "sha256":  "778e6b0d2cfe67c6289fa9ec55e05db56a240edf438664129ece9384087a88a4",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\fix3.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\fix3.py",
+        "bytes":  2907,
+        "created_utc":  "2026-10-01T16:17:46.0456848Z",
+        "modified_utc":  "2026-10-01T16:17:46.0688387Z",
+        "sha256":  "6a6117ccca41afb675fbc5cac9b4e97f095cb875454dd9f9ec945b67382bd7f4",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\fix3b.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\fix3b.py",
+        "bytes":  2584,
+        "created_utc":  "2026-10-01T16:18:14.4725646Z",
+        "modified_utc":  "2026-10-01T16:18:14.4735662Z",
+        "sha256":  "c2ca4244180c4077cd5476367d750d650d71cec90e1937cf14c4db182bab5b4e",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\qty_block.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\qty_block.txt",
+        "bytes":  1559,
+        "created_utc":  "2026-10-01T16:13:28.4101606Z",
+        "modified_utc":  "2026-10-01T16:13:28.4314259Z",
+        "sha256":  "bc6638766f92c07dd13b5093e4e8d5b35d43d27d495d9721e1eb0116ea46c165",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\h.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\h.py",
+        "bytes":  2048,
+        "created_utc":  "2026-10-01T16:29:20.3638642Z",
+        "modified_utc":  "2026-10-01T16:29:20.3909102Z",
+        "sha256":  "80aa316e08018b6c9ea6286986261cc915fb527b77b35a25bae9d4af7bab4d24",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p1.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p1.py",
+        "bytes":  2933,
+        "created_utc":  "2026-10-01T16:29:40.0088152Z",
+        "modified_utc":  "2026-10-01T16:29:40.0328177Z",
+        "sha256":  "f0ecdcea1ac232ee787d09af8bfdb75e63ab2e061ccce1070ce8848b17ac4124",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p10.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p10.py",
+        "bytes":  1242,
+        "created_utc":  "2026-10-01T16:42:44.9706648Z",
+        "modified_utc":  "2026-10-01T16:42:45.0088816Z",
+        "sha256":  "87da2dd985cae63b4abb0d98d6dc544ba93ba7c7b07a81b5cf0705fb15a48a44",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p2.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p2.py",
+        "bytes":  2932,
+        "created_utc":  "2026-10-01T16:30:05.0238477Z",
+        "modified_utc":  "2026-10-01T16:30:05.0423577Z",
+        "sha256":  "0f63ba10a95fcd88c37cd6caea3b7775362816054e599a2c17b6b8f13bde96cc",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p3.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p3.py",
+        "bytes":  3799,
+        "created_utc":  "2026-10-01T16:31:15.6925116Z",
+        "modified_utc":  "2026-10-01T16:31:15.7165094Z",
+        "sha256":  "8260ec61839abb9d59759793dc4e52691beed767b34c1cd6f23fa20f3bb812a7",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p4.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p4.py",
+        "bytes":  3010,
+        "created_utc":  "2026-10-01T16:31:50.0651993Z",
+        "modified_utc":  "2026-10-01T16:31:50.0849163Z",
+        "sha256":  "d1502c27643a18b7b56d2af73480c183e15538dcac3cf40c3b2a5106c0333694",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p5.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p5.py",
+        "bytes":  2665,
+        "created_utc":  "2026-10-01T16:32:35.0497451Z",
+        "modified_utc":  "2026-10-01T16:32:35.0707891Z",
+        "sha256":  "11390d99f53cf23b1cdcae7af8b6a18fbe1bce8c6f56f1894a24258e83208150",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p6.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p6.py",
+        "bytes":  2574,
+        "created_utc":  "2026-10-01T16:35:03.1544939Z",
+        "modified_utc":  "2026-10-01T16:35:03.1740871Z",
+        "sha256":  "c36f9c31d18f8971912cbd0736ad2b9a9a93043c86af9789a01dff0ea2251349",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p7.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p7.py",
+        "bytes":  2296,
+        "created_utc":  "2026-10-01T16:35:29.6376133Z",
+        "modified_utc":  "2026-10-01T16:35:29.6621359Z",
+        "sha256":  "b17ea016bb0096b40c04e106700d8139702e718976a1a544284e99b1c837d636",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p7b.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p7b.py",
+        "bytes":  851,
+        "created_utc":  "2026-10-01T16:35:47.3822775Z",
+        "modified_utc":  "2026-10-01T16:35:47.4060818Z",
+        "sha256":  "61815b89740ab9c5f86e4f2f0366e7d4cc554254af548835048445a87c7255cb",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p8.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p8.py",
+        "bytes":  2410,
+        "created_utc":  "2026-10-01T16:38:02.9064898Z",
+        "modified_utc":  "2026-10-01T16:38:02.9305031Z",
+        "sha256":  "a0cea2c6e2bbe327715645a32cf9c9c07a158498383dcaf350c9699861a3384f",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\p9.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\p9.py",
+        "bytes":  1832,
+        "created_utc":  "2026-10-01T16:38:27.7969371Z",
+        "modified_utc":  "2026-10-01T16:38:27.8232478Z",
+        "sha256":  "f6db0b3b30c2f1e84c07e2ea85a28ec7922622dbaecb8449a345374bb2086080",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\precision\\repro.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\precision\\repro.py",
+        "bytes":  8052,
+        "created_utc":  "2026-10-01T16:41:32.0374552Z",
+        "modified_utc":  "2026-10-01T16:41:32.0384406Z",
+        "sha256":  "657f0a6b1424674970df5235b05bab2a99cff1d0d0cc0f096af9d9ef4649098e",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\crash_310.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\crash_310.txt",
+        "bytes":  4742,
+        "created_utc":  "2026-10-01T16:28:10.1932463Z",
+        "modified_utc":  "2026-10-01T16:28:10.4482175Z",
+        "sha256":  "9f2bbb8df4252445880ee073bbfde18258b165ef8145335a7fecea794396b8c6",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\crash_313.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\crash_313.txt",
+        "bytes":  4742,
+        "created_utc":  "2026-10-01T16:28:10.5207771Z",
+        "modified_utc":  "2026-10-01T16:28:10.8201529Z",
+        "sha256":  "6fd3c6660c444b7d7beec583f5dbe0b2288cf326843f1bb54a12718540eec460",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\fuzz.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\fuzz.py",
+        "bytes":  3662,
+        "created_utc":  "2026-10-01T16:48:49.3640763Z",
+        "modified_utc":  "2026-10-01T16:48:49.3650733Z",
+        "sha256":  "38c70f4e7e4e9f2e0a976fe7fe6b229804c3741a29ef62edd4670d1941804010",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\fuzz_llm.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\fuzz_llm.py",
+        "bytes":  1424,
+        "created_utc":  "2026-10-01T16:51:12.3863838Z",
+        "modified_utc":  "2026-10-01T16:51:12.3873845Z",
+        "sha256":  "0c98780d42e0f31d91da7ec0ecd6fcba639970924b14dae23f8dadede6aa05ed",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\key_check.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\key_check.py",
+        "bytes":  724,
+        "created_utc":  "2026-10-01T16:50:40.1935198Z",
+        "modified_utc":  "2026-10-01T16:50:40.2317873Z",
+        "sha256":  "4ab50ad3e61f99f625c9b9e27509554bdd14c9df2ffa28c2ad7851e71a26b9c7",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\load.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\load.py",
+        "bytes":  1823,
+        "created_utc":  "2026-10-01T16:26:47.1108681Z",
+        "modified_utc":  "2026-10-01T16:26:47.1129760Z",
+        "sha256":  "227fd48ce5d84fcbb2794a16553ddefa17629309d45aa18adf30b1044defb996",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_alias.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_alias.py",
+        "bytes":  1390,
+        "created_utc":  "2026-10-01T16:48:04.6201952Z",
+        "modified_utc":  "2026-10-01T16:48:04.6201952Z",
+        "sha256":  "fc0874bb4adca79a86fce2b8b59174e245a75910d33eeef864e579759bbe0db8",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_cache.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_cache.py",
+        "bytes":  2358,
+        "created_utc":  "2026-10-01T16:40:21.8767408Z",
+        "modified_utc":  "2026-10-01T16:40:21.8776694Z",
+        "sha256":  "a616737d86864a4f860380149f069c296c2598599064c297cbee4ffea475e70c",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_crash.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_crash.py",
+        "bytes":  5777,
+        "created_utc":  "2026-10-01T16:27:15.8062246Z",
+        "modified_utc":  "2026-10-01T16:27:15.8072905Z",
+        "sha256":  "912e293793dd535213849241486a0e034cd88b50ab69f4ae37e747b0d9f70921",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_llm.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_llm.py",
+        "bytes":  3818,
+        "created_utc":  "2026-10-01T16:38:22.7797887Z",
+        "modified_utc":  "2026-10-01T16:39:02.8397396Z",
+        "sha256":  "eedc667027c2a44e3607cbcc6f97d616287edb846689fb7ef37782ede8b0a2a8",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_misc.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_misc.py",
+        "bytes":  3064,
+        "created_utc":  "2026-10-01T16:42:31.5290817Z",
+        "modified_utc":  "2026-10-01T16:42:31.5310782Z",
+        "sha256":  "35802be7f99800ee819ed7f8a903fcdd4278c449abc4d212056d246c3434b069",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_perf.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_perf.py",
+        "bytes":  2889,
+        "created_utc":  "2026-10-01T16:35:40.8279514Z",
+        "modified_utc":  "2026-10-01T16:35:40.8289512Z",
+        "sha256":  "8a53064612cf8a32c9f38733f13a6f4e1887a28d3c3f7720193c3b9eaf3bfe64",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_prof.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_prof.py",
+        "bytes":  952,
+        "created_utc":  "2026-10-01T16:35:40.7477485Z",
+        "modified_utc":  "2026-10-01T16:35:40.7496260Z",
+        "sha256":  "7f737afe409be3463f9232dcaaedeb0f5db7a57559022ac8e263148709c63acc",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\probe_unicode.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\probe_unicode.py",
+        "bytes":  2129,
+        "created_utc":  "2026-10-01T16:40:44.5337543Z",
+        "modified_utc":  "2026-10-01T16:40:44.5337543Z",
+        "sha256":  "165f39033f114a216da8bdcb695b56e6d7b601bcd5f34933cbd216b889b49c22",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\prof_reps.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\prof_reps.py",
+        "bytes":  483,
+        "created_utc":  "2026-10-01T16:52:59.8148723Z",
+        "modified_utc":  "2026-10-01T16:52:59.8472399Z",
+        "sha256":  "44d3ce9a437fa6e43f7b81d4d121a1bfc1b59ab9d27b14d028e6293fc468628b",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv-09a_0.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv-09a_0.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:19.6263179Z",
+        "modified_utc":  "2026-10-01T16:41:19.9280491Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv-09a_1.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv-09a_1.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:19.9916807Z",
+        "modified_utc":  "2026-10-01T16:41:20.3014851Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv-09a_12345.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv-09a_12345.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:20.6995280Z",
+        "modified_utc":  "2026-10-01T16:41:20.9859442Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv-09a_7.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv-09a_7.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:20.3648897Z",
+        "modified_utc":  "2026-10-01T16:41:20.6438339Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv_0.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv_0.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:18.1043630Z",
+        "modified_utc":  "2026-10-01T16:41:18.4194170Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv_1.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv_1.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:18.4632747Z",
+        "modified_utc":  "2026-10-01T16:41:18.7777753Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv_12345.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv_12345.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:19.2471584Z",
+        "modified_utc":  "2026-10-01T16:41:19.5564735Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\seed_.venv_7.txt",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\seed_.venv_7.txt",
+        "bytes":  3813,
+        "created_utc":  "2026-10-01T16:41:18.8446754Z",
+        "modified_utc":  "2026-10-01T16:41:19.1847126Z",
+        "sha256":  "8a4756089215bb114b3b47a0669974e3cfd10d649105da3e16dbbb507502bf13",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\synth.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\synth.py",
+        "bytes":  1164,
+        "created_utc":  "2026-10-01T16:35:40.6851542Z",
+        "modified_utc":  "2026-10-01T16:35:40.7030045Z",
+        "sha256":  "148c6484125de6e33f1caa90003823a9ae674a78729e3fca6081c1dbdf602c03",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\robustness\\x.pyc",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\robustness\\x.pyc",
+        "bytes":  70177,
+        "created_utc":  "2026-10-01T16:26:33.4238656Z",
+        "modified_utc":  "2026-10-01T16:26:33.4238656Z",
+        "sha256":  "e92246edf13c7029ac009e2c77c2537ac2869bb79f6c778bb741e30f1fa970eb",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\h.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\h.py",
+        "bytes":  2029,
+        "created_utc":  "2026-10-01T16:20:14.3630213Z",
+        "modified_utc":  "2026-10-01T16:20:14.3910347Z",
+        "sha256":  "5cf544182f00bb867b7cead3cb81d59aad46d41643636f93287d176e01ac16e5",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p1.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p1.py",
+        "bytes":  2309,
+        "created_utc":  "2026-10-01T16:29:56.2404744Z",
+        "modified_utc":  "2026-10-01T16:29:56.2625692Z",
+        "sha256":  "bd61a1ab71b8be342573566de2f10468b261b8e929ef42171b4b743c76d4d8aa",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p2.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p2.py",
+        "bytes":  2696,
+        "created_utc":  "2026-10-01T16:30:16.6750660Z",
+        "modified_utc":  "2026-10-01T16:30:16.7000747Z",
+        "sha256":  "b2fb585bba73b4668dc6cc2a00a84c0376f81059baede60caba50fdcc0710efa",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p3.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p3.py",
+        "bytes":  2913,
+        "created_utc":  "2026-10-01T16:30:40.6293818Z",
+        "modified_utc":  "2026-10-01T16:30:40.6503141Z",
+        "sha256":  "b34eb4cb946d6fa362a6450b3ee202391fa20a0a450a82a1a46771dd7a25ff9b",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p4.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p4.py",
+        "bytes":  3034,
+        "created_utc":  "2026-10-01T16:31:09.3730533Z",
+        "modified_utc":  "2026-10-01T16:31:09.3946366Z",
+        "sha256":  "d6524bf2dc89653efb85900f65df0a0be99f217dba6037516dae551eb3d76d1a",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p5.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p5.py",
+        "bytes":  2711,
+        "created_utc":  "2026-10-01T16:31:53.0401123Z",
+        "modified_utc":  "2026-10-01T16:31:53.0575924Z",
+        "sha256":  "7ba2e128dba4f06af36af08ae5e9663c6db99496b0ec2ac69f2b4d3a61198eeb",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p6.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p6.py",
+        "bytes":  1501,
+        "created_utc":  "2026-10-01T16:33:01.2137080Z",
+        "modified_utc":  "2026-10-01T16:33:01.2358397Z",
+        "sha256":  "5733da1e4d06087bbf8ae90d225f1090f22d5a5455bc595a46e3328a4ac4c66e",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p7.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p7.py",
+        "bytes":  709,
+        "created_utc":  "2026-10-01T16:34:47.3439557Z",
+        "modified_utc":  "2026-10-01T16:34:47.3639635Z",
+        "sha256":  "389123f40a5cc984cd33b9d550e22869619f33a89d9f9d19f3014923f29033c3",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p8.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p8.py",
+        "bytes":  1142,
+        "created_utc":  "2026-10-01T16:35:14.1843336Z",
+        "modified_utc":  "2026-10-01T16:35:14.2050825Z",
+        "sha256":  "bf80a665e13fb0567611750f69313d735f046c826f6a53d004a8a1fc8d3dec68",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review\\spec_conformance\\p9.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review\\spec_conformance\\p9.py",
+        "bytes":  432,
+        "created_utc":  "2026-10-01T16:36:02.8273712Z",
+        "modified_utc":  "2026-10-01T16:36:02.8485343Z",
+        "sha256":  "a17b1cb541dfc98694507f84e95c701794207963ca927da388a3582eea62546d",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\AppData\\Local\\Temp\\claude\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\scratchpad\\review2\\binder_v2_under_review.py",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\scratchpad\\review2\\binder_v2_under_review.py",
+        "bytes":  62827,
+        "created_utc":  "2026-10-02T03:02:56.2213999Z",
+        "modified_utc":  "2026-10-02T03:02:56.2223228Z",
+        "sha256":  "52702fb251905f1a0edf7a499c499fb521a6e80f3fcd0d47ee150a5489c37677",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-a4f01150040c79d66.jsonl",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-a4f01150040c79d66.jsonl",
+        "bytes":  274185,
+        "created_utc":  "2026-10-02T03:03:36.5230663Z",
+        "modified_utc":  "2026-10-02T03:03:46.1377311Z",
+        "sha256":  "3ca02bb3d772a001d28ee4f9abee0e16db4abc12e14fdd2cf68ec639e22ea514",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-a4f01150040c79d66.meta.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-a4f01150040c79d66.meta.json",
+        "bytes":  161,
+        "created_utc":  "2026-10-02T03:03:36.4935215Z",
+        "modified_utc":  "2026-10-02T03:03:36.4935215Z",
+        "sha256":  "d31edcaabd5b772864a42665d03466b0461eaf466e4fdce6488c901bf6f1dde3",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-a54526073ffbe290f.jsonl",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-a54526073ffbe290f.jsonl",
+        "bytes":  298047,
+        "created_utc":  "2026-10-02T03:03:36.4849330Z",
+        "modified_utc":  "2026-10-02T03:03:47.5537812Z",
+        "sha256":  "cfaf686592c6916848658711ee3751f83f1ed6c9f8837cc6713e33dfca7c662f",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-a54526073ffbe290f.meta.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-a54526073ffbe290f.meta.json",
+        "bytes":  165,
+        "created_utc":  "2026-10-02T03:03:36.4859278Z",
+        "modified_utc":  "2026-10-02T03:03:36.4859278Z",
+        "sha256":  "1fbcd1ace5002a2ef14c9d81076837ef4e7be953c1026b21d552ba764377ea54",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-aa179484c6150f029.jsonl",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-aa179484c6150f029.jsonl",
+        "bytes":  349085,
+        "created_utc":  "2026-10-02T03:03:34.7743686Z",
+        "modified_utc":  "2026-10-02T03:03:48.8554605Z",
+        "sha256":  "1256182f0810aa485be62de6a9b19d066e701a8047d0239c87e574aafb622ed3",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-aa179484c6150f029.meta.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-aa179484c6150f029.meta.json",
+        "bytes":  169,
+        "created_utc":  "2026-10-02T03:03:34.7524179Z",
+        "modified_utc":  "2026-10-02T03:03:34.7524179Z",
+        "sha256":  "d8bd4bb6f3a31406d2987c2a01baf6d18809d1a3f05fe4ed9c601f1b579b2072",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-ae0a82999f13914ff.jsonl",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-ae0a82999f13914ff.jsonl",
+        "bytes":  312040,
+        "created_utc":  "2026-10-02T03:03:36.4904259Z",
+        "modified_utc":  "2026-10-02T03:03:48.5823227Z",
+        "sha256":  "d5bcaa39cce7a3c40ceb62f83ff6342656941fa66f0358c4267a1838562a6012",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\agent-ae0a82999f13914ff.meta.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\agent-ae0a82999f13914ff.meta.json",
+        "bytes":  161,
+        "created_utc":  "2026-10-02T03:03:36.4924281Z",
+        "modified_utc":  "2026-10-02T03:03:36.4924281Z",
+        "sha256":  "b68172d6c2c3277eb166b6f3db784e8b939076158bc507a4996a258e3bb39b2a",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\subagents\\workflows\\wf_88a01c89-073\\journal.jsonl",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\subagents\\workflows\\wf_88a01c89-073\\journal.jsonl",
+        "bytes":  1196,
+        "created_utc":  "2026-10-02T03:03:33.7668141Z",
+        "modified_utc":  "2026-10-02T03:03:48.7560862Z",
+        "sha256":  "efba44545a4c57656e35ffad162ba30ec24bebf404674588dfcf05364e27bbf6",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\workflows\\wf_88a01c89-073.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\workflows\\wf_88a01c89-073.json",
+        "bytes":  13042,
+        "created_utc":  "2026-10-02T03:03:48.7655267Z",
+        "modified_utc":  "2026-10-02T03:03:48.7666352Z",
+        "sha256":  "ee9385884f6f6365988086ca04c3eb770036e2b54d0b46cd441e1d600baa257a",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\workflows\\wf_21dccedf-1ce.json",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\workflows\\wf_21dccedf-1ce.json",
+        "bytes":  71125,
+        "created_utc":  "2026-10-01T16:56:01.2608647Z",
+        "modified_utc":  "2026-10-01T16:56:01.2608647Z",
+        "sha256":  "a32898b60875103877df7275e3ba9c67a4b44bba7d82dd56c5d8d91fb6277b82",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\workflows\\scripts\\binder-v2-rewrite-review-wf_88a01c89-073.js",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\workflows\\scripts\\binder-v2-rewrite-review-wf_88a01c89-073.js",
+        "bytes":  7695,
+        "created_utc":  "2026-10-02T03:03:33.7668141Z",
+        "modified_utc":  "2026-10-02T03:03:33.7679084Z",
+        "sha256":  "16d417e1aa4841b230e184868378256792f1b5e79d41c87d24f4e1bd528dcb44",
+        "verified":  true
+    },
+    {
+        "source":  "C:\\Users\\Praka\\.claude\\projects\\c--Users-Praka-Downloads-researchgpt-pipeline\\9fe1cf2b-4656-4e21-9780-cce5de20ea51\\workflows\\scripts\\review-binder-v2-wf_21dccedf-1ce.js",
+        "backup":  "C:\\Users\\Praka\\Downloads\\recovery_phase10\\20261004_exact\\session\\workflows\\scripts\\review-binder-v2-wf_21dccedf-1ce.js",
+        "bytes":  6078,
+        "created_utc":  "2026-10-01T16:19:31.0455379Z",
+        "modified_utc":  "2026-10-01T16:19:31.0455379Z",
+        "sha256":  "a2342dc32412b3c3898f25dcb5c2b17981cc313cd626269faf0782ed3eb19e50",
+        "verified":  true
+    }
+]

@@ -429,6 +429,9 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     Structured table-cell binding only reaches claims whose metric is actually a
     named, recognised metric.
     """
+    if _binder_policy() != "legacy":                  # phase 10 router (binder_v2.py)
+        from .binder_v2 import structural_bind_v2
+        return structural_bind_v2(value, chunks, llm=_binder_policy() == "v2_llm")
     cells = paper_table_cells(chunks)
     if not cells:
         return {"structured": False, "status": "pdf_only"}
@@ -525,6 +528,34 @@ def _fallthrough_policy() -> str:
     return "legacy"
 
 
+# --------------------------------------------------------------------------
+# BINDER ROUTER (phase 10), behind `binder_policy`, default "legacy".
+# Read like _fallthrough_policy: RGPT_BINDER_POLICY wins, then the `binder_policy:`
+# line of configs/staging_config.yaml, then "legacy". "legacy" runs the binder and
+# sentence splitting below unchanged; "v2" / "v2_llm" route structural_bind and
+# gate_paper to binder_v2.py. Definitions: src/evaluation/binder_10/PREREG_10.md.
+# --------------------------------------------------------------------------
+_BINDER_POLICIES = ("legacy", "v2", "v2_llm")
+
+
+def _binder_policy() -> str:
+    import os
+    env = os.environ.get("RGPT_BINDER_POLICY", "").strip().lower()
+    if env in _BINDER_POLICIES:
+        return env
+    cfg = Path(__file__).resolve().parents[2] / "configs" / "staging_config.yaml"
+    try:
+        for raw in cfg.read_text(encoding="utf-8").splitlines():
+            key, _, val = raw.partition(":")
+            if key.strip() == "binder_policy":
+                v = val.split("#")[0].strip().lower()
+                if v in _BINDER_POLICIES:
+                    return v
+    except OSError:
+        pass
+    return "legacy"
+
+
 def numeric_tokens(text: Any) -> set[str]:
     """Numeric tokens of `text`. Each whitespace-separated word is read after
     borderless.norm (the G1 normalisation: U+2212, markup, trailing */† markers,
@@ -584,6 +615,9 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
         if _NUMVAL.search(value or ""):
             sb = structural_bind(value, chunks)
             item["structural_binding"] = sb
+            if sb.get("abstain_code"):                     # phase 10 v2: ambiguity / verification
+                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED, abstain_reason=sb["abstain_code"])
+                return item
             if not sb["structured"]:                       # case 1 — PDF-only
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="unverifiable_binding")
@@ -655,6 +689,9 @@ def _as_list(v: Any) -> list[str]:
 def gate_paper(record: dict[str, Any], chunks: list[dict[str, Any]],
                acquisition_status: str, surnames: list[str]) -> dict[str, Any]:
     """Return {datasets, metrics, results, evidence, acquisition_status} for one paper."""
+    if _binder_policy() != "legacy":                  # phase 10 router (binder_v2.py)
+        from .binder_v2 import gate_paper_v2
+        return gate_paper_v2(record, chunks, acquisition_status, surnames)
     evidence: dict[str, list[dict[str, Any]]] = {"datasets": [], "metrics": [], "results": []}
 
     no_full_text = acquisition_status != FULL_TEXT
