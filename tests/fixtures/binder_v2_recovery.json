@@ -1,0 +1,2497 @@
+[
+  {
+    "id": "WBS-PM-PARENS",
+    "claim": "LumenNet achieved an Accuracy of 0.73 (± 0.09).",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 ± 0.04",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-PM-PARENS",
+    "claim": "LumenNet achieved an Accuracy of 0.73 (± 0.04).",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 ± 0.04",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-PM-CONFLICT",
+    "claim": "LumenNet achieved an Accuracy of 0.73 ± 0.09.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 ± 0.04",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBS-PM-PERCENT",
+    "claim": "LumenNet achieved an Accuracy of 73.2% ± 9.1%.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy (%)",
+            "value": "73.2 ± 1.4",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-PM-PERCENT",
+    "claim": "LumenNet achieved an Accuracy of 73.2% ± 1.4%.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy (%)",
+            "value": "73.2 ± 1.4",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBS-CI-NAMED",
+    "claim": "LumenNet achieved an Accuracy of 0.73 with a 95% confidence interval of [0.66, 0.80].",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 (0.69, 0.77)",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBS-CI-COMMA",
+    "claim": "LumenNet achieved an Accuracy of 0.73, 95% CI [0.66, 0.80].",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 (0.69, 0.77)",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-CI-CONFLICT",
+    "claim": "LumenNet achieved an Accuracy of 0.73 (95% CI, 0.66-0.80).",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 (0.69, 0.77)",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-CI-MATCH",
+    "claim": "LumenNet achieved an Accuracy of 0.73 (95% CI, 0.69-0.77).",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73 (0.69, 0.77)",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBS-UNIT-SUPERSCRIPT",
+    "claim": "LumenNet had a Length of 12.5 cm².",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Length (cm)",
+            "value": "12.5",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-UNIT-ASCII",
+    "claim": "LumenNet had a Length of 12.5 cm2.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Length (cm)",
+            "value": "12.5",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-AREA-MATCH",
+    "claim": "LumenNet had an Area of 12.5 cm2.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Area (cm2)",
+            "value": "12.5",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-AREA-MISMATCH",
+    "claim": "LumenNet had an Area of 12.5 cm2.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Area (mm2)",
+            "value": "12.5",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-COMPARISON",
+    "claim": "LumenNet achieved an Accuracy of 0.73, versus 0.62 for QuartzNet.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "QuartzNet",
+            "column_header": "Accuracy",
+            "value": "0.62",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "CONTROL-COMPARISON-SWAP",
+    "claim": "LumenNet achieved an Accuracy of 0.62, versus 0.73 for QuartzNet.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "QuartzNet",
+            "column_header": "Accuracy",
+            "value": "0.62",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "EXTENSION-NEGATION",
+    "claim": "LumenNet did not achieve an Accuracy of 0.73.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Accuracy",
+            "value": "0.73",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "QuartzNet",
+            "column_header": "Accuracy",
+            "value": "0.62",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "EXTENSION-LONG-UNIT",
+    "claim": "LumenNet had a Length of 12.5 millimeters.",
+    "chunks": [
+      {
+        "chunk_id": "SYN-T1",
+        "paper_id": "SYNTHETIC",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN-B1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "LumenNet",
+            "column_header": "Length (cm)",
+            "value": "12.5",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-01_caption_metric_wrong_header",
+    "claim": "Our method achieved a Dice score of 0.77.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:c1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:c1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 46,
+        "text": "Table 1: Dice and IoU scores for segmentation.",
+        "table_caption": "Table 1: Dice and IoU scores for segmentation.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "IoU",
+            "value": "0.77",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "IoU",
+            "value": "0.70",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-01_caption_metric_wrong_row",
+    "claim": "Our method achieved a Dice score of 0.77.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:c3#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:c3",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 46,
+        "text": "Table 1: Dice and IoU scores for segmentation.",
+        "table_caption": "Table 1: Dice and IoU scores for segmentation.",
+        "table_cells": [
+          {
+            "row_label": "Dice",
+            "column_header": "Ours",
+            "value": "0.87",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Dice",
+            "column_header": "UNet",
+            "value": "0.82",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "IoU",
+            "column_header": "Ours",
+            "value": "0.77",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "IoU",
+            "column_header": "UNet",
+            "value": "0.70",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-01_positive",
+    "claim": "Our method achieved a Dice score of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:c1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:c1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 46,
+        "text": "Table 1: Dice and IoU scores for segmentation.",
+        "table_caption": "Table 1: Dice and IoU scores for segmentation.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "IoU",
+            "value": "0.77",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "IoU",
+            "value": "0.70",
+            "caption": "Table 1: Dice and IoU scores for segmentation.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-01_neutral_caption_control",
+    "claim": "Our method achieved a Dice score of 0.77.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:c2#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:c2",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 30,
+        "text": "Table 1: Segmentation results.",
+        "table_caption": "Table 1: Segmentation results.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "IoU",
+            "value": "0.77",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "IoU",
+            "value": "0.70",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-02_caption_cohort",
+    "claim": "Our method achieved a Dice score of 0.87 on the external cohort.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:internal#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:internal",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 1: Dice scores on the internal cohort.",
+        "table_caption": "Table 1: Dice scores on the internal cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      },
+      {
+        "chunk_id": "SYN:external#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:external",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 2: Dice scores on the external cohort.",
+        "table_caption": "Table 2: Dice scores on the external cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.79",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.75",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-02_caption_fronted_cohort",
+    "claim": "On the external cohort, our method achieved a Dice score of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:internal#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:internal",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 1: Dice scores on the internal cohort.",
+        "table_caption": "Table 1: Dice scores on the internal cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      },
+      {
+        "chunk_id": "SYN:external#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:external",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 2: Dice scores on the external cohort.",
+        "table_caption": "Table 2: Dice scores on the external cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.79",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.75",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-02_positive",
+    "claim": "Our method achieved a Dice score of 0.79 on the external cohort.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:internal#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:internal",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 1: Dice scores on the internal cohort.",
+        "table_caption": "Table 1: Dice scores on the internal cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      },
+      {
+        "chunk_id": "SYN:external#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:external",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 2: Dice scores on the external cohort.",
+        "table_caption": "Table 2: Dice scores on the external cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.79",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.75",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-02_table_reference_control",
+    "claim": "In Table 2, our method achieved a Dice score of 0.87 on the external cohort.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:internal#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:internal",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 1: Dice scores on the internal cohort.",
+        "table_caption": "Table 1: Dice scores on the internal cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores on the internal cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      },
+      {
+        "chunk_id": "SYN:external#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:external",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 2: Dice scores on the external cohort.",
+        "table_caption": "Table 2: Dice scores on the external cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.79",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.75",
+            "caption": "Table 2: Dice scores on the external cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-02_header_control",
+    "claim": "Our method achieved a Dice score of 0.87 on the external cohort.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:h#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:h",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 44,
+        "text": "Table 1: Segmentation performance by cohort.",
+        "table_caption": "Table 1: Segmentation performance by cohort.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Internal / Dice",
+            "value": "0.87",
+            "caption": "Table 1: Segmentation performance by cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "External / Dice",
+            "value": "0.79",
+            "caption": "Table 1: Segmentation performance by cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Internal / Dice",
+            "value": "0.82",
+            "caption": "Table 1: Segmentation performance by cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "External / Dice",
+            "value": "0.75",
+            "caption": "Table 1: Segmentation performance by cohort.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-03_percent_scope",
+    "claim": "Our method achieved a Dice score of 0.87%.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:f1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:f1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 38,
+        "text": "Table 1: Dice scores and accuracy (%).",
+        "table_caption": "Table 1: Dice scores and accuracy (%).",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice (fraction)",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "Accuracy (%)",
+            "value": "92.3",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice (fraction)",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Accuracy (%)",
+            "value": "89.1",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-03_positive_fraction",
+    "claim": "Our method achieved a Dice score of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:f1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:f1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 38,
+        "text": "Table 1: Dice scores and accuracy (%).",
+        "table_caption": "Table 1: Dice scores and accuracy (%).",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice (fraction)",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "Accuracy (%)",
+            "value": "92.3",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice (fraction)",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Accuracy (%)",
+            "value": "89.1",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-03_positive_percent",
+    "claim": "Our method achieved an accuracy of 92.3%.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:f1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:f1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 38,
+        "text": "Table 1: Dice scores and accuracy (%).",
+        "table_caption": "Table 1: Dice scores and accuracy (%).",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice (fraction)",
+            "value": "0.87",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "Accuracy (%)",
+            "value": "92.3",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice (fraction)",
+            "value": "0.82",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Accuracy (%)",
+            "value": "89.1",
+            "caption": "Table 1: Dice scores and accuracy (%).",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "bound",
+    "cell": null
+  },
+  {
+    "id": "WBT-03_neutral_caption_control",
+    "claim": "Our method achieved a Dice score of 0.87%.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:f2#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:f2",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 30,
+        "text": "Table 1: Segmentation results.",
+        "table_caption": "Table 1: Segmentation results.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice (fraction)",
+            "value": "0.87",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "Ours",
+            "column_header": "Accuracy (%)",
+            "value": "92.3",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 2
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Dice (fraction)",
+            "value": "0.82",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          },
+          {
+            "row_label": "UNet",
+            "column_header": "Accuracy (%)",
+            "value": "89.1",
+            "caption": "Table 1: Segmentation results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 2
+          }
+        ]
+      }
+    ],
+    "expected": "not_bound",
+    "cell": null
+  },
+  {
+    "id": "control_explicit_pdf",
+    "claim": "UNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "control_explicit_jats",
+    "claim": "UNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "control_explicit_latex",
+    "claim": "UNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "control_own_pdf",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Ours",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "control_own_jats",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Ours",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "control_own_latex",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Ours",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Ours",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "control_wrong_row_pdf",
+    "claim": "OtherNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "not_bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "control_wrong_row_jats",
+    "claim": "OtherNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "not_bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "control_wrong_row_latex",
+    "claim": "OtherNet achieves a Dice of 0.81.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "UNet",
+            "column_header": "Dice",
+            "value": "0.81",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "not_bound",
+    "cell": {
+      "row": "UNet",
+      "col": "Dice",
+      "value": "0.81"
+    }
+  },
+  {
+    "id": "own_method_literal_pdf",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our method",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our method",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_method_literal_jats",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our method",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our method",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_method_literal_latex",
+    "claim": "Our method achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our method",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our method",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_model_literal_pdf",
+    "claim": "Our model achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our model",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our model",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_model_literal_jats",
+    "claim": "Our model achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our model",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our model",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_model_literal_latex",
+    "claim": "Our model achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our model",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our model",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_approach_literal_pdf",
+    "claim": "Our approach achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our approach",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our approach",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_approach_literal_jats",
+    "claim": "Our approach achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our approach",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our approach",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_approach_literal_latex",
+    "claim": "Our approach achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our approach",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our approach",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_system_literal_pdf",
+    "claim": "Our system achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "pdf",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our system",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our system",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_system_literal_jats",
+    "claim": "Our system achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "jats",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our system",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our system",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  },
+  {
+    "id": "own_system_literal_latex",
+    "claim": "Our system achieves a Dice of 0.87.",
+    "chunks": [
+      {
+        "chunk_id": "SYN:T1#0",
+        "paper_id": "SYN",
+        "source": "synthetic",
+        "representation": "latex",
+        "section": "results",
+        "page_or_node": "p1",
+        "block_id": "SYN:T1",
+        "block_type": "table",
+        "char_start": 0,
+        "char_end": 22,
+        "text": "Table 1: Test results.",
+        "table_cells": [
+          {
+            "row_label": "Our system",
+            "column_header": "Dice",
+            "value": "0.87",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 1,
+            "col": 1
+          },
+          {
+            "row_label": "OtherNet",
+            "column_header": "Dice",
+            "value": "0.72",
+            "caption": "Table 1: Test results.",
+            "section": "results",
+            "page": 1,
+            "row": 2,
+            "col": 1
+          }
+        ],
+        "table_caption": "Table 1: Test results."
+      }
+    ],
+    "expected": "bound",
+    "cell": {
+      "row": "Our system",
+      "col": "Dice",
+      "value": "0.87"
+    }
+  }
+]

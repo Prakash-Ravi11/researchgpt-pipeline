@@ -106,6 +106,7 @@ def test_token_equality_also_holds_for_table_block_text():
 
 
 def test_legacy_output_is_identical_to_864f2e8(monkeypatch):
+    monkeypatch.setenv("RGPT_BINDER_POLICY", "legacy")
     src = subprocess.run(["git", "-C", str(ROOT), "show", "864f2e8:src/evidence/gate.py"], capture_output=True,
                          text=True, encoding="utf-8", check=True).stdout
     old = types.ModuleType("src.evidence._gate_864f2e8")
