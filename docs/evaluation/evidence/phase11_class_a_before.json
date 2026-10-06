@@ -1,0 +1,19 @@
+{
+  "class": "A",
+  "phase": "failing-before",
+  "implementation_commit": "5bd4c0f",
+  "runtime": "Python 3.10.18",
+  "command": ".venv/Scripts/python.exe -B -m pytest -p no:cacheprovider tests/test_binder_v2_phase11_a.py -q --tb=short",
+  "result": "5 failed, 10 passed",
+  "failed_cases": [
+    "tests/test_binder_v2_phase11_a.py::test_quantity_type_and_subject[DeltaNet sets a confidence threshold of 0.68 before measuring Dice.-Dice-0.68-False]\r",
+    "tests/test_binder_v2_phase11_a.py::test_quantity_type_and_subject[DeltaNet uses a learning rate of 0.68 for Dice evaluation.-Dice-0.68-False]\r",
+    "tests/test_binder_v2_phase11_a.py::test_quantity_type_and_subject[DeltaNet uses a dropout probability of 0.68 for Dice evaluation.-Dice-0.68-False]\r",
+    "tests/test_binder_v2_phase11_a.py::test_quantity_type_and_subject[DeltaNet uses a batch size of 68 for Dice evaluation.-Dice-68-False]\r",
+    "tests/test_binder_v2_phase11_a.py::test_raw_verifier_rejects_equal_setting_number\r"
+  ],
+  "test_sha256": "086fc71c626233767f3adfa7e8142a3f9b273b1b6c8a9eb012a839fe786c5e02",
+  "binder_sha256": "4b04a848c5e8ce57f8d1fa42e26487f5362be3456549eceab0405442df881d3c",
+  "full_log": "runs/phase11_binder/logs/class_a_before.txt",
+  "log_sha256": "3fe7941f4f9ebd2341b162b982cdf66da188747a8f6fdd468d57fa46f3b7f349"
+}
