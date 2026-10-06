@@ -1,0 +1,295 @@
+{
+  "source_commit": "7f0cef3399833362763f30a5fc51c2be58fd55ec",
+  "files": [
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/checkpoints/phase_11_binder.md",
+      "persistence": "durable_task_file",
+      "sha256": "113ee03e640701c9998d55d46d5d59273126787e48c2d35c759eba8178016f01"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/diagnosis/phase11_failure_classes.md",
+      "persistence": "durable_task_file",
+      "sha256": "f668eeaaccb05ca11a29530a41d1b65e8fc455b0f113a69ffd2a874022a823b4"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_artifact_manifest.json",
+      "persistence": "durable_task_file",
+      "sha256": null
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_a_after.json",
+      "persistence": "durable_task_file",
+      "sha256": "7e8b422dbbf9c892cde120b2be7f6ed24be155dba531fa08669551ceefff805b"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_a_before.json",
+      "persistence": "durable_task_file",
+      "sha256": "334bdbf26937745594a8b6c8fd39f77b2dd7cb43d95d38380a9c8fce6672475b"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_after.json",
+      "persistence": "durable_task_file",
+      "sha256": "04b62e7f0c45db49a737e33d253d87b4cb05ab2cdfbadf4c2ee86e388e1c7a72"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_amended_before.json",
+      "persistence": "durable_task_file",
+      "sha256": "0b7596b76bb4d528ed9d0ad19c92d0b2792b87fb75a2952df50d603e73050d39"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_before.json",
+      "persistence": "durable_task_file",
+      "sha256": "435ecaa9873738c220e210b3387e826238965fe3b4eede3d86a1cb05790a244b"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_blocked.json",
+      "persistence": "durable_task_file",
+      "sha256": "bb6138329190ae9ca0f442f6d16db2983261d248b669b229656a551efdf9eba2"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_uncommitted.patch",
+      "persistence": "durable_task_file",
+      "sha256": "59ecdf41fae08f6a2e037e0e0e7ea53fefb56d746ad72fd98339e8cdb116a55b"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_c_after.json",
+      "persistence": "durable_task_file",
+      "sha256": "220440a70fceaf5b1133ba08e3167ec2297bc5ecc2cf0bf40c9568c2f0ed6015"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_c_before.json",
+      "persistence": "durable_task_file",
+      "sha256": "e2cc3fd6f424a38f0b776ce7d0051680527026d19e7937d61293265d3e528061"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_d_after.json",
+      "persistence": "durable_task_file",
+      "sha256": "a7334323ccf35ccabe04097377ffd49deed4d4455ce27702f577044a3a3bf515"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_d_before.json",
+      "persistence": "durable_task_file",
+      "sha256": "4e4f66f3e26a9d6b2257b95b01493e4afd3399bbf685684130993e05fcdeabb9"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_validation.json",
+      "persistence": "durable_task_file",
+      "sha256": "0828f0dc95a415dea2e401993e0aa28e38eb2a1fb752c4546d097fd39f97f893"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/phase_11_binder.md",
+      "persistence": "durable_task_file",
+      "sha256": "5db552db44c7a052ed252d6163d743c19b7ec7efbc91c24747df2a0a5c83ab4c"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/preregistration/phase_11_scope.md",
+      "persistence": "durable_task_file",
+      "sha256": "ead76cc82256d0b8956524be31dd86865c57d375f2662749f957f89542f87a5a"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv-09a_legacy.json",
+      "persistence": "local_ignored",
+      "sha256": "c5c0860840fed9f0d99635749c039127c008c1330626d649db4248fb4311db02"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv-09a_v2.json",
+      "persistence": "local_ignored",
+      "sha256": "09049aeeb25b15a40043d8ea075bb93742575e3cf64a41e4b23eb644e0e48404"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv_legacy.json",
+      "persistence": "local_ignored",
+      "sha256": "013203dd57af4fc1434e16e93189e0b4a3c59cdd4a7d2cbbb31f3f1db64c4d21"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv_v2.json",
+      "persistence": "local_ignored",
+      "sha256": "4bd519e80b70e22610bff6f614ee4380c0b549626b70b88129792ff377e2b55f"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_.venv-09a.txt",
+      "persistence": "local_ignored",
+      "sha256": "d1a27587f13fee512f71c90934888a960d11e099cfcca9fa96f6177043421d08"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_.venv.txt",
+      "persistence": "local_ignored",
+      "sha256": "3941300715eb242663247f18c457771a4c1fa144c7405a68e8e3448e4fb1a830"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_310.txt",
+      "persistence": "local_ignored",
+      "sha256": "7512beba6a020ffcf5e2d38e8622de3e293b76a64987dbaefaf4ec0f74ccf0af"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_before.txt",
+      "persistence": "local_ignored",
+      "sha256": "3fe7941f4f9ebd2341b162b982cdf66da188747a8f6fdd468d57fa46f3b7f349"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_after_.venv-09a.txt",
+      "persistence": "local_ignored",
+      "sha256": "0830012e11f4353109601e4e224bc16832e8e2ce989183f653eefda2076745b6"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_after_.venv.txt",
+      "persistence": "local_ignored",
+      "sha256": "35adbe0a4793befd430736ae7700bdc1c854722b80e652c917ae7a9f5288c46e"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_amended_before.txt",
+      "persistence": "local_ignored",
+      "sha256": "e72ebe6048269cdf8b0f53eff474f2df4569b5b88930aa0c88072fad98fa0e62"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_before.txt",
+      "persistence": "local_ignored",
+      "sha256": "a3ca050d8fe393ed42a6ea8564e6bfa6937126aad2916111a1dcd8f7b8a360a7"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_final_.venv-09a.txt",
+      "persistence": "local_ignored",
+      "sha256": "87ced40b5c9c18ca2c24847f496dc31412c3308bd185c316ceafe8b649eba1a0"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_final_.venv.txt",
+      "persistence": "local_ignored",
+      "sha256": "268ccee649b6bf2da7c63ca9000423817a09a736854b235fb205c39ae9c3fdae"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_after_.venv-09a.txt",
+      "persistence": "local_ignored",
+      "sha256": "32fd3fcec0c2c1ad3fd4f2190ee14baf25dc70e2913d1b21bdad9806b4e1496b"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_after_.venv.txt",
+      "persistence": "local_ignored",
+      "sha256": "77ee64199c91ecbda9c6989af25f47e083f0951c34c2b9716f9e6eca03a92304"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_before.txt",
+      "persistence": "local_ignored",
+      "sha256": "956789d048e811ccb1b7c5802a890faac03b46a95c33e3ccde235aa5e17d2ec5"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_after_.venv-09a.txt",
+      "persistence": "local_ignored",
+      "sha256": "1664c5d9cb9bced7e5394620a5fac9f2b89ae04b2dd8a1795c69255b6b801e02"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_after_.venv.txt",
+      "persistence": "local_ignored",
+      "sha256": "b2a665828f9339b4cd0442e01a24b3c2d06cccd04660f5ddf4e3a6ee0ad4b7dc"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_before.txt",
+      "persistence": "local_ignored",
+      "sha256": "e60d488411b373df76d022a585c58c7e44aaa22781c1874f5228953708f5e530"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv-09a_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "a28c244a729a7b521701ae6e742ae0721f95477c46ed825047bb08da6e006010"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv-09a_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "a28c244a729a7b521701ae6e742ae0721f95477c46ed825047bb08da6e006010"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv-09a_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "0a5bd175b8aa6bc48c27d6b1febb760f7cbe739636cfddd685ceb1cfc982c48f"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv-09a_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "63611b8a4562d6ac8de6ad110f5c5e69101b0a78ab85196019375f6d902954c3"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "386c68aeb0b389dcf9e726ea87d5f474953933925121fb8c70f8ec99dd69f180"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "88f1dd068364d49d3fc03cf80f5deb15b4984f61800e4f0c4eb3cb404171f45a"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv-09a_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv-09a_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv_v2.txt",
+      "persistence": "local_ignored",
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/regression_.venv-09a_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "ea6d2761e6fe6a9383e6770bffbca01cbeb20c2141ef4db6ff0bc2e1f3a16672"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/regression_.venv_legacy.txt",
+      "persistence": "local_ignored",
+      "sha256": "85207c175dfd075ead71e70aab25c542d0a188e7132be52b2e31c7a6a9847ccc"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/record_evidence.py",
+      "persistence": "local_ignored",
+      "sha256": "8f9d6da446be667b45de435a75b4ab2d18d65ff6029d000d0a3e7468acd31772"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/run_checks.py",
+      "persistence": "local_ignored",
+      "sha256": "5b75bba78ce13cae2ec21faea9530dfd8a747aafb6839a5e70ed8f0bbdf88df2"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/write_report.py",
+      "persistence": "local_ignored",
+      "sha256": "667613139870ec67eadba2f9c566ba5f72f6906eebdd5a057bf346db98fb2521"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_a.py",
+      "persistence": "durable_task_file",
+      "sha256": "086fc71c626233767f3adfa7e8142a3f9b273b1b6c8a9eb012a839fe786c5e02"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_b.py",
+      "persistence": "durable_task_file",
+      "sha256": "ec04ad903c346da583c7a91b1b38d06e968979f4918f9b483a34058c4855b2d7"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_c.py",
+      "persistence": "durable_task_file",
+      "sha256": "b35b743d0fffeee0a203e01804fa33c7d2ea9049d332fb87c49405cb1efc61bf"
+    },
+    {
+      "path": "C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_d.py",
+      "persistence": "durable_task_file",
+      "sha256": "40540a0edbdd4dc6513577bbfa5ae6301b420a4361396c2aa6bebee6023c17a0"
+    }
+  ]
+}

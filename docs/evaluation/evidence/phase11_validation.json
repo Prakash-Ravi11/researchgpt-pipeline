@@ -1,0 +1,269 @@
+{
+  "status": "STOP_A4_preexisting_experiment_tests_fail_under_v2",
+  "source_commit": "7f0cef3399833362763f30a5fc51c2be58fd55ec",
+  "results": [
+    {
+      "runtime": ".venv",
+      "policy": "legacy",
+      "suite": "full_pytest",
+      "passed": 226,
+      "failed": 0,
+      "summary": "226 passed in 20.82s",
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\full_.venv_legacy.txt",
+      "sha256": "386c68aeb0b389dcf9e726ea87d5f474953933925121fb8c70f8ec99dd69f180"
+    },
+    {
+      "name": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\pipeline_.venv_legacy.txt",
+      "runtime": ".venv",
+      "counts": [
+        37,
+        0
+      ],
+      "failures": [],
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "name": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv_legacy.txt",
+      "runtime": ".venv",
+      "counts": [
+        63,
+        0
+      ],
+      "failures": [],
+      "sha256": "a28c244a729a7b521701ae6e742ae0721f95477c46ed825047bb08da6e006010"
+    },
+    {
+      "name": "regression",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\regression_.venv_legacy.txt",
+      "runtime": ".venv",
+      "counts": null,
+      "failures": [],
+      "sha256": "85207c175dfd075ead71e70aab25c542d0a188e7132be52b2e31c7a6a9847ccc"
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "full_pytest",
+      "passed": 226,
+      "failed": 0,
+      "summary": "226 passed in 22.02s",
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\full_.venv_v2.txt",
+      "sha256": "88f1dd068364d49d3fc03cf80f5deb15b4984f61800e4f0c4eb3cb404171f45a"
+    },
+    {
+      "name": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "v2",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\pipeline_.venv_v2.txt",
+      "runtime": ".venv",
+      "counts": [
+        37,
+        0
+      ],
+      "failures": [],
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "name": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "policy": "v2",
+      "exit_code": 1,
+      "pass": false,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv_v2.txt",
+      "runtime": ".venv",
+      "counts": [
+        57,
+        6
+      ],
+      "failures": [
+        "gate: structured paper, value at own cell -> bound -> RETURNED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.4502.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'binding_wrong_cell', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.4502', 'role': 'single', 'candidates': [{'row': 'Ours', 'col': 'nDCG@5', 'value': '0.4502', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained', 'candidate': {'row': 'Ours', 'col': 'nDCG@5'}}}",
+        "gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.61.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'table_value_unbound', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.61', 'role': 'single', 'candidates': [{'row': 'Jones et al.', 'col': 'nDCG@5', 'value': '0.61', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'not_required'}]}, 'status': 'not_bindable', 'reason': 'no cell holding a claim value has a subject or quantity link to it'}}",
+        "gate: structured paper, metric not a column anywhere -> not_bindable (falls through)  {'field': 'results', 'value': 'Our system reaches a BLEU of 34.1 on the shared task.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.2, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'evidence_span_not_found_in_paper_chunks', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '34.1', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}}",
+        "adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '80.52', 'role': 'single', 'candidates': [{'row': 'GA', 'col': 'Performance metrics', 'value': '80.52', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'GA', 'col': 'Performance metrics'}}",
+        "adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '87.82', 'role': 'single', 'candidates': [{'row': 'K-SVM', 'col': 'Performance metrics', 'value': '87.82', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'K-SVM', 'col': 'Performance metrics'}}",
+        "adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '12', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}"
+      ],
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "legacy",
+      "suite": "full_pytest",
+      "passed": 226,
+      "failed": 0,
+      "summary": "226 passed in 19.64s",
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\full_.venv-09a_legacy.txt",
+      "sha256": "0a5bd175b8aa6bc48c27d6b1febb760f7cbe739636cfddd685ceb1cfc982c48f"
+    },
+    {
+      "name": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\pipeline_.venv-09a_legacy.txt",
+      "runtime": ".venv-09a",
+      "counts": [
+        37,
+        0
+      ],
+      "failures": [],
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "name": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv-09a_legacy.txt",
+      "runtime": ".venv-09a",
+      "counts": [
+        63,
+        0
+      ],
+      "failures": [],
+      "sha256": "a28c244a729a7b521701ae6e742ae0721f95477c46ed825047bb08da6e006010"
+    },
+    {
+      "name": "regression",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "legacy",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\regression_.venv-09a_legacy.txt",
+      "runtime": ".venv-09a",
+      "counts": null,
+      "failures": [],
+      "sha256": "ea6d2761e6fe6a9383e6770bffbca01cbeb20c2141ef4db6ff0bc2e1f3a16672"
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "v2",
+      "suite": "full_pytest",
+      "passed": 226,
+      "failed": 0,
+      "summary": "226 passed in 19.49s",
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\full_.venv-09a_v2.txt",
+      "sha256": "63611b8a4562d6ac8de6ad110f5c5e69101b0a78ab85196019375f6d902954c3"
+    },
+    {
+      "name": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "policy": "v2",
+      "exit_code": 0,
+      "pass": true,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\pipeline_.venv-09a_v2.txt",
+      "runtime": ".venv-09a",
+      "counts": [
+        37,
+        0
+      ],
+      "failures": [],
+      "sha256": "a18c32669d0123a624a0925957fc1e85663b3e52c79969126279a57b7dc1d559"
+    },
+    {
+      "name": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "policy": "v2",
+      "exit_code": 1,
+      "pass": false,
+      "output": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv-09a_v2.txt",
+      "runtime": ".venv-09a",
+      "counts": [
+        57,
+        6
+      ],
+      "failures": [
+        "gate: structured paper, value at own cell -> bound -> RETURNED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.4502.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'binding_wrong_cell', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.4502', 'role': 'single', 'candidates': [{'row': 'Ours', 'col': 'nDCG@5', 'value': '0.4502', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained', 'candidate': {'row': 'Ours', 'col': 'nDCG@5'}}}",
+        "gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.61.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'table_value_unbound', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.61', 'role': 'single', 'candidates': [{'row': 'Jones et al.', 'col': 'nDCG@5', 'value': '0.61', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'not_required'}]}, 'status': 'not_bindable', 'reason': 'no cell holding a claim value has a subject or quantity link to it'}}",
+        "gate: structured paper, metric not a column anywhere -> not_bindable (falls through)  {'field': 'results', 'value': 'Our system reaches a BLEU of 34.1 on the shared task.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.2, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'evidence_span_not_found_in_paper_chunks', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '34.1', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}}",
+        "adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '80.52', 'role': 'single', 'candidates': [{'row': 'GA', 'col': 'Performance metrics', 'value': '80.52', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'GA', 'col': 'Performance metrics'}}",
+        "adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '87.82', 'role': 'single', 'candidates': [{'row': 'K-SVM', 'col': 'Performance metrics', 'value': '87.82', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'K-SVM', 'col': 'Performance metrics'}}",
+        "adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '12', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}"
+      ],
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    }
+  ],
+  "S1": "not_evaluated",
+  "S2": "not_evaluated",
+  "S3": "not_rerun",
+  "decision": "NO_ENABLE",
+  "Part_B": "not_started",
+  "frozen_diff_empty": true,
+  "preexisting_tests_diff_empty": true,
+  "source_sha256": {
+    "src/evidence/binder_v2.py": "ffe2a1668cfbc83bbb0a322d434799a77d529b8d817cbcd29040c7f96f832e83",
+    "src/evidence/gate.py": "8b5ef18761b4b59c20aeb24d076d9c7982f4582e5c72f4b80925c5f03134fcbe"
+  }
+}

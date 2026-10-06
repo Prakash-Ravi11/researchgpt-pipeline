@@ -208,3 +208,56 @@ phase), then:
 - mine the 30 PDFs and run the post-fix evaluation.
 
 There will be no 4th edit to represent.py: if the in-place tests expose a defect, I stop again.
+
+## 2026-10-06 Phase 11
+
+What I was doing: implementing Class B independent-value and complete-required-binding checks after
+committing the scope, read-only diagnosis, validated Class A fix, and Class B failing tests.
+
+What failed: both Python 3.10.18 and 3.13.6 report **98 passed, 2 failed**. Existing
+`tests/test_binder_v2.py:165` expects a supported binding when another number occurs in no attached
+cell; the candidate returns `partial_binding`. Existing `tests/test_binder_v2.py:177` expects
+`not_a_table_claim` for a prose-only number; the candidate returns `not_bindable`.
+
+What I tried: one Class B candidate patch after the committed 4-failure synthetic reproduction.
+It prevents borrowing a later quantity, prefers explicit entity subjects, and broadens required
+coverage to absent table values. All six new tests pass, but the two existing regressions trigger the
+user's explicit STOP. No tests were changed, no further fix was attempted, and Part B was not started.
+
+What I need from you: choose the required-value contract before resuming: retain the existing
+value-matching rule and explicitly revise the new Class B scope/tests, or explicitly authorize
+stricter coverage and updates to the affected old expectations. The candidate source remains
+uncommitted; its exact diff and both runtime results are preserved under `docs/evaluation/evidence/`.
+Full report: `docs/evaluation/phase_11_binder.md`; checkpoint: `docs/evaluation/checkpoints/phase_11_binder.md`.
+
+### Class B resolution, 2026-10-06
+
+The user explicitly chose Option 1 and authorized revising only the new Class B scope/tests.
+The scope amendment was committed before code (`9a8fc9a`), tests revised with history preserved
+(`cd53e13`), and the narrower fix committed (`176de61`). Table-absent values do not block a supported
+bind and are not verified by it. Original tests remained unchanged; 102 focused checks passed in both
+runtimes. Classes C and D then passed 117 and 125 focused checks respectively. The old rejected patch
+is an archive, not an active uncommitted source change.
+
+## 2026-10-06 Phase 11 A4 - current STOP
+
+What I was doing: running the full authorized Python 3.10/3.13, legacy/v2 validation matrix after all
+four implementation classes were committed (latest code `7f0cef3`).
+
+What failed: the unchanged experiment unit suite under v2 reports **57 passed, 6 failed in each
+runtime**. Failures in `experiments/document_evidence_pipeline/tests/test_pipeline_units.py` are the
+own-cell nDCG@5 binding/return at line 262, cross-row abstention reason at 266, missing-column status
+at 277, two generic performance-metrics statuses at 356/358, and generic count status at 368.
+
+What passed: full pytest **226/226** in all four combinations; standalone pipeline **37/37** in all
+four; experiment suite **63/63** under legacy in both runtimes; frozen binder regression **123/123**
+under the legacy invocation in both runtimes. Explicit v2 regression invocation was not reached.
+
+What I tried: one A4 validation matrix. No fix, test modification or additional baseline run followed
+the failures. New S3, development measurement and Part B were not started. The latest user instruction
+requires STOP if any pre-existing test fails, regardless of whether it is newly introduced.
+
+What I need from you: authorization to diagnose and fix the six failures under the unchanged test
+expectations before A4 can complete. No test waiver or frozen-file change is assumed. Details, raw
+output locations and hashes are in `docs/evaluation/phase_11_binder.md` and
+`docs/evaluation/evidence/phase11_validation.json`.

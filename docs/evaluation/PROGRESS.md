@@ -10,6 +10,12 @@
 > when a phase brief asks for them. Phases 09A, 09B and the phase 10 package do; phases 00–08 did not.
 
 ## Current Phase
+**Phase 11 Binder v2: BLOCKED on A4 experiment-suite failures (2026-10-06).** Classes A-D are committed.
+Full pytest passes 226 checks in all four runtime/policy combinations; standalone pipeline passes 37
+in all four. The experiment suite passes 63 under legacy but fails **6/63 under v2 in each runtime**.
+The latest user STOP rule applies. S3, new measurement and Part B have not run. Read
+`checkpoints/phase_11_binder.md` and `phase_11_binder.md`. No pre-existing test was modified.
+
 **Phase 10 package, complete (2026-10-06).** It has three parts:
 1. Freeze 09B: **complete**.
 2. Product acceptance before Phase 10: **complete** on `acceptance/pre-phase10`.
@@ -37,14 +43,18 @@
 `phase_10_binder`, 2026-10-06. The experiment is complete; the binder is not approved for production.
 
 ## Next Action
-Phase 10 is closed with a no-enable decision. Read `checkpoints/phase_10_binder.md` for the exact resume
-boundary. A next implementation phase needs explicit scope; do not repeat recovery or tune against
-these measured claims. Immediate release blockers are wrong subject/quantity linking and lost verified
-bindings. Earlier product bottlenecks remain claim availability and representation.
+Obtain explicit continuation scope for the six A4 experiment failures, preserving all existing
+expectations. The Class B contract was settled by the user: only table-measurable values are required;
+text-only values do not block a supported bind and are not verified by it. Do not begin Part B before
+Part A completes. Cached replay with real LLM calls blocked is approved for eventual Part B. Legacy
+stays default, and all Phase 10 artifacts remain frozen.
 
 ## Repository State
-- Active experiment branch: `exp/phase10-binder`, recovered from `408137e`. Implementation/test/driver
-  commits: `7f55789`, `1cfea2c`, `c805cf4`; measurement/audit: `ad92c87`. No merge into the default branch.
+- Active experiment branch: `exp/phase11-binder`, based on pushed/tagged Phase 10 `050f8de`.
+  Phase 11 commits: scope `537658d`, diagnosis `5bd4c0f`, Class A tests `ad5bc9e`, Class A fix `d64cd91`,
+  Class B tests `d32f367`, scope amendment `9a8fc9a`, amended tests `cd53e13`, fix `176de61`,
+  Class C tests/fix `c3e77ba`/`85bee81`, Class D tests/fix `2415bb9`/`7f0cef3`.
+  No uncommitted source patch remains; no default-branch merge or final Phase 11 tag.
 - `claude-code-verification` is the default branch. It now contains `exp/phase09b-fallthrough`
   (fast-forward). The 09B commits after its base `864f2e8`:
 
@@ -181,5 +191,6 @@ bindings. Earlier product bottlenecks remain claim availability and representati
 - Do not enable `borderless_policy` without a region guard and a new pre-registered evaluation.
 
 ## Last Checkpoint
-`docs/evaluation/checkpoints/phase_10_binder.md` (2026-10-06). Full report:
-`src/evaluation/binder_10/PHASE10_REPORT.md`. The 09B freeze remains recorded in `phase_09b_fallthrough.md`.
+`docs/evaluation/checkpoints/phase_11_binder.md` (2026-10-06, BLOCKED). Full current report:
+`docs/evaluation/phase_11_binder.md`. Phase 10 remains frozen at `phase10-binder-final`; its report is
+`src/evaluation/binder_10/PHASE10_REPORT.md`. The 09B freeze remains in `phase_09b_fallthrough.md`.

@@ -1,0 +1,30 @@
+{
+  "class": "B",
+  "stage": "blocked",
+  "commit_before_record": "d32f367e6901c3c56b567aa341cde71e98dec3e9",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_b_after_.venv.txt",
+      "sha256": "35adbe0a4793befd430736ae7700bdc1c854722b80e652c917ae7a9f5288c46e",
+      "summary": "2 failed, 98 passed in 0.87s",
+      "failed_cases": [
+        "tests/test_binder_v2.py::test_comparison_both_sides_and_partial_comparison\r",
+        "tests/test_binder_v2.py::test_table_prose_is_never_a_cell - AssertionE...\r"
+      ]
+    },
+    {
+      "path": "runs/phase11_binder/logs/class_b_after_.venv-09a.txt",
+      "sha256": "0830012e11f4353109601e4e224bc16832e8e2ce989183f653eefda2076745b6",
+      "summary": "2 failed, 98 passed in 0.75s",
+      "failed_cases": [
+        "tests/test_binder_v2.py::test_comparison_both_sides_and_partial_comparison\r",
+        "tests/test_binder_v2.py::test_table_prose_is_never_a_cell - AssertionE...\r"
+      ]
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "9de53e484134b9462240a96ff48b6c00d89e3c7a4e78b7f697f6eb4a0633ceda",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_b.py": "e223436af1f6bd52c6ca41dbafcf87f467fde5eeb2741c94c49a07fae98b1d20"
+  }
+}

@@ -1,0 +1,42 @@
+diff --git a/src/evidence/binder_v2.py b/src/evidence/binder_v2.py
+index 4b068e4..53e9d61 100644
+--- a/src/evidence/binder_v2.py
++++ b/src/evidence/binder_v2.py
+@@ -716,7 +716,10 @@ def _views(m: dict, fr: dict, idx: dict, off: frozenset[str]) -> None:
+                      and t[1] in idx["caption_terms"] and t[1] not in idx["q"]]
+     m["lv_terms"] = []
+     for level, spans in enumerate(m["levels"]):                  # level terms: form -> (claim text, quantity-like)
+-        terms = {x["form"]: (w[x["s"]:x["e"]], x["q"]) for x in fr["matches"] if _in(x["s"], x["e"], spans)}
++        terms = {x["form"]: (w[x["s"]:x["e"]], x["q"]) for x in fr["matches"] if _in(x["s"], x["e"], spans)
++                 and not (level == 2 and x['q'] and any(
++                     m['end'] <= x['s'] < x['e'] <= other['start']
++                     for other in fr['mentions'] if other['start'] > m['start']))}
+         if level == 0 and m["count"] and "count_attribute" not in off:
+             terms["#" + _canon(m["count"], idx["syn"])] = (m["count"], True)
+         m["lv_terms"].append(terms)
+@@ -773,7 +776,8 @@ def _subject_cands(m: dict, p: dict, idx: dict, off: frozenset[str]) -> list[dic
+     # an explicit entity/own-method link before reinterpreting that metric as
+     # the subject and a generic caption term as the quantity.
+     out.sort(key=lambda x: (bool(x.get("weak")), not x["local"], x["kind"] != "label"))
+-    return out
++    strong = [x for x in out if not x.get('weak')]
++    return strong or out
+ 
+ 
+ def links(m: dict, p: dict, fr: dict, idx: dict, off: frozenset[str], part: int | None = None) -> dict[str, Any]:
+@@ -1140,6 +1144,15 @@ def structural_bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = Fal
+         tr["candidates"] = [_cell_key(p) for p, _, _ in cands[:TRACE_CAP]] if len(trace) <= 16 else []
+         any_cand = any_cand or bool(cands)
+         linked = [(p, lk) for p, lk, _ in cands if lk["has_subject"] or lk["has_quantity"]]
++        if not cands and not ('multi_binding' in off and required):
++            # A named table quantity with a supported subject is still required
++            # when its stated number is absent. Do not return a partial claim.
++            expected = any(links(m, p, fr, idx, off)['eligible'] for p in idx['cells'])
++            if expected:
++                required += 1
++                failures.append(None)
++                tr['outcome'] = 'required_value_absent'
++                continue
+         if not linked or ("multi_binding" in off and required):
+             tr["outcome"] = "not_required"
+             continue
