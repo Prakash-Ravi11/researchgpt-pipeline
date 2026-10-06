@@ -1,0 +1,24 @@
+{
+  "class": "B",
+  "stage": "after",
+  "commit_before_record": "cd53e134805c3aff8b5f785aa623d723a6f2b64f",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_b_final_.venv.txt",
+      "sha256": "268ccee649b6bf2da7c63ca9000423817a09a736854b235fb205c39ae9c3fdae",
+      "summary": "102 passed in 0.74s",
+      "failed_cases": []
+    },
+    {
+      "path": "runs/phase11_binder/logs/class_b_final_.venv-09a.txt",
+      "sha256": "87ced40b5c9c18ca2c24847f496dc31412c3308bd185c316ceafe8b649eba1a0",
+      "summary": "102 passed in 0.64s",
+      "failed_cases": []
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "d2d06e513bbcf53ec299e4837ed40ed2908a6fc561d3348fd9432b987af3b38f",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_b.py": "ec04ad903c346da583c7a91b1b38d06e968979f4918f9b483a34058c4855b2d7"
+  }
+}

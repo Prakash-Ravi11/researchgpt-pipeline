@@ -716,7 +716,10 @@ def _views(m: dict, fr: dict, idx: dict, off: frozenset[str]) -> None:
                      and t[1] in idx["caption_terms"] and t[1] not in idx["q"]]
     m["lv_terms"] = []
     for level, spans in enumerate(m["levels"]):                  # level terms: form -> (claim text, quantity-like)
-        terms = {x["form"]: (w[x["s"]:x["e"]], x["q"]) for x in fr["matches"] if _in(x["s"], x["e"], spans)}
+        terms = {x["form"]: (w[x["s"]:x["e"]], x["q"]) for x in fr["matches"] if _in(x["s"], x["e"], spans)
+                 and not (level == 2 and x['q'] and any(
+                     m['end'] <= x['s'] < x['e'] <= other['start']
+                     for other in fr['mentions'] if other['start'] > m['start']))}
         if level == 0 and m["count"] and "count_attribute" not in off:
             terms["#" + _canon(m["count"], idx["syn"])] = (m["count"], True)
         m["lv_terms"].append(terms)
@@ -773,7 +776,8 @@ def _subject_cands(m: dict, p: dict, idx: dict, off: frozenset[str]) -> list[dic
     # an explicit entity/own-method link before reinterpreting that metric as
     # the subject and a generic caption term as the quantity.
     out.sort(key=lambda x: (bool(x.get("weak")), not x["local"], x["kind"] != "label"))
-    return out
+    strong = [x for x in out if not x.get('weak')]
+    return strong or out
 
 
 def links(m: dict, p: dict, fr: dict, idx: dict, off: frozenset[str], part: int | None = None) -> dict[str, Any]:
