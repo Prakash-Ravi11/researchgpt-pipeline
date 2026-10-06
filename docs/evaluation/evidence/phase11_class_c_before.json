@@ -1,0 +1,23 @@
+{
+  "class": "C",
+  "stage": "before",
+  "commit_before_record": "176de61e2973824cbb9a9964076abf9e12aca9ac",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_c_before.txt",
+      "sha256": "956789d048e811ccb1b7c5802a890faac03b46a95c33e3ccde235aa5e17d2ec5",
+      "summary": "4 failed, 11 passed in 0.72s",
+      "failed_cases": [
+        "tests/test_binder_v2_phase11_c.py::test_supported_decorations[DeltaNet (Proposed)-Dice-0.68-Our method reports Dice of 0.68.]\r",
+        "tests/test_binder_v2_phase11_c.py::test_supported_decorations[DeltaNet [Proposed]-Dice-0.68-Our method reports Dice of 0.68.]\r",
+        "tests/test_binder_v2_phase11_c.py::test_supported_decorations[DeltaNet (Ours)-Dice-0.68-Our method reports Dice of 0.68.]\r",
+        "tests/test_binder_v2_phase11_c.py::test_supported_decorations[DeltaNet-Dice (%)\\u2191-68.4% \\xb1 1.6%*-DeltaNet reports Dice of 68.4% \\xb1 1.6%.]\r"
+      ]
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "d2d06e513bbcf53ec299e4837ed40ed2908a6fc561d3348fd9432b987af3b38f",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_c.py": "b35b743d0fffeee0a203e01804fa33c7d2ea9049d332fb87c49405cb1efc61bf"
+  }
+}
