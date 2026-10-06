@@ -41,6 +41,22 @@ mention as evidence for multiple unrelated cells. Partial or ambiguous required 
 Include equal-valued measurements with different metrics/subjects, coordinated clauses, and a
 complete comparison positive control. Do not solve coverage by returning only the first metric.
 
+**Explicit user amendment, 2026-10-06, after the recorded Class B STOP:** completeness applies only
+to table-measurable claim values: the value appears in at least one candidate cell of the claim's
+table(s). A value matching no table cell is non-table/text-only and does not block a supported bind.
+Existing tests define this supported-bind behavior; forcing abstention would lose verified bindings
+and violate S2. A matching value in another row/column remains table-measurable: if its required
+binding cannot be covered without semantic conflict, the whole claim must still abstain.
+
+Only the NEW Phase 11 Class B tests may be revised to reflect this clarified scope. Preserve their
+original failing-first commit and document the revision; no pre-existing test or frozen artifact may
+change. Include paired boundary tests for an absent second value (keep the supported bind) and a
+second value matching a conflicting row/column (partial_binding). Keep extra-cell negative controls.
+The S1/S2 trade-off is explicit: a text-only value supplies no table binding and cannot itself cause
+a wrong cell selection, but it is also not verified by the table. A supported table bind must not be
+reported as verification of every text-only statement in the claim. This amendment is committed
+separately before further implementation, as instructed by the user.
+
 ### C. Decorated labels, values and hierarchy
 
 Normalize general formatting while preserving semantics: `X (Proposed)`, `Proposed Method`, `Ours`,
