@@ -1194,9 +1194,18 @@ def _bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = False) -> dic
         out.update(status=codes[0], abstain_code=codes[0], reason=f"a value is {codes[0]}")
         return out
     if not required:
-        out.update(status="not_bindable" if any_cand else "not_a_table_claim",
+        # Absence of the number alone does not establish a prose aggregate.
+        # First establish the named quantity's scope, using the same local
+        # quantity links as binding (including row, caption and count support).
+        quantity_scoped = not any_cand and any(
+            links(m, p, fr, idx, off, part)["has_quantity"]
+            for m in fr["mentions"] if "L_local" in m
+            and not (m["threshold"] or m["delta"] or m.get("negated"))
+            for p in idx["cells"] for part in [None, *range(len(p["parts"]))])
+        out.update(status="not_a_table_claim" if quantity_scoped else "not_bindable",
                    reason="no cell holding a claim value has a subject or quantity link to it" if any_cand
-                   else "no claim value is in an attached cell")
+                   else ("the claimed quantity is represented, but no claim value is in an attached cell"
+                         if quantity_scoped else "no attached cell represents the claimed quantity"))
         return out
     if not bindings:
         bad = next((x for x in failures if x), None)
