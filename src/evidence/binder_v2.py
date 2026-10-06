@@ -83,7 +83,7 @@ _ODD_SPACE = re.compile(r"[  -​  　\x00]")
 _LEAD_DASH = re.compile(r"(?<![^\s(\[=:])[–—](?=\d)")
 _TOKEN = re.compile(r"[^\W_]+(?:\+\+|\+)?")
 _BRACKET = re.compile(r"[\(\[][^\)\]]*[\)\]]")
-_SEP = re.compile(r"[\s\-_/.]*")
+_SEP = re.compile(r"[\s\-_/.@]*")  # retain every token in ranked metrics such as Gain@k
 
 
 def _prep(s: Any) -> str:
