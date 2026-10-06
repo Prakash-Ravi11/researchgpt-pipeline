@@ -1,0 +1,20 @@
+{
+  "class": "A",
+  "result": "94 passed on each runtime (15 class A plus 79 original/recovery)",
+  "runtimes": [
+    "3.10.18",
+    "3.13.6"
+  ],
+  "binder_sha256": "409a0654abfb0e8da7e5da4fb3a9737d63deddea364881256b1871d5d864fee8",
+  "logs": [
+    {
+      "path": "runs\\phase11_binder\\logs\\class_a_after_.venv.txt",
+      "sha256": "3941300715eb242663247f18c457771a4c1fa144c7405a68e8e3448e4fb1a830"
+    },
+    {
+      "path": "runs\\phase11_binder\\logs\\class_a_after_.venv-09a.txt",
+      "sha256": "d1a27587f13fee512f71c90934888a960d11e099cfcca9fa96f6177043421d08"
+    }
+  ],
+  "environment_note": "One sandbox invocation had a Windows pytest-temp permission error; same tests passed using normal authorized temp access."
+}

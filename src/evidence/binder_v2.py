@@ -533,6 +533,23 @@ _GOV = re.compile(r"^\s*(for|by|on|in|at|across|under|among|within|with|using)\s
 _GOV_STOP = re.compile(r"[,;:()\[\]]|\.(?=\s|$)|\b(?:and|or|but|while|whereas|vs|versus|compared|than|respectively|"
                        r"which|that|to|from|where|when)\b", re.I)
 _FRONTED = re.compile(r"^\s*(?:on|in|for|at|across|under|among|within|with|using|over)\s+[^,;]{1,80},", re.I)
+_SETTING_TYPES = (
+    ('confidence', re.compile(r'\bconfidence(?:\s+(?:thresholds?|values?|levels?|scores?))?\b', re.I)),
+    ('learning_rate', re.compile(r'\blearning\s+rates?\b', re.I)),
+    ('dropout', re.compile(r'\bdropout(?:\s+(?:rates?|probabilit(?:y|ies)))?\b', re.I)),
+    ('batch_size', re.compile(r'\bbatch\s+sizes?\b', re.I)),
+    ('epochs', re.compile(r'\bepochs?\b', re.I)),
+    ('threshold', re.compile(r'\bthresholds?\b', re.I)),
+    ('hyperparameter', re.compile(r'\bhyperparameters?\b', re.I)),
+)
+
+
+def _setting_type(text: str) -> tuple[str | None, int]:
+    hits = [(m.end(), -i, kind) for i, (kind, rx) in enumerate(_SETTING_TYPES) for m in rx.finditer(text)]
+    if not hits:
+        return None, 0
+    end, _, kind = max(hits)
+    return kind, end
 
 
 def _match_forms(w: str, toks: list, idx: dict) -> tuple[list[dict[str, Any]], list[tuple[int, int, str]]]:
@@ -665,6 +682,12 @@ def _frame(w: str, idx: dict[str, Any], off: frozenset[str]) -> dict[str, Any]:
             m["qphr"] = fronted + qual_gov
             noun = [(m["end"], m["count_end"])] if m.get("count_end") else []
             m["levels"] = [m["local"] + m["head"] + qual_gov + noun, [(cs, cm[0]["start"])], [(cs, ce)]]
+            prev = next((v['end'] for v in reversed(cm) if v['start'] < m['start']), cs)
+            kind, end = _setting_type(w[prev:m['start']])
+            # An explicit nearer measured quantity supersedes an earlier setting.
+            if kind and any(x['q'] and prev + end < x['e'] <= m['start'] for x in matches):
+                kind = None
+            m['quantity_type'] = kind
             _views(m, fr, idx, off)
     return fr
 
@@ -818,6 +841,12 @@ def links(m: dict, p: dict, fr: dict, idx: dict, off: frozenset[str], part: int 
         if any(f.startswith("#") and p["count"] not in (None, "", f[1:]) or isq and not f.startswith("#")
                and f not in carried for f, (_, isq) in terms.items()):
             conf.append("quantity_term")
+        if m.get('quantity_type'):
+            quantity_source = {'header': p['levels'][-1], 'row': p['row'], 'caption': p['cap'],
+                               'part': p['parts'][part][0] if part is not None else ''}
+            source = quantity_source.get(qlink['kind'], '') if qlink else ''
+            if _setting_type(source)[0] != m['quantity_type']:
+                conf.append('quantity_type')
         if not _unit_ok(m, p, part):
             conf.append("unit")
         if fr["tables"] and t["label"] not in fr["tables"]:
