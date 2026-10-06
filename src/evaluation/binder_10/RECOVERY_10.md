@@ -60,3 +60,17 @@ No production changes, integrations, measurement runs, or commits have been perf
 - Integrated the synthetically validated binder and recovered tests/driver. Default remains `legacy`; no borderless or LLM policy was enabled.
 - The user-provided `C:/Users/Praka/Downloads/New Text Document.txt` was checked once and is empty (0 bytes), so it supplies no additional interrupted-command details.
 - S3 identity and full-suite validation are the next prerequisites; no Phase 10 v2 gold measurement has been run at this checkpoint.
+
+## Completed 2026-10-06
+
+The preceding inventory and resumed-checkpoint statements describe their original times. Recovery,
+integration and the authorized Phase 10 experiment are now complete. All four full pytest runs passed
+180 tests; both environments passed the standalone 37-test pipeline script, 63-test experiment suite,
+and 123-expectation binder regression. S3 passed before measurement.
+
+The deterministic measurement completed on 2026-10-05. Two independent reviewers audited all 22 new
+claim/cell bindings using crops and text layers: 21 agreed matches and one agreed semantic mismatch.
+The frozen criteria yield **S1 FAIL, S2 FAIL, S3 PASS**. Default remains legacy; v2_llm was not run.
+Implementation/test/driver commits are `7f55789`, `1cfea2c`, `c805cf4`; measurement/audit is `ad92c87`.
+See `PHASE10_REPORT.md`, `results.json`, and `validation_10.json` for the complete results and remaining
+bottleneck. No binder, gold, evaluator, preregistration or configuration changes followed measurement.

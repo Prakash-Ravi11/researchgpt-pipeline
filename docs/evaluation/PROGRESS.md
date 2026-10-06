@@ -10,13 +10,15 @@
 > when a phase brief asks for them. Phases 09A, 09B and the phase 10 package do; phases 00–08 did not.
 
 ## Current Phase
-**Phase 10 package, in progress.** It has three parts:
+**Phase 10 package, complete (2026-10-06).** It has three parts:
 1. Freeze 09B: **complete**.
 2. Product acceptance before Phase 10: **complete** on `acceptance/pre-phase10`.
    - 0 RETURNED-with-verified-bind in either arm.
    - Gold coverage 3/18.
    - `src/evaluation/acceptance_pre10/ACCEPTANCE_REPORT.md`.
-3. Binder v2: next.
+3. Binder v2: recovered, implemented, tested, measured and independently audited.
+   - **NO ENABLE: S1 and S2 fail; S3 passes.** Legacy remains default.
+   - `src/evaluation/binder_10/PHASE10_REPORT.md` and `checkpoints/phase_10_binder.md`.
 
 ## Status
 - Phases 00–08 are complete. Their checkpoints were audited on 2026-09-30: 384 facts, 5 discrepancies found
@@ -32,19 +34,17 @@
   borderless, which Phase 10 does not require.
 
 ## Last Completed Phase
-`phase_09b_fallthrough` (frozen by phase 10 package Part 1), 2026-10-01.
+`phase_10_binder`, 2026-10-06. The experiment is complete; the binder is not approved for production.
 
 ## Next Action
-**Phase 10 package, Part 3: Binder v2**, on `exp/phase10-binder`, created from `acceptance/pre-phase10`. Its
-steps, from the phase 10 package brief:
-- STEP 0: failure map;
-- STEP 1: pre-registration;
-- STEP 2: tests;
-- STEP 3: run;
-- STEP 4: decision;
-- STEP 5: report.
+Phase 10 is closed with a no-enable decision. Read `checkpoints/phase_10_binder.md` for the exact resume
+boundary. A next implementation phase needs explicit scope; do not repeat recovery or tune against
+these measured claims. Immediate release blockers are wrong subject/quantity linking and lost verified
+bindings. Earlier product bottlenecks remain claim availability and representation.
 
 ## Repository State
+- Active experiment branch: `exp/phase10-binder`, recovered from `408137e`. Implementation/test/driver
+  commits: `7f55789`, `1cfea2c`, `c805cf4`; measurement/audit: `ad92c87`. No merge into the default branch.
 - `claude-code-verification` is the default branch. It now contains `exp/phase09b-fallthrough`
   (fast-forward). The 09B commits after its base `864f2e8`:
 
@@ -65,23 +65,25 @@ steps, from the phase 10 package brief:
 - Production code:
   - `src/evidence/represent.py`: ruled path (phase 04) plus 09A additions (+44/−0);
   - `src/evidence/borderless.py`: 09A; off by default;
-  - `src/evidence/gate.py`: 09B additions (+69/−0).
+  - `src/evidence/gate.py`: 09B additions (+69/−0), plus Phase 10 router (+37/−0) on this experiment branch.
+  - `src/evidence/binder_v2.py`: optional Phase 10 implementation; legacy fallback remains the default.
 - `configs/staging_config.yaml`: one new line, `fallthrough_policy: table_value_guard`. No `borderless_policy`
   line, so the code default `off` applies.
 - **`runs/p09b_run/`** (gitignored) holds the 64 09B child records: 16 papers × L0/G0/L1/G1.
   - The originals were deleted in the 09B scratchpad cleanup.
   - These were regenerated with the unmodified harness. Re-analysis gives 0 differences from the committed
     results.
-- Unchanged: the binder matching logic, `chunker.py`, `pdf_parser.py`, `schema.py`, `requirements.txt`, the
+- Unchanged: the legacy binder behavior, `chunker.py`, `pdf_parser.py`, `schema.py`, `requirements.txt`, the
   verified gold, and the candidate ZIP (SHA-256 `a11900f2ea572e89…`; untracked, never touched).
 - Environments:
   - `.venv`: production, Python 3.10.18, with no docling or torch.
   - `.venv-09a`: gitignored, Python 3.13.6, pinned by `requirements-borderless.txt`.
-- Tests, last run 2026-10-01: **201 passed, 0 failed**.
-  - pytest 101: fall-through guard 10, borderless 13, pdf_table_cells 30, physical 6, evaluator 4, anchors 9,
-    Stage B 6, Phase 2.1 20, portability 3.
-  - `tests/test_pipeline.py`: 37.
-  - experiments unit suite: 63.
+- Tests, last run 2026-10-05: **180 pytest passed** under both policies in both Python environments.
+  - Includes 19 recovered Binder v2 tests and 60 recovery checks, plus the 101 existing tests.
+  - `tests/test_pipeline.py`: 37 passed; experiments unit suite: 63 passed, in both runtimes.
+  - Separate binder regression: 123 expectations passed in both runtimes.
+  - S3: 30/30 PDF gate identity, 55 pairs/18 claims unchanged, newline canary 0.
+  - The 3.13 environment's missing existing scikit-learn pin was installed; requirements unchanged.
 - Still untracked and not ours: `docs/diagnosis/`, `out/`, `src/evaluation/candidate_gold/`.
 
 ## Important Artifacts
@@ -113,13 +115,17 @@ steps, from the phase 10 package brief:
   - the fall-through guard is enabled by default (`fallthrough_policy = table_value_guard`);
   - the borderless enable was reverted by the freeze. Reasons: 171 unbound returns outside E3; no docling in
     the production `.venv`.
-- `gate.py` changes are additions only. The binder matching logic is unchanged.
+- `gate.py` changes are additions only. Legacy behavior is byte-identical; v2 is opt-in and experimental.
 - Never modify the verified gold or the claim wording to make a test pass.
 - Stage B `main()` is never run again. Import its functions.
 - Evaluator rules are fixed before results. After results, report defects and do not fix them silently.
 - Checkpoint discipline: every phase ends with a checkpoint file and an update of this file.
 
 ## Known Issues
+- **Phase 10 release blocked.** S1 records 9 R-prod / 10 R-eval gold-unit violations under conservative
+  frozen reconstruction, plus one semantically wrong sweep binding confirmed by both PDF reviewers.
+  S2 loses 1 R-prod / 4 R-eval gold units and 9 / 13 sweep associations. All 22 new bindings were audited.
+  Product verified bindings remain zero. Full failure lists and scoring caveats are in the Phase 10 report.
 - **D5 gap (09B).** A pdf_only table's body text sits in ordinary paragraph blocks (`represent.py:193-195`),
   so the guard cannot see its values. With borderless on, this gives 171 new unbound returns vs L0. It is the
   reason borderless stays off and Phase 09C is deferred.
@@ -162,6 +168,8 @@ steps, from the phase 10 package brief:
 - `tests/test_portability.py` subprocesses write `src/__pycache__/*.pyc` even under `-B` (git-ignored).
 
 ## Do Not Redo
+- Phase 10 recovery, synthetic validation, S3, deterministic measurement and two independent PDF audits.
+  Preserve the failed release decision; no post-result tuning or evaluator changes.
 - Phases 00–08, as recorded in their checkpoints.
 - Phase 09A: target derivation, pre-registration, oracle ceiling, flag-off identity, both validation runs,
   and the crop review.
@@ -173,5 +181,5 @@ steps, from the phase 10 package brief:
 - Do not enable `borderless_policy` without a region guard and a new pre-registered evaluation.
 
 ## Last Checkpoint
-`docs/evaluation/checkpoints/phase_acceptance_pre10.md` (2026-10-01). The 09B freeze is recorded in
-`phase_09b_fallthrough.md` (Current State).
+`docs/evaluation/checkpoints/phase_10_binder.md` (2026-10-06). Full report:
+`src/evaluation/binder_10/PHASE10_REPORT.md`. The 09B freeze remains recorded in `phase_09b_fallthrough.md`.

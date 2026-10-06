@@ -51,3 +51,7 @@ Integration exposed two additional general failures: numeric `Row NN` labels wer
 The final integrated source SHA-256 is `4b04a848c5e8ce57f8d1fa42e26487f5362be3456549eceab0405442df881d3c`. Its decisions on the 51 preserved parameterized fixtures remain identical under both runtimes and hash seeds 0/7. The 123 regression expectations still pass; final stress times were approximately 0.66 s (3.10) and 0.50 s (3.13), with a 98 KB trace.
 
 The separate Python 3.13 environment lacked scikit-learn. Its existing project pin, `scikit-learn==1.7.2`, was installed there; no project dependency declaration changed. Before that environment repair, the standalone pipeline script reported 31 passed/6 missing-sklearn failures. Both runtimes passed the separate 63-check experiment suite.
+
+Final standalone pipeline result after the environment repair: **37 passed, 0 failed on both runtimes**.
+The later frozen measurement failed S1/S2 despite the synthetic suite passing; see `PHASE10_REPORT.md`.
+The synthetic result is retained as evidence of covered cases, not a general guarantee of precision.
