@@ -1,0 +1,806 @@
+[
+ {
+  "id": "12e5fadea630",
+  "paper": "P008",
+  "value": "We observe that by adding 2.6% extra parameters, our attention module could improve the performance by 3% (from 0.84 by DSRNet to 0.87 by Ours) in terms of Dice.",
+  "cell": {
+   "row": "Ours",
+   "col": "Dice↑",
+   "value": "0.87±0.06",
+   "caption": "TABLE I COMPARING SEGMENTATION RESULTS OF DIFFERENT METHODS (3D UNET, PAUNET, ATTENTION UNET, SE-FCN, DSRNET, AND OUR METHOD) BASED ON QUANTITATIVE PERFORMANCE MEASURES (DICE, 95HD, AND ASD) AND COMPUTATIONAL COST (NUM OF PARAMS, AND RUN TIME). THE BEST VALUE FOR EACH EVALUATION MEASURE HAS BEEN SHOWN IN BOLDFACE TEXT."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C027",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:110#0",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C027",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:110#0",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   }
+  ],
+  "page": 7,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+  "table_crop": "audit/12e5fadea630_table.png",
+  "text_layer": "audit/12e5fadea630_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "180698941f64",
+  "paper": "P001",
+  "value": "LWV, compared to MV, represents a marginal improvement, with an average Dice score of 0.926 ± 0.012 versus 0.915 ± 0.012, respectively.",
+  "cell": {
+   "row": "Average",
+   "col": "Ours",
+   "value": "0.926 ± 0.012",
+   "caption": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33]."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P001:291198a6c58f36f37af3215a9a5270db92925bf9:104#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 13,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+  "table_crop": "audit/180698941f64_table.png",
+  "text_layer": "audit/180698941f64_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "1eefc5cd27ca",
+  "paper": "P006",
+  "value": "For the pituitary, YOLOv5 has a score of 0.661 for box detection and 0.642 for mask detection, while YOLOv7 has a score of 0.675 for box detection and 0.653 for mask detection.",
+  "cell": {
+   "row": "Pituitary",
+   "col": "YOLOv7 / Box",
+   "value": "0.67 5",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/1eefc5cd27ca_table.png",
+  "text_layer": "audit/1eefc5cd27ca_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "28be140170be",
+  "paper": "P006",
+  "value": "Further, it depicts that the ideal box confidence value is 0.639 and 0.53 while mask confidence values are 0.635 and 0.53 for YOLOv5 and YOLOv7, respectively, to achieve a 0.92 f1-score.",
+  "cell": {
+   "row": "Glioma",
+   "col": "YOLOv5 / Mas k",
+   "value": "0.53",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:275#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:275#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/28be140170be_table.png",
+  "text_layer": "audit/28be140170be_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "3872c6f1b76f",
+  "paper": "P006",
+  "value": "For glioma, YOLOv5 has a score of 0.546 for box detection and 0.53 for mask detection, while YOLOv7 has a score of 0.553 for box detection and 0.531 for mask detection.",
+  "cell": {
+   "row": "Glioma",
+   "col": "YOLOv7 / Box",
+   "value": "0.55 3",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/3872c6f1b76f_table.png",
+  "text_layer": "audit/3872c6f1b76f_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "387bb2d51882",
+  "paper": "P006",
+  "value": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+  "cell": {
+   "row": "All",
+   "col": "YOLOv5 / Box",
+   "value": "0.94 7",
+   "caption": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 14,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/387bb2d51882_table.png",
+  "text_layer": "audit/387bb2d51882_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "398c84f99e10",
+  "paper": "P015",
+  "value": "Here, FetalSynthSeg achieves a Dice of 80.1%, while all other methods, including FetalReal- Seg, nnU-Net, BOUNTI, and FeTA24, drop below 25%.",
+  "cell": {
+   "row": "FetalSynthSeg",
+   "col": "DSC / dHCPT1w",
+   "value": "80.1±2.1*",
+   "caption": "Table 3: Dice performance (in %) and surface distance (in mm) across datasets for each model. Values are mean± standard deviation. Bold indicates best and underlined second-best performance per column. An asterisk (∗) marks cases where the best method is statistically significantly better than the second-best method according to a Wilcoxon rank-sum test (p < 0.05)."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P015:902ac09c780901e1645101f2b5b817093381dcc8:204#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 11,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+  "table_crop": "audit/398c84f99e10_table.png",
+  "text_layer": "audit/398c84f99e10_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "44c1ebe1dba4",
+  "paper": "P006",
+  "value": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+  "cell": {
+   "row": "All",
+   "col": "YOLOv5 / Mas k",
+   "value": "0.947",
+   "caption": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 14,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/44c1ebe1dba4_table.png",
+  "text_layer": "audit/44c1ebe1dba4_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "4dd0b712e2bd",
+  "paper": "P006",
+  "value": "For the pituitary, YOLOv5 has a score of 0.661 for box detection and 0.642 for mask detection, while YOLOv7 has a score of 0.675 for box detection and 0.653 for mask detection.",
+  "cell": {
+   "row": "Pituitary",
+   "col": "YOLOv7 / Mas k",
+   "value": "0.653",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/4dd0b712e2bd_table.png",
+  "text_layer": "audit/4dd0b712e2bd_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "550d8078b328",
+  "paper": "P006",
+  "value": "For glioma, YOLOv5 has a score of 0.546 for box detection and 0.53 for mask detection, while YOLOv7 has a score of 0.553 for box detection and 0.531 for mask detection.",
+  "cell": {
+   "row": "Glioma",
+   "col": "YOLOv7 / Mas k",
+   "value": "0.531",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/550d8078b328_table.png",
+  "text_layer": "audit/550d8078b328_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "7028128071ef",
+  "paper": "P006",
+  "value": "For the pituitary, YOLOv5 has a score of 0.661 for box detection and 0.642 for mask detection, while YOLOv7 has a score of 0.675 for box detection and 0.653 for mask detection.",
+  "cell": {
+   "row": "Pituitary",
+   "col": "YOLOv5 / Box",
+   "value": "0.66 1",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/7028128071ef_table.png",
+  "text_layer": "audit/7028128071ef_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "79c0d2eacd58",
+  "paper": "P015",
+  "value": "Ran- domizing its parameters (randFaBiAN) improved results (to 68.4 Dice on average), but remained below SynthSeg (72.2 Dice) and FetalSynthSeg (74.9 Dice).",
+  "cell": {
+   "row": "SynthSeg",
+   "col": "Global",
+   "value": "72.2±13.0",
+   "caption": "Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated across multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the best-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the best method is statistically significantly bet"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P015:902ac09c780901e1645101f2b5b817093381dcc8:245#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 9,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+  "table_crop": "audit/79c0d2eacd58_table.png",
+  "text_layer": "audit/79c0d2eacd58_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "8166968c5fcb",
+  "paper": "P006",
+  "value": "For the pituitary, YOLOv5 has a score of 0.661 for box detection and 0.642 for mask detection, while YOLOv7 has a score of 0.675 for box detection and 0.653 for mask detection.",
+  "cell": {
+   "row": "Pituitary",
+   "col": "YOLOv5 / Mas k",
+   "value": "0.642",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/8166968c5fcb_table.png",
+  "text_layer": "audit/8166968c5fcb_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "90e37f4dc19e",
+  "paper": "P008",
+  "value": "We observe that by adding 2.6% extra parameters, our attention module could improve the performance by 3% (from 0.84 by DSRNet to 0.87 by Ours) in terms of Dice.",
+  "cell": {
+   "row": "DSRNet",
+   "col": "Dice↑",
+   "value": "0.84±0.06",
+   "caption": "TABLE I COMPARING SEGMENTATION RESULTS OF DIFFERENT METHODS (3D UNET, PAUNET, ATTENTION UNET, SE-FCN, DSRNET, AND OUR METHOD) BASED ON QUANTITATIVE PERFORMANCE MEASURES (DICE, 95HD, AND ASD) AND COMPUTATIONAL COST (NUM OF PARAMS, AND RUN TIME). THE BEST VALUE FOR EACH EVALUATION MEASURE HAS BEEN SHOWN IN BOLDFACE TEXT."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C027",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:110#0",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C027",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:110#0",
+    "binding_type": "COMPARISON",
+    "final": "RETURNED"
+   }
+  ],
+  "page": 7,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf",
+  "table_crop": "audit/90e37f4dc19e_table.png",
+  "text_layer": "audit/90e37f4dc19e_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "94dfd9110c54",
+  "paper": "P001",
+  "value": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+  "cell": {
+   "row": "Average",
+   "col": "nnU-Net",
+   "value": "0.920 ± 0.014",
+   "caption": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33]."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C005",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P001:291198a6c58f36f37af3215a9a5270db92925bf9:113#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 13,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+  "table_crop": "audit/94dfd9110c54_table.png",
+  "text_layer": "audit/94dfd9110c54_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "a2f67993ec09",
+  "paper": "P001",
+  "value": "It shows that our method obtains similar results than nnU-Net for all anatomical labels, achieving an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
+  "cell": {
+   "row": "Average",
+   "col": "Ours",
+   "value": "0.926 ± 0.012",
+   "caption": "Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33], and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33]."
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C005",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P001:291198a6c58f36f37af3215a9a5270db92925bf9:113#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 13,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\291198a6c58f36f37af3215a9a5270db92925bf9.pdf",
+  "table_crop": "audit/a2f67993ec09_table.png",
+  "text_layer": "audit/a2f67993ec09_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "a9d2d454a148",
+  "paper": "P015",
+  "value": "FaBiAN, which uses tissue- specific relaxometry values with realistic physics-based mod- eling, yields the lowest mean Dice (63.3).",
+  "cell": {
+   "row": "FaBiAN",
+   "col": "Global",
+   "value": "63.3±15.5",
+   "caption": "Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated across multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the best-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the best method is statistically significantly bet"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P015:902ac09c780901e1645101f2b5b817093381dcc8:181#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 9,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+  "table_crop": "audit/a9d2d454a148_table.png",
+  "text_layer": "audit/a9d2d454a148_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "c964b994cb83",
+  "paper": "P006",
+  "value": "For glioma, YOLOv5 has a score of 0.546 for box detection and 0.53 for mask detection, while YOLOv7 has a score of 0.553 for box detection and 0.531 for mask detection.",
+  "cell": {
+   "row": "Glioma",
+   "col": "YOLOv5 / Box",
+   "value": "0.54 6",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/c964b994cb83_table.png",
+  "text_layer": "audit/c964b994cb83_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "dd7a91e9e681",
+  "paper": "P006",
+  "value": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+  "cell": {
+   "row": "All",
+   "col": "YOLOv7 / Mas k",
+   "value": "0.941",
+   "caption": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 14,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/dd7a91e9e681_table.png",
+  "text_layer": "audit/dd7a91e9e681_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "e71ef722f7a1",
+  "paper": "P006",
+  "value": "For all the classes combined, YOLOv5 has a mAP score of 0.947 for box detection and 0.947 for mask detection, while YOLOv7 has a mAP score of 0.94 for box detection and 0.941 for mask detection.",
+  "cell": {
+   "row": "All",
+   "col": "YOLOv7 / Box",
+   "value": "0.94",
+   "caption": "TABLE V: MEAN AVERAGE PRECISION (MAP@.5)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_A",
+    "unit": "C021",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:252#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 14,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/e71ef722f7a1_table.png",
+  "text_layer": "audit/e71ef722f7a1_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "f06ffa1cc376",
+  "paper": "P006",
+  "value": "For glioma, YOLOv5 has a score of 0.546 for box detection and 0.53 for mask detection, while YOLOv7 has a score of 0.553 for box detection and 0.531 for mask detection.",
+  "cell": {
+   "row": "Glioma",
+   "col": "YOLOv5 / Mas k",
+   "value": "0.53",
+   "caption": "TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95)"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-prod",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   },
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P006:562fa0fc542863477a8d86985bf4ac02654fb4f8:291#0",
+    "binding_type": "COMPARISON",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 15,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf",
+  "table_crop": "audit/f06ffa1cc376_table.png",
+  "text_layer": "audit/f06ffa1cc376_text.txt",
+  "crop_scope": "table"
+ },
+ {
+  "id": "fde30147edcf",
+  "paper": "P015",
+  "value": "Overall, FetalRealSeg remains the second-best performing model, with an average Dice of 73.0, indicating that synthetic data generation alone does not necessarily guarantee improved generalization, and models trained on real images may remain competitive when the domain gap between training and testing data is relatively limited.",
+  "cell": {
+   "row": "FetalRealSeg",
+   "col": "Global",
+   "value": "73.0±12.6",
+   "caption": "Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated across multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the best-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the best method is statistically significantly bet"
+  },
+  "occurrences": [
+   {
+    "arm": "v2",
+    "rep": "R-eval",
+    "kind": "sweep_B",
+    "unit": "P015:902ac09c780901e1645101f2b5b817093381dcc8:177#0",
+    "binding_type": "SINGLE_CELL",
+    "final": "ABSTAINED"
+   }
+  ],
+  "page": 9,
+  "pdf": "C:\\Users\\Praka\\Downloads\\rgpt-exp-parser\\data\\medical30_eval\\pdfs\\902ac09c780901e1645101f2b5b817093381dcc8.pdf",
+  "table_crop": "audit/fde30147edcf_table.png",
+  "text_layer": "audit/fde30147edcf_text.txt",
+  "crop_scope": "table"
+ }
+]

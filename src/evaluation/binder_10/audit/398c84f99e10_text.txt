@@ -1,0 +1,130 @@
+Vladyslav Zalevskyi and Thomas Sanchez, 2026
+Table 3: Dice performance (in %) and surface distance (in mm) across datasets for each model. Values are mean±
+standard deviation. Bold indicates best and underlined second-best performance per column. An asterisk (∗) marks
+cases where the best method is statistically significantly better than the second-best method according to a Wilcoxon
+rank-sum test (p < 0.05).
+Model
+DSC
+HD95
+CHUVT2w
+KCLT2w
+VIENT2w
+dHCPT2w
+dHCPT1w
+CHUVT2w
+KCLT2w
+VIENT2w
+dHCPT2w
+dHCPT1w
+BOUNTI
+79.9±2.2
+83.4±1.1
+70.1±12.3
+85.1±1.3*
+16.4±2.1
+3.15±0.46
+2.62±0.27
+4.51±2.58
+3.56±0.42*
+15.86±3.36
+FeTA24
+83.0±1.8
+85.6±0.9
+81.4±4.1
+82.4±1.5
+23.3±3.8
+2.49±0.42
+1.82±0.27
+2.47±0.86
+4.07±0.58
+10.35±2.03
+nnU-Net
+81.8±1.8
+86.7±1.2
+83.6±3.4*
+84.3±1.2
+13.5±2.5
+2.55±0.35
+1.64±0.15
+2.07±0.54
+4.08±0.47
+25.16±8.74
+FetalRealSeg
+84.6±1.8
+86.5±1.1
+82.0±3.3
+84.1±1.5
+43.7±7.0
+1.79±0.23
+1.55±0.16*
+2.11±0.50
+4.11±0.65
+9.10±4.08
+RealSynthHybrid
+84.2±1.5
+85.9±1.2
+80.1±4.3
+83.1±1.7
+78.1±2.5
+1.84±0.22
+1.76±0.26
+2.46±0.90
+4.32±0.55
+4.42±0.85
+FetalSynthSeg
+83.2±1.7
+85.3±1.2
+79.5±4.1
+84.0±2.1
+80.1±2.1*
+1.89±0.22
+1.76±0.25
+2.17±0.40
+4.08±0.50
+4.27±0.53*
+Image
+GT
+FeTA24
+FetalSynthSeg
+dHCP T2w
+dHCP T1w
+BOUNTI
+FetalRealSeg
+KCL 
+RealSynthHybrid
+nnU-Net
+Figure 6: Qualitative comparison of the proposed models and FeTA24 on a test case from the dHCP dataset, showing
+T2w images (top two rows) and T1w images (bottom two rows) from the same subject. White arrows highlight
+discrepancies between the dHCP and FeTA annotation schemes—particularly in the definitions of SGM and LV —as all
+models were trained using FeTA annotations, while the ground truth reflects dHCP labels converted to FeTA format.
+Yellow arrows indicate prominent segmentation errors made by the model fine-tuned on real T2w images when applied
+to the T1w contrast.
+On dHCP T2w, BOUNTI attains the highest perfor-
+mance: this could be explained by a closer alignment be-
+tween the dHCP and BOUNTI labels (the latter were refined
+based on the dHCP annotations) as well as by a data leak-
+age problem, as BOUNTI’s training data included some
+of the dHCP T2w data (though the exact data splits of
+dHCP used for BOUNTI training were not published). In
+contrast, FetalRealSeg and FetalSynthSeg reach per-
+formance comparable to nnU-Net without such overlap,
+highlighting the strength of the proposed training schemes.
+Additional HD95 and per-class results are provided in Table
+S6 in the Supplementary materials, which show that all
+methods exhibit similar relative performance patterns across
+labels, despite differing in their absolute metric values.
+The most striking effect appears in the OOD evaluation
+on dHCP T1w. Here, FetalSynthSeg achieves a Dice
+of 80.1%, while all other methods, including FetalReal-
+Seg, nnU-Net, BOUNTI, and FeTA24, drop below 25%.
+FetalSynthSeg is thus the only evaluated model capable
+of reliably segmenting this challenging modality using a
+single, contrast-agnostic network trained exclusively on syn-
+thetic data. Figure 6 illustrates these findings qualitatively:
+models trained on real T2w data struggle on T1w images,
+whereas FetalSynthSeg preserves anatomical plausibility
+and label consistency. Besides a quantitative evaluation,
+visual inspection also shows that FetalSynthSeg produces
+highly consistent segmentations across T1w and T2w im-
+ages. On T1w images, a visual assessment shows that these
+492

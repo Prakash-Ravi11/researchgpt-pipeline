@@ -1,0 +1,70 @@
+ 
+14 
+ 
+TABLE V: MEAN AVERAGE PRECISION (MAP@.5) 
+Class 
+Image
+s 
+Label
+s 
+YOLOv5 
+YOLOv7 
+Box 
+Mas
+k 
+Box 
+Mas
+k 
+All 
+827 
+827 
+0.94
+7 
+0.947 
+0.94 
+0.941 
+Meningiom
+a 
+202 
+0.99 
+0.99 
+0.98
+5 
+0.985 
+Glioma 
+382 
+0.87
+2 
+0.872 
+0.86 
+0.862 
+Pituitary 
+243 
+0.97
+8 
+0.978 
+0.97
+6 
+0.975 
+ 
+Figure 11 presents the F1-confidence curves for YOLOv5 
+and YOLOv7. Both the models perform good for two classes 
+i.e., meningioma and pituitary. However, the glioma has a 
+low curve indicating poor performance relating to other 
+classes. Further, it depicts that the ideal box confidence value 
+is 0.639 and 0.53 while mask confidence values are 0.635 
+and 0.53 for YOLOv5 and YOLOv7, respectively, to achieve 
+a 0.92 f1-score. 
+ 
+ 
+(a) Box Detection Performance for YOLOv5
+ 
+(c) Box Detection Performance for YOLOv7
+ 
+(b) Mask Detection Performance for YOLOv5 
+ 
+(d) Box Detection Performance for YOLOv7 
+FIGURE 12: Precision-Recall Curve Confidence Curve for yolo models for brain tumor segmentation and classification 
+This article has been accepted for publication in IEEE Access. This is the author's version which has not been fully edited and 
+content may change prior to final publication. Citation information: DOI 10.1109/ACCESS.2024.3359418
+This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License. For more information, see https://creativecommons.org/licenses/by-nc-nd/4.0/

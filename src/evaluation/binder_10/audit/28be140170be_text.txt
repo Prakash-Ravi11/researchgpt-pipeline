@@ -1,0 +1,126 @@
+ 
+15 
+ 
+F. MEAN AVERAGE PRECISION (mAP@.5:.95) 
+Table VI shows the mAP for the YOLOv5 and YOLOv7 
+models on 827 labeled boxes and masks images, evaluated at 
+IoU threshold of 0.5-0.95. The mAP@.5:.95 score means 
+that the model considers an object detected if it has an IOU 
+threshold score between 50- 95%. The combine classes 
+mAP@.5 score for YOLOv5 has 0.666 for box detection and 
+0.657 for mask detection, while YOLOv7 has mAP@.5 
+score of 0.677 for box detection and 0.659 for mask 
+detection. For meningioma, both YOLOv5 and YOLOv7 
+have the highest scores of 0.79 for box detection and 0.799 
+for mask detection.  
+For glioma, YOLOv5 has a score of 0.546 for box detection 
+and 0.53 for mask detection, while YOLOv7 has a score of 
+0.553 for box detection and 0.531 for mask detection. For the 
+pituitary, YOLOv5 has a score of 0.661 for box detection and 
+0.642 for mask detection, while YOLOv7 has a score of 
+0.675 for box detection and 0.653 for mask detection. 
+Figure 12 demonstrate the precision-recall curves of 
+YOLOv5 and YOLOv7 models. It depicts that both models 
+perform better for all classes except glioma. The glioma 
+curve shows a more false positive than meningioma and 
+pituitary. 
+ 
+ 
+TABLE VI: MEAN AVERAGE PRECISION (MAP@.5:.95) 
+Class 
+Image
+s 
+Label
+s 
+YOLOv5 
+YOLOv7 
+Box 
+Mas
+k 
+Box 
+Mas
+k 
+All 
+827 
+827 
+0.66
+6 
+0.657 
+0.67
+7 
+0.659 
+Meningiom
+a 
+202 
+0.79 
+0.799 
+0.80
+3 
+0.793 
+Glioma 
+382 
+0.54
+6 
+0.53 
+0.55
+3 
+0.531 
+Pituitary 
+243 
+0.66
+1 
+0.642 
+0.67
+5 
+0.653 
+G. DETECTION TIME 
+The models are evaluated on a dataset of 91 frames using an 
+image size of 512 pixels. For YOLOv5, the inference time is 
+7.0 ms, and the NMS time is 1.2 ms. The Frames Per Second 
+(FPS) for YOLOv5 is 142.857, indicating that the model can 
+process approximately 143 frames per second on average. 
+For YOLOv7, the inference time is 10.0 ms, and the NMS 
+time is 1.1 ms per image. The FPS for YOLOv7 is 100, 
+indicating that the model can process approximately 100 
+frames per second on average.  
+H. CONFUSION MATRIX 
+Figure 13 shows the normalized confusion matrix of 
+YOLOv5 and YOLOv7, illustrating that both models 
+perform well for all classes except for glioma, which exhibits 
+high false positives with values of 0.75 and 0.74, 
+respectively. 
+Figure 14 illustrates the visual representation of the 
+validation (a) and (c) batches, as well as prediction batches 
+(b) and (d) for both YOLOv5 and YOLOv7 models. These 
+batches serve to optimize computational efficiency and 
+enhance inference speed, enabling the detection of instances 
+across multiple images. The validation images showcase 
+tumor detection on the original images; while the predicted 
+images demonstrate the accuracy of the brain tumor 
+detection after training on the original images. 
+I. DISCUSSION 
+The study evaluates the performance of the YOLOv5 and 
+YOLOv7 in segmenting three distinct classes of brain 
+tumors, namely meningioma, glioma, and pituitary tumors. 
+The evaluation of these models relies on several metrics, 
+including the confusion matrix, precision, recall, F1-curve, 
+and inference metrics. The finding revealed that both models 
+exhibited superior performance for across all classes except 
+for glioma, which displayed elevated false positives rates of 
+0.75 and 0.74 for YOLOv5 and YOLOv7, respectively. 
+Notably, YOLOv5 excelled at detecting meningioma, while 
+it also outperformed in glioma and pituitary tumor detection. 
+In contrast, YOLOv7 demonstrated comparable performance 
+across all three classes, albeit with slightly lower precision 
+scores than YOLOv5. Furthermore, precision scores for box 
+detection are generally exceeded those for mask detection.  
+The study also presented the precision-confidence curves, 
+which underscored models robust performance, except in the 
+ 
+(a) YOLOv5 
+ 
+(b) YOLOv7 
+FIGURE 13: Confusion Matrix for YOLO models for Brain Tumor Segmentation and Classification 
+This article has been accepted for publication in IEEE Access. This is the author's version which has not been fully edited and 
+content may change prior to final publication. Citation information: DOI 10.1109/ACCESS.2024.3359418
+This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License. For more information, see https://creativecommons.org/licenses/by-nc-nd/4.0/

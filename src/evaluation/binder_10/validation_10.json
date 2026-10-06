@@ -1,0 +1,222 @@
+{
+  "artifact": "phase10_validation_record",
+  "label_status": "machine-assisted, unvalidated",
+  "implementation_commit": "c805cf4",
+  "binder_sha256": "4b04a848c5e8ce57f8d1fa42e26487f5362be3456549eceab0405442df881d3c",
+  "runtime_results": {
+    "3.10.18": {
+      "full_pytest_legacy": 180,
+      "full_pytest_v2": 180,
+      "standalone_pipeline": 37,
+      "experiment_units": 63,
+      "binder_regression": 123,
+      "failures": 0
+    },
+    "3.13.6": {
+      "full_pytest_legacy": 180,
+      "full_pytest_v2": 180,
+      "standalone_pipeline": 37,
+      "experiment_units": 63,
+      "binder_regression": 123,
+      "failures": 0
+    }
+  },
+  "synthetic_pytest_included_in_full_suite": {
+    "recovered": 19,
+    "recovery": 60
+  },
+  "determinism": {
+    "runtimes": [
+      "3.10.18",
+      "3.13.6"
+    ],
+    "hash_seeds": [
+      0,
+      7
+    ],
+    "fixture_count": 51,
+    "sha256": "f21dd02bd4add11e1e78e814c0bff96da0b9f3b6d58a005bd764368fbaed75b7"
+  },
+  "stress": {
+    "values": 135,
+    "cells": 1200,
+    "trace_kb_approx": 98,
+    "seconds_approx": {
+      "3.10.18": 0.66,
+      "3.13.6": 0.5
+    }
+  },
+  "llm_evaluation": {
+    "status": "not_run",
+    "reason": "Deterministic v2 fails S1 and S2; no LLM rescue."
+  },
+  "product_item_changes": [
+    {
+      "unit": "562fa0fc542863477a8d86985bf4ac02654fb4f8:results",
+      "item_index": 0,
+      "value": "YOLOv7 achieved higher box detection accuracy (0.936) and mask segmentation accuracy (0.935) compared to other models.",
+      "differences": {
+        "status": [
+          "not_bindable",
+          "not_a_table_claim"
+        ]
+      }
+    },
+    {
+      "unit": "6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:metrics",
+      "item_index": 1,
+      "value": "95 percent Hausdorff Distance",
+      "differences": {
+        "status": [
+          "not_bindable",
+          "not_a_table_claim"
+        ]
+      }
+    },
+    {
+      "unit": "6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:results",
+      "item_index": 1,
+      "value": "It also generated CP segmentations faster than MAS, which took about 20 minutes compared to less than a minute for the proposed model.",
+      "differences": {
+        "status": [
+          "not_bindable",
+          "not_a_table_claim"
+        ]
+      }
+    },
+    {
+      "unit": "a365d1ad28cc97045dd2acf60f9dc5740683dbe3:results",
+      "item_index": 0,
+      "value": "The internal validation achieved an AUROC of 0.928, an AUPR of 0.884, and a sensitivity at fixed specificity of 0.559.",
+      "differences": {
+        "status": [
+          "not_bindable",
+          "not_a_table_claim"
+        ]
+      }
+    },
+    {
+      "unit": "a365d1ad28cc97045dd2acf60f9dc5740683dbe3:results",
+      "item_index": 1,
+      "value": "The external validation set also showed promising results with an AUROC of 0.930.",
+      "differences": {
+        "status": [
+          "not_bindable",
+          "not_a_table_claim"
+        ]
+      }
+    }
+  ],
+  "raw_artifacts": [
+    {
+      "path": "runs/binder_10/legacy.json",
+      "bytes": 2859976,
+      "sha256": "b5082748e3de4b1ce7ae24aa5f0a87568c49407b0df09c6f194e4ba649103fb0"
+    },
+    {
+      "path": "runs/binder_10/v2-caption_quantity.json",
+      "bytes": 2884348,
+      "sha256": "0429394284cf0958a8746a8a32c713aa38aca7da182d904a25367e1cf9d3519a"
+    },
+    {
+      "path": "runs/binder_10/v2-column_subject.json",
+      "bytes": 2881782,
+      "sha256": "6e4ae6c41c3c5c7b245bd720e4db9ba37176f4fc120af1ad80db8635e7ec2a28"
+    },
+    {
+      "path": "runs/binder_10/v2-count_attribute.json",
+      "bytes": 2889421,
+      "sha256": "b16dad3c04eb3287590895e9466c1d4ca4ab4fa10522db86e84a7997c0d35372"
+    },
+    {
+      "path": "runs/binder_10/v2-gate_fixes.json",
+      "bytes": 2888088,
+      "sha256": "4fbc5f28e5f761445bf8c418b76bffc3c0f8461813353b75c5fda3cbf69b7624"
+    },
+    {
+      "path": "runs/binder_10/v2-multi_binding.json",
+      "bytes": 2886450,
+      "sha256": "0f7462713f61c35a2dae518b39ce3a930ebba3993d971bfa1d0d5db0a8e74d4b"
+    },
+    {
+      "path": "runs/binder_10/v2-own_alias.json",
+      "bytes": 2885923,
+      "sha256": "9e5950dbdcfc07f3c993db02abf1b26057e363d6535566b82899093edaa012a2"
+    },
+    {
+      "path": "runs/binder_10/v2-synonyms.json",
+      "bytes": 2885795,
+      "sha256": "98cccf74d4b246e50b8ea99f33f587883022bbcca91dceb3a087c2ec84a6f503"
+    },
+    {
+      "path": "runs/binder_10/v2-table_mention.json",
+      "bytes": 2888466,
+      "sha256": "b90bafd04a4c94c4682ce45d589b8e0f06e4bd49f6eb1df036349fe218fe7bac"
+    },
+    {
+      "path": "runs/binder_10/v2.json",
+      "bytes": 2888466,
+      "sha256": "b90bafd04a4c94c4682ce45d589b8e0f06e4bd49f6eb1df036349fe218fe7bac"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_experiment_.venv-09a.txt",
+      "bytes": 8478,
+      "sha256": "078f8a5df6bdfde341dc7070efcbd531451edb2d558ad78653301d387c016582"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_experiment_.venv.txt",
+      "bytes": 8478,
+      "sha256": "078f8a5df6bdfde341dc7070efcbd531451edb2d558ad78653301d387c016582"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_full_.venv-09a_legacy.txt",
+      "bytes": 530,
+      "sha256": "d89a76a0cb344afa9a05efee242b7d6f7dd7a851673c03e349cfa39755b6fec4"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_full_.venv-09a_v2.txt",
+      "bytes": 530,
+      "sha256": "e040e75b43ffe109a59ef3b1921ff2b42d7ef88e1d9b1b15ce71da56d90d5640"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_full_.venv_legacy.txt",
+      "bytes": 530,
+      "sha256": "5ba548e698140783f0b4f6f0d3e0967a5fccf87b2271bf48b14772860f52d77e"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_full_.venv_v2.txt",
+      "bytes": 530,
+      "sha256": "46e32e926b97c05d2d3c3f9addc0086f99ceb684e884d00b5299c9fa40064cab"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_pipeline_.venv-09a.txt",
+      "bytes": 5126,
+      "sha256": "1a534ea2cfa010bca4cd18ff8b1b103c19229cdcc548faa94427e27def072a4b"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_pipeline_.venv.txt",
+      "bytes": 5126,
+      "sha256": "1a534ea2cfa010bca4cd18ff8b1b103c19229cdcc548faa94427e27def072a4b"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_regression_.venv-09a.txt",
+      "bytes": 13652,
+      "sha256": "ad502c311287a63242341d197d7a4faa20f6cd8a0b6ed2ab0695223f8c5ce363"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/final_regression_.venv.txt",
+      "bytes": 13652,
+      "sha256": "9e20a73dd0716e42ee30ef872360419aa2069341139b1e0d818e48e97a40baf3"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/s3_identity.txt",
+      "bytes": 370,
+      "sha256": "dc1348830675d723f970e37ae5bd47ef18c9d4187cd971618b2ad0f836fda685"
+    },
+    {
+      "path": "runs/phase10_recovery/logs/measurement.txt",
+      "bytes": 1128,
+      "sha256": "dfebdc9b750c3f554ed69fb51da69339de01e8d2f682f8f2d86a195e70964ccb"
+    }
+  ]
+}

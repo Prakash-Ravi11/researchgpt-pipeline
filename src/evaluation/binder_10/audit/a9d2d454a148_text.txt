@@ -1,0 +1,133 @@
+Vladyslav Zalevskyi and Thomas Sanchez, 2026
+Table 2: Mean Dice scores (multiplied by 100 for readability) for models trained on different data sources, evaluated
+across multiple testing splits. Each cell reports the mean and standard deviation across test subjects. Bold indicates the
+best-performing method per column, and underlined denotes the second-best. An asterisk (∗) marks cases where the
+best method is statistically significantly better than the second best according to a Wilcoxon rank-sum test (p < 0.05).
+Testing split
+CHUV-MIAL
+KISPI-IRTK
+KISPI-MIAL
+Global
+Training split
+KISPI-IRTK
+KISPI-MIAL
+CHUV-MIAL
+KISPI-MIAL
+CHUV-MIAL
+KISPI-IRTK
+FaBiAN
+74.2±4.2
+73.1±5.7
+53.6±13.3
+56.6±12.9
+60.6±17.1
+61.5±20.1
+63.3±15.5
+randFaBiAN
+79.1±2.3
+78.2±2.9
+55.1±12.7
+68.9±7.8
+60.7±7.3
+68.1±14.7
+68.3±13.8
+SynthSeg
+75.9±3.9
+73.7±3.9
+70.9±9.2
+74.8±7.8
+60.5±15.7
+63.4±16.8
+72.2±13.0
+FetalSynthSeg
+80.7±2.0∗
+76.9±3.3
+79.2±9.0∗
+76.8±6.9∗
+67.5±16.0
+68.5±15.6
+74.9±11.5∗
+FetalRealSeg
+77.2±4.0
+78.5±3.3∗
+70.6±13.9
+71.9±11.5
+68.0±19.3
+64.3±19.1
+73.0±12.6
+When not stated otherwise, the metrics that we report
+are first averaged across the 7 labels for each subject, and
+then averaged across all subjects in experiments where we
+compare different models.
+Statistical analysis.
+Normality is assessed with the
+Shapiro–Wilk test. Depending on distribution, we use either
+a paired t-test or Wilcoxon rank-sum test with Bonferroni
+correction. Results with p < 0.05 are considered statistically
+significant.
+4. Results
+4.1 Selecting an intensity generation strategy
+A global comparison of all intensity generation methods is
+reported in Table 2. Across all cross-validation splits, Fetal-
+SynthSeg achieves the highest global average Dice score
+of 74.9, consistently outperforming all other simulation-
+based approaches. Across individual splits, the only signifi-
+cant exception is the KISPI-mial→CHUV-mial split, where
+FetalRealSeg outperforms FetalSynthSeg, suggesting
+that training on real images can provide advantages un-
+der certain domain shift conditions (same SRR method
+in this experiment). Overall, FetalRealSeg remains the
+second-best performing model, with an average Dice of 73.0,
+indicating that synthetic data generation alone does not
+necessarily guarantee improved generalization, and models
+trained on real images may remain competitive when the
+domain gap between training and testing data is relatively
+limited.
+Focusing on synthetic generation methods, the progres-
+sion across generation strategies highlights the impact of
+increasing intensity variability. FaBiAN, which uses tissue-
+specific relaxometry values with realistic physics-based mod-
+eling, yields the lowest mean Dice (63.3). Randomizing
+T1/T2 within randFaBiAN improves performance by +5.0
+(68.3).
+Replacing physics-based simulation with GMM-
+based sampling in SynthSeg leads to a further increase
+of +3.9 (72.2). Incorporating meta-classes and intensity
+sub-clustering in FetalSynthSeg brings an additional +2.7
+gain, reaching a mean Dice of 74.9.
+These differences are not solely explained by training
+set size. Supplementary Experiment S2 shows that, even
+when matched to FaBiAN with 6,000 synthetic samples,
+FetalSynthSeg still improves by 3.9 Dice points. More-
+over, FaBiAN ’s physics-based simulation is computationally
+demanding (∼280s per volume), whereas the GMM-based
+sampling of SynthSeg and FetalSynthSeg requires ∼1s,
+enabling efficient on-the-fly generation during training.
+Qualitative results in Fig. 4 corroborate the quantitative
+findings: methods with stronger contrast randomization
+(randFaBiAN, FetalSynthSeg) are noticeably more robust
+to changes in reconstruction and skull-stripping quality than
+approaches relying solely on realistic or real intensities.
+Per-label Dice and HD95 scores are provided in Sup-
+plementary Tables S4 and S5. While HD95 differences
+between SynthSeg and FetalSynthSeg are small (mean
+HD95 3.15 ± 0.52 vs. 3.16 ± 0.52), all domain-randomized
+models outperform purely real-data or strictly physics-based
+approaches, confirming that randomized synthetic intensi-
+ties are key for robust, cross-domain fetal brain segmenta-
+tion.
+4.2 Impact of intensity clustering
+Figure 5 summarizes the effect of intensity sub-clustering
+on SynthSeg and FetalSynthSeg. Intensity-clustering is
+done on the seven tissue classes for SynthSeg and on the
+four meta-labels for FetalSynthSeg. Starting from the
+baseline configuration (a single class per label), gradually
+increasing the number of subclasses consistently improves
+Dice scores for both methods. Performance gains saturate
+beyond approximately six subclasses, suggesting an optimal
+range of sub-cluster granularity.
+Across most configurations, FetalSynthSeg maintains
+a systematic advantage over SynthSeg, demonstrating
+that meta-label fusion and sub-clustering act synergistically.
+Over the four tested sub-cluster settings, FetalSynthSeg
+490

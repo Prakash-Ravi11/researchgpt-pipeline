@@ -1,0 +1,178 @@
+[
+  {
+    "id": "12e5fadea630",
+    "same_quantity_and_subject": true,
+    "reason": "Table I shows Dice 0.87 +/- 0.06 for Ours. The claim explicitly assigns 0.87 to Ours and names Dice; the bound value is the resulting Dice, not the 3% improvement or parameter increase. Canonical PDF page 6 expressly links this comparison to Table I.",
+    "evidence": ["src/evaluation/binder_10/audit/12e5fadea630_table.png", "src/evaluation/binder_10/audit/12e5fadea630_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "180698941f64",
+    "same_quantity_and_subject": true,
+    "reason": "Table 4 places 0.926 +/- 0.012 in Average/Ours. Canonical PDF page 10 states that the adopted label-fusion strategy is LWV and assigns it this average Dice, while page 12 identifies the same average for the proposed MAS method in Table 4. Thus the LWV value refers to the same implemented method and quantity; 0.915 belongs to the MV comparator.",
+    "evidence": ["src/evaluation/binder_10/audit/180698941f64_table.png", "src/evaluation/binder_10/audit/180698941f64_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/291198a6c58f36f37af3215a9a5270db92925bf9.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "1eefc5cd27ca",
+    "same_quantity_and_subject": true,
+    "reason": "The claim assigns 0.675 to YOLOv7 box detection for pituitary. Table VI's Pituitary row and YOLOv7/Box column show 0.675, wrapped as 0.67 then 5, and section F identifies the quantity as mAP@0.5:0.95.",
+    "evidence": ["src/evaluation/binder_10/audit/1eefc5cd27ca_table.png", "src/evaluation/binder_10/audit/1eefc5cd27ca_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "28be140170be",
+    "same_quantity_and_subject": false,
+    "reason": "The claim's 0.53 is an ideal confidence threshold for YOLOv7 box/mask predictions at an F1 score of 0.92 (canonical PDF page 14). The bound Table VI cell is YOLOv5 mask mAP@0.5:0.95 for glioma. Both the quantity and the model/class context differ; equal numeric text does not establish this binding.",
+    "evidence": ["src/evaluation/binder_10/audit/28be140170be_table.png", "src/evaluation/binder_10/audit/28be140170be_text.txt", "src/evaluation/binder_10/audit/387bb2d51882_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/562fa0fc542863477a8d86985bf4ac02654fb4f8.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "3872c6f1b76f",
+    "same_quantity_and_subject": true,
+    "reason": "The claim assigns 0.553 to YOLOv7 box detection for glioma. The Glioma row under YOLOv7/Box in Table VI shows 0.553, wrapped over two lines. The adjoining section names the quantity mAP@0.5:0.95.",
+    "evidence": ["src/evaluation/binder_10/audit/3872c6f1b76f_table.png", "src/evaluation/binder_10/audit/3872c6f1b76f_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "387bb2d51882",
+    "same_quantity_and_subject": true,
+    "reason": "Table V is mAP@0.5. Its All row under YOLOv5/Box contains 0.947, with the final digit wrapped. This is precisely the model, detection type, aggregate class scope and mAP value stated in the claim.",
+    "evidence": ["src/evaluation/binder_10/audit/387bb2d51882_table.png", "src/evaluation/binder_10/audit/387bb2d51882_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "398c84f99e10",
+    "same_quantity_and_subject": true,
+    "reason": "The immediately preceding text identifies the evaluation as dHCP T1w. Table 3 gives FetalSynthSeg DSC 80.1 +/- 2.1 in that dataset column, with the caption stating Dice percentages. The bound 80.1% therefore has the same subject and quantity. This verdict does not assess the sentence's separate claims about other methods.",
+    "evidence": ["src/evaluation/binder_10/audit/398c84f99e10_table.png", "src/evaluation/binder_10/audit/398c84f99e10_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "44c1ebe1dba4",
+    "same_quantity_and_subject": true,
+    "reason": "Table V's All row and YOLOv5/Mask column contain 0.947 for mAP@0.5. The claim explicitly gives 0.947 for YOLOv5 mask detection over all classes, matching this cell.",
+    "evidence": ["src/evaluation/binder_10/audit/44c1ebe1dba4_table.png", "src/evaluation/binder_10/audit/44c1ebe1dba4_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "4dd0b712e2bd",
+    "same_quantity_and_subject": true,
+    "reason": "The claim's 0.653 is assigned to YOLOv7 mask detection for pituitary. Table VI shows exactly 0.653 in Pituitary/YOLOv7 Mask, and its caption and section F specify mAP@0.5:0.95.",
+    "evidence": ["src/evaluation/binder_10/audit/4dd0b712e2bd_table.png", "src/evaluation/binder_10/audit/4dd0b712e2bd_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "550d8078b328",
+    "same_quantity_and_subject": true,
+    "reason": "The claim assigns 0.531 to YOLOv7 mask detection for glioma. Table VI's Glioma/YOLOv7 Mask cell is 0.531, and the surrounding section identifies the score as mAP@0.5:0.95.",
+    "evidence": ["src/evaluation/binder_10/audit/550d8078b328_table.png", "src/evaluation/binder_10/audit/550d8078b328_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "7028128071ef",
+    "same_quantity_and_subject": true,
+    "reason": "Table VI shows 0.661 in the Pituitary row under YOLOv5/Box, displayed as 0.66 then 1. The claim explicitly names the same subject, box task and value in the mAP@0.5:0.95 discussion.",
+    "evidence": ["src/evaluation/binder_10/audit/7028128071ef_table.png", "src/evaluation/binder_10/audit/7028128071ef_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "79c0d2eacd58",
+    "same_quantity_and_subject": true,
+    "reason": "The claim assigns 72.2 Dice to SynthSeg. Table 2 gives SynthSeg/Global 72.2 +/- 13.0; its caption defines mean Dice multiplied by 100, and the discussion explicitly associates SynthSeg with 72.2. The separate randFaBiAN number is outside this cell-level verdict.",
+    "evidence": ["src/evaluation/binder_10/audit/79c0d2eacd58_table.png", "src/evaluation/binder_10/audit/79c0d2eacd58_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "8166968c5fcb",
+    "same_quantity_and_subject": true,
+    "reason": "The claim gives 0.642 for YOLOv5 mask detection of pituitary. Table VI contains 0.642 at Pituitary/YOLOv5 Mask, within the mAP@0.5:0.95 section.",
+    "evidence": ["src/evaluation/binder_10/audit/8166968c5fcb_table.png", "src/evaluation/binder_10/audit/8166968c5fcb_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "90e37f4dc19e",
+    "same_quantity_and_subject": true,
+    "reason": "Table I gives DSRNet Dice 0.84 +/- 0.06. The claim's from-side explicitly attributes 0.84 to DSRNet in Dice, and canonical PDF page 6 ties the comparison to this table. The bound number is the baseline Dice, not the percentage improvement.",
+    "evidence": ["src/evaluation/binder_10/audit/90e37f4dc19e_table.png", "src/evaluation/binder_10/audit/90e37f4dc19e_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "94dfd9110c54",
+    "same_quantity_and_subject": true,
+    "reason": "Table 4 places 0.920 +/- 0.014 at Average/nnU-Net for Dice on IMPACT. The claim expressly assigns that average Dice to nnU-Net, and canonical PDF page 12 introduces the same comparison as Table 4.",
+    "evidence": ["src/evaluation/binder_10/audit/94dfd9110c54_table.png", "src/evaluation/binder_10/audit/94dfd9110c54_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/291198a6c58f36f37af3215a9a5270db92925bf9.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "a2f67993ec09",
+    "same_quantity_and_subject": true,
+    "reason": "Table 4 gives Average/Ours 0.926 +/- 0.012 for Dice on IMPACT. The claim's first value is the proposed method's average Dice, and canonical PDF page 12 explicitly describes it as the Table 4 result.",
+    "evidence": ["src/evaluation/binder_10/audit/a2f67993ec09_table.png", "src/evaluation/binder_10/audit/a2f67993ec09_text.txt", "C:/Users/Praka/Downloads/rgpt-exp-parser/data/medical30_eval/pdfs/291198a6c58f36f37af3215a9a5270db92925bf9.pdf"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "a9d2d454a148",
+    "same_quantity_and_subject": true,
+    "reason": "Table 2 gives FaBiAN/Global 63.3 +/- 15.5 for mean Dice multiplied by 100. The adjoining discussion and claim both assign mean Dice 63.3 to FaBiAN, so the subject and aggregate quantity match.",
+    "evidence": ["src/evaluation/binder_10/audit/a9d2d454a148_table.png", "src/evaluation/binder_10/audit/a9d2d454a148_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "c964b994cb83",
+    "same_quantity_and_subject": true,
+    "reason": "The claim gives 0.546 for YOLOv5 box detection of glioma. Table VI shows 0.546, with the last digit wrapped, at Glioma/YOLOv5 Box; section F defines the quantity as mAP@0.5:0.95.",
+    "evidence": ["src/evaluation/binder_10/audit/c964b994cb83_table.png", "src/evaluation/binder_10/audit/c964b994cb83_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "dd7a91e9e681",
+    "same_quantity_and_subject": true,
+    "reason": "Table V gives 0.941 at All/YOLOv7 Mask for mAP@0.5. The claim explicitly states the same mAP value for YOLOv7 mask detection across all classes.",
+    "evidence": ["src/evaluation/binder_10/audit/dd7a91e9e681_table.png", "src/evaluation/binder_10/audit/dd7a91e9e681_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "e71ef722f7a1",
+    "same_quantity_and_subject": true,
+    "reason": "Table V's All row under YOLOv7/Box is 0.94 for mAP@0.5. The claim names the identical model, box task, all-class aggregate and mAP value.",
+    "evidence": ["src/evaluation/binder_10/audit/e71ef722f7a1_table.png", "src/evaluation/binder_10/audit/e71ef722f7a1_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "f06ffa1cc376",
+    "same_quantity_and_subject": true,
+    "reason": "The claim's 0.53 is explicitly YOLOv5 mask detection for glioma in the mAP@0.5:0.95 discussion. Table VI's Glioma/YOLOv5 Mask cell is 0.53, so this binding has the correct subject and quantity.",
+    "evidence": ["src/evaluation/binder_10/audit/f06ffa1cc376_table.png", "src/evaluation/binder_10/audit/f06ffa1cc376_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  },
+  {
+    "id": "fde30147edcf",
+    "same_quantity_and_subject": true,
+    "reason": "Table 2 shows FetalRealSeg/Global 73.0 +/- 12.6 for mean Dice multiplied by 100. The discussion and claim both describe FetalRealSeg's overall average Dice as 73.0; model, aggregate scope and quantity agree.",
+    "evidence": ["src/evaluation/binder_10/audit/fde30147edcf_table.png", "src/evaluation/binder_10/audit/fde30147edcf_text.txt"],
+    "reviewer": "reviewer_b",
+    "label_status": "machine-assisted, unvalidated"
+  }
+]

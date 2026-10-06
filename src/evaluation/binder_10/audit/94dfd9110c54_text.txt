@@ -1,0 +1,104 @@
+Unsupervised Segmentation of Fetal Brain MRI using Deep Learning Cascaded Registration
+our MAS approach when compared to the classical methods is the drastically reduced computational time. For the same
+single segmentation task, classical approaches require from 30 minutes up to one hour, whereas our method segments
+the image in approximately 60 seconds, in the same range as nnU-Net.
+Label
+Ours
+nnU-Net
+PP
+dHCP
+CSF
+0.923 ± 0.006
+0.897 ± 0.011
+0.83 ± 0.04
+0.79 ± 0.02
+Grey Matter
+0.877 ± 0.006
+0.871 ± 0.012
+0.85 ± 0.03
+0.76 ± 0.05
+White Matter
+0.915 ± 0.006
+0.919 ± 0.006
+0.90 ± 0.02
+0.85 ± 0.02
+Ventricles
+0.902 ± 0.005
+0.879 ± 0.011
+0.73 ± 0.05
+0.66 ± 0.07
+Cerebellum
+0.964 ± 0.004
+0.965 ± 0.004
+0.93 ± 0.02
+0.89 ± 0.03
+Thalamus
+0.950 ± 0.002
+0.957 ± 0.004
+0.92 ± 0.02
+0.88 ± 0.03
+Brain Stem
+0.955 ± 0.003
+0.953 ± 0.006
+0.91 ± 0.01
+0.90 ± 0.02
+Average
+0.926 ± 0.012
+0.920 ± 0.014
+0.87 ± 0.02
+0.81 ± 0.03
+Time
+60s
+80s
+> 30min
+> 1h
+Table 4: Average Dice scores obtained using MAS, nnU-Net [17], the perinatal brain segmentation pipeline PP [33],
+and the dHCP pipeline for neonatal segmentation [26], on the IMPACT dataset [33].
+Table 5 showcases the segmentation outcomes on 20 fetal brain MRI scans from the FeTa test set [27], obtained using
+our MAS method and nnU-Net [17]. In this case, nnU-Net outperforms our approach for 5 out of the 7 anatomical labels,
+achieving a higher average Dice score of 0.866 ± 0.013 compared to 0.847 ± 0.008 for our method. The comparatively
+lower performance on the FeTa dataset can be attributed to several factors. Firstly, the FeTa dataset exhibits a greater
+morphological variability due to the inclusion of fetuses with pathologies that impact the shapes of certain brain regions,
+such as ventricles in the case of VM. Moreover, the dataset encompasses a broader range of gestational ages, from 20 to
+35 weeks, as opposed to the 32 to 37-week range in the IMPACT dataset. Secondly, the FeTa dataset is characterized
+by a higher degree of heterogeneity as the fetal brain MRI scans were acquired from multiple centers using different
+scanners and 3D SR techniques, resulting in diverse image appearances within the dataset. This increased variability in
+morphology and appearance complicates the task of establishing correspondences between image pairs, thereby posing
+challenges for registration-based segmentation.
+The segmentation results of our proposed method on the two fetal brain MRI datasets were generally satisfactory.
+Although nnU-Net outperformed our method on the FeTa dataset, a notable advantage of our approach is its ability to
+effectively utilize a limited number of annotated images for MAS, without the need for labeled data during network
+training. This aspect can lead to considerable savings in terms of time and resources, particularly in scenarios where
+annotated data is scarce. Moreover, our method offers the benefit of enforcing spatial and topological consistency in the
+segmentation results, as opposed to deep learning-based segmentation methods. This could be an important advantage
+when dealing with medical images, where preserving accurate anatomical relationships and structure is crucial for
+reliable interpretation and analysis.
+Label
+Ours
+nnU-Net
+CSF
+0.903 ± 0.006
+0.878 ± 0.012
+Grey Matter
+0.742 ± 0.010
+0.762 ± 0.021
+White Matter
+0.913 ± 0.003
+0.914 ± 0.006
+Ventricles
+0.816 ± 0.023
+0.902 ± 0.014
+Cerebellum
+0.902 ± 0.005
+0.897 ± 0.008
+Thalamus
+0.837 ± 0.016
+0.866 ± 0.012
+Brain Stem
+0.814 ± 0.017
+0.841 ± 0.013
+Average
+0.847 ± 0.008
+0.866 ± 0.013
+Table 5: Average Dice scores obtained using MAS, nnU-Net [17], on the FeTa dataset [27].
+13
