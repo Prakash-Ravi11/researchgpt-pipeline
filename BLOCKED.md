@@ -261,3 +261,24 @@ What I need from you: authorization to diagnose and fix the six failures under t
 expectations before A4 can complete. No test waiver or frozen-file change is assumed. Details, raw
 output locations and hashes are in `docs/evaluation/phase_11_binder.md` and
 `docs/evaluation/evidence/phase11_validation.json`.
+
+### Original six-failure STOP resolved, 2026-10-06
+
+The user authorized the six fixes. Phase 10 baseline proved all six predated Phase 11.
+Three failing-first general mechanisms were committed. All 138 focused checks pass
+on both runtimes; the unchanged experiment suite passes 63/63 under v2 on 3.10.18.
+
+## 2026-10-06 Phase 11 F5 - current STOP
+
+What I was doing: the full A4 matrix after Class E implementation `6cc9b5c`.
+What failed: frozen `src/evaluation/binder_10/regress.py:105` (B threshold alone) and
+`:198` (B delta never binds), expected `not_a_table_claim`, actual `not_bindable`.
+What passed: 3.10.18/legacy invocation, full pytest 239, standalone pipeline 37,
+experiment 63; regression 121 passed / 2 failed. Regression internally selects v2.
+What I tried: one F5 matrix, stopped at its first failed command. No further code
+fix or rerun. The E2 quantity-scope check excludes threshold/delta mentions, causing
+the status regression. Remaining combinations, S3, measurement and Part B not run.
+What I need from you: continuation authorization to repair this non-equality status
+boundary while preserving every original expectation. No test/evaluator edit or
+waiver assumed. No final tag. Full evidence: phase11_a4_validation.json; current
+report/checkpoint updated. No real LLM calls; offline guard proof is in the logs.

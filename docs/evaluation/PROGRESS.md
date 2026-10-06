@@ -10,11 +10,13 @@
 > when a phase brief asks for them. Phases 09A, 09B and the phase 10 package do; phases 00–08 did not.
 
 ## Current Phase
-**Phase 11 Binder v2: BLOCKED on A4 experiment-suite failures (2026-10-06).** Classes A-D are committed.
-Full pytest passes 226 checks in all four runtime/policy combinations; standalone pipeline passes 37
-in all four. The experiment suite passes 63 under legacy but fails **6/63 under v2 in each runtime**.
-The latest user STOP rule applies. S3, new measurement and Part B have not run. Read
-`checkpoints/phase_11_binder.md` and `phase_11_binder.md`. No pre-existing test was modified.
+**Phase 11 Binder v2: BLOCKED at F5 frozen regression (2026-10-06).**
+The six experiment assertions are repaired; baseline proved all six already failed in Phase 10.
+Classes A-E are committed. All 138 focused checks pass on both runtimes. The first full matrix
+combination passes pytest 239, pipeline 37 and experiment 63, then stops at two frozen regression
+statuses: threshold alone and delta never binds expect `not_a_table_claim`, receive `not_bindable`.
+Remaining matrix invocations, S3, development measurement and Part B were not run. No final tag.
+See `checkpoints/phase_11_binder.md`, `phase_11_binder.md`, and `evidence/phase11_a4_validation.json`.
 
 **Phase 10 package, complete (2026-10-06).** It has three parts:
 1. Freeze 09B: **complete**.
@@ -43,14 +45,15 @@ The latest user STOP rule applies. S3, new measurement and Part B have not run. 
 `phase_10_binder`, 2026-10-06. The experiment is complete; the binder is not approved for production.
 
 ## Next Action
-Obtain explicit continuation scope for the six A4 experiment failures, preserving all existing
-expectations. The Class B contract was settled by the user: only table-measurable values are required;
-text-only values do not block a supported bind and are not verified by it. Do not begin Part B before
-Part A completes. Cached replay with real LLM calls blocked is approved for eventual Part B. Legacy
-stays default, and all Phase 10 artifacts remain frozen.
+Continuation authorization is needed after the explicit F5 STOP on frozen regression lines 105/198.
+Preserve both non-equality status expectations and all six repaired experiment assertions. This is
+a new status regression, not proof of an irreconcilable contract. Do not edit frozen artifacts or
+pre-existing tests. Finish A4 before S3/development measurement, tagging or cached Part B. No real LLM
+calls, no fresh production run, no enable recommendation. Avoid an unmeasured loop of further fixes.
 
 ## Repository State
 - Active experiment branch: `exp/phase11-binder`, based on pushed/tagged Phase 10 `050f8de`.
+  A4 resumption: baseline/diagnosis `5ef7bc8`, failing tests `089aa62`, E1 `0184ebb`, E2 `198c922`, E3 `6cc9b5c`.
   Phase 11 commits: scope `537658d`, diagnosis `5bd4c0f`, Class A tests `ad5bc9e`, Class A fix `d64cd91`,
   Class B tests `d32f367`, scope amendment `9a8fc9a`, amended tests `cd53e13`, fix `176de61`,
   Class C tests/fix `c3e77ba`/`85bee81`, Class D tests/fix `2415bb9`/`7f0cef3`.

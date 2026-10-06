@@ -1,149 +1,138 @@
-# Phase 11 Binder v2 - implementation, validation STOP and full handoff
+# Phase 11 Binder v2 - A4 resumption and F5 STOP
 
-**Status: implementation of Classes A-D is committed; A4 is BLOCKED by six pre-existing experiment-suite failures under v2 in each Python runtime. Phase 11 is not complete. Do not enable v2. Part B has not started.**
+**Status: BLOCKED at F5. The original six experiment assertions now pass, but the frozen
+regression has two status failures. No final tag, S3, development measurement or Part B.**
 
-This report records the completed work and exact remaining blocker. No pre-existing test or frozen Phase 10 artifact was modified. All historical evaluation/classification labels remain **machine-assisted, unvalidated**, and the old evaluation set is **development-contaminated**.
+Date: 2026-10-06. Branch: `exp/phase11-binder`. Starting checkpoint: `731ef69`;
+starting implementation: `7f0cef3`. Current implementation: `6cc9b5c3500bc68aa7aa6260fc30bdba8249f60c`.
+No real LLM calls, pre-existing test edits, frozen artifact edits, or default changes occurred.
+All research labels remain **machine-assisted, unvalidated**. The 55-pair/18-claim set is
+**development-contaminated** and was not rerun after this STOP. No held-out evidence was produced.
 
-## Repository and constraints
+## Baseline and preservation (F0-F2)
 
-- Repository: `C:/Users/Praka/Downloads/researchgpt-pipeline`.
-- Current branch: `exp/phase11-binder`, created from `050f8de76b8eabf04bb46fd863beee152a760975`.
-- Phase 10 was confirmed pushed; annotated tag `phase10-binder-final` was created and pushed at that commit.
-- All required Phase 10 commits were confirmed: `7f55789`, `1cfea2c`, `c805cf4`, `ad92c87`, `050f8de`.
-- The final Phase 11 implementation commit is `7f0cef3399833362763f30a5fc51c2be58fd55ec`. There is no remaining uncommitted binder source patch.
-- Defaults remain `binder_policy=legacy`, `fallthrough_policy=table_value_guard`, `borderless_policy=off`. No real LLM or v2_llm run occurred. No default-branch merge.
-- The user approved **cached replay with all real LLM calls blocked** for eventual Part B. It must not be represented as a fresh extraction run. Missing records must be disclosed.
-- Unrelated untracked `docs/diagnosis/`, `out/`, `src/evaluation/candidate_gold/` were not touched.
-- The early automatic-approval usage-limit error was resolved by retrying through the same check after its stated retry time. It is not the current blocker.
+Both original logs remain byte-identical, SHA-256:
+`55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4`.
+They are `runs/phase11_binder/logs/experiment_.venv_v2.txt` and
+`runs/phase11_binder/logs/experiment_.venv-09a_v2.txt`.
 
-## Work completed and remaining
+The unchanged command `python -B -m tests.test_pipeline_units` ran under explicit v2
+in the experiment directory of a detached temporary `phase10-binder-final` worktree,
+outside this repository. Both runtimes reported **56 passed, 7 failed**; the worktree
+was removed after measurement. The seventh failure was adv 4c, already resolved by
+Classes A-D at the starting Phase 11 checkpoint.
 
-| Step | Result |
+| Original assertion line | Python 3.10.18 baseline | Python 3.13.6 baseline | Classification |
+| --- | --- | --- | --- |
+| 262 own-cell return | Failed | Failed | Already failing in Phase 10 |
+| 266 cross-row reason | Failed | Failed | Already failing in Phase 10 |
+| 277 absent metric column | Failed | Failed | Already failing in Phase 10 |
+| 356 generic group probe A | Failed | Failed | Already failing in Phase 10 |
+| 358 generic group probe B | Failed | Failed | Already failing in Phase 10 |
+| 368 generic measurement/count phrase | Failed | Failed | Already failing in Phase 10 |
+
+Exact observations/commands/hashes: `evidence/phase11_a4_baseline.json`.
+The classification-only diagnosis was written before tests/fixes:
+`diagnosis/phase11_a4_failures.md`. It identifies compound metric token matching,
+quantity scope for absent values, and generic headings incorrectly promoted to quantities.
+
+## Failing-first tests and fixes (F3-F4)
+
+The new `tests/test_binder_v2_phase11_e.py` uses invented tables, quantities and values.
+It was committed after **9 failed / 4 passed** was observed, before any fix. No
+expectation in that file was revised afterwards. Three separate mechanism commits followed.
+
+| Mechanism | Change | Focused result on each runtime |
+| --- | --- | --- |
+| E1 | Allow `@` between matched compound-label tokens; retain cutoff tokens | 131 passed, 7 not-yet-fixed E2/E3 cases deselected |
+| E2 | Classify an absent value as prose only when a local quantity is represented | 134 passed, 4 not-yet-fixed E3 cases deselected |
+| E3 | Generic model/result/score headings cannot supply measurable quantity links | 138 passed, including all 46 A-D checks and Class B boundaries |
+
+The unchanged experiment suite also passed **63/63 under v2 on Python 3.10.18** after
+E3. No source change was made to `gate.py` in this resumption. The E2 fix subsequently
+failed the broader frozen regression below, so the implementation is not validated.
+
+An initial focused run encountered Windows pytest temporary-directory permissions,
+not an assertion failure. The guarded confirmation runs used reviewed escalation and
+fresh temporary directories. Every test child had a process-wide network/Ollama guard;
+logs record its blocked-loopback self-test. Mocked judge tests did not make real calls.
+
+## Full A4 matrix and exact STOP (F5)
+
+The sequential matrix stopped at the first failing command, as required.
+
+| Runtime / invocation policy | Suite | Result |
+| --- | --- | --- |
+| 3.10.18 / legacy | Full pytest | 239 passed |
+| 3.10.18 / legacy | Standalone `tests/test_pipeline.py` | 37 passed |
+| 3.10.18 / legacy | Experiment units | 63 passed |
+| 3.10.18 / legacy | Frozen `binder_10/regress.py` | **121 passed, 2 failed: STOP** |
+| Remaining 12 runtime/policy/suite combinations | Full matrix | Not run after STOP |
+
+The frozen regression sets `RGPT_BINDER_POLICY=v2` internally at line 20, including
+when invoked with legacy in the environment. Neither that script nor its policy
+selection was modified; an explicit v2 invocation was not reached in this matrix.
+
+| Frozen expectation | Original claim | Expected | Actual |
+| --- | --- | --- | --- |
+| `src/evaluation/binder_10/regress.py:105`, B threshold alone | Our method achieves above 0.90. | `not_a_table_claim` | `not_bindable` |
+| `src/evaluation/binder_10/regress.py:198`, B delta never binds | Ours improves the Dice by 0.84 over UNet. | `not_a_table_claim` | `not_bindable` |
+
+E2's quantity-scope branch excludes threshold/delta mentions. With no required equality
+candidate, those claims now take `not_bindable`. This is a newly introduced status
+regression, not evidence that the immutable expectations are irreconcilable. Both
+claims remain unbound. No additional fix, rollback, test rerun or measurement followed
+the STOP. The two generic/absent-quantity cases still require `not_bindable`; the two
+frozen non-equality cases require their original `not_a_table_claim` classification.
+
+The child failure log and matrix JSON were saved before the parent hit a console
+UnicodeEncodeError while printing the failure tail. That display error did not hide
+or change the recorded child results. Durable records and exact new-file inventory:
+`evidence/phase11_a4_validation.json`.
+
+## S1/S2/S3, measurement and Part B (F6-F8)
+
+| Criterion | Current Phase 11 resumption | Frozen Phase 10 history |
+| --- | --- | --- |
+| S1 zero wrong binds | NOT EVALUATED after F5 STOP | FAIL |
+| S2 zero verified binds lost | NOT EVALUATED after F5 STOP | FAIL |
+| S3 legacy identity | NOT RUN after F5 STOP | PASS |
+
+The development-contaminated, machine-assisted, unvalidated 55-pair/18-claim
+measurement was not run. Synthetic test success is not substituted for it or for
+held-out evidence. No `phase11-binder-final` tag was created and no Part B branch or
+cached replay was started. There is no new funnel or newly measured bottleneck ranking.
+The later request for end-to-end testing and cheap fixes remains downstream of the
+explicit F5 STOP. A future Part B remains **CACHED REPLAY - NOT A FRESH PRODUCTION RUN**
+with network/LLM calls blocked, missing records disclosed and no enable recommendation.
+
+## Preservation and handoff
+
+`git diff phase10-binder-final -- src/evaluation configs` is empty. The only test diff
+from checkpoint `731ef69` is the newly added Class E file. The two original failure
+logs were rehashed and match. Defaults remain legacy / table_value_guard / borderless
+off. Unrelated untracked `docs/diagnosis/`, `out/`, and `src/evaluation/candidate_gold/`
+remain untouched. The temporary baseline worktree was removed.
+
+Next work requires continuation past the two frozen regression failures, with all
+expectations preserved. Diagnose the non-equality classification boundary without
+changing the evaluator or tests, then resume F5 only under that authorization. The
+stopped state is committed/pushed on `exp/phase11-binder`; no success tag is warranted.
+
+## New commit ledger
+
+| Full hash | Work |
 | --- | --- |
-| A0 state, Phase 10 push/tag, Phase 11 branch | Complete |
-| A1 scope committed alone before code | Complete, including the separate user-authorized Class B amendment |
-| A2 read-only violation classification | Complete: 47 inventory rows |
-| A3 Classes A-D, failing tests before fixes | Implemented and committed; 46 new synthetic checks |
-| A4 full pytest | 226 passed in all four runtime/policy combinations |
-| A4 standalone pipeline | 37 passed in all four combinations |
-| A4 experiment suite, legacy | 63 passed in each runtime |
-| A4 experiment suite, v2 | **57 passed, 6 failed in each runtime: STOP** |
-| A4 frozen binder regression | 123 expectations pass in each runtime under the legacy invocation; the explicit v2 invocation was not reached after the experiment STOP |
-| A4 new S3 identity / development measurement | Not run after STOP |
-| A5 successful completion/tag | Not complete; only a blocked report/checkpoint is delivered |
-| Part B replay/funnel/upper bounds/ranking | Not started because Part A did not complete |
+| `5ef7bc89f03623e6991236b6605237157021827d` | Read-only baseline evidence and mechanism diagnosis |
+| `089aa6202ffbc01c8b34cb17cb4870695b6e44f8` | 13 synthetic tests committed failing: 9 failed, 4 passed |
+| `0184ebb881b03decaa7fd0f1b9d7165e4b101f1c` | E1: preserve compound metric separators and cutoff tokens |
+| `198c9225d506b2eee04e3ac2df93e605ed18da15` | E2: require quantity scope before absent-value classification |
+| `6cc9b5c3500bc68aa7aa6260fc30bdba8249f60c` | E3: exclude generic group headings from quantity links |
 
-No `phase11-binder-final` tag or Part B branch exists. The Phase 11 work/checkpoint branch is pushed as incomplete work, not marked final.
+The final report/checkpoint commit hash is supplied in the reply; a commit cannot
+embed its own hash. Historical A-D commits remain unchanged:
 
-## Scope, classification and held-out evidence
-
-The scope was committed before code. It requires general synthetic evidence, no evaluated-ID tuning, unchanged S1/S2/S3 definitions, unchanged frozen artifacts, and a new held-out primary evaluation later. The 55-pair/18-claim set may only be used as a development-contaminated regression check. It was not re-run in this attempt because A4 stopped first.
-
-The registered future held-out design is 12 new papers / 60 claims: 40 positive claim/cell cases and 20 numeric near-miss controls. It excludes Phase 10 and development papers/versions, freezes PDF hashes and strata before prediction, enumerates all required target cells, and uses blinded independent readings with unresolved disagreements explicit. Labels remain machine-assisted/unvalidated pending owner validation. **The held-out set was not built**, as requested. See `preregistration/phase_11_scope.md`.
-
-The read-only diagnosis inventories 19 gold S1 occurrences, 5 gold S2 occurrences, 22 lost sweep associations, and one distinct audited S1 mismatch. These overlap units/representations. All 17 canonical-pair S1 occurrences have absent reconstructed gold targets and remain **other**, without changed scoring. Two real-claim occurrences have extra cells outside the reconstructed target subset, with reconstruction caveats. The independently confirmed quantity/subject mismatch motivates Class A. C/D classifications are hypotheses requiring synthetic proof, not automatic instructions to restore old bindings. Full row-level evidence and hashes: `diagnosis/phase11_failure_classes.md`.
-
-## Classes and failing-before evidence
-
-| Class | New checks | Before | After focused checks, each runtime | Committed mechanism |
-| --- | --- | --- | --- | --- |
-| A | 15 | 5 failed, 10 passed | 94 passed including original/recovery tests | Local setting type must agree with chosen quantity source; raw verifier rebuilds links |
-| B original | 6 | 4 failed, 2 passed | Initial candidate: 98 passed, 2 old failures; STOP recorded | Over-broad absent-value requirement was rejected |
-| B amended | 8 | New boundary: 1 failed, 7 passed against the rejected candidate | 102 passed | Independent quantity support, strong subject evidence, existing required-value semantics |
-| C | 15 | 4 failed, 11 passed | 117 passed | Exact bracketed ownership markers and percent-before-uncertainty parsing |
-| D | 8 | 2 failed, 6 passed | 125 passed | Guarded legacy preservation with fresh raw checks and complete required coverage |
-
-The focused totals include 19 original + 60 recovery tests and accumulated Phase 11 tests. The full 226 pytest total is the prior 180 plus 46 Phase 11 checks. Existing tests were not edited. Before/after JSON records under `docs/evaluation/evidence/` include source hashes, log paths and observed failures.
-
-### A - equal numbers do not prove equal quantities
-
-Synthetic claims previously bound a confidence threshold, learning rate, dropout probability or batch size to an equal-valued metric cell. The raw verifier also accepted the invalid threshold case. Per-value local type checks now require the cell's quantity source to agree, while nearer explicit measured quantities supersede earlier setting cues. Positive metric/setting cases and wrong-model/group controls remain covered. Code: `src/evidence/binder_v2.py:553` and the `quantity_type` conflict check.
-
-### B - explicit user decision and S1/S2 trade-off
-
-The first candidate required a number absent from every cell, which broke two pre-existing tests. Work stopped. The user explicitly selected Option 1: **preserve the existing required-value rule and revise only the NEW Class B scope/tests**. The amendment was committed separately as `9a8fc9a` before further code. Only the new tests changed in `cd53e13`; their original failing-first history remains in `d32f367`.
-
-Completeness applies only to table-measurable values: values present in candidate cells of the claim's tables. A value matching no cell is non-table/text-only and does not block a supported bind. The paired boundary test keeps a supported bind when the second value is absent everywhere, and requires `partial_binding` when that second value instead matches a conflicting row. Extra-cell negative controls remain. The over-broad absent-value logic was removed; the original supported-bind and prose-only tests pass unchanged.
-
-**Trade-off:** a value in no table cell supplies no table binding, so that wrong text-only value cannot itself cause a wrong cell selection. It also cannot be verified by the table. A supported table binding does **not** verify every text-only statement in the claim. This preserves existing S2 behavior while S1 still governs every selected cell and table-measurable value.
-
-The historical rejected patch and its two-runtime failures are preserved as `phase11_class_b_uncommitted.patch` and `phase11_class_b_blocked.json`. The filename describes its state at the earlier STOP; it is an archival rejected patch, not the current working tree.
-
-### C - formatting without erasing semantics
-
-Own-method markers exactly inside `(Proposed)`, `[Proposed]` or `(Ours)` survive label-core cleanup. Meaningful model variants remain excluded. A percent sign before `±` is parsed as part of the same numeric structure. Positive controls cover `Proposed Method`, `Ours`, cited labels, arrow headers, significance marks, hierarchy and split tokens; negative controls preserve variant, cohort, uncertainty and unit conflicts. Code: `src/evidence/binder_v2.py:138` and `_C_PM`.
-
-### D - preservation is conditional, not a bypass
-
-The original legacy body now has a direct internal entry point at `src/evidence/gate.py:438`, so fallback does not mutate the policy environment or recurse through routing. The wrapper at `src/evidence/binder_v2.py:1233` only considers conservative no-bind outcomes with no recorded semantic conflict. It re-reads raw evidence, reconstructs required values and links, requires exactly one required value, rejects ambiguity, requires the unique eligible cell to equal the legacy cell, and re-runs the raw verifier. Multiple required values, partial coverage, wrong quantity, wrong table, ownership conflicts and ambiguity are not rescued. Text-only values remain outside the required set.
-
-The positive synthetic reproduction deliberately injects an omitted initial candidate index, while keeping attached evidence and fresh verification intact. This tests a preservation failure path; it is **not** evidence of a naturally occurring historical S2 recovery. Negative controls prove that legacy-wrong numeric/quantity and table choices stay rejected even with that candidate omission. No historical gain is claimed without measurement.
-
-## Full A4 results and exact current STOP
-
-| Suite | Python 3.10 legacy | Python 3.10 v2 | Python 3.13 legacy | Python 3.13 v2 |
-| --- | --- | --- | --- | --- |
-| Full pytest | 226 pass | 226 pass | 226 pass | 226 pass |
-| Standalone pipeline | 37 pass | 37 pass | 37 pass | 37 pass |
-| Experiment units | 63 pass | **57 pass / 6 fail** | 63 pass | **57 pass / 6 fail** |
-| Frozen binder regression | 123 pass | Not reached | 123 pass | Not reached |
-
-The legacy-invoked frozen regression itself directly exercises v2 internally. Its explicit v2-policy invocation was not reached because the per-policy validation runner stopped immediately at the experiment failure. The two independently running legacy-policy validations completed successfully. No validation was rerun or implementation changed after observing this STOP.
-
-Commands: `python -B -m pytest -p no:cacheprovider tests/ src/evaluation/bottleneck_diagnosis/ --ignore=tests/test_pipeline.py -q --tb=short`; `python -B tests/test_pipeline.py`; `python -B -m tests.test_pipeline_units` from `experiments/document_evidence_pipeline`; and `python -B src/evaluation/binder_10/regress.py`. Each invocation selects its Python runtime and policy, disables bytecode and uses UTF-8 output. Pytest plugin autoload was disabled. Exact standalone commands, working directories, output paths, return codes and hashes are in `evidence/phase11_validation.json` and the local execution records.
-
-All six current failures occur in the unchanged `experiments/document_evidence_pipeline/tests/test_pipeline_units.py`:
-
-| Line | Assertion | Observed v2 behavior |
-| --- | --- | --- |
-| 262 | Own-cell nDCG@5 must bind and RETURN | `wrong_cell`, `name_unexplained`; final `ABSTAINED` |
-| 266 | Cross-row nDCG@5 must produce `binding_wrong_cell` | `not_bindable`; gate reason `table_value_unbound` |
-| 277 | Metric absent from columns must be `not_bindable` | `not_a_table_claim` |
-| 356 | Generic performance-metrics probe A must be `not_bindable` | `wrong_cell`, name/subject conflicts |
-| 358 | Generic performance-metrics probe B must be `not_bindable` | `wrong_cell`, name/subject conflicts |
-| 368 | Generic count probe must be `not_bindable` | `not_a_table_claim` |
-
-The own-cell case is a supported-return failure, not merely a status-name difference. The other cases also fail their existing expectations and cannot be silently waived. It is not established whether each failure predates Phase 11, because no extra baseline rerun was performed after the STOP. Earlier Phase 10 experiment checks were not a documented four-way policy matrix. No test expectations were changed and no legacy-only forcing was inserted to conceal these results.
-
-The user's instruction is explicit: **"If any pre-existing test fails, STOP and report. No test edits to make them pass."** This is the current stopping boundary. The earlier Class B contract STOP was resolved by the user's amendment; it is not the current blocker.
-
-## Part A S1/S2/S3 verdict and default decision
-
-| Criterion | Phase 11 | Frozen Phase 10 historical result |
-| --- | --- | --- |
-| S1 zero wrong binds | NOT EVALUATED after A4 STOP | FAIL |
-| S2 zero verified binds lost | NOT EVALUATED after A4 STOP | FAIL |
-| S3 30-PDF identity | NOT RE-RUN after A4 STOP | PASS: 30/30, 55 pairs / 18 claims identical, newline canary 0 |
-
-**NO ENABLE.** All four classes having focused tests does not establish release safety. Full A4 validation has failures; new S3/regression measurement and held-out primary evidence remain absent. Phase 10 gold, scorer, results, preregistration, audit artifacts, earlier evaluation packages and configs have no diff from `phase10-binder-final`. All pre-existing tests are unchanged. Defaults remain legacy/guard-on/borderless-off.
-
-## Part B funnel and top three historical bottlenecks
-
-Part B was not started. The approved cached replay, stage funnel, isolated-stage upper bounds and new ranked bottleneck map remain undone. No new measured count is fabricated:
-
-| Requested stage | Legacy remaining / lost | v2 remaining / lost |
-| --- | --- | --- |
-| 1. Claim detected in text | Not measured | Not measured |
-| 2. Reaches gate | Not measured | Not measured |
-| 3. Table/gold cell represented | Not measured | Not measured |
-| 4. Candidate recall | Not measured | Not measured |
-| 5. Correct binding chosen | Not measured | Not measured |
-| 6. Raw verification passes | Not measured | Not measured |
-| 7. Returned verified bind | Not measured | Not measured |
-
-The following are **historical Phase 10 observations only**, not a new Part B funnel or isolated-stage estimate:
-
-1. Product claim availability: 15/18 gold claims do not reach the gate. Extraction versus claim-detection attribution still needs the requested trace.
-2. Production table representation: 11/18 real claims lack reconstructed gold cells in R-prod. Reconstruction/scoring qualifications remain explicit.
-3. Binding precision/preservation: one independently confirmed new wrong binding; one lost R-prod correct claim plus nine lost sweep associations. The recorded real-claim stage map has three linking and one ranking failure.
-
-Counts overlap and use different units; they are not additive. Product verified bindings were zero across 75 items. All these historical labels are machine-assisted, unvalidated and development-contaminated. They are not a recommendation to enable any policy.
-
-## Commit ledger
-
-Every Phase 11 implementation/test/scope commit before this report is listed below. The final report commit cannot contain its own hash; it is supplied in the final reply and by `git log -1 -- docs/evaluation/phase_11_binder.md`.
-
-| Full commit hash | Work |
+| Full hash | Work |
 | --- | --- |
 | `537658dd17e7b7d3516e9e3f72f634ec14036cef` | preregister Phase 11 binder safety and preservation scope |
 | `5bd4c0f448061eb61e21f305b85b32bdc121fbb2` | classify frozen Phase 10 safety and preservation violations |
@@ -158,71 +147,52 @@ Every Phase 11 implementation/test/scope commit before this report is listed bel
 | `2415bb9c7e14da4f1306dc58ab32c567280181fe` | test Class D verified preservation and legacy-wrong vetoes first |
 | `7f0cef3399833362763f30a5fc51c2be58fd55ec` | preserve only raw-verified unambiguous legacy binds without semantic override |
 
-## Exact absolute paths of all new files
+## Exact absolute paths of every new resumption file
 
-This inventory includes durable task files plus local ignored commands/logs. Existing files modified are `src/evidence/binder_v2.py`, `src/evidence/gate.py`, `docs/evaluation/PROGRESS.md`, and `BLOCKED.md`. No unrelated untracked file is included. File hashes and persistence status are also recorded in `evidence/phase11_artifact_manifest.json`.
+Committed evidence/test files and ignored local helpers, receipts and logs are all
+listed here. SHA-256 values and persistence are in `phase11_a4_validation.json`.
+Existing modified files are `src/evidence/binder_v2.py`, this report,
+`docs/evaluation/PROGRESS.md`, `docs/evaluation/checkpoints/phase_11_binder.md`, and
+`BLOCKED.md`. Prior STOP logs and evidence files remain unchanged.
 
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/checkpoints/phase_11_binder.md`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/diagnosis/phase11_failure_classes.md`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_artifact_manifest.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_a_after.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_a_before.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_after.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_amended_before.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_before.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_blocked.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_b_uncommitted.patch`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_c_after.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_c_before.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_d_after.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_class_d_before.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/evidence/phase11_validation.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/phase_11_binder.md`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/docs/evaluation/preregistration/phase_11_scope.md`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv-09a_legacy.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv-09a_v2.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv_legacy.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/checks_.venv_v2.json`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_.venv-09a.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_.venv.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_after_310.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_a_before.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_after_.venv-09a.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_after_.venv.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_amended_before.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_before.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_final_.venv-09a.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_b_final_.venv.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_after_.venv-09a.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_after_.venv.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_c_before.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_after_.venv-09a.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_after_.venv.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/class_d_before.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv-09a_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv-09a_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/experiment_.venv_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv-09a_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv-09a_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/full_.venv_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv-09a_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv-09a_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/pipeline_.venv_v2.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/regression_.venv-09a_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/logs/regression_.venv_legacy.txt`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/record_evidence.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/run_checks.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/runs/phase11_binder/write_report.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_a.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_b.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_c.py`
-- `C:/Users/Praka/Downloads/researchgpt-pipeline/tests/test_binder_v2_phase11_d.py`
+```text
+C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\evidence\phase11_a4_baseline.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\diagnosis\phase11_a4_failures.md
+C:\Users\Praka\Downloads\researchgpt-pipeline\tests\test_binder_v2_phase11_e.py
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_after_focused_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_confirmed_focused_.venv-09a_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_confirmed_focused_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e2_after_focused_.venv-09a_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e2_after_focused_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_experiment_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_focused_.venv-09a_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_focused_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e_before_synthetic_.venv_v2.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_final_matrix.json
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_guard\sitecustomize.py
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_matrix.py
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_report.py
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_run.py
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_baseline_experiment_.venv-09a_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_baseline_experiment_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_after_focused_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_confirmed_focused_.venv-09a_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_confirmed_focused_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_verified_focused_.venv-09a_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_verified_focused_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e2_after_focused_.venv-09a_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e2_after_focused_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_experiment_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_focused_.venv-09a_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_focused_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e_before_synthetic_.venv_v2.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_experiment_.venv_legacy.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_full_.venv_legacy.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_pipeline_.venv_legacy.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_regression_.venv_legacy.txt
+C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\evidence\phase11_a4_validation.json
+```
 
-## Resume boundary
-
-The Class B decision is settled; do not reopen it or modify pre-existing tests. The current blocker is the six A4 experiment failures. A resumed task must explicitly authorize diagnosis/fixes of those failures while retaining all original expectations. Preserve their current logs as failing-before evidence, use general synthetic causes, and repeat only the checks justified by changes. Keep all frozen artifacts untouched.
-
-Once all A4 requirements pass, run S3 and the development-contaminated regression with output redirected away from frozen Phase 10 files. Record S1/S2/S3 without substituting synthetic success for primary held-out evidence. Only then complete/push/tag Part A and start the approved cached Part B replay. Do not create a final-success tag or manufacture the missing Part B funnel now.
+Earlier A-D scope, mechanism descriptions and validation receipts remain in checkpoint
+commit `731ef69` and the unchanged `preregistration/phase_11_scope.md`,
+`diagnosis/phase11_failure_classes.md` and `evidence/phase11_class_*` artifacts.

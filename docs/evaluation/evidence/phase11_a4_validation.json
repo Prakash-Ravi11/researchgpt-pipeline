@@ -1,0 +1,624 @@
+{
+  "status": "STOP_F5_frozen_regression_status_failures",
+  "implementation_commit": "6cc9b5c3500bc68aa7aa6260fc30bdba8249f60c",
+  "commits": [
+    {
+      "hash": "5ef7bc89f03623e6991236b6605237157021827d",
+      "purpose": "Read-only baseline evidence and mechanism diagnosis"
+    },
+    {
+      "hash": "089aa6202ffbc01c8b34cb17cb4870695b6e44f8",
+      "purpose": "13 synthetic tests committed failing: 9 failed, 4 passed"
+    },
+    {
+      "hash": "0184ebb881b03decaa7fd0f1b9d7165e4b101f1c",
+      "purpose": "E1: preserve compound metric separators and cutoff tokens"
+    },
+    {
+      "hash": "198c9225d506b2eee04e3ac2df93e605ed18da15",
+      "purpose": "E2: require quantity scope before absent-value classification"
+    },
+    {
+      "hash": "6cc9b5c3500bc68aa7aa6260fc30bdba8249f60c",
+      "purpose": "E3: exclude generic group headings from quantity links"
+    }
+  ],
+  "baseline_file": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\docs\\evaluation\\evidence\\phase11_a4_baseline.json",
+  "original_log_hashes_preserved": true,
+  "frozen_evaluation_and_configs_diff_empty": true,
+  "preexisting_tests_unchanged": true,
+  "test_diff_from_checkpoint": [
+    "tests/test_binder_v2_phase11_e.py"
+  ],
+  "focused_records": [
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-k",
+        "not absent_value_requires_quantity_scope and not generic_group_heading",
+        "-q",
+        "--tb=short"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 1,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_after_focused_.venv_v2.txt",
+      "sha256": "a9d6eef5d3437a6bb84fb135a18929b96872e9c88ca781c5dae6d9919edbebd3",
+      "guard_active": true,
+      "summaries": [
+        "130 passed, 7 deselected, 1 error in 1.11s"
+      ]
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-k",
+        "not absent_value_requires_quantity_scope and not generic_group_heading",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_b4_2pl7z\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_confirmed_focused_.venv-09a_v2.txt",
+      "sha256": "062f6c9367515fd77bc76403bc984f1e7330fc86760d4adf8a9138eaab288afc",
+      "guard_active": true,
+      "summaries": [
+        "131 passed, 7 deselected in 0.63s"
+      ]
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-k",
+        "not absent_value_requires_quantity_scope and not generic_group_heading",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_f8z96hqy\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_confirmed_focused_.venv_v2.txt",
+      "sha256": "5040587b15f223fdbe6581184813c46d14acaffe63d3a4a0ecd7b2cf447ca63a",
+      "guard_active": true,
+      "summaries": [
+        "131 passed, 7 deselected in 0.74s"
+      ]
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-k",
+        "not generic_group_heading",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_yuwpz87_\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e2_after_focused_.venv-09a_v2.txt",
+      "sha256": "14da0c0219a97f5577ed075394c1870bb594ad78c4b43e2ce4e47f5238a6e6c3",
+      "guard_active": true,
+      "summaries": [
+        "134 passed, 4 deselected in 0.61s"
+      ]
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-k",
+        "not generic_group_heading",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_w3lx_hzv\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e2_after_focused_.venv_v2.txt",
+      "sha256": "61109124a40ae6d30a28c84c83f482da0093b30fd02cc4d19344861af0509218",
+      "guard_active": true,
+      "summaries": [
+        "134 passed, 4 deselected in 0.75s"
+      ]
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_experiment_.venv_v2.txt",
+      "sha256": "f16fa236938bf120cce287c0768f5349db1c94b34ac29bfc2c0c72e084802c1d",
+      "guard_active": true,
+      "summaries": [
+        "63 passed, 0 failed"
+      ]
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_7qcve8p1\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_focused_.venv-09a_v2.txt",
+      "sha256": "12839faa37753e159b06644ca5cc72c0adf0eb5acf82b563f7500a631b481f1e",
+      "guard_active": true,
+      "summaries": [
+        "138 passed in 0.62s"
+      ]
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "focused",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2.py",
+        "tests/test_binder_v2_recovery.py",
+        "tests/test_binder_v2_phase11_a.py",
+        "tests/test_binder_v2_phase11_b.py",
+        "tests/test_binder_v2_phase11_c.py",
+        "tests/test_binder_v2_phase11_d.py",
+        "tests/test_binder_v2_phase11_e.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_2idmyjg2\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_focused_.venv_v2.txt",
+      "sha256": "01f4306fc18aa8dbef5d69daae8bca91386bae8da5999780096f3e5449999e8e",
+      "guard_active": true,
+      "summaries": [
+        "138 passed in 0.79s"
+      ]
+    },
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "synthetic",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_binder_v2_phase11_e.py",
+        "-q",
+        "--tb=short"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 1,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e_before_synthetic_.venv_v2.txt",
+      "sha256": "5250c085626599aa384d074c5fd796279c24fede3229b0a0890cba2edcb43755",
+      "guard_active": true,
+      "summaries": [
+        "9 failed, 4 passed in 0.27s"
+      ]
+    }
+  ],
+  "matrix": [
+    {
+      "runtime": ".venv",
+      "policy": "legacy",
+      "suite": "full",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/",
+        "src/evaluation/bottleneck_diagnosis/",
+        "--ignore=tests/test_pipeline.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_tmp_y8cn4nuz\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_full_.venv_legacy.txt",
+      "sha256": "f411202c5a879ae4be1c24bcc8a93b92c14c75378dc5700991ed76f8f222df6d",
+      "guard_active": true,
+      "summaries": [
+        "239 passed in 10.36s"
+      ],
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "policy": "legacy",
+      "suite": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_pipeline_.venv_legacy.txt",
+      "sha256": "07a00776a0da6044e72a49345a5d846c2d0a1b5125e6368474b88eea603c17ae",
+      "guard_active": true,
+      "summaries": [
+        "37 passed, 0 failed"
+      ],
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "policy": "legacy",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_experiment_.venv_legacy.txt",
+      "sha256": "f16fa236938bf120cce287c0768f5349db1c94b34ac29bfc2c0c72e084802c1d",
+      "guard_active": true,
+      "summaries": [
+        "63 passed, 0 failed"
+      ],
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "policy": "legacy",
+      "suite": "regression",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 1,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_regression_.venv_legacy.txt",
+      "sha256": "78a9f7632b51315e602b520378fd15a760d63538d6c9dd5941406cb5fd5be57c",
+      "guard_active": true,
+      "summaries": [
+        "2 failing: ['B threshold alone', 'B delta never binds']"
+      ],
+      "pass": false,
+      "internal_policy": "v2 (unchanged regress.py sets this internally)"
+    }
+  ],
+  "remaining_12_matrix_commands": "not run after first failure",
+  "failed_assertions": [
+    {
+      "path": "src/evaluation/binder_10/regress.py",
+      "line": 105,
+      "name": "B threshold alone",
+      "claim": "Our method achieves above 0.90.",
+      "expected": "not_a_table_claim",
+      "actual": "not_bindable"
+    },
+    {
+      "path": "src/evaluation/binder_10/regress.py",
+      "line": 198,
+      "name": "B delta never binds",
+      "claim": "Ours improves the Dice by 0.84 over UNet.",
+      "expected": "not_a_table_claim",
+      "actual": "not_bindable"
+    }
+  ],
+  "regression_counts": {
+    "passed": 121,
+    "failed": 2
+  },
+  "mechanism": "E2 quantity_scoped excludes threshold/delta mentions; with no required equality candidate it now returns not_bindable. These two frozen v2 expectations retain not_a_table_claim.",
+  "conflict_assessment": "A status regression, not proof of irreconcilable expectations. No corrective patch or rerun after F5 STOP.",
+  "S1": "NOT EVALUATED in this resumption",
+  "S2": "NOT EVALUATED in this resumption",
+  "S3": "NOT RUN after STOP",
+  "historical_phase10": {
+    "S1": "FAIL",
+    "S2": "FAIL",
+    "S3": "PASS"
+  },
+  "development_regression": "not run; if resumed label development-contaminated, machine-assisted, unvalidated",
+  "Part_B": "not started; no final tag or diagnosis branch",
+  "guard": {
+    "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_guard\\sitecustomize.py",
+    "sha256": "ed92b618ee6a87a7a7135dbe91b7985d6dfdee579d6fd33877cf6231929886c3",
+    "proof": "Each child log contains PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS",
+    "mode": "Python audit hook blocks network socket operations and external Ollama/curl/wget processes; binder LLM mode replay"
+  },
+  "execution_caveats": [
+    "First E1 focused run: 130 passed, one pytest temporary-directory permission error.",
+    "Two sandbox temp-directory retries produced logs but cleanup permission errors; no assertion success claimed from them.",
+    "E1 confirmation used reviewed escalation with guard active: 131 passed on each runtime.",
+    "F5 child failure was fully logged and matrix JSON saved; printing its Unicode tail in the parent then raised UnicodeEncodeError. No subsequent matrix command ran."
+  ],
+  "new_files": [
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\docs\\evaluation\\evidence\\phase11_a4_baseline.json",
+      "sha256": "ac70d8105853be82aaffe616c427d892592961c7eb91a2c245dde22401045978",
+      "persistence": "committed"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\docs\\evaluation\\diagnosis\\phase11_a4_failures.md",
+      "sha256": "715e6bf3e6c863ba2eea2b26ced53172a587bfad8566e2b042d29fc97a68ad2b",
+      "persistence": "committed"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\tests\\test_binder_v2_phase11_e.py",
+      "sha256": "0e1040237ecd10aa222d5659df807f285eb6d8623ce30891513071b1eb8c58c1",
+      "persistence": "committed"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e1_after_focused_.venv_v2.json",
+      "sha256": "9090a2804f50acbf6e758e354e9427d78fc2d4c5ff8b8dddc14f9787676a7faa",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e1_confirmed_focused_.venv-09a_v2.json",
+      "sha256": "aa01f61e8a1f7a0d52d0955e155c59e86007372e27a0ec54b2a703f6282eee95",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e1_confirmed_focused_.venv_v2.json",
+      "sha256": "97acf4285f1520189cc74f9c2441339c68f6254c5e9643d82bb83b8b42713acf",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e2_after_focused_.venv-09a_v2.json",
+      "sha256": "f90826b8309490b60c8844ae9cd45663afc577d731b7e56e4bf78a9bb9fb0be8",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e2_after_focused_.venv_v2.json",
+      "sha256": "01b30c370139cd3d93d105643f9bed1f5a1fc45cd63c1d27543117e37c5feb40",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e3_after_experiment_.venv_v2.json",
+      "sha256": "9b63e547eb55f28d2f2ba6bac414e776b3e3469e7b7751a9bcf89dd5bfef73dd",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e3_after_focused_.venv-09a_v2.json",
+      "sha256": "1d1d270ea6fe929599f8da376384d61aeab3c8c364765be425e33230a432e240",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e3_after_focused_.venv_v2.json",
+      "sha256": "0df01bbce351d01ececabc9ab5fa4f5cf1d1d82cac1253a40128fcc8c6e6addd",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_e_before_synthetic_.venv_v2.json",
+      "sha256": "02f46333bf28a24629cb03f83ebea6f080c583a66189c4c992f91a9e9bb394c4",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_final_matrix.json",
+      "sha256": "ff290865f2126cff0a6bde38a008ef8d2ebd6b94c669a12e8749777e9891568e",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_guard\\sitecustomize.py",
+      "sha256": "ed92b618ee6a87a7a7135dbe91b7985d6dfdee579d6fd33877cf6231929886c3",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_matrix.py",
+      "sha256": "923ed05e71fb1e5a976038d83b5c3b59c93beebd019cc4c6f08b6c08330cd33e",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_report.py",
+      "sha256": "9e9cca1bfd63a2085b823f7e5152ce98def230b12a3f2f016b10321d12b27aee",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\a4_run.py",
+      "sha256": "759b1fee2ef313b5236b9c57b88bd47596ac3f4eaecb692e0d0888c01c3a75c0",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_baseline_experiment_.venv-09a_v2.txt",
+      "sha256": "e52d173dd1f5cab48cf296bb24282cc5abfc5e9181cfb829ce1c36c0e9f5ac70",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_baseline_experiment_.venv_v2.txt",
+      "sha256": "e52d173dd1f5cab48cf296bb24282cc5abfc5e9181cfb829ce1c36c0e9f5ac70",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_after_focused_.venv_v2.txt",
+      "sha256": "a9d6eef5d3437a6bb84fb135a18929b96872e9c88ca781c5dae6d9919edbebd3",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_confirmed_focused_.venv-09a_v2.txt",
+      "sha256": "062f6c9367515fd77bc76403bc984f1e7330fc86760d4adf8a9138eaab288afc",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_confirmed_focused_.venv_v2.txt",
+      "sha256": "5040587b15f223fdbe6581184813c46d14acaffe63d3a4a0ecd7b2cf447ca63a",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_verified_focused_.venv-09a_v2.txt",
+      "sha256": "fd910abb544c1def65fb94f0f3eaf6455a4f4bcd734e81a111a23ccd89b31f17",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e1_verified_focused_.venv_v2.txt",
+      "sha256": "4f5c081fdc5d5f557a6fe8170bacb4fea1730f8405e352357c40628a1979a3c8",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e2_after_focused_.venv-09a_v2.txt",
+      "sha256": "14da0c0219a97f5577ed075394c1870bb594ad78c4b43e2ce4e47f5238a6e6c3",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e2_after_focused_.venv_v2.txt",
+      "sha256": "61109124a40ae6d30a28c84c83f482da0093b30fd02cc4d19344861af0509218",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_experiment_.venv_v2.txt",
+      "sha256": "f16fa236938bf120cce287c0768f5349db1c94b34ac29bfc2c0c72e084802c1d",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_focused_.venv-09a_v2.txt",
+      "sha256": "12839faa37753e159b06644ca5cc72c0adf0eb5acf82b563f7500a631b481f1e",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e3_after_focused_.venv_v2.txt",
+      "sha256": "01f4306fc18aa8dbef5d69daae8bca91386bae8da5999780096f3e5449999e8e",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_e_before_synthetic_.venv_v2.txt",
+      "sha256": "5250c085626599aa384d074c5fd796279c24fede3229b0a0890cba2edcb43755",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_experiment_.venv_legacy.txt",
+      "sha256": "f16fa236938bf120cce287c0768f5349db1c94b34ac29bfc2c0c72e084802c1d",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_full_.venv_legacy.txt",
+      "sha256": "f411202c5a879ae4be1c24bcc8a93b92c14c75378dc5700991ed76f8f222df6d",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_pipeline_.venv_legacy.txt",
+      "sha256": "07a00776a0da6044e72a49345a5d846c2d0a1b5125e6368474b88eea603c17ae",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_final_regression_.venv_legacy.txt",
+      "sha256": "78a9f7632b51315e602b520378fd15a760d63538d6c9dd5941406cb5fd5be57c",
+      "persistence": "local ignored"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\docs\\evaluation\\evidence\\phase11_a4_validation.json",
+      "sha256": null,
+      "persistence": "committed; self hash omitted"
+    }
+  ]
+}
