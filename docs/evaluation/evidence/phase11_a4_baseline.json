@@ -1,0 +1,146 @@
+{
+  "start_head": "731ef69",
+  "implementation": "7f0cef3",
+  "baseline_tag": "phase10-binder-final",
+  "baseline_commit": "050f8de76b8eabf04bb46fd863beee152a760975",
+  "original_logs": [
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv_v2.txt",
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    },
+    {
+      "path": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\experiment_.venv-09a_v2.txt",
+      "sha256": "55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4"
+    }
+  ],
+  "results": [
+    {
+      "runtime": ".venv",
+      "policy": "v2",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\AppData\\Local\\Temp\\phase11-a4-baseline\\experiments\\document_evidence_pipeline",
+      "exit_code": 1,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_baseline_experiment_.venv_v2.txt",
+      "sha256": "e52d173dd1f5cab48cf296bb24282cc5abfc5e9181cfb829ce1c36c0e9f5ac70",
+      "guard_active": true,
+      "summaries": [
+        "56 passed, 7 failed"
+      ],
+      "python_version": "Python 3.10.18",
+      "assertions": [
+        {
+          "line": 262,
+          "label": "gate: structured paper, value at own cell",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, value at own cell -> bound -> RETURNED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.4502.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'binding_wrong_cell', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.4502', 'role': 'single', 'candidates': [{'row': 'Ours', 'col': 'nDCG@5', 'value': '0.4502', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained', 'candidate': {'row': 'Ours', 'col': 'nDCG@5'}}}"
+        },
+        {
+          "line": 266,
+          "label": "gate: structured paper, cross-row number",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.61.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'table_value_unbound', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.61', 'role': 'single', 'candidates': [{'row': 'Jones et al.', 'col': 'nDCG@5', 'value': '0.61', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'not_required'}]}, 'status': 'not_bindable', 'reason': 'no cell holding a claim value has a subject or quantity link to it'}}"
+        },
+        {
+          "line": 277,
+          "label": "gate: structured paper, metric not a column",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, metric not a column anywhere -> not_bindable (falls through)  {'field': 'results', 'value': 'Our system reaches a BLEU of 34.1 on the shared task.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.2, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'evidence_span_not_found_in_paper_chunks', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '34.1', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}}"
+        },
+        {
+          "line": 356,
+          "label": "adv 4a:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '80.52', 'role': 'single', 'candidates': [{'row': 'GA', 'col': 'Performance metrics', 'value': '80.52', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'GA', 'col': 'Performance metrics'}}"
+        },
+        {
+          "line": 358,
+          "label": "adv 4b:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '87.82', 'role': 'single', 'candidates': [{'row': 'K-SVM', 'col': 'Performance metrics', 'value': '87.82', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'K-SVM', 'col': 'Performance metrics'}}"
+        },
+        {
+          "line": 368,
+          "label": "adv 4d:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '12', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}"
+        }
+      ]
+    },
+    {
+      "runtime": ".venv-09a",
+      "policy": "v2",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\AppData\\Local\\Temp\\phase11-a4-baseline\\experiments\\document_evidence_pipeline",
+      "exit_code": 1,
+      "log": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\logs\\a4_baseline_experiment_.venv-09a_v2.txt",
+      "sha256": "e52d173dd1f5cab48cf296bb24282cc5abfc5e9181cfb829ce1c36c0e9f5ac70",
+      "guard_active": true,
+      "summaries": [
+        "56 passed, 7 failed"
+      ],
+      "python_version": "Python 3.13.6",
+      "assertions": [
+        {
+          "line": 262,
+          "label": "gate: structured paper, value at own cell",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, value at own cell -> bound -> RETURNED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.4502.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'binding_wrong_cell', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.4502', 'role': 'single', 'candidates': [{'row': 'Ours', 'col': 'nDCG@5', 'value': '0.4502', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained', 'candidate': {'row': 'Ours', 'col': 'nDCG@5'}}}"
+        },
+        {
+          "line": 266,
+          "label": "gate: structured paper, cross-row number",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED  {'field': 'results', 'value': 'Our method reports an nDCG@5 of 0.61.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.0, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'table_value_unbound', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '0.61', 'role': 'single', 'candidates': [{'row': 'Jones et al.', 'col': 'nDCG@5', 'value': '0.61', 'caption': 'Results on the shared task.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'not_required'}]}, 'status': 'not_bindable', 'reason': 'no cell holding a claim value has a subject or quantity link to it'}}"
+        },
+        {
+          "line": 277,
+          "label": "gate: structured paper, metric not a column",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL gate: structured paper, metric not a column anywhere -> not_bindable (falls through)  {'field': 'results', 'value': 'Our system reaches a BLEU of 34.1 on the shared task.', 'evidence_span': None, 'source': None, 'representation': None, 'section': None, 'page_or_node': None, 'block_id': None, 'char_start': None, 'char_end': None, 'evidence_status': 'UNSUPPORTED', 'attribution': 'UNKNOWN', 'attribution_confidence': 0.0, 'confidence': 0.2, 'provenance_valid': False, 'final': 'ABSTAINED', 'abstain_reason': 'evidence_span_not_found_in_paper_chunks', 'range_check': None, 'structural_binding': {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '34.1', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}}"
+        },
+        {
+          "line": 356,
+          "label": "adv 4a:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '80.52', 'role': 'single', 'candidates': [{'row': 'GA', 'col': 'Performance metrics', 'value': '80.52', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'GA', 'col': 'Performance metrics'}}"
+        },
+        {
+          "line": 358,
+          "label": "adv 4b:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '87.82', 'role': 'single', 'candidates': [{'row': 'K-SVM', 'col': 'Performance metrics', 'value': '87.82', 'caption': 'Comparative performance metrics analysis.'}], 'eligible': [], 'n_candidates': 1, 'outcome': 'wrong', 'conflicts': ['name_unexplained', 'subject_label']}]}, 'status': 'wrong_cell', 'reason': 'every cell holding the value conflicts with the claim: name_unexplained, subject_label', 'candidate': {'row': 'K-SVM', 'col': 'Performance metrics'}}"
+        },
+        {
+          "line": 368,
+          "label": "adv 4d:",
+          "baseline_failed": true,
+          "classification": "already failed at Phase 10",
+          "baseline_detail": "FAIL adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)  {'structured': True, 'binder': 'v2', 'v2_trace': {'mentions': [{'tok': '12', 'role': 'single', 'candidates': [], 'eligible': [], 'n_candidates': 0, 'outcome': 'not_required'}]}, 'status': 'not_a_table_claim', 'reason': 'no claim value is in an attached cell'}"
+        }
+      ]
+    }
+  ]
+}
