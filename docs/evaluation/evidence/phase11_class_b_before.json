@@ -1,0 +1,23 @@
+{
+  "class": "B",
+  "stage": "before",
+  "commit_before_record": "d64cd91cf647c16a00dacf73a5240a2b9b02434b",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_b_before.txt",
+      "sha256": "a3ca050d8fe393ed42a6ea8564e6bfa6937126aad2916111a1dcd8f7b8a360a7",
+      "summary": "4 failed, 2 passed in 0.74s",
+      "failed_cases": [
+        "tests/test_binder_v2_phase11_b.py::test_no_partial_or_borrowed_quantity[DeltaNet reports Dice of 0.68 and Precision of 0.82.-cells0]\r",
+        "tests/test_binder_v2_phase11_b.py::test_no_partial_or_borrowed_quantity[DeltaNet reports Dice of 0.68 while SigmaNet reports Dice of 0.82.-cells1]\r",
+        "tests/test_binder_v2_phase11_b.py::test_no_partial_or_borrowed_quantity[DeltaNet has an activation coefficient of 0.68 and reports Dice of 0.82.-cells2]\r",
+        "tests/test_binder_v2_phase11_b.py::test_complete_independent_support[DeltaNet reports Dice of 0.68 and Precision of 0.68.-cells2]\r"
+      ]
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "409a0654abfb0e8da7e5da4fb3a9737d63deddea364881256b1871d5d864fee8",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_b.py": "e223436af1f6bd52c6ca41dbafcf87f467fde5eeb2741c94c49a07fae98b1d20"
+  }
+}
