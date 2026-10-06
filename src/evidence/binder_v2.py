@@ -1124,7 +1124,7 @@ def _table_type(p: dict, idx: dict) -> str:
                              {str(c["raw"].get("row_label") or "") for c in sib})
 
 
-def structural_bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = False) -> dict[str, Any]:
+def _bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = False) -> dict[str, Any]:
     """The phase 10 binder (PREREG D): gate.structural_bind's contract, plus binding_type, bindings, abstain_code
     (ambiguity, partial binding, failed verification) and v2_trace."""
     off = _off()
@@ -1227,6 +1227,58 @@ def structural_bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = Fal
     out.update(status="bound", number=recs[0]["number"], cell=recs[0]["cell"],
                table_type=next((x for x in types if x != "results"), "results"), bindings=recs,
                binding_type=SINGLE if len(recs) == 1 else (MULTI if len(subjects) == 1 else COMPARISON))
+    return out
+
+
+def structural_bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = False) -> dict[str, Any]:
+    out = _bind_v2(value, chunks, llm)
+    if llm or out['status'] not in ('not_bindable', 'not_a_table_claim'):
+        return out
+    if any(m.get('conflicts') for m in out.get('v2_trace', {}).get('mentions', [])):
+        return out
+    legacy = G._structural_bind_legacy(value, chunks)
+    if legacy['status'] != 'bound':
+        return out
+    off, w = _off(), _prep(value)
+    idx = _index(chunks, off)
+    fr = _frame(w, idx, off)
+    required = []
+    for m in fr['mentions']:
+        if m['threshold'] or m['delta'] or m.get('negated') or 'L_local' not in m:
+            continue
+        linked = []
+        for i in dict.fromkeys(idx['by_value'].get(m['tok'], [])):
+            p = idx['cells'][i]
+            for part in _value_hits(m, p):
+                lk = links(m, p, fr, idx, off, part)
+                if lk['has_subject'] or lk['has_quantity']:
+                    linked.append((p, lk))
+        if linked:
+            required.append((m, linked))
+    # Legacy provides one cell. It cannot cover multiple required values or
+    # resolve ambiguity by its original ordering. Text-only values stay outside
+    # this required set, exactly as in the main binder.
+    if len(required) != 1:
+        return out
+    m, linked = required[0]
+    eligible = [(p, lk) for p, lk in linked if lk['eligible']]
+    if not eligible:
+        return out
+    winners, code = _choose(eligible)
+    if code or len(winners) != 1:
+        return out
+    p, lk = winners[0]
+    if _cell_key(p) != legacy['cell'] or verify(w, m, p, chunks, off, lk=lk) is not None:
+        return out
+    record = {'number': m['tok'], 'cell': _cell_key(p), 'role': m.get('role'),
+              'subject': lk['subject']['kind'], 'subject_text': lk['subject']['text'],
+              'quantity': lk['quantity']['kind'], 'quantity_text': lk['quantity']['text']}
+    if lk['subject'].get('span'):
+        record['alias_span'] = lk['subject']['span']
+    out.pop('reason', None)
+    out.pop('abstain_code', None)
+    out.update(status='bound', cell=record['cell'], number=record['number'], bindings=[record],
+               binding_type=SINGLE, table_type=_table_type(p, idx), legacy_preserved=True)
     return out
 
 

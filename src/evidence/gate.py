@@ -432,6 +432,10 @@ def structural_bind(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     if _binder_policy() != "legacy":                  # phase 10 router (binder_v2.py)
         from .binder_v2 import structural_bind_v2
         return structural_bind_v2(value, chunks, llm=_binder_policy() == "v2_llm")
+    return _structural_bind_legacy(value, chunks)
+
+
+def _structural_bind_legacy(value: str, chunks: list[dict[str, Any]]) -> dict[str, Any]:
     cells = paper_table_cells(chunks)
     if not cells:
         return {"structured": False, "status": "pdf_only"}
