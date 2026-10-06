@@ -77,3 +77,25 @@ def test_explicit_count_header_remains_bindable():
     chunks = paper([('Birch', 'Specimens', '28')])
     got = B.structural_bind_v2('Birch has 28 specimens.', chunks)
     assert got['status'] == 'bound', got
+
+
+def test_e2_resume_threshold_only_is_not_a_table_claim():
+    chunks = paper([('Ours', 'PrismGain', '0.6743'), ('WillowNet', 'PrismGain', '0.2961')])
+    got = B.structural_bind_v2('Our method achieves above 0.6743.', chunks)
+    assert got['status'] == 'not_a_table_claim', got
+
+
+def test_e2_resume_delta_is_not_a_table_claim():
+    chunks = paper([('Ours', 'PrismGain', '0.6743'), ('WillowNet', 'PrismGain', '0.2961')])
+    got = B.structural_bind_v2('Ours improves PrismGain by 0.2961 over WillowNet.', chunks)
+    assert got['status'] == 'not_a_table_claim', got
+
+
+@pytest.mark.parametrize('claim', [
+    'Our method reports MapleGain of 0.8452.',
+    'Our method has 37 observation records.',
+])
+def test_e2_resume_absent_quantity_stays_not_bindable(claim):
+    chunks = paper([('Ours', 'PrismGain', '0.6743'), ('WillowNet', 'PrismGain', '0.2961')])
+    got = B.structural_bind_v2(claim, chunks)
+    assert got['status'] == 'not_bindable', got
