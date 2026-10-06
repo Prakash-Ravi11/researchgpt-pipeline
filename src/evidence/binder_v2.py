@@ -752,7 +752,17 @@ def _qnames(p: dict, part: int | None, idx: dict, off: frozenset[str]) -> dict[s
             out.setdefault(f, "caption")
     if p["count"] is not None and "count_attribute" not in off:
         out.setdefault("#" + (p["count"] or "*"), "count")
-    return out
+    # Group headings such as model scores or performance metrics do not name
+    # a measurable quantity. Keep them indexed as weak labels, so they cannot
+    # become strong subjects merely by losing quantity eligibility. Explicit
+    # counts and domain-specific quantity names retain their existing links.
+    generic_forms = {
+        _form(label, idx["syn"])
+        for label in [p["row"], *p["levels"], p["cap"]]
+        if all(t[1] in _FUNCTION | _GENERIC | {"metric", "metrics"}
+               for t in _tokens(_core(label), idx["syn"]))
+    }
+    return {f: kind for f, kind in out.items() if f not in generic_forms}
 
 
 def _subject_cands(m: dict, p: dict, idx: dict, off: frozenset[str]) -> list[dict]:
