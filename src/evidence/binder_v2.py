@@ -1204,6 +1204,12 @@ def _bind_v2(value: str, chunks: list[dict[str, Any]], llm: bool = False) -> dic
         out.update(status=codes[0], abstain_code=codes[0], reason=f"a value is {codes[0]}")
         return out
     if not required:
+        # A threshold or improvement is not an assertion of an absolute cell
+        # value. Keep this distinct from an equality with no table quantity;
+        # mixed claims must still follow their ordinary value mentions.
+        if all(m["threshold"] or m["delta"] for m in fr["mentions"]):
+            out.update(status="not_a_table_claim", reason="claim contains only thresholds or changes, not cell values")
+            return out
         # Absence of the number alone does not establish a prose aggregate.
         # First establish the named quantity's scope, using the same local
         # quantity links as binding (including row, caption and count support).
