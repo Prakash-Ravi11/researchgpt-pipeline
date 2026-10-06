@@ -135,6 +135,12 @@ def _bracket(label: Any) -> str:
     return " ".join(x[1:-1].strip() for x in _BRACKET.findall(_prep(label)))
 
 
+def _own_label(label: str) -> bool:
+    core = _core(label)
+    decorated = any(_OWN_MARK.fullmatch(x[1:-1].strip()) for x in _BRACKET.findall(_prep(label)))
+    return bool(not _VARIANT.search(label) and (decorated or _OWN_MARK.search(core) or _OWN_REF.fullmatch(core)))
+
+
 def _form(text: Any, syn: bool) -> str:
     return "".join(t[1] for t in _tokens(_prep(text), syn))
 
@@ -271,7 +277,7 @@ def mentions(text: str) -> list[dict[str, Any]]:
 _MARKS = r"[*†‡§¶]*"
 _PART = re.compile(r"^\s*([A-Za-z][\w\s\-()%²³/.]*?)\s*(?::|=|\s)\s*(" + _N + r")\s*(" + _UNIT + r")?\s*"
                    + _MARKS + r"\s*$", re.I | re.A)
-_C_PM = re.compile(r"(" + _N + r")(?:±|\+/-|\+-)(" + _N + r")(?:" + _UNIT + r")?" + _MARKS, re.I | re.A)
+_C_PM = re.compile(r"(" + _N + r")%?(?:±|\+/-|\+-)(" + _N + r")(?:" + _UNIT + r")?" + _MARKS, re.I | re.A)
 _C_IV = re.compile(r"(" + _N + r")(?:" + _UNIT + r")?[\(\[](" + _N + r")(?:,|;|–|—|-|to)(" + _N + r")[\)\]]"
                    r"(?:" + _UNIT + r")?" + _MARKS, re.I | re.A)
 _C_RANGE = re.compile(r"(" + _N + r")(?:–|—|-|to)(" + _N + r")(?:" + _UNIT + r")?", re.I | re.A)
@@ -499,7 +505,7 @@ def _build(chunks: list, off: frozenset[str]) -> dict[str, Any]:
         own = []
         for ax, raw in [("r", p["row"])] + [(("c", k), x) for k, x in enumerate(p["levels"])]:
             core = _core(raw)
-            if core and (_OWN_MARK.search(core) or _OWN_REF.fullmatch(core)) and not _VARIANT.search(raw):
+            if core and _own_label(raw):
                 own.append((ax, "mark"))
             elif p["axes"][ax] and p["axes"][ax] in declared:
                 own.append((ax, "declared"))
@@ -956,7 +962,8 @@ def verify(claim: str, m: dict, p: dict, chunks: list, off: frozenset[str], span
         if _flat(sub["text"]) not in cf or _flat(sub["text"]) not in lflat:
             return "subject"
     elif sub["kind"] == "own_alias":
-        if not _OWN_REF.search(_prep(claim)) or not (any(_OWN_MARK.search(x) for x in labels)
+        raw_labels = [_prep(raw.get('row_label'))] + _prep(raw.get('column_header')).split(' / ')
+        if not _OWN_REF.search(_prep(claim)) or not (any(_own_label(x) for x in raw_labels)
                                                        or (sub.get("span") and _span_in(sub["span"], chunks))):
             return "subject"
     else:                                                           # group or judge alias: a verbatim paper span
