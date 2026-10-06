@@ -1,0 +1,20 @@
+{
+  "class": "B",
+  "stage": "amended_before",
+  "commit_before_record": "9a8fc9ab42bc1162b65d560971f174be07d0d7bd",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_b_amended_before.txt",
+      "sha256": "e72ebe6048269cdf8b0f53eff474f2df4569b5b88930aa0c88072fad98fa0e62",
+      "summary": "1 failed, 7 passed in 0.24s",
+      "failed_cases": [
+        "tests/test_binder_v2_phase11_b.py::test_absent_value_and_conflicting_candidate_boundary[None-bound]\r"
+      ]
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "9de53e484134b9462240a96ff48b6c00d89e3c7a4e78b7f697f6eb4a0633ceda",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_b.py": "ec04ad903c346da583c7a91b1b38d06e968979f4918f9b483a34058c4855b2d7"
+  }
+}
