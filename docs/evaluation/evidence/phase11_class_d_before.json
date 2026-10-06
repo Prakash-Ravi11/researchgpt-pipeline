@@ -1,0 +1,21 @@
+{
+  "class": "D",
+  "stage": "before",
+  "commit_before_record": "85bee812c57879b6cca31a8019b60bb972150f51",
+  "logs": [
+    {
+      "path": "runs/phase11_binder/logs/class_d_before.txt",
+      "sha256": "e60d488411b373df76d022a585c58c7e44aaa22781c1874f5228953708f5e530",
+      "summary": "2 failed, 6 passed in 0.26s",
+      "failed_cases": [
+        "tests/test_binder_v2_phase11_d.py::test_verified_legacy_cell_survives_conservative_candidate_omission[]\r",
+        "tests/test_binder_v2_phase11_d.py::test_verified_legacy_cell_survives_conservative_candidate_omission[ and Precision of 0.82]\r"
+      ]
+    }
+  ],
+  "files": {
+    "src/evidence/binder_v2.py": "9d2f80d233131d0ef68f7ce03be25c8f9438c5bbb1e24d08e7f5a78f626525f3",
+    "src/evidence/gate.py": "65516fe2bc9564d03616c257704a6b46c3adc1971035df4fb0b3131c6ffdd530",
+    "tests/test_binder_v2_phase11_d.py": "40540a0edbdd4dc6513577bbfa5ae6301b420a4361396c2aa6bebee6023c17a0"
+  }
+}
