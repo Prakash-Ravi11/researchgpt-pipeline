@@ -10,13 +10,16 @@
 > when a phase brief asks for them. Phases 09A, 09B and the phase 10 package do; phases 00–08 did not.
 
 ## Current Phase
-**Phase 11 Binder v2: BLOCKED at F5 frozen regression (2026-10-06).**
-The six experiment assertions are repaired; baseline proved all six already failed in Phase 10.
-Classes A-E are committed. All 138 focused checks pass on both runtimes. The first full matrix
-combination passes pytest 239, pipeline 37 and experiment 63, then stops at two frozen regression
-statuses: threshold alone and delta never binds expect `not_a_table_claim`, receive `not_bindable`.
-Remaining matrix invocations, S3, development measurement and Part B were not run. No final tag.
-See `checkpoints/phase_11_binder.md`, `phase_11_binder.md`, and `evidence/phase11_a4_validation.json`.
+**Phase 11 Binder v2: R4/R5 complete; NO ENABLE (2026-10-07).**
+The guard-only resumption passed all four required self-tests and all 16 A4 combinations:
+243 full pytest, 37 standalone pipeline, 63 experiment and 123 regression checks per
+runtime/policy combination. Frozen regression lines 105/198 both pass. S3 PASS: 30/30 PDFs,
+55 pairs/18 claims identical, newline canary zero. Development-contaminated, machine-assisted,
+unvalidated regression completed: S1 FAIL (19 gold flags), S2 FAIL (25 lost occurrences).
+No source/test/config/frozen artifact edits occurred in this resumption. See
+checkpoints/phase_11_binder.md and phase_11_binder.md.
+Publication at report commit: local only; previous push rejected; one push attempt follows.
+No final tag exists at report time. Final session reply records the actual publication result.
 
 **Phase 10 package, complete (2026-10-06).** It has three parts:
 1. Freeze 09B: **complete**.
@@ -45,14 +48,14 @@ See `checkpoints/phase_11_binder.md`, `phase_11_binder.md`, and `evidence/phase1
 `phase_10_binder`, 2026-10-06. The experiment is complete; the binder is not approved for production.
 
 ## Next Action
-Continuation authorization is needed after the explicit F5 STOP on frozen regression lines 105/198.
-Preserve both non-equality status expectations and all six repaired experiment assertions. This is
-a new status regression, not proof of an irreconcilable contract. Do not edit frozen artifacts or
-pre-existing tests. Finish A4 before S3/development measurement, tagging or cached Part B. No real LLM
-calls, no fresh production run, no enable recommendation. Avoid an unmeasured loop of further fixes.
+Stop after the single authorized R5 push attempt and conditional completion tag. Do not start
+cell-selection evaluation, end-to-end testing, Part B or bottleneck fixes in this session.
+S1/S2 release failures remain visible; no enablement or held-out success is established.
+Legacy stays default. Consult the final session reply for the actual push/tag outcome.
 
 ## Repository State
 - Active experiment branch: `exp/phase11-binder`, based on pushed/tagged Phase 10 `050f8de`.
+  R1/R2/R3: a0ed08d / d619db9 / 6536d5c. Guard fix and complete R4/R5 receipts accompany this report.
   A4 resumption: baseline/diagnosis `5ef7bc8`, failing tests `089aa62`, E1 `0184ebb`, E2 `198c922`, E3 `6cc9b5c`.
   Phase 11 commits: scope `537658d`, diagnosis `5bd4c0f`, Class A tests `ad5bc9e`, Class A fix `d64cd91`,
   Class B tests `d32f367`, scope amendment `9a8fc9a`, amended tests `cd53e13`, fix `176de61`,
@@ -194,6 +197,6 @@ calls, no fresh production run, no enable recommendation. Avoid an unmeasured lo
 - Do not enable `borderless_policy` without a region guard and a new pre-registered evaluation.
 
 ## Last Checkpoint
-`docs/evaluation/checkpoints/phase_11_binder.md` (2026-10-06, BLOCKED). Full current report:
+`docs/evaluation/checkpoints/phase_11_binder.md` (2026-10-07, R4/R5 complete; NO ENABLE). Full current report:
 `docs/evaluation/phase_11_binder.md`. Phase 10 remains frozen at `phase10-binder-final`; its report is
 `src/evaluation/binder_10/PHASE10_REPORT.md`. The 09B freeze remains in `phase_09b_fallthrough.md`.

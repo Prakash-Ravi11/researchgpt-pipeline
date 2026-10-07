@@ -1,0 +1,100 @@
+{
+  "mode": "blocked",
+  "diagnosis": {
+    "events": [
+      {
+        "event": "subprocess.Popen",
+        "signature": [
+          "executable",
+          "args",
+          "cwd",
+          "env"
+        ],
+        "types": [
+          "NoneType",
+          "str",
+          "str",
+          "dict"
+        ],
+        "executable": null,
+        "argv": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe -B -c \"print('offline child')\"",
+        "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+        "env_record": "mapping values omitted",
+        "sentinel_keys": [
+          "OLLAMA_HOST",
+          "OPENAI_API_KEY"
+        ]
+      }
+    ],
+    "raised": "PHASE11_OFFLINE_GUARD: external network/LLM client blocked",
+    "guard_sha256": "ed92b618ee6a87a7a7135dbe91b7985d6dfdee579d6fd33877cf6231929886c3"
+  },
+  "guard_sha256": "c65a0c46766a7a23f0dd75940d18933000d9643387c731103bd94eb7c25462fe",
+  "tests": {
+    "a_external_connection": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: network access blocked"
+    },
+    "b_localhost_ollama_connection": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: network access blocked"
+    },
+    "c_explicit_environment_subprocess": {
+      "exit_code": 0,
+      "sentinel_keys": [
+        "OLLAMA_HOST",
+        "OPENAI_API_KEY",
+        "ANTHROPIC_API_KEY"
+      ],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\nCHILD {\"guard_active\": true, \"blocked\": true, \"error\": \"PHASE11_OFFLINE_GUARD: network access blocked\"}\n",
+      "stderr": "",
+      "pass": true
+    },
+    "d_child_inherits_guard": {
+      "child": {
+        "guard_active": true,
+        "blocked": true,
+        "error": "PHASE11_OFFLINE_GUARD: network access blocked"
+      },
+      "pass": true
+    }
+  },
+  "additional_checks": {
+    "popen_client": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: external network/LLM client blocked"
+    },
+    "exec_client": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: external network/LLM client blocked"
+    },
+    "spawn_client": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: external network/LLM client blocked"
+    },
+    "non_loopback_bind": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: non-loopback bind blocked"
+    },
+    "allowed_subprocess.Popen": {
+      "pass": true
+    },
+    "allowed_os.exec": {
+      "pass": true
+    },
+    "allowed_os.posix_spawn": {
+      "pass": true
+    },
+    "allowed_os.spawn": {
+      "pass": true
+    },
+    "allowed_socket.bind": {
+      "pass": true
+    },
+    "repo_llm_entry_point": {
+      "pass": true,
+      "exception": "PHASE11_OFFLINE_GUARD: LLM client entry point blocked"
+    }
+  },
+  "all_passed": true
+}

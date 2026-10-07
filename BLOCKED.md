@@ -282,3 +282,22 @@ What I need from you: continuation authorization to repair this non-equality sta
 boundary while preserving every original expectation. No test/evaluator edit or
 waiver assumed. No final tag. Full evidence: phase11_a4_validation.json; current
 report/checkpoint updated. No real LLM calls; offline guard proof is in the logs.
+
+## 2026-10-07 Phase 11 - guard/R4 execution STOPs resolved; S1/S2 still fail
+
+R3 6536d5c fixed the two frozen status expectations without changing existing tests.
+The following R4 attempt stopped before launch because the offline guard scanned
+subprocess.Popen's entire argument tuple, including the environment. One authorized
+helper-only fix now inspects executable/argv and retains socket/LLM blocking.
+
+All guard self-tests a-d passed. All 16 A4 combinations subsequently passed, including
+regress.py:105 and :198 (not_a_table_claim). S3 passed 30/30 PDFs, 55 pairs/18 claims
+identity, zero newline canary. The unchanged development-contaminated,
+machine-assisted, unvalidated regression completed: S1 FAIL (19 gold flags); S2 FAIL
+(25 lost gold/sweep occurrences). No new independent PDF audit or held-out evidence.
+No further binder fixes, end-to-end run, cell-selection study or bottleneck work.
+
+Publication status at report commit: local only, previous push rejected. One push
+attempt follows; final session reply records the outcome. No tag exists at report time.
+Full current report: docs/evaluation/phase_11_binder.md. Receipts: runs/phase11_binder/
+a4_guard_selftest.json, a4_guard_resume_matrix.json, r5_results.json, r5_console.txt.

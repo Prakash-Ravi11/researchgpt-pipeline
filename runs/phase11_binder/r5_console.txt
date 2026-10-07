@@ -1,0 +1,9 @@
+development-contaminated, machine-assisted, unvalidated
+Guard: blocked; parent and every child canary raised before execution.
+Consider using the pymupdf_layout package for a greatly improved page layout analysis.
+S3: gate records identical 30/30; 55-pair differences pairs none claims none; newline canary 0
+Completed deterministic regression arm: legacy
+Completed deterministic regression arm: v2
+S1/S2/S3: {"S1": "FAIL", "S2": "FAIL", "S3": "PASS"}
+Comparison counts: {"R-prod": {"wrong_binds": 9, "correct_gains": 21, "lost_verified": 1, "new_binds": 25, "lost_binds": 10}, "R-eval": {"wrong_binds": 10, "correct_gains": 27, "lost_verified": 2, "new_binds": 36, "lost_binds": 12}, "R-oracle": {"wrong_binds": 0, "correct_gains": 7, "lost_verified": 0, "new_binds": 0, "lost_binds": 0}}
+R5 measurement completed; no end-to-end or cell-selection evaluation started.

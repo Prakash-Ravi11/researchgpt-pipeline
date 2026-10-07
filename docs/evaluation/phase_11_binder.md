@@ -1,123 +1,217 @@
-# Phase 11 Binder v2 - A4 resumption and F5 STOP
+# Phase 11 Binder v2 - guarded A4 and development regression complete
 
-**Status: BLOCKED at F5. The original six experiment assertions now pass, but the frozen
-regression has two status failures. No final tag, S3, development measurement or Part B.**
+**R4 passed all 16 combinations. R5 measurement completed. S1 FAIL / S2 FAIL / S3 PASS.
+Legacy remains default. No end-to-end run, new cell-selection evaluation or bottleneck fixes.**
 
-Date: 2026-10-06. Branch: `exp/phase11-binder`. Starting checkpoint: `731ef69`;
-starting implementation: `7f0cef3`. Current implementation: `6cc9b5c3500bc68aa7aa6260fc30bdba8249f60c`.
-No real LLM calls, pre-existing test edits, frozen artifact edits, or default changes occurred.
-All research labels remain **machine-assisted, unvalidated**. The 55-pair/18-claim set is
-**development-contaminated** and was not rerun after this STOP. No held-out evidence was produced.
+Report date: 2026-10-07. Branch: `exp/phase11-binder`. This guard-only resumption
+started at `6536d5c883ea208dce18986b6d0e35153139b0d6`; that remains the binder
+implementation commit. No `src/`, `tests/`, evaluator, frozen artifact or config
+was changed in this resumption.
 
-## Baseline and preservation (F0-F2)
+## Publication status
 
-Both original logs remain byte-identical, SHA-256:
+At this report commit the work is **local only**. The earlier branch push was
+rejected by automatic approval review and did not run. The previous report's
+?committed/pushed? wording was incorrect and is replaced here.
+
+One authorized `git push origin exp/phase11-binder` follows this commit. Its
+destination, read from local Git configuration, is
+`https://github.com/Prakash-Ravi11/researchgpt-pipeline.git`. The final session
+reply records the actual result; this report does not predict success. No final
+tag exists at report time. A tag requires completed R4/S3/regression without a
+STOP and a successful branch push; it cannot imply release approval.
+
+## G1-G3: guard diagnosis, one fix and verification
+
+The failing audit event was `subprocess.Popen(executable, args, cwd, env)`.
+Observed Windows types were `(NoneType, str, str, dict)`: no separate executable,
+a Python command-line string, the repository cwd, and an explicit environment
+mapping. The old guard searched `str(args)`, so `OLLAMA_HOST` in that mapping
+rejected a harmless Python subprocess. Environment values were not logged.
+
+Only `runs/phase11_binder/a4_guard/sitecustomize.py` was fixed, in one attempt.
+Process-event inspection now takes executable/argv only. It does not inspect cwd
+or environment. It handles Popen, exec, posix_spawn, spawn and system argument
+shapes and blocks named network/LLM command-line clients. Python children inherit
+the guard through PYTHONPATH. Socket connections/DNS/sends remain blocked,
+including 127.0.0.1:11434; non-loopback binds are blocked. Import hooks block
+the repository's real Ollama call functions and known Ollama/OpenAI/Anthropic
+client entry points. Mocked judge tests and cache-only replay remain available.
+
+| Required guard self-test | Result |
+| --- | --- |
+| a. External connection canary raises | PASS |
+| b. Localhost:11434 canary raises | PASS |
+| c. Python child with explicit OLLAMA_HOST/API-key-like environment keys succeeds | PASS |
+| d. Child inherits guard and its connection canary raises | PASS |
+
+CLI-event, ignored-cwd/environment, non-loopback-bind, loopback-bind and real
+repository LLM-entry-point checks also passed. The exact event shape, exceptions,
+sentinel key names, child output and helper SHA-256 are in
+`runs/phase11_binder/a4_guard_selftest.json`. No actual LLM/network call occurred.
+
+## R1-R3 history retained, not changed in this resumption
+
+E2 `198c922` conflated threshold/delta-only claims with ordinary equality claims
+whose quantity is absent. Mechanism-only diagnosis was committed as `a0ed08d`.
+Four invented tests were appended without editing existing expectations, then
+committed failing as `d619db9` (two failures, two passing controls). The single
+R3 fix `6536d5c` restores `not_a_table_claim` when every numeric mention is a
+threshold or delta, leaving the ordinary/mixed-claim quantity-scope path intact.
+Its 142 focused checks passed on both runtimes.
+
+| Frozen assertion | Expected | Actual, all four R4 regression invocations |
+| --- | --- | --- |
+| `regress.py:105`, B threshold alone | `not_a_table_claim` | `not_a_table_claim`, PASS |
+| `regress.py:198`, B delta never binds | `not_a_table_claim` | `not_a_table_claim`, PASS |
+
+The absent-metric and generic-count controls remain `not_bindable`. All E1-E3,
+Classes A-D and Class B boundary tests are included in the full A4 runs.
+
+## R4: complete sequential matrix
+
+Every invocation used PYTHONIOENCODING=utf-8, disabled bytecode/cache writing,
+and the blocked guard. Pytest basetemp and temporary regression cache fixtures
+were confined to `runs/phase11_binder/` and removed after each combination.
+The matrix ran sequentially and encountered no failure.
+
+| Python | Invocation policy | Suite | Result |
+| --- | --- | --- | --- |
+| 3.10.18 | legacy | full_pytest | PASS, 243 checks |
+| 3.10.18 | legacy | pipeline | PASS, 37 checks |
+| 3.10.18 | legacy | experiment | PASS, 63 checks |
+| 3.10.18 | legacy | regress | PASS, 123 checks |
+| 3.10.18 | v2 | full_pytest | PASS, 243 checks |
+| 3.10.18 | v2 | pipeline | PASS, 37 checks |
+| 3.10.18 | v2 | experiment | PASS, 63 checks |
+| 3.10.18 | v2 | regress | PASS, 123 checks |
+| 3.13.6 | legacy | full_pytest | PASS, 243 checks |
+| 3.13.6 | legacy | pipeline | PASS, 37 checks |
+| 3.13.6 | legacy | experiment | PASS, 63 checks |
+| 3.13.6 | legacy | regress | PASS, 123 checks |
+| 3.13.6 | v2 | full_pytest | PASS, 243 checks |
+| 3.13.6 | v2 | pipeline | PASS, 37 checks |
+| 3.13.6 | v2 | experiment | PASS, 63 checks |
+| 3.13.6 | v2 | regress | PASS, 123 checks |
+
+Full pytest scope: `tests/ src/evaluation/bottleneck_diagnosis/`, excluding
+`tests/test_pipeline.py` because it runs separately. The unchanged frozen
+`regress.py` selects v2 internally at line 20 even when invoked with legacy in
+the environment. Both environment invocations were executed on both runtimes;
+no policy was forced to hide v2 behavior. Exact commands, complete child output,
+guard proof, hashes and both frozen assertion receipts are in
+`runs/phase11_binder/a4_guard_resume_matrix.json`.
+
+## R5: development-contaminated, machine-assisted, unvalidated
+
+S3 imported the unchanged `validate_10.py.identity()` with RESULTS redirected to
+`runs/phase11_binder/r5_results.json`. It compared current legacy output with the
+frozen starting implementation: **30/30 PDF gate records identical, no differences
+for 55 pairs or 18 claims, newline canary zero**.
+
+Then unchanged `load_rep`, `run_arm`, `compare` and `summary` evaluated legacy
+and deterministic v2 on R-prod, R-eval and the existing R-oracle subset. The
+55-pair/18-claim regression and its frozen sweep/cached-product comparisons used
+existing records. No fresh extraction, LLM arm, independent new PDF audit,
+held-out construction, end-to-end pipeline or new cell-selection study ran.
+No evaluator or reconstruction criterion was changed.
+
+**The following regression counts are development-contaminated, machine-assisted,
+unvalidated.** Bound-correct and wrong-bind flags can overlap for a multi-cell
+claim under the unchanged scorer; they are not disjoint precision categories.
+
+| Representation | Policy | Unit | Total | Bound | Bound-correct | Wrong-bind flags | Returned with correct bind |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| R-prod | legacy | pairs | 55 | 4 | 4 | 0 | 4 |
+| R-prod | legacy | claims | 18 | 2 | 2 | 0 | 2 |
+| R-prod | v2 | pairs | 55 | 31 | 23 | 8 | 5 |
+| R-prod | v2 | claims | 18 | 3 | 3 | 1 | 2 |
+| R-eval | legacy | pairs | 55 | 7 | 6 | 1 | 4 |
+| R-eval | legacy | claims | 18 | 5 | 4 | 1 | 2 |
+| R-eval | v2 | pairs | 55 | 39 | 30 | 9 | 5 |
+| R-eval | v2 | claims | 18 | 5 | 5 | 1 | 2 |
+| R-oracle | legacy | pairs | 12 | 6 | 6 | 0 | 0 |
+| R-oracle | legacy | claims | 3 | 0 | 0 | 0 | 0 |
+| R-oracle | v2 | pairs | 12 | 12 | 12 | 0 | 0 |
+| R-oracle | v2 | claims | 3 | 1 | 1 | 0 | 0 |
+
+**Development-contaminated, machine-assisted, unvalidated comparisons with legacy:**
+
+| Representation | S1 gold wrong-bind flags | S2 lost gold units | S2 lost sweep associations | New non-gold associations |
+| --- | --- | --- | --- | --- |
+| R-prod | 9 | 1 | 10 | 25 |
+| R-eval | 10 | 2 | 12 | 36 |
+| R-oracle | 0 | 0 | 0 | 0 |
+
+S1 remains FAIL on **19 gold-unit wrong-binding flags**. 17 flags have no
+reconstructed gold target under the frozen scorer; those conservative failures
+are retained, not reinterpreted as passes. The 61 new non-gold association
+occurrences across representations received no new independent PDF audit here.
+They remain unvalidated and cannot establish S1 safety.
+
+S2 remains FAIL on **3 lost gold claim units plus 22 lost sweep associations**,
+25 occurrences across representations; overlapping claims are not independent
+samples. Exact identities, claims and cell associations are preserved in
+`r5_results.json`. No tuning or corrective patch followed the measurement.
+
+The cached product comparison still has **0/75 returned-with-verified-bind items**
+for both policies. This is part of the frozen deterministic regression, not a
+fresh production run or a new bottleneck investigation.
+
+| Criterion | Current verdict | Evidence |
+| --- | --- | --- |
+| S1 zero wrong binds | FAIL | 9 R-prod / 10 R-eval gold flags; new associations unvalidated |
+| S2 zero verified binds lost | FAIL | R-prod 1 gold + 10 sweep; R-eval 2 gold + 12 sweep |
+| S3 legacy identity | PASS | 30/30 PDFs; 55 pairs/18 claims identical; newline canary 0 |
+
+**NO ENABLE.** Successful unit tests and completed development measurement do not
+replace held-out evidence. Legacy / table_value_guard / borderless off remain the
+defaults. R5 execution itself completed with exit code zero; failed S1/S2 release
+criteria are reported plainly rather than silently treated as test success.
+
+## Preservation and session boundary
+
+The original two failing-before experiment logs retain SHA-256
 `55bcd9dc91fb3eb13aaf8e54384c3c4730c972ce0f982b2b5d9700c1e73da3b4`.
-They are `runs/phase11_binder/logs/experiment_.venv_v2.txt` and
-`runs/phase11_binder/logs/experiment_.venv-09a_v2.txt`.
+The F1 baseline remains unchanged: all six original experiment assertions already
+failed at Phase 10 on both runtimes. See `evidence/phase11_a4_baseline.json`.
 
-The unchanged command `python -B -m tests.test_pipeline_units` ran under explicit v2
-in the experiment directory of a detached temporary `phase10-binder-final` worktree,
-outside this repository. Both runtimes reported **56 passed, 7 failed**; the worktree
-was removed after measurement. The seventh failure was adv 4c, already resolved by
-Classes A-D at the starting Phase 11 checkpoint.
+`git diff 6536d5c -- src tests configs experiments/document_evidence_pipeline/tests`
+and `git diff phase10-binder-final -- src/evaluation configs` are empty.
+Unrelated untracked docs/diagnosis, out and src/evaluation/candidate_gold remain
+untouched. The session stops after R5 publication handling. No Part B branch,
+end-to-end replay, bottleneck ranking or bottleneck fix is authorized here.
 
-| Original assertion line | Python 3.10.18 baseline | Python 3.13.6 baseline | Classification |
-| --- | --- | --- | --- |
-| 262 own-cell return | Failed | Failed | Already failing in Phase 10 |
-| 266 cross-row reason | Failed | Failed | Already failing in Phase 10 |
-| 277 absent metric column | Failed | Failed | Already failing in Phase 10 |
-| 356 generic group probe A | Failed | Failed | Already failing in Phase 10 |
-| 358 generic group probe B | Failed | Failed | Already failing in Phase 10 |
-| 368 generic measurement/count phrase | Failed | Failed | Already failing in Phase 10 |
+## Every new or changed file in this guard resumption
 
-Exact observations/commands/hashes: `evidence/phase11_a4_baseline.json`.
-The classification-only diagnosis was written before tests/fixes:
-`diagnosis/phase11_a4_failures.md`. It identifies compound metric token matching,
-quantity scope for absent values, and generic headings incorrectly promoted to quantities.
+Raw legacy/v2 arm outputs remain local ignored receipts. The helper, self-test,
+matrix, results summary, console receipt and four documentation files are included
+in the report commit. File hashes and this inventory are in `r5_results.json`.
 
-## Failing-first tests and fixes (F3-F4)
+```text
+changed: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_guard\sitecustomize.py
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_guard_selftest.json
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_guard_resume_matrix.json
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\r5_results.json
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\r5_legacy.json
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\r5_v2.json
+new: C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\r5_console.txt
+changed: C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\phase_11_binder.md
+changed: C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\PROGRESS.md
+changed: C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\checkpoints\phase_11_binder.md
+changed: C:\Users\Praka\Downloads\researchgpt-pipeline\BLOCKED.md
+```
 
-The new `tests/test_binder_v2_phase11_e.py` uses invented tables, quantities and values.
-It was committed after **9 failed / 4 passed** was observed, before any fix. No
-expectation in that file was revised afterwards. Three separate mechanism commits followed.
+## R1-R3 commit ledger
 
-| Mechanism | Change | Focused result on each runtime |
-| --- | --- | --- |
-| E1 | Allow `@` between matched compound-label tokens; retain cutoff tokens | 131 passed, 7 not-yet-fixed E2/E3 cases deselected |
-| E2 | Classify an absent value as prose only when a local quantity is represented | 134 passed, 4 not-yet-fixed E3 cases deselected |
-| E3 | Generic model/result/score headings cannot supply measurable quantity links | 138 passed, including all 46 A-D checks and Class B boundaries |
+| Full hash | Work |
+| --- | --- |
+| `a0ed08db53d89e475a98eb5883a543069c4daa33` | Diagnose E2 threshold/delta status regression |
+| `d619db9198dcc3e438a65e5e37209cdd9b8ac3a3` | Append failing-first non-equality tests and controls |
+| `6536d5c883ea208dce18986b6d0e35153139b0d6` | Single R3 fix |
 
-The unchanged experiment suite also passed **63/63 under v2 on Python 3.10.18** after
-E3. No source change was made to `gate.py` in this resumption. The E2 fix subsequently
-failed the broader frozen regression below, so the implementation is not validated.
-
-An initial focused run encountered Windows pytest temporary-directory permissions,
-not an assertion failure. The guarded confirmation runs used reviewed escalation and
-fresh temporary directories. Every test child had a process-wide network/Ollama guard;
-logs record its blocked-loopback self-test. Mocked judge tests did not make real calls.
-
-## Full A4 matrix and exact STOP (F5)
-
-The sequential matrix stopped at the first failing command, as required.
-
-| Runtime / invocation policy | Suite | Result |
-| --- | --- | --- |
-| 3.10.18 / legacy | Full pytest | 239 passed |
-| 3.10.18 / legacy | Standalone `tests/test_pipeline.py` | 37 passed |
-| 3.10.18 / legacy | Experiment units | 63 passed |
-| 3.10.18 / legacy | Frozen `binder_10/regress.py` | **121 passed, 2 failed: STOP** |
-| Remaining 12 runtime/policy/suite combinations | Full matrix | Not run after STOP |
-
-The frozen regression sets `RGPT_BINDER_POLICY=v2` internally at line 20, including
-when invoked with legacy in the environment. Neither that script nor its policy
-selection was modified; an explicit v2 invocation was not reached in this matrix.
-
-| Frozen expectation | Original claim | Expected | Actual |
-| --- | --- | --- | --- |
-| `src/evaluation/binder_10/regress.py:105`, B threshold alone | Our method achieves above 0.90. | `not_a_table_claim` | `not_bindable` |
-| `src/evaluation/binder_10/regress.py:198`, B delta never binds | Ours improves the Dice by 0.84 over UNet. | `not_a_table_claim` | `not_bindable` |
-
-E2's quantity-scope branch excludes threshold/delta mentions. With no required equality
-candidate, those claims now take `not_bindable`. This is a newly introduced status
-regression, not evidence that the immutable expectations are irreconcilable. Both
-claims remain unbound. No additional fix, rollback, test rerun or measurement followed
-the STOP. The two generic/absent-quantity cases still require `not_bindable`; the two
-frozen non-equality cases require their original `not_a_table_claim` classification.
-
-The child failure log and matrix JSON were saved before the parent hit a console
-UnicodeEncodeError while printing the failure tail. That display error did not hide
-or change the recorded child results. Durable records and exact new-file inventory:
-`evidence/phase11_a4_validation.json`.
-
-## S1/S2/S3, measurement and Part B (F6-F8)
-
-| Criterion | Current Phase 11 resumption | Frozen Phase 10 history |
-| --- | --- | --- |
-| S1 zero wrong binds | NOT EVALUATED after F5 STOP | FAIL |
-| S2 zero verified binds lost | NOT EVALUATED after F5 STOP | FAIL |
-| S3 legacy identity | NOT RUN after F5 STOP | PASS |
-
-The development-contaminated, machine-assisted, unvalidated 55-pair/18-claim
-measurement was not run. Synthetic test success is not substituted for it or for
-held-out evidence. No `phase11-binder-final` tag was created and no Part B branch or
-cached replay was started. There is no new funnel or newly measured bottleneck ranking.
-The later request for end-to-end testing and cheap fixes remains downstream of the
-explicit F5 STOP. A future Part B remains **CACHED REPLAY - NOT A FRESH PRODUCTION RUN**
-with network/LLM calls blocked, missing records disclosed and no enable recommendation.
-
-## Preservation and handoff
-
-`git diff phase10-binder-final -- src/evaluation configs` is empty. The only test diff
-from checkpoint `731ef69` is the newly added Class E file. The two original failure
-logs were rehashed and match. Defaults remain legacy / table_value_guard / borderless
-off. Unrelated untracked `docs/diagnosis/`, `out/`, and `src/evaluation/candidate_gold/`
-remain untouched. The temporary baseline worktree was removed.
-
-Next work requires continuation past the two frozen regression failures, with all
-expectations preserved. Diagnose the non-equality classification boundary without
-changing the evaluator or tests, then resume F5 only under that authorization. The
-stopped state is committed/pushed on `exp/phase11-binder`; no success tag is warranted.
+The guard/report commit hash is supplied in the final reply; the commit cannot
+contain its own hash. Earlier implementation and failing-first history follows.
 
 ## New commit ledger
 
@@ -146,53 +240,3 @@ embed its own hash. Historical A-D commits remain unchanged:
 | `85bee812c57879b6cca31a8019b60bb972150f51` | normalize Class C ownership decorations and percent uncertainty |
 | `2415bb9c7e14da4f1306dc58ab32c567280181fe` | test Class D verified preservation and legacy-wrong vetoes first |
 | `7f0cef3399833362763f30a5fc51c2be58fd55ec` | preserve only raw-verified unambiguous legacy binds without semantic override |
-
-## Exact absolute paths of every new resumption file
-
-Committed evidence/test files and ignored local helpers, receipts and logs are all
-listed here. SHA-256 values and persistence are in `phase11_a4_validation.json`.
-Existing modified files are `src/evidence/binder_v2.py`, this report,
-`docs/evaluation/PROGRESS.md`, `docs/evaluation/checkpoints/phase_11_binder.md`, and
-`BLOCKED.md`. Prior STOP logs and evidence files remain unchanged.
-
-```text
-C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\evidence\phase11_a4_baseline.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\diagnosis\phase11_a4_failures.md
-C:\Users\Praka\Downloads\researchgpt-pipeline\tests\test_binder_v2_phase11_e.py
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_after_focused_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_confirmed_focused_.venv-09a_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e1_confirmed_focused_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e2_after_focused_.venv-09a_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e2_after_focused_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_experiment_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_focused_.venv-09a_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e3_after_focused_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_e_before_synthetic_.venv_v2.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_final_matrix.json
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_guard\sitecustomize.py
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_matrix.py
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_report.py
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\a4_run.py
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_baseline_experiment_.venv-09a_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_baseline_experiment_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_after_focused_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_confirmed_focused_.venv-09a_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_confirmed_focused_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_verified_focused_.venv-09a_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e1_verified_focused_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e2_after_focused_.venv-09a_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e2_after_focused_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_experiment_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_focused_.venv-09a_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e3_after_focused_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_e_before_synthetic_.venv_v2.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_experiment_.venv_legacy.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_full_.venv_legacy.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_pipeline_.venv_legacy.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\logs\a4_final_regression_.venv_legacy.txt
-C:\Users\Praka\Downloads\researchgpt-pipeline\docs\evaluation\evidence\phase11_a4_validation.json
-```
-
-Earlier A-D scope, mechanism descriptions and validation receipts remain in checkpoint
-commit `731ef69` and the unchanged `preregistration/phase_11_scope.md`,
-`diagnosis/phase11_failure_classes.md` and `evidence/phase11_class_*` artifacts.

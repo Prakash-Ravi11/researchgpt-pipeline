@@ -1,0 +1,423 @@
+{
+  "mode": "blocked",
+  "implementation": "6536d5c883ea208dce18986b6d0e35153139b0d6",
+  "completed": 16,
+  "results": [
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "legacy",
+      "suite": "full_pytest",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/",
+        "src/evaluation/bottleneck_diagnosis/",
+        "--ignore=tests/test_pipeline.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\g4_tmp_ey3wbz_8\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "243 passed",
+      "guard_active": true,
+      "summary": [
+        "243 passed in 7.38s"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n........................................................................ [ 29%]\n........................................................................ [ 59%]\n........................................................................ [ 88%]\n...........................                                              [100%]\n243 passed in 7.38s\n",
+      "output_sha256": "d3b1eadcf839898d9f3d36a5ece64077b81426311e713d386fa6f604dbea062d",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "legacy",
+      "suite": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "37 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "37 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n\nchunk_text()\n  [PASS] normal case produces multiple overlapping chunks\n  [PASS] short text produces exactly one chunk\n  [PASS] empty text produces zero chunks\n  [PASS] whitespace-only text produces zero chunks\n  [PASS] exact chunk_size input produces exactly one chunk\n  [PASS] overlap >= chunk_size raises instead of infinite-looping\n  [PASS] overlap > chunk_size raises instead of infinite-looping\n\nclean_text()\n  [PASS] references section is cut off\n  [PASS] content before references is kept\n  [PASS] text with no references heading is left intact\n  [PASS] collapses 3+ blank lines to 2\n  [PASS] empty input returns empty output\n\nstringify() / listify()\n  [PASS] stringify: plain string passes through\n  [PASS] stringify: None becomes empty string\n  [PASS] stringify: dict is flattened to readable text\n  [PASS] stringify: list is joined\n  [PASS] stringify: nested dict-in-list doesn't crash\n  [PASS] listify: plain list of strings passes through\n  [PASS] listify: None becomes empty list\n  [PASS] listify: single string becomes single-item list\n  [PASS] listify: empty string becomes empty list, not ['']\n  [PASS] listify: dict becomes list of key:value strings\n  [PASS] listify: list containing a dict doesn't crash and stays a list\n\nfind_weak_extractions()\n  [PASS] all fields populated -> not weak\n  [PASS] explicitly flagged _extraction_failed -> weak regardless of fields\n  [PASS] exactly 3 of 4 fields empty -> weak (boundary, inclusive)\n  [PASS] exactly 2 of 4 fields empty -> NOT weak (boundary, exclusive)\n  [PASS] all 4 fields empty -> weak\n\ncluster_papers() on small corpora (the auto-k crash case)\n  [PASS] auto-k with n=2 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.015)\n  [PASS] auto-k with n=3 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.227)\n  [PASS] auto-k with n=4 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.106)\n  [PASS] auto-k with n=5 papers doesn't crash and covers all papers\n  auto-selected k=3 (silhouette=0.103)\n  [PASS] auto-k with n=9 papers doesn't crash and covers all papers\n  [PASS] fixed k=6 with only 3 papers clamps instead of crashing\n\nshould_attempt_dataset_fallback()\n  [PASS] empirical study text triggers dataset fallback\n  [PASS] pure theory text does not trigger dataset fallback\n  [PASS] empty text does not trigger dataset fallback\n\n==================================================\n37 passed, 0 failed\n==================================================\n",
+      "output_sha256": "7d194821dd41c5666e1537d5c6b29eeda343871a11f66b9a8826d8e04554450c",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "legacy",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "expected": "63 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "63 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n  ok   schema.valid FULL_TEXT record\n  ok   schema.rejects FULL_TEXT w/o content validation\n  ok   content_validate accepts a real downloaded pdf\n  ok   content_validate rejects html landing page\n  ok   content_validate rejects empty\n  ok   content_validate rejects tiny abstract-sized pdf\n  ok   content_validate accepts JATS with sections+body\n  ok   content_validate rejects JATS-shaped but thin\n  ok   identity_validate accepts matching JATS\n  ok   identity_validate REJECTS wrong paper (JATS)\n  ok   identity_validate accepts matching PDF\n  ok   identity_validate REJECTS wrong paper (PDF)\n  ok   represent: JATS yields blocks\n  ok   represent: results section detected\n  ok   represent: nested method subsection keeps 'method' label\n  ok   represent: every block has provenance\n  ok   chunker: chunks carry section+loc+offsets\n  ok   chunker: no chunk crosses blocks\n  ok   attr A: 'we propose SPAR ... achieves' -> OWN\n  ok   attr B: 'Smith et al. achieved 94.2%' -> CITED\n  ok   attr C: passive voice in first-person results section -> OWN\n  ok   attr C2: passive voice, no first-person cues -> UNKNOWN\n  ok   attr D: 'our method achieved' -> OWN\n  ok   attr E: table 'Proposed' row with proposed-system caption -> OWN\n  ok   attr F: ablation variant row -> not CITED\n  ok   attr G: 'we evaluate using ...' in Methods -> OWN\n  ok   attr H: 'we report ...' in Results -> OWN\n  ok   attr I/J: bare sentence, no context -> UNKNOWN\n  ok   attr guard: number hugging '[12]' -> CITED\n  ok   attr self-cite: own-author 'Chen et al.' discounted -> OWN\n  ok   decide: MISSING -> ABSTAINED\n  ok   decide: UNSUPPORTED -> ABSTAINED\n  ok   decide: EXPLICIT but CITED result -> ABSTAINED\n  ok   decide: EXPLICIT result, ownership UNKNOWN -> ABSTAINED\n  ok   decide: EXPLICIT OWN result -> RETURNED\n  ok   decide: INFERRED dataset -> ABSTAINED (quantitative field)\n  ok   decide: INFERRED method -> RETURNED (non-quantitative)\n  ok   gate: paraphrased result, number verbatim in body -> grounds\n  ok   gate: result number absent from every chunk -> not grounded\n  ok   gate: 'BLEU-4' single digit does not number-anchor a result\n  ok   gate: metrics value still grounds via token containment\n  ok   gate: PDF-only quantitative OWN result -> unverifiable_binding (not RETURNED)\n  ok   gate: structured paper, value at own cell -> bound -> RETURNED\n  ok   gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED\n  ok   gate: structured paper, prose aggregate not in metric column -> not_a_table_claim (falls through)\n  ok   gate: structured paper, metric not a column anywhere -> not_bindable (falls through)\n  ok   sym 1a: _metric_tokens sees short metric tokens ('f1', 'auc')\n  ok   sym 1b: claim 'F1 of 0.88' at own F1 cell -> bound (was not_bindable pre-fix)\n  ok   sym 1c: claim 'F1 of 0.71' (Prior's row) -> wrong_cell (was not_bindable pre-fix)\n  ok   sym 2a: _metric_tokens('Performance metrics') is empty (no 'em' substring hit)\n  ok   sym 2b: _metric_tokens('Blood component used for measurement') is empty\n  ok   sym 2c: _col_matches_metric('Performance metrics', full vocab) is False (was True via 'em')\n  ok   sym 2d: _col_matches_metric('Blood component used for measurement', full vocab) is False\n  ok   sym 3a: 'F1-score' and 'F1' share the token 'f1' under _metric_tokens (both sides)\n  ok   sym 3b: _col_matches_metric reduces its header arg with _metric_tokens too\n  ok   sym 3c: no side introduces 'em' from 'exact match' as a substring\n  ok   sym 3d: header vs claim symmetry \u2014 _col_matches_metric(h, toks(c)) == (toks(h) & toks(c))\n  ok   adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4c: same cross-row attack via real metric 'Accuracy' -> wrong_cell (caught post-fix)\n  ok   adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)\n  ok   inv16: route-agnostic \u2014 counts a RETURNED adversarial probe even when binding_status=not_bindable\n  ok   inv16: a correct_cell RETURNED is NOT an acceptance; an ABSTAINED adversarial is NOT\n\n63 passed, 0 failed\n",
+      "output_sha256": "9f2b7cc9914e55040d55f3e13dbc340a86a9fdb16e185962f8a924ccabf2ef76",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "legacy",
+      "suite": "regress",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "0 failing: []",
+      "guard_active": true,
+      "summary": [
+        "0 failing: []"
+      ],
+      "regression_statuses": [
+        "PASS  B threshold alone: not_a_table_claim",
+        "PASS  B delta never binds: not_a_table_claim"
+      ],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\nPASS  A QUAL2: wrong_cell\nPASS  A QUAL1: wrong_cell\nPASS  A HIER1: partial_binding\nPASS  A A1: wrong_cell\nPASS  A C3: not_bindable\nPASS  A B1: wrong_cell\nPASS  A B3: wrong_cell\nPASS  A FLIP2: wrong_cell\nPASS  A DECL3: wrong_cell\nPASS  A F1: wrong_cell\nPASS  A PART1: not_bindable\nPASS  A PART2: wrong_cell\nPASS  A PART3: wrong_cell\nPASS  A SLASH1: not_bindable\nPASS  A D1: wrong_cell\nPASS  A D2: wrong_cell\nPASS  A C1: wrong_cell\nPASS  A COUNT2: not_a_table_claim\nPASS  A Q1: wrong_cell\nPASS  A OWNV: wrong_cell\nPASS  A S1: wrong_cell\nPASS  A SUF1: wrong_cell\nPASS  A ROLE1: partial_binding\nPASS  A ROLE3: partial_binding\nPASS  A DOM1: wrong_cell\nPASS  A CTX1: wrong_cell\nPASS  A THOUS1: not_a_table_claim\nPASS  A SIGN1: not_a_table_claim\nPASS  A RANGE1: not_a_table_claim\nPASS  A PCT1: not_a_table_claim\nPASS  A TM1: wrong_cell\nPASS  A AL1: not_bindable\nPASS  A THR2: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  A PROP1: wrong_cell\nPASS  B caption names the dataset: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B \u00b1 is not a tie-break: duplicate_quantity_context\nPASS  B table mention picks: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B table mention picks Table 2: {'row': 'Ours', 'col': 'Dice', 'value': '0.95', 'caption': 'Table 2: Results.'}\nPASS  B table_mention off: no dominance either: duplicate_quantity_context\nPASS  B D9 0.915 (no cell) not required: [('0.926', 'Average', 'Ours', '0.926 \u00b1 0.012')]\nPASS  B threshold, no metric named: not_bindable\nPASS  B threshold alone: not_a_table_claim\nPASS  B threshold beside a comparator: [('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B different entity -> wrong_cell: wrong_cell\nPASS  B gate binding_wrong_cell: binding_wrong_cell\nPASS  B two quantities, one value: wrong_cell\nPASS  B synonym 'Dice score' / a Di: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice score' / a DS: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice coefficient' / a Di: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice coefficient' / a DS: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a Di: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a DS: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'DSC' / a Di: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'DSC' / a DS: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'Dice' / a Di: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B synonym 'Dice' / a DS: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B % never a fraction: wrong_cell\nPASS  B % stated in the header: [('0.87', 'Ours', 'Dice (%)', '0.87')]\nPASS  B part unit mm: [('35.66', 'Smith et al. (2020)', 'Results', 'DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm')]\nPASS  B part unit % vs mm: wrong_cell\nPASS  B count header '# subjects': [('15', 'Training', '# subjects', '15')]\nPASS  B count header '#subjects': [('15', 'Training', '#subjects', '15')]\nPASS  B count header 'No. of subjects': [('15', 'Training', 'No. of subjects', '15')]\nPASS  B count header 'Number of subjects': [('15', 'Training', 'Number of subjects', '15')]\nPASS  B count header 'n': [('15', 'Training', 'n', '15')]\nPASS  B count header '# participants': wrong_cell\nPASS  B count header 'Number of scans': wrong_cell\nPASS  B Eq. numbers: Eq.\nPASS  B epochs of the other row: wrong_cell\nPASS  B Eq. only: no_number\nPASS  B 'we present a comparison' declares nothing: \nPASS  B own ref, no own cell: wrong_cell\nPASS  B two declared names: ambiguous_subject\nPASS  B no verb alias: not_bindable\nPASS  B group alias (off=''): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias (off='own_alias'): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias span: Unexposed controls were scanned twice.\nPASS  B subject is not the quantity: not_bindable\nPASS  B methods as columns: [('0.84', 'CSF', 'VNet', '0.84')]\nPASS  B numeric column label: [('0.88', 'Ours', '128', '0.88')]\nPASS  B numeric column label conflict: wrong_cell\nPASS  B mL: \nPASS  B mL vs cm3 header: wrong_cell\nPASS  B Tables 2 and 3: \nPASS  B Tables 2 and 3 -> 3: [('0.95', 'Ours', 'HD95', '0.95')]\nPASS  B Table 2 named, value in 3: wrong_cell\nPASS  B row unit conflict: wrong_cell\nPASS  B row quantity (transposed): [('28.7', 'Age (years)', 'Controls', '28.7')]\nPASS  B cell unit conflict: wrong_cell\nPASS  B cell unit: [('35.66', 'Ours', 'Inference time', '35.66 ms')]\nPASS  B 'this work' is not own (PREREG D5): wrong_cell\nPASS  B 'but' splits clauses: 0.84 names no metric: partial_binding\nPASS  B 'while' clause, metric shared: [('0.81', 'UNet', 'Dice', '0.81'), ('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B qualifier 'On ISLES, ours reaches': wrong_cell\nPASS  B qualifier 'Ours reaches a Dice of': wrong_cell\nPASS  B qualifier 'For the ISLES dataset,': wrong_cell\nPASS  B qualifier 'On BraTS, ours reaches': [('0.91', 'Ours', 'BraTS / Dice', '0.91')]\nPASS  B maximal match: [('0.85', 'Attention U-Net', 'Dice', '0.85')]\nPASS  B maximal match, inner label: wrong_cell\nPASS  B passive 'by': [('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B 'X (a) outperforms Y (b)': [('0.90', 'Ours', 'Dice', '0.90'), ('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B 'respectively' lists abstain: wrong_cell\nPASS  B delta never binds: not_a_table_claim\nPASS  B own claim, non-own cell: wrong_cell\nPASS  C alias judge binds with a verbatim span: ([('0.81', 'UNet', 'Dice', '0.81')], 1)\nPASS  C alias span not in the paper -> STOP: judge span 'VNet is a network.' is not in its input (claim '\nPASS  C alias span must name the chosen cell: not_bindable\nPASS  C claim-only span -> STOP (PREREG E): judge span 'The baseline network achieves a Dice of 0.81.' i\nPASS  C empty span: rejected, no STOP: ambiguous_subject\nPASS  C missing span: rejected: ambiguous_subject\nPASS  C judge unavailable: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'llm_error'}\nPASS  C replay cache miss, malformed lines skipped: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'cache_miss'}\nPASS  D 'In \u0130zmir, a mAP of 0.85 ': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D 'On the \u0130zmir cohort, the': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D sign: -0.45 vs 0.45: not_a_table_claim\nPASS  D sign: -0.12: [('-0.12', 'VNet', 'Pearson r', '\u22120.12')]\nPASS  D sign: 0.12 vs -0.12: not_a_table_claim\nPASS  D ligature: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D wrapped cell: [('0.947', 'VNet', 'Dice', '0.94 7')]\nPASS  D thousands: [('1500', 'Training', 'Number of images', '1500')]\nPASS  D 2000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D 40000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  E table-body sentence: < 3 s, trace < 200 KB: 1.02s 98 KB wrong_cell\n\n0 failing: []\n",
+      "output_sha256": "3017c34c1b00df35f6af7dd5c386fdc6fa20b3ed7338b1bc485615be449634f2",
+      "pass": true,
+      "internal_policy": "v2; frozen regress.py selects it internally",
+      "passed_expectations": 123
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "v2",
+      "suite": "full_pytest",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/",
+        "src/evaluation/bottleneck_diagnosis/",
+        "--ignore=tests/test_pipeline.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\g4_tmp_rbwoi1m4\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "243 passed",
+      "guard_active": true,
+      "summary": [
+        "243 passed in 5.90s"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n........................................................................ [ 29%]\n........................................................................ [ 59%]\n........................................................................ [ 88%]\n...........................                                              [100%]\n243 passed in 5.90s\n",
+      "output_sha256": "9c8cff353d6ef77ed6fd9617194e0b086ce86922f23933f088d3ea728463a7d4",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "v2",
+      "suite": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "37 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "37 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n\nchunk_text()\n  [PASS] normal case produces multiple overlapping chunks\n  [PASS] short text produces exactly one chunk\n  [PASS] empty text produces zero chunks\n  [PASS] whitespace-only text produces zero chunks\n  [PASS] exact chunk_size input produces exactly one chunk\n  [PASS] overlap >= chunk_size raises instead of infinite-looping\n  [PASS] overlap > chunk_size raises instead of infinite-looping\n\nclean_text()\n  [PASS] references section is cut off\n  [PASS] content before references is kept\n  [PASS] text with no references heading is left intact\n  [PASS] collapses 3+ blank lines to 2\n  [PASS] empty input returns empty output\n\nstringify() / listify()\n  [PASS] stringify: plain string passes through\n  [PASS] stringify: None becomes empty string\n  [PASS] stringify: dict is flattened to readable text\n  [PASS] stringify: list is joined\n  [PASS] stringify: nested dict-in-list doesn't crash\n  [PASS] listify: plain list of strings passes through\n  [PASS] listify: None becomes empty list\n  [PASS] listify: single string becomes single-item list\n  [PASS] listify: empty string becomes empty list, not ['']\n  [PASS] listify: dict becomes list of key:value strings\n  [PASS] listify: list containing a dict doesn't crash and stays a list\n\nfind_weak_extractions()\n  [PASS] all fields populated -> not weak\n  [PASS] explicitly flagged _extraction_failed -> weak regardless of fields\n  [PASS] exactly 3 of 4 fields empty -> weak (boundary, inclusive)\n  [PASS] exactly 2 of 4 fields empty -> NOT weak (boundary, exclusive)\n  [PASS] all 4 fields empty -> weak\n\ncluster_papers() on small corpora (the auto-k crash case)\n  [PASS] auto-k with n=2 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.015)\n  [PASS] auto-k with n=3 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.227)\n  [PASS] auto-k with n=4 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.106)\n  [PASS] auto-k with n=5 papers doesn't crash and covers all papers\n  auto-selected k=3 (silhouette=0.103)\n  [PASS] auto-k with n=9 papers doesn't crash and covers all papers\n  [PASS] fixed k=6 with only 3 papers clamps instead of crashing\n\nshould_attempt_dataset_fallback()\n  [PASS] empirical study text triggers dataset fallback\n  [PASS] pure theory text does not trigger dataset fallback\n  [PASS] empty text does not trigger dataset fallback\n\n==================================================\n37 passed, 0 failed\n==================================================\n",
+      "output_sha256": "7d194821dd41c5666e1537d5c6b29eeda343871a11f66b9a8826d8e04554450c",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "v2",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "expected": "63 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "63 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n  ok   schema.valid FULL_TEXT record\n  ok   schema.rejects FULL_TEXT w/o content validation\n  ok   content_validate accepts a real downloaded pdf\n  ok   content_validate rejects html landing page\n  ok   content_validate rejects empty\n  ok   content_validate rejects tiny abstract-sized pdf\n  ok   content_validate accepts JATS with sections+body\n  ok   content_validate rejects JATS-shaped but thin\n  ok   identity_validate accepts matching JATS\n  ok   identity_validate REJECTS wrong paper (JATS)\n  ok   identity_validate accepts matching PDF\n  ok   identity_validate REJECTS wrong paper (PDF)\n  ok   represent: JATS yields blocks\n  ok   represent: results section detected\n  ok   represent: nested method subsection keeps 'method' label\n  ok   represent: every block has provenance\n  ok   chunker: chunks carry section+loc+offsets\n  ok   chunker: no chunk crosses blocks\n  ok   attr A: 'we propose SPAR ... achieves' -> OWN\n  ok   attr B: 'Smith et al. achieved 94.2%' -> CITED\n  ok   attr C: passive voice in first-person results section -> OWN\n  ok   attr C2: passive voice, no first-person cues -> UNKNOWN\n  ok   attr D: 'our method achieved' -> OWN\n  ok   attr E: table 'Proposed' row with proposed-system caption -> OWN\n  ok   attr F: ablation variant row -> not CITED\n  ok   attr G: 'we evaluate using ...' in Methods -> OWN\n  ok   attr H: 'we report ...' in Results -> OWN\n  ok   attr I/J: bare sentence, no context -> UNKNOWN\n  ok   attr guard: number hugging '[12]' -> CITED\n  ok   attr self-cite: own-author 'Chen et al.' discounted -> OWN\n  ok   decide: MISSING -> ABSTAINED\n  ok   decide: UNSUPPORTED -> ABSTAINED\n  ok   decide: EXPLICIT but CITED result -> ABSTAINED\n  ok   decide: EXPLICIT result, ownership UNKNOWN -> ABSTAINED\n  ok   decide: EXPLICIT OWN result -> RETURNED\n  ok   decide: INFERRED dataset -> ABSTAINED (quantitative field)\n  ok   decide: INFERRED method -> RETURNED (non-quantitative)\n  ok   gate: paraphrased result, number verbatim in body -> grounds\n  ok   gate: result number absent from every chunk -> not grounded\n  ok   gate: 'BLEU-4' single digit does not number-anchor a result\n  ok   gate: metrics value still grounds via token containment\n  ok   gate: PDF-only quantitative OWN result -> unverifiable_binding (not RETURNED)\n  ok   gate: structured paper, value at own cell -> bound -> RETURNED\n  ok   gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED\n  ok   gate: structured paper, prose aggregate not in metric column -> not_a_table_claim (falls through)\n  ok   gate: structured paper, metric not a column anywhere -> not_bindable (falls through)\n  ok   sym 1a: _metric_tokens sees short metric tokens ('f1', 'auc')\n  ok   sym 1b: claim 'F1 of 0.88' at own F1 cell -> bound (was not_bindable pre-fix)\n  ok   sym 1c: claim 'F1 of 0.71' (Prior's row) -> wrong_cell (was not_bindable pre-fix)\n  ok   sym 2a: _metric_tokens('Performance metrics') is empty (no 'em' substring hit)\n  ok   sym 2b: _metric_tokens('Blood component used for measurement') is empty\n  ok   sym 2c: _col_matches_metric('Performance metrics', full vocab) is False (was True via 'em')\n  ok   sym 2d: _col_matches_metric('Blood component used for measurement', full vocab) is False\n  ok   sym 3a: 'F1-score' and 'F1' share the token 'f1' under _metric_tokens (both sides)\n  ok   sym 3b: _col_matches_metric reduces its header arg with _metric_tokens too\n  ok   sym 3c: no side introduces 'em' from 'exact match' as a substring\n  ok   sym 3d: header vs claim symmetry \u2014 _col_matches_metric(h, toks(c)) == (toks(h) & toks(c))\n  ok   adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4c: same cross-row attack via real metric 'Accuracy' -> wrong_cell (caught post-fix)\n  ok   adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)\n  ok   inv16: route-agnostic \u2014 counts a RETURNED adversarial probe even when binding_status=not_bindable\n  ok   inv16: a correct_cell RETURNED is NOT an acceptance; an ABSTAINED adversarial is NOT\n\n63 passed, 0 failed\n",
+      "output_sha256": "9f2b7cc9914e55040d55f3e13dbc340a86a9fdb16e185962f8a924ccabf2ef76",
+      "pass": true
+    },
+    {
+      "runtime": ".venv",
+      "python": "3.10.18",
+      "invocation_policy": "v2",
+      "suite": "regress",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "0 failing: []",
+      "guard_active": true,
+      "summary": [
+        "0 failing: []"
+      ],
+      "regression_statuses": [
+        "PASS  B threshold alone: not_a_table_claim",
+        "PASS  B delta never binds: not_a_table_claim"
+      ],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\nPASS  A QUAL2: wrong_cell\nPASS  A QUAL1: wrong_cell\nPASS  A HIER1: partial_binding\nPASS  A A1: wrong_cell\nPASS  A C3: not_bindable\nPASS  A B1: wrong_cell\nPASS  A B3: wrong_cell\nPASS  A FLIP2: wrong_cell\nPASS  A DECL3: wrong_cell\nPASS  A F1: wrong_cell\nPASS  A PART1: not_bindable\nPASS  A PART2: wrong_cell\nPASS  A PART3: wrong_cell\nPASS  A SLASH1: not_bindable\nPASS  A D1: wrong_cell\nPASS  A D2: wrong_cell\nPASS  A C1: wrong_cell\nPASS  A COUNT2: not_a_table_claim\nPASS  A Q1: wrong_cell\nPASS  A OWNV: wrong_cell\nPASS  A S1: wrong_cell\nPASS  A SUF1: wrong_cell\nPASS  A ROLE1: partial_binding\nPASS  A ROLE3: partial_binding\nPASS  A DOM1: wrong_cell\nPASS  A CTX1: wrong_cell\nPASS  A THOUS1: not_a_table_claim\nPASS  A SIGN1: not_a_table_claim\nPASS  A RANGE1: not_a_table_claim\nPASS  A PCT1: not_a_table_claim\nPASS  A TM1: wrong_cell\nPASS  A AL1: not_bindable\nPASS  A THR2: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  A PROP1: wrong_cell\nPASS  B caption names the dataset: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B \u00b1 is not a tie-break: duplicate_quantity_context\nPASS  B table mention picks: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B table mention picks Table 2: {'row': 'Ours', 'col': 'Dice', 'value': '0.95', 'caption': 'Table 2: Results.'}\nPASS  B table_mention off: no dominance either: duplicate_quantity_context\nPASS  B D9 0.915 (no cell) not required: [('0.926', 'Average', 'Ours', '0.926 \u00b1 0.012')]\nPASS  B threshold, no metric named: not_bindable\nPASS  B threshold alone: not_a_table_claim\nPASS  B threshold beside a comparator: [('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B different entity -> wrong_cell: wrong_cell\nPASS  B gate binding_wrong_cell: binding_wrong_cell\nPASS  B two quantities, one value: wrong_cell\nPASS  B synonym 'Dice score' / a Di: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice score' / a DS: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice coefficient' / a Di: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice coefficient' / a DS: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a Di: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a DS: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'DSC' / a Di: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'DSC' / a DS: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'Dice' / a Di: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B synonym 'Dice' / a DS: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B % never a fraction: wrong_cell\nPASS  B % stated in the header: [('0.87', 'Ours', 'Dice (%)', '0.87')]\nPASS  B part unit mm: [('35.66', 'Smith et al. (2020)', 'Results', 'DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm')]\nPASS  B part unit % vs mm: wrong_cell\nPASS  B count header '# subjects': [('15', 'Training', '# subjects', '15')]\nPASS  B count header '#subjects': [('15', 'Training', '#subjects', '15')]\nPASS  B count header 'No. of subjects': [('15', 'Training', 'No. of subjects', '15')]\nPASS  B count header 'Number of subjects': [('15', 'Training', 'Number of subjects', '15')]\nPASS  B count header 'n': [('15', 'Training', 'n', '15')]\nPASS  B count header '# participants': wrong_cell\nPASS  B count header 'Number of scans': wrong_cell\nPASS  B Eq. numbers: Eq.\nPASS  B epochs of the other row: wrong_cell\nPASS  B Eq. only: no_number\nPASS  B 'we present a comparison' declares nothing: \nPASS  B own ref, no own cell: wrong_cell\nPASS  B two declared names: ambiguous_subject\nPASS  B no verb alias: not_bindable\nPASS  B group alias (off=''): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias (off='own_alias'): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias span: Unexposed controls were scanned twice.\nPASS  B subject is not the quantity: not_bindable\nPASS  B methods as columns: [('0.84', 'CSF', 'VNet', '0.84')]\nPASS  B numeric column label: [('0.88', 'Ours', '128', '0.88')]\nPASS  B numeric column label conflict: wrong_cell\nPASS  B mL: \nPASS  B mL vs cm3 header: wrong_cell\nPASS  B Tables 2 and 3: \nPASS  B Tables 2 and 3 -> 3: [('0.95', 'Ours', 'HD95', '0.95')]\nPASS  B Table 2 named, value in 3: wrong_cell\nPASS  B row unit conflict: wrong_cell\nPASS  B row quantity (transposed): [('28.7', 'Age (years)', 'Controls', '28.7')]\nPASS  B cell unit conflict: wrong_cell\nPASS  B cell unit: [('35.66', 'Ours', 'Inference time', '35.66 ms')]\nPASS  B 'this work' is not own (PREREG D5): wrong_cell\nPASS  B 'but' splits clauses: 0.84 names no metric: partial_binding\nPASS  B 'while' clause, metric shared: [('0.81', 'UNet', 'Dice', '0.81'), ('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B qualifier 'On ISLES, ours reaches': wrong_cell\nPASS  B qualifier 'Ours reaches a Dice of': wrong_cell\nPASS  B qualifier 'For the ISLES dataset,': wrong_cell\nPASS  B qualifier 'On BraTS, ours reaches': [('0.91', 'Ours', 'BraTS / Dice', '0.91')]\nPASS  B maximal match: [('0.85', 'Attention U-Net', 'Dice', '0.85')]\nPASS  B maximal match, inner label: wrong_cell\nPASS  B passive 'by': [('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B 'X (a) outperforms Y (b)': [('0.90', 'Ours', 'Dice', '0.90'), ('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B 'respectively' lists abstain: wrong_cell\nPASS  B delta never binds: not_a_table_claim\nPASS  B own claim, non-own cell: wrong_cell\nPASS  C alias judge binds with a verbatim span: ([('0.81', 'UNet', 'Dice', '0.81')], 1)\nPASS  C alias span not in the paper -> STOP: judge span 'VNet is a network.' is not in its input (claim '\nPASS  C alias span must name the chosen cell: not_bindable\nPASS  C claim-only span -> STOP (PREREG E): judge span 'The baseline network achieves a Dice of 0.81.' i\nPASS  C empty span: rejected, no STOP: ambiguous_subject\nPASS  C missing span: rejected: ambiguous_subject\nPASS  C judge unavailable: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'llm_error'}\nPASS  C replay cache miss, malformed lines skipped: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'cache_miss'}\nPASS  D 'In \u0130zmir, a mAP of 0.85 ': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D 'On the \u0130zmir cohort, the': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D sign: -0.45 vs 0.45: not_a_table_claim\nPASS  D sign: -0.12: [('-0.12', 'VNet', 'Pearson r', '\u22120.12')]\nPASS  D sign: 0.12 vs -0.12: not_a_table_claim\nPASS  D ligature: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D wrapped cell: [('0.947', 'VNet', 'Dice', '0.94 7')]\nPASS  D thousands: [('1500', 'Training', 'Number of images', '1500')]\nPASS  D 2000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D 40000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  E table-body sentence: < 3 s, trace < 200 KB: 1.03s 98 KB wrong_cell\n\n0 failing: []\n",
+      "output_sha256": "5f172720438b87b4be4adf6e58efac8b0c1120aed12512abf308478795df7f31",
+      "pass": true,
+      "internal_policy": "v2; frozen regress.py selects it internally",
+      "passed_expectations": 123
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "legacy",
+      "suite": "full_pytest",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/",
+        "src/evaluation/bottleneck_diagnosis/",
+        "--ignore=tests/test_pipeline.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\g4_tmp_7i9y_4k_\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "243 passed",
+      "guard_active": true,
+      "summary": [
+        "243 passed in 7.81s"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n........................................................................ [ 29%]\n........................................................................ [ 59%]\n........................................................................ [ 88%]\n...........................                                              [100%]\n243 passed in 7.81s\n",
+      "output_sha256": "1de3e657b5ac28c731dfc1960501ba4ccc7b5f86b60f889b7649ac9ab91048ed",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "legacy",
+      "suite": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "37 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "37 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n\nchunk_text()\n  [PASS] normal case produces multiple overlapping chunks\n  [PASS] short text produces exactly one chunk\n  [PASS] empty text produces zero chunks\n  [PASS] whitespace-only text produces zero chunks\n  [PASS] exact chunk_size input produces exactly one chunk\n  [PASS] overlap >= chunk_size raises instead of infinite-looping\n  [PASS] overlap > chunk_size raises instead of infinite-looping\n\nclean_text()\n  [PASS] references section is cut off\n  [PASS] content before references is kept\n  [PASS] text with no references heading is left intact\n  [PASS] collapses 3+ blank lines to 2\n  [PASS] empty input returns empty output\n\nstringify() / listify()\n  [PASS] stringify: plain string passes through\n  [PASS] stringify: None becomes empty string\n  [PASS] stringify: dict is flattened to readable text\n  [PASS] stringify: list is joined\n  [PASS] stringify: nested dict-in-list doesn't crash\n  [PASS] listify: plain list of strings passes through\n  [PASS] listify: None becomes empty list\n  [PASS] listify: single string becomes single-item list\n  [PASS] listify: empty string becomes empty list, not ['']\n  [PASS] listify: dict becomes list of key:value strings\n  [PASS] listify: list containing a dict doesn't crash and stays a list\n\nfind_weak_extractions()\n  [PASS] all fields populated -> not weak\n  [PASS] explicitly flagged _extraction_failed -> weak regardless of fields\n  [PASS] exactly 3 of 4 fields empty -> weak (boundary, inclusive)\n  [PASS] exactly 2 of 4 fields empty -> NOT weak (boundary, exclusive)\n  [PASS] all 4 fields empty -> weak\n\ncluster_papers() on small corpora (the auto-k crash case)\n  [PASS] auto-k with n=2 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.015)\n  [PASS] auto-k with n=3 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.227)\n  [PASS] auto-k with n=4 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.106)\n  [PASS] auto-k with n=5 papers doesn't crash and covers all papers\n  auto-selected k=3 (silhouette=0.103)\n  [PASS] auto-k with n=9 papers doesn't crash and covers all papers\n  [PASS] fixed k=6 with only 3 papers clamps instead of crashing\n\nshould_attempt_dataset_fallback()\n  [PASS] empirical study text triggers dataset fallback\n  [PASS] pure theory text does not trigger dataset fallback\n  [PASS] empty text does not trigger dataset fallback\n\n==================================================\n37 passed, 0 failed\n==================================================\n",
+      "output_sha256": "7d194821dd41c5666e1537d5c6b29eeda343871a11f66b9a8826d8e04554450c",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "legacy",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "expected": "63 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "63 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n  ok   schema.valid FULL_TEXT record\n  ok   schema.rejects FULL_TEXT w/o content validation\n  ok   content_validate accepts a real downloaded pdf\n  ok   content_validate rejects html landing page\n  ok   content_validate rejects empty\n  ok   content_validate rejects tiny abstract-sized pdf\n  ok   content_validate accepts JATS with sections+body\n  ok   content_validate rejects JATS-shaped but thin\n  ok   identity_validate accepts matching JATS\n  ok   identity_validate REJECTS wrong paper (JATS)\n  ok   identity_validate accepts matching PDF\n  ok   identity_validate REJECTS wrong paper (PDF)\n  ok   represent: JATS yields blocks\n  ok   represent: results section detected\n  ok   represent: nested method subsection keeps 'method' label\n  ok   represent: every block has provenance\n  ok   chunker: chunks carry section+loc+offsets\n  ok   chunker: no chunk crosses blocks\n  ok   attr A: 'we propose SPAR ... achieves' -> OWN\n  ok   attr B: 'Smith et al. achieved 94.2%' -> CITED\n  ok   attr C: passive voice in first-person results section -> OWN\n  ok   attr C2: passive voice, no first-person cues -> UNKNOWN\n  ok   attr D: 'our method achieved' -> OWN\n  ok   attr E: table 'Proposed' row with proposed-system caption -> OWN\n  ok   attr F: ablation variant row -> not CITED\n  ok   attr G: 'we evaluate using ...' in Methods -> OWN\n  ok   attr H: 'we report ...' in Results -> OWN\n  ok   attr I/J: bare sentence, no context -> UNKNOWN\n  ok   attr guard: number hugging '[12]' -> CITED\n  ok   attr self-cite: own-author 'Chen et al.' discounted -> OWN\n  ok   decide: MISSING -> ABSTAINED\n  ok   decide: UNSUPPORTED -> ABSTAINED\n  ok   decide: EXPLICIT but CITED result -> ABSTAINED\n  ok   decide: EXPLICIT result, ownership UNKNOWN -> ABSTAINED\n  ok   decide: EXPLICIT OWN result -> RETURNED\n  ok   decide: INFERRED dataset -> ABSTAINED (quantitative field)\n  ok   decide: INFERRED method -> RETURNED (non-quantitative)\n  ok   gate: paraphrased result, number verbatim in body -> grounds\n  ok   gate: result number absent from every chunk -> not grounded\n  ok   gate: 'BLEU-4' single digit does not number-anchor a result\n  ok   gate: metrics value still grounds via token containment\n  ok   gate: PDF-only quantitative OWN result -> unverifiable_binding (not RETURNED)\n  ok   gate: structured paper, value at own cell -> bound -> RETURNED\n  ok   gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED\n  ok   gate: structured paper, prose aggregate not in metric column -> not_a_table_claim (falls through)\n  ok   gate: structured paper, metric not a column anywhere -> not_bindable (falls through)\n  ok   sym 1a: _metric_tokens sees short metric tokens ('f1', 'auc')\n  ok   sym 1b: claim 'F1 of 0.88' at own F1 cell -> bound (was not_bindable pre-fix)\n  ok   sym 1c: claim 'F1 of 0.71' (Prior's row) -> wrong_cell (was not_bindable pre-fix)\n  ok   sym 2a: _metric_tokens('Performance metrics') is empty (no 'em' substring hit)\n  ok   sym 2b: _metric_tokens('Blood component used for measurement') is empty\n  ok   sym 2c: _col_matches_metric('Performance metrics', full vocab) is False (was True via 'em')\n  ok   sym 2d: _col_matches_metric('Blood component used for measurement', full vocab) is False\n  ok   sym 3a: 'F1-score' and 'F1' share the token 'f1' under _metric_tokens (both sides)\n  ok   sym 3b: _col_matches_metric reduces its header arg with _metric_tokens too\n  ok   sym 3c: no side introduces 'em' from 'exact match' as a substring\n  ok   sym 3d: header vs claim symmetry \u2014 _col_matches_metric(h, toks(c)) == (toks(h) & toks(c))\n  ok   adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4c: same cross-row attack via real metric 'Accuracy' -> wrong_cell (caught post-fix)\n  ok   adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)\n  ok   inv16: route-agnostic \u2014 counts a RETURNED adversarial probe even when binding_status=not_bindable\n  ok   inv16: a correct_cell RETURNED is NOT an acceptance; an ABSTAINED adversarial is NOT\n\n63 passed, 0 failed\n",
+      "output_sha256": "9f2b7cc9914e55040d55f3e13dbc340a86a9fdb16e185962f8a924ccabf2ef76",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "legacy",
+      "suite": "regress",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "0 failing: []",
+      "guard_active": true,
+      "summary": [
+        "0 failing: []"
+      ],
+      "regression_statuses": [
+        "PASS  B threshold alone: not_a_table_claim",
+        "PASS  B delta never binds: not_a_table_claim"
+      ],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\nPASS  A QUAL2: wrong_cell\nPASS  A QUAL1: wrong_cell\nPASS  A HIER1: partial_binding\nPASS  A A1: wrong_cell\nPASS  A C3: not_bindable\nPASS  A B1: wrong_cell\nPASS  A B3: wrong_cell\nPASS  A FLIP2: wrong_cell\nPASS  A DECL3: wrong_cell\nPASS  A F1: wrong_cell\nPASS  A PART1: not_bindable\nPASS  A PART2: wrong_cell\nPASS  A PART3: wrong_cell\nPASS  A SLASH1: not_bindable\nPASS  A D1: wrong_cell\nPASS  A D2: wrong_cell\nPASS  A C1: wrong_cell\nPASS  A COUNT2: not_a_table_claim\nPASS  A Q1: wrong_cell\nPASS  A OWNV: wrong_cell\nPASS  A S1: wrong_cell\nPASS  A SUF1: wrong_cell\nPASS  A ROLE1: partial_binding\nPASS  A ROLE3: partial_binding\nPASS  A DOM1: wrong_cell\nPASS  A CTX1: wrong_cell\nPASS  A THOUS1: not_a_table_claim\nPASS  A SIGN1: not_a_table_claim\nPASS  A RANGE1: not_a_table_claim\nPASS  A PCT1: not_a_table_claim\nPASS  A TM1: wrong_cell\nPASS  A AL1: not_bindable\nPASS  A THR2: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  A PROP1: wrong_cell\nPASS  B caption names the dataset: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B \u00b1 is not a tie-break: duplicate_quantity_context\nPASS  B table mention picks: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B table mention picks Table 2: {'row': 'Ours', 'col': 'Dice', 'value': '0.95', 'caption': 'Table 2: Results.'}\nPASS  B table_mention off: no dominance either: duplicate_quantity_context\nPASS  B D9 0.915 (no cell) not required: [('0.926', 'Average', 'Ours', '0.926 \u00b1 0.012')]\nPASS  B threshold, no metric named: not_bindable\nPASS  B threshold alone: not_a_table_claim\nPASS  B threshold beside a comparator: [('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B different entity -> wrong_cell: wrong_cell\nPASS  B gate binding_wrong_cell: binding_wrong_cell\nPASS  B two quantities, one value: wrong_cell\nPASS  B synonym 'Dice score' / a Di: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice score' / a DS: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice coefficient' / a Di: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice coefficient' / a DS: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a Di: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a DS: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'DSC' / a Di: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'DSC' / a DS: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'Dice' / a Di: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B synonym 'Dice' / a DS: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B % never a fraction: wrong_cell\nPASS  B % stated in the header: [('0.87', 'Ours', 'Dice (%)', '0.87')]\nPASS  B part unit mm: [('35.66', 'Smith et al. (2020)', 'Results', 'DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm')]\nPASS  B part unit % vs mm: wrong_cell\nPASS  B count header '# subjects': [('15', 'Training', '# subjects', '15')]\nPASS  B count header '#subjects': [('15', 'Training', '#subjects', '15')]\nPASS  B count header 'No. of subjects': [('15', 'Training', 'No. of subjects', '15')]\nPASS  B count header 'Number of subjects': [('15', 'Training', 'Number of subjects', '15')]\nPASS  B count header 'n': [('15', 'Training', 'n', '15')]\nPASS  B count header '# participants': wrong_cell\nPASS  B count header 'Number of scans': wrong_cell\nPASS  B Eq. numbers: Eq.\nPASS  B epochs of the other row: wrong_cell\nPASS  B Eq. only: no_number\nPASS  B 'we present a comparison' declares nothing: \nPASS  B own ref, no own cell: wrong_cell\nPASS  B two declared names: ambiguous_subject\nPASS  B no verb alias: not_bindable\nPASS  B group alias (off=''): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias (off='own_alias'): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias span: Unexposed controls were scanned twice.\nPASS  B subject is not the quantity: not_bindable\nPASS  B methods as columns: [('0.84', 'CSF', 'VNet', '0.84')]\nPASS  B numeric column label: [('0.88', 'Ours', '128', '0.88')]\nPASS  B numeric column label conflict: wrong_cell\nPASS  B mL: \nPASS  B mL vs cm3 header: wrong_cell\nPASS  B Tables 2 and 3: \nPASS  B Tables 2 and 3 -> 3: [('0.95', 'Ours', 'HD95', '0.95')]\nPASS  B Table 2 named, value in 3: wrong_cell\nPASS  B row unit conflict: wrong_cell\nPASS  B row quantity (transposed): [('28.7', 'Age (years)', 'Controls', '28.7')]\nPASS  B cell unit conflict: wrong_cell\nPASS  B cell unit: [('35.66', 'Ours', 'Inference time', '35.66 ms')]\nPASS  B 'this work' is not own (PREREG D5): wrong_cell\nPASS  B 'but' splits clauses: 0.84 names no metric: partial_binding\nPASS  B 'while' clause, metric shared: [('0.81', 'UNet', 'Dice', '0.81'), ('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B qualifier 'On ISLES, ours reaches': wrong_cell\nPASS  B qualifier 'Ours reaches a Dice of': wrong_cell\nPASS  B qualifier 'For the ISLES dataset,': wrong_cell\nPASS  B qualifier 'On BraTS, ours reaches': [('0.91', 'Ours', 'BraTS / Dice', '0.91')]\nPASS  B maximal match: [('0.85', 'Attention U-Net', 'Dice', '0.85')]\nPASS  B maximal match, inner label: wrong_cell\nPASS  B passive 'by': [('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B 'X (a) outperforms Y (b)': [('0.90', 'Ours', 'Dice', '0.90'), ('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B 'respectively' lists abstain: wrong_cell\nPASS  B delta never binds: not_a_table_claim\nPASS  B own claim, non-own cell: wrong_cell\nPASS  C alias judge binds with a verbatim span: ([('0.81', 'UNet', 'Dice', '0.81')], 1)\nPASS  C alias span not in the paper -> STOP: judge span 'VNet is a network.' is not in its input (claim '\nPASS  C alias span must name the chosen cell: not_bindable\nPASS  C claim-only span -> STOP (PREREG E): judge span 'The baseline network achieves a Dice of 0.81.' i\nPASS  C empty span: rejected, no STOP: ambiguous_subject\nPASS  C missing span: rejected: ambiguous_subject\nPASS  C judge unavailable: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'llm_error'}\nPASS  C replay cache miss, malformed lines skipped: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'cache_miss'}\nPASS  D 'In \u0130zmir, a mAP of 0.85 ': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D 'On the \u0130zmir cohort, the': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D sign: -0.45 vs 0.45: not_a_table_claim\nPASS  D sign: -0.12: [('-0.12', 'VNet', 'Pearson r', '\u22120.12')]\nPASS  D sign: 0.12 vs -0.12: not_a_table_claim\nPASS  D ligature: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D wrapped cell: [('0.947', 'VNet', 'Dice', '0.94 7')]\nPASS  D thousands: [('1500', 'Training', 'Number of images', '1500')]\nPASS  D 2000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D 40000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  E table-body sentence: < 3 s, trace < 200 KB: 0.85s 98 KB wrong_cell\n\n0 failing: []\n",
+      "output_sha256": "76b8ccefd715a70b834304df173851b747f54e56553068702c1b93d28076aa93",
+      "pass": true,
+      "internal_policy": "v2; frozen regress.py selects it internally",
+      "passed_expectations": 123
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "v2",
+      "suite": "full_pytest",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "pytest",
+        "-p",
+        "no:cacheprovider",
+        "tests/",
+        "src/evaluation/bottleneck_diagnosis/",
+        "--ignore=tests/test_pipeline.py",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\runs\\phase11_binder\\g4_tmp_40108hyq\\pytest"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "243 passed",
+      "guard_active": true,
+      "summary": [
+        "243 passed in 4.90s"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n........................................................................ [ 29%]\n........................................................................ [ 59%]\n........................................................................ [ 88%]\n...........................                                              [100%]\n243 passed in 4.90s\n",
+      "output_sha256": "096e005879faf174e46b885841d2a71f398281b5f9c484602e255b88b0c5df7b",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "v2",
+      "suite": "pipeline",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "tests/test_pipeline.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "37 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "37 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n\nchunk_text()\n  [PASS] normal case produces multiple overlapping chunks\n  [PASS] short text produces exactly one chunk\n  [PASS] empty text produces zero chunks\n  [PASS] whitespace-only text produces zero chunks\n  [PASS] exact chunk_size input produces exactly one chunk\n  [PASS] overlap >= chunk_size raises instead of infinite-looping\n  [PASS] overlap > chunk_size raises instead of infinite-looping\n\nclean_text()\n  [PASS] references section is cut off\n  [PASS] content before references is kept\n  [PASS] text with no references heading is left intact\n  [PASS] collapses 3+ blank lines to 2\n  [PASS] empty input returns empty output\n\nstringify() / listify()\n  [PASS] stringify: plain string passes through\n  [PASS] stringify: None becomes empty string\n  [PASS] stringify: dict is flattened to readable text\n  [PASS] stringify: list is joined\n  [PASS] stringify: nested dict-in-list doesn't crash\n  [PASS] listify: plain list of strings passes through\n  [PASS] listify: None becomes empty list\n  [PASS] listify: single string becomes single-item list\n  [PASS] listify: empty string becomes empty list, not ['']\n  [PASS] listify: dict becomes list of key:value strings\n  [PASS] listify: list containing a dict doesn't crash and stays a list\n\nfind_weak_extractions()\n  [PASS] all fields populated -> not weak\n  [PASS] explicitly flagged _extraction_failed -> weak regardless of fields\n  [PASS] exactly 3 of 4 fields empty -> weak (boundary, inclusive)\n  [PASS] exactly 2 of 4 fields empty -> NOT weak (boundary, exclusive)\n  [PASS] all 4 fields empty -> weak\n\ncluster_papers() on small corpora (the auto-k crash case)\n  [PASS] auto-k with n=2 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.015)\n  [PASS] auto-k with n=3 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.227)\n  [PASS] auto-k with n=4 papers doesn't crash and covers all papers\n  auto-selected k=2 (silhouette=0.106)\n  [PASS] auto-k with n=5 papers doesn't crash and covers all papers\n  auto-selected k=3 (silhouette=0.103)\n  [PASS] auto-k with n=9 papers doesn't crash and covers all papers\n  [PASS] fixed k=6 with only 3 papers clamps instead of crashing\n\nshould_attempt_dataset_fallback()\n  [PASS] empirical study text triggers dataset fallback\n  [PASS] pure theory text does not trigger dataset fallback\n  [PASS] empty text does not trigger dataset fallback\n\n==================================================\n37 passed, 0 failed\n==================================================\n",
+      "output_sha256": "7d194821dd41c5666e1537d5c6b29eeda343871a11f66b9a8826d8e04554450c",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "v2",
+      "suite": "experiment",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "tests.test_pipeline_units"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\experiments\\document_evidence_pipeline",
+      "exit_code": 0,
+      "expected": "63 passed, 0 failed",
+      "guard_active": true,
+      "summary": [
+        "63 passed, 0 failed"
+      ],
+      "regression_statuses": [],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\n  ok   schema.valid FULL_TEXT record\n  ok   schema.rejects FULL_TEXT w/o content validation\n  ok   content_validate accepts a real downloaded pdf\n  ok   content_validate rejects html landing page\n  ok   content_validate rejects empty\n  ok   content_validate rejects tiny abstract-sized pdf\n  ok   content_validate accepts JATS with sections+body\n  ok   content_validate rejects JATS-shaped but thin\n  ok   identity_validate accepts matching JATS\n  ok   identity_validate REJECTS wrong paper (JATS)\n  ok   identity_validate accepts matching PDF\n  ok   identity_validate REJECTS wrong paper (PDF)\n  ok   represent: JATS yields blocks\n  ok   represent: results section detected\n  ok   represent: nested method subsection keeps 'method' label\n  ok   represent: every block has provenance\n  ok   chunker: chunks carry section+loc+offsets\n  ok   chunker: no chunk crosses blocks\n  ok   attr A: 'we propose SPAR ... achieves' -> OWN\n  ok   attr B: 'Smith et al. achieved 94.2%' -> CITED\n  ok   attr C: passive voice in first-person results section -> OWN\n  ok   attr C2: passive voice, no first-person cues -> UNKNOWN\n  ok   attr D: 'our method achieved' -> OWN\n  ok   attr E: table 'Proposed' row with proposed-system caption -> OWN\n  ok   attr F: ablation variant row -> not CITED\n  ok   attr G: 'we evaluate using ...' in Methods -> OWN\n  ok   attr H: 'we report ...' in Results -> OWN\n  ok   attr I/J: bare sentence, no context -> UNKNOWN\n  ok   attr guard: number hugging '[12]' -> CITED\n  ok   attr self-cite: own-author 'Chen et al.' discounted -> OWN\n  ok   decide: MISSING -> ABSTAINED\n  ok   decide: UNSUPPORTED -> ABSTAINED\n  ok   decide: EXPLICIT but CITED result -> ABSTAINED\n  ok   decide: EXPLICIT result, ownership UNKNOWN -> ABSTAINED\n  ok   decide: EXPLICIT OWN result -> RETURNED\n  ok   decide: INFERRED dataset -> ABSTAINED (quantitative field)\n  ok   decide: INFERRED method -> RETURNED (non-quantitative)\n  ok   gate: paraphrased result, number verbatim in body -> grounds\n  ok   gate: result number absent from every chunk -> not grounded\n  ok   gate: 'BLEU-4' single digit does not number-anchor a result\n  ok   gate: metrics value still grounds via token containment\n  ok   gate: PDF-only quantitative OWN result -> unverifiable_binding (not RETURNED)\n  ok   gate: structured paper, value at own cell -> bound -> RETURNED\n  ok   gate: structured paper, cross-row number -> binding_wrong_cell -> ABSTAINED\n  ok   gate: structured paper, prose aggregate not in metric column -> not_a_table_claim (falls through)\n  ok   gate: structured paper, metric not a column anywhere -> not_bindable (falls through)\n  ok   sym 1a: _metric_tokens sees short metric tokens ('f1', 'auc')\n  ok   sym 1b: claim 'F1 of 0.88' at own F1 cell -> bound (was not_bindable pre-fix)\n  ok   sym 1c: claim 'F1 of 0.71' (Prior's row) -> wrong_cell (was not_bindable pre-fix)\n  ok   sym 2a: _metric_tokens('Performance metrics') is empty (no 'em' substring hit)\n  ok   sym 2b: _metric_tokens('Blood component used for measurement') is empty\n  ok   sym 2c: _col_matches_metric('Performance metrics', full vocab) is False (was True via 'em')\n  ok   sym 2d: _col_matches_metric('Blood component used for measurement', full vocab) is False\n  ok   sym 3a: 'F1-score' and 'F1' share the token 'f1' under _metric_tokens (both sides)\n  ok   sym 3b: _col_matches_metric reduces its header arg with _metric_tokens too\n  ok   sym 3c: no side introduces 'em' from 'exact match' as a substring\n  ok   sym 3d: header vs claim symmetry \u2014 _col_matches_metric(h, toks(c)) == (toks(h) & toks(c))\n  ok   adv 4a: 'Performance metrics of 80.52' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4b: 'Performance metrics of 87.82' -> not_bindable (names no metric; symmetric residual)\n  ok   adv 4c: same cross-row attack via real metric 'Accuracy' -> wrong_cell (caught post-fix)\n  ok   adv 4d: 'Blood component used for measurement of 12' -> not_bindable (names no metric)\n  ok   inv16: route-agnostic \u2014 counts a RETURNED adversarial probe even when binding_status=not_bindable\n  ok   inv16: a correct_cell RETURNED is NOT an acceptance; an ABSTAINED adversarial is NOT\n\n63 passed, 0 failed\n",
+      "output_sha256": "9f2b7cc9914e55040d55f3e13dbc340a86a9fdb16e185962f8a924ccabf2ef76",
+      "pass": true
+    },
+    {
+      "runtime": ".venv-09a",
+      "python": "3.13.6",
+      "invocation_policy": "v2",
+      "suite": "regress",
+      "command": [
+        "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline\\.venv-09a\\Scripts\\python.exe",
+        "-B",
+        "src/evaluation/binder_10/regress.py"
+      ],
+      "cwd": "C:\\Users\\Praka\\Downloads\\researchgpt-pipeline",
+      "exit_code": 0,
+      "expected": "0 failing: []",
+      "guard_active": true,
+      "summary": [
+        "0 failing: []"
+      ],
+      "regression_statuses": [
+        "PASS  B threshold alone: not_a_table_claim",
+        "PASS  B delta never binds: not_a_table_claim"
+      ],
+      "output": "PHASE11_OFFLINE_GUARD: network access blocked; startup self-test PASS\nPASS  A QUAL2: wrong_cell\nPASS  A QUAL1: wrong_cell\nPASS  A HIER1: partial_binding\nPASS  A A1: wrong_cell\nPASS  A C3: not_bindable\nPASS  A B1: wrong_cell\nPASS  A B3: wrong_cell\nPASS  A FLIP2: wrong_cell\nPASS  A DECL3: wrong_cell\nPASS  A F1: wrong_cell\nPASS  A PART1: not_bindable\nPASS  A PART2: wrong_cell\nPASS  A PART3: wrong_cell\nPASS  A SLASH1: not_bindable\nPASS  A D1: wrong_cell\nPASS  A D2: wrong_cell\nPASS  A C1: wrong_cell\nPASS  A COUNT2: not_a_table_claim\nPASS  A Q1: wrong_cell\nPASS  A OWNV: wrong_cell\nPASS  A S1: wrong_cell\nPASS  A SUF1: wrong_cell\nPASS  A ROLE1: partial_binding\nPASS  A ROLE3: partial_binding\nPASS  A DOM1: wrong_cell\nPASS  A CTX1: wrong_cell\nPASS  A THOUS1: not_a_table_claim\nPASS  A SIGN1: not_a_table_claim\nPASS  A RANGE1: not_a_table_claim\nPASS  A PCT1: not_a_table_claim\nPASS  A TM1: wrong_cell\nPASS  A AL1: not_bindable\nPASS  A THR2: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  A PROP1: wrong_cell\nPASS  B caption names the dataset: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B \u00b1 is not a tie-break: duplicate_quantity_context\nPASS  B table mention picks: [('0.95', 'Ours', 'Dice', '0.95')]\nPASS  B table mention picks Table 2: {'row': 'Ours', 'col': 'Dice', 'value': '0.95', 'caption': 'Table 2: Results.'}\nPASS  B table_mention off: no dominance either: duplicate_quantity_context\nPASS  B D9 0.915 (no cell) not required: [('0.926', 'Average', 'Ours', '0.926 \u00b1 0.012')]\nPASS  B threshold, no metric named: not_bindable\nPASS  B threshold alone: not_a_table_claim\nPASS  B threshold beside a comparator: [('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B different entity -> wrong_cell: wrong_cell\nPASS  B gate binding_wrong_cell: binding_wrong_cell\nPASS  B two quantities, one value: wrong_cell\nPASS  B synonym 'Dice score' / a Di: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice score' / a DS: [('0.87', 'Ours', 'Dice score', '0.87')]\nPASS  B synonym 'Dice coefficient' / a Di: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice coefficient' / a DS: [('0.87', 'Ours', 'Dice coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a Di: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'Dice similarity coefficient' / a DS: [('0.87', 'Ours', 'Dice similarity coefficient', '0.87')]\nPASS  B synonym 'DSC' / a Di: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'DSC' / a DS: [('0.87', 'Ours', 'DSC', '0.87')]\nPASS  B synonym 'Dice' / a Di: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B synonym 'Dice' / a DS: [('0.87', 'Ours', 'Dice', '0.87')]\nPASS  B % never a fraction: wrong_cell\nPASS  B % stated in the header: [('0.87', 'Ours', 'Dice (%)', '0.87')]\nPASS  B part unit mm: [('35.66', 'Smith et al. (2020)', 'Results', 'DSC: 83.79%, VS: 84.84%, HD95: 35.66 mm')]\nPASS  B part unit % vs mm: wrong_cell\nPASS  B count header '# subjects': [('15', 'Training', '# subjects', '15')]\nPASS  B count header '#subjects': [('15', 'Training', '#subjects', '15')]\nPASS  B count header 'No. of subjects': [('15', 'Training', 'No. of subjects', '15')]\nPASS  B count header 'Number of subjects': [('15', 'Training', 'Number of subjects', '15')]\nPASS  B count header 'n': [('15', 'Training', 'n', '15')]\nPASS  B count header '# participants': wrong_cell\nPASS  B count header 'Number of scans': wrong_cell\nPASS  B Eq. numbers: Eq.\nPASS  B epochs of the other row: wrong_cell\nPASS  B Eq. only: no_number\nPASS  B 'we present a comparison' declares nothing: \nPASS  B own ref, no own cell: wrong_cell\nPASS  B two declared names: ambiguous_subject\nPASS  B no verb alias: not_bindable\nPASS  B group alias (off=''): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias (off='own_alias'): [('412.5', 'Unexposed', 'Volume (cm3)', '412.5')]\nPASS  B group alias span: Unexposed controls were scanned twice.\nPASS  B subject is not the quantity: not_bindable\nPASS  B methods as columns: [('0.84', 'CSF', 'VNet', '0.84')]\nPASS  B numeric column label: [('0.88', 'Ours', '128', '0.88')]\nPASS  B numeric column label conflict: wrong_cell\nPASS  B mL: \nPASS  B mL vs cm3 header: wrong_cell\nPASS  B Tables 2 and 3: \nPASS  B Tables 2 and 3 -> 3: [('0.95', 'Ours', 'HD95', '0.95')]\nPASS  B Table 2 named, value in 3: wrong_cell\nPASS  B row unit conflict: wrong_cell\nPASS  B row quantity (transposed): [('28.7', 'Age (years)', 'Controls', '28.7')]\nPASS  B cell unit conflict: wrong_cell\nPASS  B cell unit: [('35.66', 'Ours', 'Inference time', '35.66 ms')]\nPASS  B 'this work' is not own (PREREG D5): wrong_cell\nPASS  B 'but' splits clauses: 0.84 names no metric: partial_binding\nPASS  B 'while' clause, metric shared: [('0.81', 'UNet', 'Dice', '0.81'), ('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B qualifier 'On ISLES, ours reaches': wrong_cell\nPASS  B qualifier 'Ours reaches a Dice of': wrong_cell\nPASS  B qualifier 'For the ISLES dataset,': wrong_cell\nPASS  B qualifier 'On BraTS, ours reaches': [('0.91', 'Ours', 'BraTS / Dice', '0.91')]\nPASS  B maximal match: [('0.85', 'Attention U-Net', 'Dice', '0.85')]\nPASS  B maximal match, inner label: wrong_cell\nPASS  B passive 'by': [('0.84', 'VNet', 'Dice', '0.84')]\nPASS  B 'X (a) outperforms Y (b)': [('0.90', 'Ours', 'Dice', '0.90'), ('0.85', 'UNet', 'Dice', '0.85')]\nPASS  B 'respectively' lists abstain: wrong_cell\nPASS  B delta never binds: not_a_table_claim\nPASS  B own claim, non-own cell: wrong_cell\nPASS  C alias judge binds with a verbatim span: ([('0.81', 'UNet', 'Dice', '0.81')], 1)\nPASS  C alias span not in the paper -> STOP: judge span 'VNet is a network.' is not in its input (claim '\nPASS  C alias span must name the chosen cell: not_bindable\nPASS  C claim-only span -> STOP (PREREG E): judge span 'The baseline network achieves a Dice of 0.81.' i\nPASS  C empty span: rejected, no STOP: ambiguous_subject\nPASS  C missing span: rejected: ambiguous_subject\nPASS  C judge unavailable: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'llm_error'}\nPASS  C replay cache miss, malformed lines skipped: {'kind': 'ambiguity', 'candidates': ['k1', 'k2'], 'result': 'cache_miss'}\nPASS  D 'In \u0130zmir, a mAP of 0.85 ': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D 'On the \u0130zmir cohort, the': [('0.85', 'UNet', 'mAP', '0.85')]\nPASS  D sign: -0.45 vs 0.45: not_a_table_claim\nPASS  D sign: -0.12: [('-0.12', 'VNet', 'Pearson r', '\u22120.12')]\nPASS  D sign: 0.12 vs -0.12: not_a_table_claim\nPASS  D ligature: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D wrapped cell: [('0.947', 'VNet', 'Dice', '0.94 7')]\nPASS  D thousands: [('1500', 'Training', 'Number of images', '1500')]\nPASS  D 2000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  D 40000 spaces: [('0.81', 'UNet', 'Dice', '0.81')]\nPASS  E table-body sentence: < 3 s, trace < 200 KB: 0.84s 98 KB wrong_cell\n\n0 failing: []\n",
+      "output_sha256": "65166825e0a1fe1ca6565ffb45c96afe2e33b05e47547495daa68f6cae39e816",
+      "pass": true,
+      "internal_policy": "v2; frozen regress.py selects it internally",
+      "passed_expectations": 123
+    }
+  ]
+}
