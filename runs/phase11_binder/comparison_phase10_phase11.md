@@ -1,5 +1,7 @@
 # Phase 10 vs Phase 11 deterministic binder comparison
 
+Current disposition (2026-10-08): STOP at Stage B of the change-role repair. Review found a new general counterexample: "The Dice scores of 0.37 increase after tuning." The candidate incorrectly marked the absolute score as a change amount. Stage B was reverted byte-for-byte to the retained binder (S1=19, S2=25); Stage A's S3 PASS is the last measured identity result. Stage C, held-out evaluation and end-to-end replay were not started. The new reproduction tests remain uncommitted. The completed audit and STOP evidence are the only publication changes. See the final Stage B STOP section for the exact conflict and verification limits.
+
 Follow-up disposition (2026-10-07): the single numeric-metric fix attempt was REJECTED and REVERTED after it reintroduced an improvement-to-p-value binding. Retained binder behavior remains phase11-binder-final: S1=19 and S2=25. The new synthetic reproductions remain uncommitted (4 expected recovery failures, 6 passing controls). See the final STOP section below. No second fix attempt was made.
 
 development-contaminated, machine-assisted, unvalidated
@@ -498,3 +500,150 @@ Stage sequencing: Stage A is intentionally red; Stages A/B also carry the four e
 Untouched held-out data: filename/provenance inspection found no held-out manifest and did not inspect candidate records. phase_11_scope.md:101-131 says the planned held-out set was not built. Honest construction requires an independent custodian, 12 new deduplicated papers/60 claims (40 positives,20 near misses), fixed hashes/strata/gold before predictions, hidden labels and two blinded readings. Development examples cannot be relabelled held-out.
 
 Later end-to-end evaluation is limited to deterministic cached replay, labelled CACHED REPLAY - NOT A FRESH PRODUCTION RUN. Fresh acquisition/extraction stages are not measurable from cache. No production or real LLM calls will run.
+
+## Stage A: bounded verification
+
+development-contaminated, machine-assisted, unvalidated
+
+Guard blocked; external and localhost:11434 canaries raised. Explicit interpreter paths; PYTHONIOENCODING=utf-8; no bytecode or pytest cache. Temporary files stay under runs/phase11_binder and are removed.
+
+Source SHA-256: 31b6dbd94fc43861cd2128d5da8927e7ec11c2fa50af0477fd11423398b84da0.
+
+Expected red checks: 4 retained numeric recovery cases and 7 failing-first change-role cases. No expectation is skipped, xfailed or changed.
+
+| Python | Policy | Check | Result | Guard |
+|---|---|---|---|---|
+| 3.10.18 | v2 | Classes A-E and B boundaries | PASS: 63 passed in 0.35s | active |
+| 3.10.18 | v2 | 10 retained numeric tests | EXPECTED RED: 4 failed, 6 passed in 0.23s | active |
+| 3.10.18 | v2 | 18 change-role tests | EXPECTED RED: 7 failed, 11 passed in 0.24s | active |
+| 3.10.18 | legacy | full pytest | EXPECTED RED: 11 failed, 260 passed in 6.58s | active |
+| 3.10.18 | legacy | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.10.18 | legacy | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.10.18 | legacy | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.10.18 | v2 | full pytest | EXPECTED RED: 11 failed, 260 passed in 6.07s | active |
+| 3.10.18 | v2 | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.10.18 | v2 | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.10.18 | v2 | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.13.6 | v2 | Classes A-E and B boundaries | PASS: 63 passed in 0.31s | active |
+| 3.13.6 | v2 | 10 retained numeric tests | EXPECTED RED: 4 failed, 6 passed in 0.22s | active |
+| 3.13.6 | v2 | 18 change-role tests | EXPECTED RED: 7 failed, 11 passed in 0.22s | active |
+| 3.13.6 | legacy | full pytest | EXPECTED RED: 11 failed, 260 passed in 5.27s | active |
+| 3.13.6 | legacy | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.13.6 | legacy | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.13.6 | legacy | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.13.6 | v2 | full pytest | EXPECTED RED: 11 failed, 260 passed in 5.07s | active |
+| 3.13.6 | v2 | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.13.6 | v2 | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.13.6 | v2 | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+
+Stage A: all 16 matrix combinations and six focused checks completed with only the declared expected failures. The frozen regression selects v2 internally even for legacy-labelled invocations.
+
+### Stage A: S3 and frozen development measurement
+
+S3 PASS: 30/30 PDF gate records identical; 55 pairs and 18 claims with zero differences; newline canary 0. Python 3.10.18. Frozen identity function unchanged, result sink held in memory and written only here.
+
+| Representation | Baseline S1 | Current S1 | Baseline S2 | Current S2 |
+|---|---:|---:|---:|---:|
+| R-prod | 9 | 9 | 11 | 11 |
+| R-eval | 10 | 10 | 14 | 14 |
+| R-oracle | 0 | 0 | 0 | 0 |
+| Total | 19 | 19 | 25 | 25 |
+
+Lost occurrences recovered: 0; new losses: 0; new wrong flags: 0. Cached input hashes unchanged; legacy arm exactly identical to baseline.
+
+| Affected unit | Claim | Baseline status/cells/final | Current status/cells/final |
+|---|---|---|---|
+| none | identical decisions | unchanged | unchanged |
+
+Improvement-to-p-value guard checks:
+
+- R-prod / sweep_B / P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:107#0: wrong_cell; none; ABSTAINED.
+- R-eval / sweep_B / P008:6890f2eb4b55bfadce53bd82f0ed2b39cb0f2709:107#0: wrong_cell; none; ABSTAINED.
+
+Stage A measurement PASS against the preregistered expectations. Development-contaminated, machine-assisted, unvalidated. Frozen S1 remains FAIL; S2 remains FAIL; S3 PASS.
+
+Stage B implementation note: the 18 Stage A cases were preserved, and three general predicate/count controls were added and passed before the source change. The candidate rule used singular change nouns immediately after the parsed quantity/unit, preserved counts, and did not cross punctuation. The rejected candidate passed all 21 change-role tests before the review counterexample was added. No numeric-label change was reapplied.
+
+## Stage B: bounded verification
+
+development-contaminated, machine-assisted, unvalidated
+
+Guard blocked; external and localhost:11434 canaries raised. Explicit interpreter paths; PYTHONIOENCODING=utf-8; no bytecode or pytest cache. Temporary files stay under runs/phase11_binder and are removed.
+
+Source SHA-256: 6e0720524ae11a84fcc56dcca36e77b41eec95be1021369050362366e56c95c6.
+
+Expected red checks: 4 retained numeric recovery cases and 0 failing-first change-role cases. No expectation is skipped, xfailed or changed.
+
+| Python | Policy | Check | Result | Guard |
+|---|---|---|---|---|
+| 3.10.18 | v2 | Classes A-E and B boundaries | PASS: 63 passed in 0.52s | active |
+| 3.10.18 | v2 | 10 retained numeric tests | EXPECTED RED: 4 failed, 6 passed in 0.25s | active |
+| 3.10.18 | v2 | 21 change-role tests | PASS: 21 passed in 0.15s | active |
+| 3.10.18 | legacy | full pytest | EXPECTED RED: 4 failed, 270 passed in 8.86s | active |
+| 3.10.18 | legacy | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.10.18 | legacy | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.10.18 | legacy | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.10.18 | v2 | full pytest | EXPECTED RED: 4 failed, 270 passed in 6.13s | active |
+| 3.10.18 | v2 | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.10.18 | v2 | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.10.18 | v2 | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.13.6 | v2 | Classes A-E and B boundaries | PASS: 63 passed in 0.51s | active |
+| 3.13.6 | v2 | 10 retained numeric tests | EXPECTED RED: 4 failed, 6 passed in 0.20s | active |
+| 3.13.6 | v2 | 21 change-role tests | PASS: 21 passed in 0.14s | active |
+| 3.13.6 | legacy | full pytest | EXPECTED RED: 4 failed, 270 passed in 7.80s | active |
+| 3.13.6 | legacy | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.13.6 | legacy | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.13.6 | legacy | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+| 3.13.6 | v2 | full pytest | EXPECTED RED: 4 failed, 270 passed in 5.05s | active |
+| 3.13.6 | v2 | standalone pipeline | PASS: 37 passed, 0 failed | active |
+| 3.13.6 | v2 | experiment units | PASS: 63 passed, 0 failed | active |
+| 3.13.6 | v2 | frozen regress | PASS: 0 failing: []; :105/:198 not_a_table_claim | active |
+
+Stage B: all 16 matrix combinations and six focused checks completed with only the declared expected failures. The frozen regression selects v2 internally even for legacy-labelled invocations.
+
+## Stage B STOP: absolute score misclassified as a change amount
+
+development-contaminated, machine-assisted, unvalidated
+
+The matrix above describes the rejected candidate, before the additional review counterexample was added. It is not a fully green result: each full-pytest invocation still had the four known numeric-metric recovery failures. A separate read-only review then exposed a new quantity-role error outside that matrix's test cases.
+
+Exact counterexample: `The Dice scores of 0.37 increase after tuning.`
+
+- Required absolute-score expectation (new review reproduction): `assert mention['delta'] is False, mention`.
+- Candidate actual: `mention['delta'] == True`; the focused test failed with `assert True is False`.
+- Mechanism: the immediate post-value pattern treated the singular spelling `increase` as a change noun. Here it is a verb with the plural subject `scores`; 0.37 is an absolute measurement, not a change magnitude. Lexical adjacency and singular spelling do not establish the grammatical relation.
+- This conflicts with the preregistered requirement that absolute Dice/metric quantities remain non-delta. The confirmed error is role classification; no end-to-end lost answer or frozen metric movement is claimed for this synthetic sentence.
+
+The counterexample was appended to the new task-owned test file as `test_predicates_and_event_counts_are_not_change_amounts[plural_score_predicate]`. All earlier expectations were preserved. The candidate failed this test on Python 3.10.18, with the offline guard active. The six-line Stage B source change was then removed. No second implementation was attempted and the numeric-label fix was not reapplied.
+
+Reversion evidence: `git diff -- src/evidence/binder_v2.py` is empty, and its SHA-256 is again `31b6dbd94fc43861cd2128d5da8927e7ec11c2fa50af0477fd11423398b84da0`, exactly the Stage A retained source. No pre-existing test, gate semantics, policy default, frozen evaluator, frozen evidence or scoring file was changed.
+
+| Post-reversion check | Python 3.10.18 | Python 3.13.6 |
+|---|---|---|
+| New change-role file, now 22 tests | 7 expected failures, 15 passes | 7 expected failures, 15 passes |
+| Existing numeric-metric file, unchanged, 10 tests | 4 known failures, 6 passes | 4 known failures, 6 passes |
+| Combined focused run | 11 failed, 21 passed | 11 failed, 21 passed |
+| New plural-score predicate counterexample | PASS | PASS |
+| Offline guard startup canary | PASS, blocked | PASS, blocked |
+
+The seven change-role failures are the same four postposed-role cases, two absolute-cell collision cases and mixed-quantity role assertion demonstrated in Stage A. The four numeric-metric failures are the same retained baseline cases listed in Part 0. Thus the reversion restores the known behavior, including its unresolved bugs. These tests are intentionally red reproductions, not a passing implementation stage.
+
+| Criterion | Retained baseline | Last measured result (Stage A) | Disposition after Stage B reversion |
+|---|---|---|---|
+| S1 wrong-binding flags | 19 | 19 | Unchanged retained source; zero-failure criterion FAIL |
+| S2 lost-binding occurrences | 25 | 25 | Unchanged retained source; zero-failure criterion FAIL |
+| S3 PDF identity | PASS | 30/30 identical; 55 pair and 18 claim outputs unchanged; newline canary 0 | Last measured PASS applies to identical retained source |
+
+Stage B S3 and development measurement were not run after the new counterexample triggered STOP. No S1/S2 improvement is claimed for that candidate. Stage C, current held-out evaluation and current end-to-end replay were not run. The matrix and S3 were not repeated after reverting because the source hash matches the already measured Stage A source; the focused runs above verify the reversion. Frozen `regress.py:105` and `:198` returned the expected `not_a_table_claim` in all four Stage A and all four Stage B regression invocations.
+
+No untouched held-out set has been established by the provenance inspection. Candidate records were not opened. The honest construction plan is recorded in Part 1. This session therefore cannot establish generalization, a current end-to-end funnel, or a largest end-to-end bottleneck. The six repeated C026 quantity-conflict occurrences are a demonstrated development-set binding mechanism, not evidence about the largest production loss stage. Binding recovery alone would still not guarantee a returned answer (the earlier C013 recovery remained abstained by the final gate).
+
+Proposed next step, not implemented: revise the change-role design to require a grammatical amount relation while distinguishing absolute scores used as subjects of change predicates. Preserve this counterexample and the bare p-value, absolute-score, event-count, punctuation and mixed-quantity controls. Only a separately authorized bounded stage that passes these controls should precede another numeric-label repair attempt. No claim-specific exception or scoring change is proposed.
+
+Persistent files created or changed in this task:
+
+- Updated existing report: `C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\comparison_phase10_phase11.md`. This remains the only report; no duplicate JSON/Markdown report was created.
+- New failing-first test file, retained uncommitted: `C:\Users\Praka\Downloads\researchgpt-pipeline\tests\test_binder_v2_change_roles.py`.
+- Temporarily changed and fully reverted: `C:\Users\Praka\Downloads\researchgpt-pipeline\src\evidence\binder_v2.py`.
+
+The pre-existing untracked numeric-metric test file was not edited or staged. Test temporary directories were confined to `C:\Users\Praka\Downloads\researchgpt-pipeline\runs\phase11_binder\` and removed by the test orchestration. Existing unrelated untracked files were left alone. Audit/preregistration commit: `a5563e026c67b53a1ce58960d02bfe90e3d31b26`. The completed verification and STOP report will be committed separately; no implementation-stage commit is warranted. A single user-authorized GitHub push of the report commits follows, with the actual result reported to the user. No production run or LLM call occurred.
