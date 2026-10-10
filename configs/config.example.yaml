@@ -66,4 +66,4 @@ evidence_grounding:
   #   Stage 5  evidence gate: verbatim span + attribution + abstention over
   #            extracted Dataset/Metric/Result; rewrites paper_summaries.json
   # false = exact legacy six-stage behaviour, nothing new runs.
-  enabled: false
+  enabled: true

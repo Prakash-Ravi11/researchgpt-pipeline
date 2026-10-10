@@ -30,6 +30,7 @@ import yaml
 
 from src.summarization.summarize import _stringify, call_ollama_json, embed_method_texts, prime_ollama_cache
 from src.config import resolve_device
+from src.synthesis.dataset_resolution import DatasetResolver, canonical_dataset_names
 
 NOVELTY_SYSTEM_PROMPT = """You are assessing the novelty of a paper against a corpus of related work. You are given \
 the target paper's summary and method, plus the summaries and methods of its most similar existing papers in the \
@@ -58,12 +59,14 @@ def build_gap_matrix(papers: list[dict]) -> dict:
     filtered to RETURNED (grounded + attributed) datasets only, so a gap is
     never derived from an unsupported/abstained dataset mention."""
     categories = sorted({p.get("category", "Uncategorized") for p in papers})
-    all_datasets = sorted({d for p in papers for d in p.get("datasets", []) if d})
+    resolver = DatasetResolver()
+    resolved = [resolver.resolve_many(p.get("datasets", [])) for p in papers]
+    all_datasets = sorted({r.canonical for group in resolved for r in group})
 
     matrix = {c: {d: 0 for d in all_datasets} for c in categories}
-    for p in papers:
+    for p, group in zip(papers, resolved):
         cat = p.get("category", "Uncategorized")
-        for d in p.get("datasets", []):
+        for d in {r.canonical for r in group}:
             if d in matrix.get(cat, {}):
                 matrix[cat][d] += 1
 
@@ -78,6 +81,13 @@ def build_gap_matrix(papers: list[dict]) -> dict:
         "datasets": all_datasets,
         "matrix": matrix,
         "candidate_gaps": candidate_gaps,
+        "dataset_resolution": {
+            "threshold": resolver.threshold,
+            "raw_label_count": len({r.original for group in resolved for r in group}),
+            "canonical_count": len(all_datasets),
+            "aliases": [vars(r) for r in sorted(
+                {r for group in resolved for r in group}, key=lambda r: r.original)],
+        },
     }
 
 
@@ -139,7 +149,7 @@ def compare_against_corpus(uploaded_extraction: dict, config: dict, top_k: int =
     # corpus), so we use its single nearest match's category as a stand-in for
     # "where would this paper likely be categorized" when checking gap-fit.
     approx_category = similar_papers[0]["category"] if similar_papers else None
-    uploaded_datasets = uploaded_extraction.get("datasets", [])
+    uploaded_datasets = canonical_dataset_names(uploaded_extraction.get("datasets", []))
     fits_gap = None
     if approx_category and approx_category in gap_result["categories"]:
         fits_gap = any(

@@ -16,14 +16,16 @@ from __future__ import annotations
 
 import json
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
 from .anchors import NUMERIC_ANCHOR_RE as _NUMVAL
 from .attribute import attribute_claim
-from .schema import (EXPLICIT, PROSE_GROUNDED, UNSUPPORTED, MISSING, RETURNED, ABSTAINED,
+from .schema import (EXPLICIT, PROSE_GROUNDED, ENTAILED, UNSUPPORTED, MISSING, RETURNED, ABSTAINED,
                      OWN_PAPER, CITED_PAPER, UNKNOWN, FULL_TEXT, atomic_metrics)
+from .entailment import (entailment_scores, MIN_OVERLAP, MAX_OVERLAP, MIN_ENTAILMENT,
+                         MAX_CANDIDATES, model_identity)
 
 _WORD = re.compile(r"[a-z0-9][a-z0-9\-]*")
 _STOP = {"the", "and", "for", "with", "from", "this", "that", "using", "based",
@@ -188,7 +190,7 @@ def _supporting_sentence(value: str, text: str) -> str:
 
 
 def _ground(value: str, chunks: list[dict[str, Any]], *,
-            field: str = "metrics") -> tuple[dict[str, Any], str] | None:
+            field: str = "metrics", surnames: list[str] | None = None) -> tuple[dict[str, Any], str] | None:
     """Return (chunk, supporting_sentence) for the chunk that verbatim-supports
     `value`, or None. A body chunk is preferred over the paper's own abstract
     when both match, since the abstract merely restates a body result.
@@ -198,7 +200,8 @@ def _ground(value: str, chunks: list[dict[str, Any]], *,
     structurally under-matches. Instead we NUMBER-ANCHOR: every meaningful
     number in the paraphrase must appear verbatim in one chunk, and >=2 of the
     paraphrase's significant tokens must co-occur there. For `metrics` (short,
-    near-verbatim values) the substring / >=0.8-token-containment check is kept.
+    near-verbatim values) literal / >0.85-token-containment is the fast tier;
+    lower-overlap paraphrases require the separately verified NLI tier.
     """
     nv = _norm(value)
     if not nv or (len(nv) < 4 and field != "metrics"):
@@ -208,7 +211,7 @@ def _ground(value: str, chunks: list[dict[str, Any]], *,
 
     def matches(c: dict[str, Any]) -> bool:
         ct = _norm(c.get("text", ""))
-        if (re.search(r"(?<![\w-])" + re.escape(nv) + r"(?![\w-])", ct)
+        if (re.search(r"(?<![\w-])" + r"[\s-]+".join(map(re.escape, nv.split())) + r"(?![\w-])", ct)
                 if field == "metrics" else nv in ct):
             return True
         if nums:
@@ -218,11 +221,12 @@ def _ground(value: str, chunks: list[dict[str, Any]], *,
             return False
         if len(toks) < 2:
             return False
-        return len(toks & set(_WORD.findall(ct))) / len(toks) >= 0.8
+        overlap = len(toks & set(_WORD.findall(ct))) / len(toks)
+        return overlap >= 0.8 if field == 'datasets' else overlap > MAX_OVERLAP
 
     hits = [c for c in chunks if matches(c)]
     if not hits:
-        return None
+        return _semantic_ground(value, chunks, field=field, surnames=surnames or [])
     hits.sort(key=lambda c: (c.get("section") == "abstract",
                              c.get("section") not in ("results", "experimental_setup", "discussion")))
     chosen = hits[0]
@@ -245,27 +249,213 @@ def _prose_ground(value: str, chunks: list[dict[str, Any]]) -> tuple[dict, str, 
         if not isinstance(start, int) or not isinstance(end, int) or start < 0 or end < start + len(text):
             continue
         # Match a contiguous assertion in one sentence, not a bag of numbers from a chunk.
-        offset = 0
-        for boundary in list(re.finditer(r"(?<=[.!?])(?<!\bal\.)\s+", text)) + [None]:
-            stop = boundary.start() if boundary else len(text)
-            sentence = text[offset:stop]
-            match = pattern.match(sentence.strip())
+        for sentence, left, right in _sentence_spans(text):
+            match = pattern.match(sentence)
             if match and re.fullmatch(r"(?:\s*\[\d+(?:\s*[,\-]\s*\d+)*\])?[.!?]?",
-                                      sentence.strip()[match.end():]):
-                left = offset + len(sentence) - len(sentence.lstrip())
-                right = stop - len(sentence) + len(sentence.rstrip())
+                                      sentence[match.end():]) and not re.match(
+                    r'\s*\[\d+(?:\s*[,\-]\s*\d+)*\]', text[right:]):
                 return chunk, text[left:right], start + left, start + right
-            offset = boundary.end() if boundary else len(text)
     return None
 
 
-def _value_sane(field: str, value: Any) -> bool:
+def _sentence_spans(text: str):
+    """Original sentence text and character bounds, including PDF whitespace."""
+    offset = 0
+    for boundary in list(re.finditer(r"(?<=[.!?])(?<!\bal\.)\s+", text)) + [None]:
+        stop = boundary.start() if boundary else len(text)
+        sentence = text[offset:stop]
+        left = offset + len(sentence) - len(sentence.lstrip())
+        right = stop - len(sentence) + len(sentence.rstrip())
+        if right > left:
+            yield text[left:right], left, right
+        offset = boundary.end() if boundary else len(text)
+
+
+def _quantities_supported(claim: str, source: str) -> bool:
+    """NLI cannot override a changed value, unit, role, subject or metric/value pairing."""
+    from .binder_v2 import mentions, _identifier_spans
+
+    def numbers(text):
+        identifiers = _identifier_spans(text)
+        return [m.group().replace(',', '').lstrip('+') for m in re.finditer(
+            r'(?<![\w.])[+-]?\d+(?:,\d{3})*(?:\.\d+)?(?!\w|\.\d)', text)
+                if not any(a <= m.start() and m.end() <= b for a, b in identifiers)]
+
+    # Include single-digit denominators and confidence levels, which the
+    # binder intentionally omits from its primary scalar mentions.
+    wanted_numbers, source_numbers = Counter(numbers(claim)), Counter(numbers(source))
+    if wanted_numbers - source_numbers:
+        return False
+
+    def relation(text, quantity):
+        prefix = text[max(0, quantity['start'] - 48):quantity['start']]
+        match = re.search(r'(>=|<=|>|<|at least|at most|no less than|no more than|more than|'
+                          r'less than|above|below|over|under|up to|about|around|approximately|~)'
+                          r'\s*$', prefix, re.I)
+        if not match:
+            return '='
+        term = match.group().strip().lower()
+        return {'at least': '>=', 'no less than': '>=', 'at most': '<=', 'no more than': '<=',
+                'up to': '<=', 'more than': '>', 'above': '>', 'over': '>',
+                'less than': '<', 'below': '<', 'under': '<', 'about': '~',
+                'around': '~', 'approximately': '~'}.get(term, term)
+
+    wanted, available = mentions(claim), mentions(source)
+    if _NUMVAL.search(claim) and not wanted:
+        return False
+
+    def local(text, values, index):
+        value = values[index]
+        left = values[index - 1]['end'] if index else 0
+        right = values[index + 1]['start'] if index + 1 < len(values) else len(text)
+        names = list(_METRIC_LABEL_RE.finditer(text, left, right))
+        closest = min(names, key=lambda m: min(abs(m.end() - value['start']),
+                                               abs(m.start() - value['end'])), default=None)
+        metric = (_canon_metric(closest.group()) or closest.group().lower()) if closest else None
+        metric = {'dsc': 'dice', 'f-score': 'f1', 'f1-score': 'f1', 'jaccard': 'iou',
+                  'jaccard index': 'iou'}.get(metric, metric)
+        prefix = text[left:value['start']]
+        subjects = list(re.finditer(r"\b(our|ours|proposed|baseline|prior|previous)\b", prefix, re.I))
+        subject_cues = [(m.start(), 'own' if m.group().lower() in ('our', 'ours', 'proposed')
+                        else 'other') for m in subjects]
+        # Explicit model names also anchor a quantity; an OWN cue elsewhere in
+        # the sentence cannot lend its subject to a different model's score.
+        for m in re.finditer(r'\b[A-Z][A-Za-z0-9-]*[A-Z][A-Za-z0-9-]*\b', prefix):
+            if (any(c.islower() for c in m.group()) and not _METRIC_LABEL_RE.fullmatch(m.group())
+                    and re.match(r'\s+(?:model\s+)?(?:achiev\w*|obtain\w*|reach\w*|record\w*|'
+                                 r'attain\w*|score\w*|yield\w*|has|is|was)\b', prefix[m.end():], re.I)):
+                subject_cues.append((m.start(), m.group().lower()))
+        subject = max(subject_cues, default=(0, None))[1]
+        directions = list(re.finditer(r"\b(increas\w*|rais\w*|boost\w*|decreas\w*|reduc\w*|drop\w*|lower\w*)\b", prefix, re.I))
+        direction = None if not directions else ('down' if directions[-1].group().lower().startswith(
+            ('decreas', 'reduc', 'drop', 'lower')) else 'up')
+        return metric, subject, direction
+
+    if re.search(r"\b(whether|hypothesi\w*|would|could|might|may)\b", source, re.I) and not re.search(
+            r"\b(whether|hypothesi\w*|would|could|might|may)\b", claim, re.I):
+        return False
+    used = set()
+    for i, quantity in enumerate(wanted):
+        expected = local(claim, wanted, i)
+        for j, candidate in enumerate(available):
+            if j in used or any(quantity[k] != candidate[k] for k in
+                                ('tok', 'unit', 'delta', 'threshold', 'negated')):
+                continue
+            if relation(claim, quantity) != relation(source, candidate):
+                continue
+            if any(quantity[k] is not None and quantity[k] != candidate[k]
+                   for k in ('pm', 'range', 'interval', 'count')):
+                continue
+            actual = local(source, available, j)
+            if expected[0] is not None and expected[0] != actual[0]:
+                continue
+            if any(a is not None and b is not None and a != b for a, b in zip(expected, actual)):
+                continue
+            used.add(j)
+            break
+        else:
+            return False
+    return True
+
+
+def _semantic_ground(value: str, chunks: list[dict[str, Any]], *, field: str,
+                     surnames: list[str]) -> tuple[dict, str] | None:
+    if field not in ('metrics', 'results') or claim_value_tokens(value) & table_value_tokens(chunks):
+        return None
+    # Salvage can flatten a result list into one bracketed assertion. Brackets
+    # around prose are not numeric citation markers; keep output text unchanged.
+    assertion = value.strip()
+    if assertion.startswith('[') and assertion.endswith(']') and re.search(r'[A-Za-z]', assertion):
+        assertion = assertion[1:-1].strip()
+    tokens = _sig_tokens(assertion)
+    if len(tokens) < 2:
+        return None
+    candidates = []
+    for chunk in chunks:
+        start, end, text = chunk.get('char_start'), chunk.get('char_end'), chunk.get('text') or ''
+        if (chunk.get('block_type') not in ('paragraph', 'prose', 'text') or chunk.get('table_cells')
+                or not isinstance(start, int) or not isinstance(end, int) or start < 0
+                or end < start + len(text)):
+            continue
+        for sentence, left, right in _sentence_spans(text):
+            overlap = len(tokens & set(_WORD.findall(_norm(sentence)))) / len(tokens)
+            if not MIN_OVERLAP <= overlap <= MAX_OVERLAP or not _quantities_supported(assertion, sentence):
+                continue
+            if re.match(r'\s*\[\d+(?:\s*[,\-]\s*\d+)*\]', text[right:]):
+                continue
+            attr = attribute_claim(sentence, sentence, block_type=chunk.get('block_type'),
+                                   section=chunk.get('section'), section_context='',
+                                   own_author_surnames=surnames)
+            if attr['attribution'] != OWN_PAPER:
+                continue
+            candidates.append((overlap, chunk, sentence, start + left, start + right))
+    # Bounded inference only after lexical, numeric, provenance and ownership checks.
+    candidates.sort(key=lambda c: (-c[0], c[1].get('section') == 'abstract'))
+    candidates = candidates[:MAX_CANDIDATES]
+    if not candidates:
+        return None
+    hypothesis = assertion if field == 'results' or _NUMVAL.search(assertion) else (
+        f'An evaluation metric is {assertion}.')
+    scores = entailment_scores([(c[2], hypothesis) for c in candidates])
+    for (overlap, chunk, sentence, start, end), score in zip(candidates, scores):
+        if score is not None and MIN_ENTAILMENT <= score <= 1.0:
+            proof = dict(**model_identity(), confidence=score,
+                         lexical_overlap=overlap, char_start=start, char_end=end)
+            return {**chunk, '_entailment': proof}, sentence
+    return None
+
+
+_METRIC_LABEL_RE = re.compile(
+    r'(?<![\w-])(?:' + '|'.join(re.escape(m) for m in sorted(
+        _METRIC_TOKENS | set(_METRIC_RANGES) | {'bertscore', 'hr', 'hd95', '95hd', 'hausdorff'},
+        key=len, reverse=True)) + r')(?![\w-])', re.I)
+_MEASUREMENT_CUE = re.compile(
+    r'\b(metric\w*|measur\w*|evaluat\w*|number|count\w*|ratio|average|mean|total|percentage)\b', re.I)
+
+
+def _metric_defined(value: str, chunks: list[dict[str, Any]]) -> bool:
+    """An unfamiliar author-defined label needs a local measurement definition."""
+    if not re.search(r'[A-Za-z]', value):
+        return False
+    label = re.compile(r'(?<!\w)' + r'[\s-]+'.join(map(re.escape, value.strip().split())) + r'(?!\w)', re.I)
+    for chunk in chunks:
+        for sentence, _, _ in _sentence_spans(chunk.get('text') or ''):
+            match = label.search(sentence)
+            if not match:
+                continue
+            context = sentence[:match.start()] + sentence[match.end():]
+            if _MEASUREMENT_CUE.search(context):
+                return True
+            # A locally reported rating also defines a custom metric; digits
+            # inside its label (e.g. GPT-4) do not provide this evidence.
+            if (re.search(r'\b(?:reach|achiev|scor|rat|obtain|record)\w*\b', context, re.I)
+                    and re.search(r'\d+(?:\.\d+)?(?:\s*/\s*\d+)?\s*(?:in|on|for|using|with)?\s*$',
+                                  sentence[:match.start()], re.I)):
+                return True
+            # Explicitly named, reported outcomes: "we report ... (Custom Label)".
+            if (sentence[:match.start()].rstrip().endswith('(')
+                    and sentence[match.end():].lstrip().startswith(')')
+                    and re.search(r'\b(?:we\s+)?report\w*\b', sentence[:match.start()], re.I)):
+                return True
+    return False
+
+
+def _value_sane(field: str, value: Any, chunks: list[dict[str, Any]] | None = None) -> bool:
     if field == "metrics":
         raw = value if isinstance(value, list) else [value]
         if not raw or any(not isinstance(v, str) or not v.strip() for v in raw):
             return False
         values = atomic_metrics(raw)
-        return bool(values) and all(_NUM.search(v) or set(_WORD.findall(v.lower())) & _METRIC_TOKENS
+        # A digit alone is not a metric: years, counts and numbered prose must
+        # not bypass validation. Novel metric names need source definitions.
+        # "IoU-based human evaluation" retains the named metric, while model
+        # identifiers such as GPT-4-based still need a source definition.
+        def named_metric(v):
+            qualified = any(_METRIC_LABEL_RE.fullmatch(m.group(1)) for m in
+                            re.finditer(r'(?<![\w-])(\w+)-based(?![\w-])', v, re.I))
+            rates = re.search(r'(?<![\w-])(?:success|failure|error)[ -]+rates?(?![\w-])', v, re.I)
+            return _METRIC_LABEL_RE.search(v) or qualified or rates
+        return bool(values) and all(named_metric(v) or _metric_defined(v, chunks or [])
                                     for v in values)
     if not isinstance(value, str):
         return False
@@ -295,9 +485,8 @@ def _evidence_item(field: str, value: str) -> dict[str, Any]:
 # Where a paper has a STRUCTURED representation (LaTeX e-print / JATS -> parsed
 # table_cells on its chunks), a quantitative OWN claim is verified against the
 # actual cell. Where only a collapsed PDF representation exists, structural
-# binding CANNOT be verified — the claim is marked `unverifiable_binding` and is
-# NOT returned as an OWN quantitative result (this reduces returned results on
-# PDF-only papers; that reduction is a CORRECTION, like the abstract-vs-body one).
+# binding is unavailable. Owned prose must instead have a literal assertion or
+# pass bounded semantic entailment with quantitative consistency and provenance.
 # --------------------------------------------------------------------------
 
 _OWN_ROW = re.compile(
@@ -642,7 +831,7 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 surnames: list[str]) -> dict[str, Any]:
     item = _evidence_item(field, value)
     prose = None
-    if not _value_sane(field, value):
+    if not _value_sane(field, value, chunks):
         item.update(evidence_status=UNSUPPORTED, abstain_reason="value_failed_sanity_check")
         return item
     # BINDING (not attribution): if the claim names a bounded metric, its value
@@ -655,8 +844,8 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                         abstain_reason="metric_value_out_of_range", range_check=rng)
             return item
         # STRUCTURAL CELL BINDING — a quantitative claim must bind to the actual
-        # (row, column) cell, where a structured representation exists; else it is
-        # unverifiable and is not returned as an OWN quantitative result.
+        # (row, column) cell where one exists; missing cells require verified
+        # prose. Semantic entailment cannot override a conflicting table value.
         if _NUMVAL.search(value or ""):
             sb = structural_bind(value, chunks)
             item["structural_binding"] = sb
@@ -665,6 +854,12 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 return item
             if not sb["structured"]:                       # case 1 — PDF-only
                 prose = _prose_ground(value, chunks)
+                if prose is None:
+                    semantic = _semantic_ground(value, chunks, field=field, surnames=surnames)
+                    if semantic:
+                        hit, sentence = semantic
+                        proof = hit['_entailment']
+                        prose = hit, sentence, proof['char_start'], proof['char_end']
                 if prose is None:
                     item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                                 abstain_reason="unverifiable_binding")
@@ -694,25 +889,26 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="table_value_unbound")
                 return item
-    grounded = prose[:2] if prose else _ground(value, chunks, field=field)
+    grounded = prose[:2] if prose else _ground(value, chunks, field=field, surnames=surnames)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
                     abstain_reason="evidence_span_not_found_in_paper_chunks", confidence=0.2)
         return item
     hit, sentence = grounded
+    semantic = hit.get('_entailment')
     item.update(
         evidence_span=sentence[:400], source=hit.get("source"),
         representation=hit.get("representation"), section=hit.get("section"),
         page_or_node=hit.get("page_or_node"), block_id=hit.get("block_id"),
-        char_start=prose[2] if prose else hit.get("char_start"),
-        char_end=prose[3] if prose else hit.get("char_end"),
+        char_start=semantic['char_start'] if semantic else (prose[2] if prose else hit.get("char_start")),
+        char_end=semantic['char_end'] if semantic else (prose[3] if prose else hit.get("char_end")),
         evidence_status=EXPLICIT, provenance_valid=True, confidence=0.8)
 
     if field in ("metrics", "results"):
         attr = attribute_claim(
-            sentence if prose else hit.get("text") or "", value,
+            sentence if prose or semantic else hit.get("text") or "", sentence if semantic else value,
             block_type=hit.get("block_type"), section=hit.get("section"),
-            section_context="" if prose else _section_context(chunks, hit.get("section") or ""),
+            section_context="" if prose or semantic else _section_context(chunks, hit.get("section") or ""),
             own_author_surnames=surnames)
         item["attribution"] = attr["attribution"]
         item["attribution_confidence"] = attr["confidence"]
@@ -722,7 +918,10 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
         if attr["attribution"] == UNKNOWN:
             item.update(final=ABSTAINED, abstain_reason="ownership_unverified")
             return item
-    if prose:
+    if semantic:
+        item.update(evidence_status=ENTAILED, evidence_span=sentence,
+                    confidence=semantic['confidence'], entailment=semantic)
+    elif prose:
         item.update(evidence_status=PROSE_GROUNDED, evidence_span=sentence)
     item["final"] = RETURNED
     return item
@@ -833,10 +1032,10 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
                     stats["no_full_text_quant_fields"] += 1
                     if it["final"] == ABSTAINED:
                         stats["no_full_text_quant_abstained"] += 1
-                if it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED):
+                if it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED, ENTAILED):
                     stats["provenance_checked"] += 1
                     stats["provenance_valid"] += 1 if it["provenance_valid"] else 0
-                if field in ("metrics", "results") and it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED):
+                if field in ("metrics", "results") and it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED, ENTAILED):
                     stats["attribution"][it["attribution"]] = \
                         stats["attribution"].get(it["attribution"], 0) + 1
         evidence_out.append({"paper_id": pid, "acquisition_status": acq,

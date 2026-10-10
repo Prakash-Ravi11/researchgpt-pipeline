@@ -213,7 +213,7 @@ def test_the_two_gate_fixes():
     assert v2[0] == "Smith et al. reported a Dice of 0.81."
 
 
-def test_legacy_is_identical_to_the_starting_commit(monkeypatch):
+def test_legacy_binding_is_identical_except_rejected_nonmetric_counts(monkeypatch):
     src = subprocess.run(["git", "-C", str(ROOT), "show", f"{START}:src/evidence/gate.py"], capture_output=True,
                          text=True, encoding="utf-8", check=True).stdout
     old = types.ModuleType("src.evidence._gate_start")
@@ -224,8 +224,14 @@ def test_legacy_is_identical_to_the_starting_commit(monkeypatch):
                   "Our method achieves an average Dice score of 0.926 ± 0.012 versus 0.920 ± 0.014 for nnU-Net.",
                   "Ours reaches a Dice of 0.91 on ISLES.", "The training set has 15 subjects aged 21-38 weeks."):
         new = G.gate_paper({"results": claim, "metrics": [claim]}, PAPER, "FULL_TEXT", [])
-        assert json.dumps(new, sort_keys=True) == json.dumps(
-            old.gate_paper({"results": claim, "metrics": [claim]}, PAPER, "FULL_TEXT", []), sort_keys=True)
+        previous = old.gate_paper({"results": claim, "metrics": [claim]}, PAPER, "FULL_TEXT", [])
+        if claim == "The training set has 15 subjects aged 21-38 weeks.":
+            # Subject counts are not metric labels. Tightened sanity rejects
+            # this before binding, while preserving the existing result gate.
+            metric = previous['evidence']['metrics'][0]
+            assert metric['abstain_reason'] == 'table_value_unbound'
+            metric.update(abstain_reason='value_failed_sanity_check', structural_binding=None)
+        assert json.dumps(new, sort_keys=True) == json.dumps(previous, sort_keys=True)
 
 
 def test_flag_resolution(monkeypatch, tmp_path):

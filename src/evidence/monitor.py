@@ -71,7 +71,7 @@ def evaluate(evidence_out: list[dict[str, Any]], gate_stats: dict[str, Any],
     rate = (pv / pc) if pc else None
     c = {"provenance_valid": pv, "provenance_checked": pc, "rate": rate,
          "status": _OK if (pc > 0 and rate == 1.0) else (_FAIL if pc and rate is not None and rate < 1.0 else _WARN),
-         "note": "no EXPLICIT evidence items to check" if not pc else ""}
+         "note": "no grounded evidence items to check" if not pc else ""}
 
     # D — no-full-text leakage (tripwire; the gate already forces these to abstain)
     leaks = []

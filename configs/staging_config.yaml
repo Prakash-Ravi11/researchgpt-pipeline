@@ -1,5 +1,4 @@
-# STAGING config — the ONLY place evidence_grounding is enabled.
-# Production / default (configs/config.yaml) keeps evidence_grounding.enabled: false.
+# Isolated staging config; evidence grounding is also enabled in production.
 # Bounded, reproducible corpus: the 8-paper data_test set (LLM-reasoning topic),
 # separate data_test/ paths and Chroma collection — never touches data/.
 # No secret in this file: set S2_API_KEY in the environment if collection is re-run.
@@ -59,7 +58,7 @@ system:
   collection_name: "researchgpt_staging_papers"
 
 evidence_grounding:
-  enabled: true   # STAGING ONLY — do not copy this line into configs/config.yaml
+  enabled: true
   # arXiv LaTeX e-print ingestion (Phase 4). DISABLED: it reached numeric parity
   # (M1) but regressed downstream extraction — the structured table text drives
   # qwen2.5:7b past the 768 num_predict cap (retained-subset mean fields
