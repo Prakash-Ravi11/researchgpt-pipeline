@@ -105,7 +105,7 @@ def test_token_equality_also_holds_for_table_block_text():
     assert not G.claim_value_tokens(CLAIM["token"]) & G.table_value_tokens(text_only)
 
 
-def test_legacy_output_is_identical_to_864f2e8(monkeypatch):
+def test_legacy_output_changes_only_for_owned_prose_without_cells(monkeypatch):
     monkeypatch.setenv("RGPT_BINDER_POLICY", "legacy")
     src = subprocess.run(["git", "-C", str(ROOT), "show", "864f2e8:src/evidence/gate.py"], capture_output=True,
                          text=True, encoding="utf-8", check=True).stdout
@@ -114,16 +114,30 @@ def test_legacy_output_is_identical_to_864f2e8(monkeypatch):
     exec(compile(src, "864f2e8:src/evidence/gate.py", "exec"), old.__dict__)
     monkeypatch.setenv("RGPT_FALLTHROUGH_POLICY", "legacy")
     for chunks in (CHUNKS, NO_CELLS):
-        for claim in CLAIM.values():
+        for name, claim in CLAIM.items():
             new = G.gate_paper({"results": claim}, chunks, "FULL_TEXT", [])
-            assert json.dumps(new, sort_keys=True) == json.dumps(
-                old.gate_paper({"results": claim}, chunks, "FULL_TEXT", []), sort_keys=True)
+            baseline = old.gate_paper({"results": claim}, chunks, "FULL_TEXT", [])
+            if chunks is NO_CELLS and name in {"cell", "prose", "token", "plus_minus"}:
+                assert baseline['evidence']['results'][0]['abstain_reason'] == 'unverifiable_binding'
+                assert new['results'] == claim
+                item = new['evidence']['results'][0]
+                assert item['evidence_status'] == G.PROSE_GROUNDED
+                assert item['attribution'] == G.OWN_PAPER and item['final'] == G.RETURNED
+                assert item['structural_binding'] == baseline['evidence']['results'][0]['structural_binding']
+                assert item['evidence_span'] == PROSE[item['char_start']:item['char_end']] == claim
+                assert item['source'] == 't' and item['block_id'] == 'SYN:0'
+            else:
+                assert json.dumps(new, sort_keys=True) == json.dumps(baseline, sort_keys=True)
 
 
-def test_paper_without_cells_stays_on_the_pdf_only_path(monkeypatch):
-    for claim in (CLAIM["cell"], CLAIM["pdf_only_table_text"]):
-        before, after = _both(monkeypatch, claim, NO_CELLS)
-        assert after == before and after["abstain_reason"] == "unverifiable_binding"
+def test_paper_without_cells_uses_prose_but_rejects_table_collisions(monkeypatch):
+    before, after = _both(monkeypatch, CLAIM['cell'], NO_CELLS)
+    assert after == before
+    assert after['final'] == G.RETURNED and after['evidence_status'] == G.PROSE_GROUNDED
+    assert after['evidence_span'] == CLAIM['cell']
+    before, after = _both(monkeypatch, CLAIM['pdf_only_table_text'], NO_CELLS)
+    assert after == before and after['abstain_reason'] == 'unverifiable_binding'
+    assert after['final'] == G.ABSTAINED
 
 
 def test_flag_resolution(monkeypatch, tmp_path):

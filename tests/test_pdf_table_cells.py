@@ -14,7 +14,7 @@ import pytest
 import src.evidence.represent as R
 from src.evidence.chunker import chunk_document
 from src.evidence.gate import gate_paper, structural_bind
-from src.evidence.schema import ABSTAINED, FULL_TEXT, OWN_PAPER, RETURNED
+from src.evidence.schema import ABSTAINED, FULL_TEXT, OWN_PAPER, PROSE_GROUNDED, RETURNED
 from src.processing.pdf_parser import process_paper_grounded
 
 CAPTION = "Table 1: Comparison with baseline methods on the test set."
@@ -234,4 +234,9 @@ def test_end_to_end_claim_binds_and_gate_returns_it(tmp_path, monkeypatch):
     before = process_paper_grounded(paper)
     assert structural_bind(CLAIM, before)["status"] == "pdf_only"
     item = gate_paper({"results": CLAIM}, before, FULL_TEXT, [])["evidence"]["results"][0]
-    assert (item["final"], item["abstain_reason"]) == (ABSTAINED, "unverifiable_binding")
+    assert (item['final'], item['evidence_status'], item['attribution']) == (RETURNED, PROSE_GROUNDED, OWN_PAPER)
+    assert item['structural_binding']['structured'] is False
+    hit = next(c for c in before if c['block_id'] == item['block_id']
+               and c['char_start'] <= item['char_start'] < c['char_end'])
+    span = hit['text'][item['char_start'] - hit['char_start']:item['char_end'] - hit['char_start']]
+    assert span == item['evidence_span'] == CLAIM

@@ -22,8 +22,8 @@ from typing import Any
 
 from .anchors import NUMERIC_ANCHOR_RE as _NUMVAL
 from .attribute import attribute_claim
-from .schema import (EXPLICIT, UNSUPPORTED, MISSING, RETURNED, ABSTAINED,
-                     OWN_PAPER, CITED_PAPER, UNKNOWN, FULL_TEXT)
+from .schema import (EXPLICIT, PROSE_GROUNDED, UNSUPPORTED, MISSING, RETURNED, ABSTAINED,
+                     OWN_PAPER, CITED_PAPER, UNKNOWN, FULL_TEXT, atomic_metrics)
 
 _WORD = re.compile(r"[a-z0-9][a-z0-9\-]*")
 _STOP = {"the", "and", "for", "with", "from", "this", "that", "using", "based",
@@ -201,14 +201,15 @@ def _ground(value: str, chunks: list[dict[str, Any]], *,
     near-verbatim values) the substring / >=0.8-token-containment check is kept.
     """
     nv = _norm(value)
-    if len(nv) < 4:
+    if not nv or (len(nv) < 4 and field != "metrics"):
         return None
     toks = _sig_tokens(value)
     nums = set(_NUMVAL.findall(value)) if field == "results" else set()
 
     def matches(c: dict[str, Any]) -> bool:
         ct = _norm(c.get("text", ""))
-        if nv in ct:
+        if (re.search(r"(?<![\w-])" + re.escape(nv) + r"(?![\w-])", ct)
+                if field == "metrics" else nv in ct):
             return True
         if nums:
             # number-anchored: all meaningful numbers verbatim in this chunk + local lexical support
@@ -228,7 +229,46 @@ def _ground(value: str, chunks: list[dict[str, Any]], *,
     return chosen, _supporting_sentence(value, chosen.get("text", ""))
 
 
-def _value_sane(field: str, value: str) -> bool:
+def _prose_ground(value: str, chunks: list[dict[str, Any]]) -> tuple[dict, str, int, int] | None:
+    # A flattened table cannot become prose evidence just because its cells are missing.
+    if claim_value_tokens(value) & table_value_tokens(chunks):
+        return None
+    words = value.strip().split()
+    if not words or not _NUMVAL.search(value):
+        return None
+    pattern = re.compile(r"(?<![\w.])" + r"\s+".join(map(re.escape, words)) + r"(?!\w|\.\d)", re.I)
+    for chunk in chunks:
+        if chunk.get("block_type") not in ("paragraph", "prose", "text") or chunk.get("table_cells"):
+            continue
+        text = chunk.get("text") or ""
+        start, end = chunk.get("char_start"), chunk.get("char_end")
+        if not isinstance(start, int) or not isinstance(end, int) or start < 0 or end < start + len(text):
+            continue
+        # Match a contiguous assertion in one sentence, not a bag of numbers from a chunk.
+        offset = 0
+        for boundary in list(re.finditer(r"(?<=[.!?])(?<!\bal\.)\s+", text)) + [None]:
+            stop = boundary.start() if boundary else len(text)
+            sentence = text[offset:stop]
+            match = pattern.match(sentence.strip())
+            if match and re.fullmatch(r"(?:\s*\[\d+(?:\s*[,\-]\s*\d+)*\])?[.!?]?",
+                                      sentence.strip()[match.end():]):
+                left = offset + len(sentence) - len(sentence.lstrip())
+                right = stop - len(sentence) + len(sentence.rstrip())
+                return chunk, text[left:right], start + left, start + right
+            offset = boundary.end() if boundary else len(text)
+    return None
+
+
+def _value_sane(field: str, value: Any) -> bool:
+    if field == "metrics":
+        raw = value if isinstance(value, list) else [value]
+        if not raw or any(not isinstance(v, str) or not v.strip() for v in raw):
+            return False
+        values = atomic_metrics(raw)
+        return bool(values) and all(_NUM.search(v) or set(_WORD.findall(v.lower())) & _METRIC_TOKENS
+                                    for v in values)
+    if not isinstance(value, str):
+        return False
     if field == "datasets":
         return bool(value and value.strip())
     v = (value or "").lower()
@@ -601,6 +641,7 @@ def _section_context(chunks: list[dict[str, Any]], section: str, limit: int = 60
 def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 surnames: list[str]) -> dict[str, Any]:
     item = _evidence_item(field, value)
+    prose = None
     if not _value_sane(field, value):
         item.update(evidence_status=UNSUPPORTED, abstain_reason="value_failed_sanity_check")
         return item
@@ -623,9 +664,11 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED, abstain_reason=sb["abstain_code"])
                 return item
             if not sb["structured"]:                       # case 1 — PDF-only
-                item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
-                            abstain_reason="unverifiable_binding")
-                return item
+                prose = _prose_ground(value, chunks)
+                if prose is None:
+                    item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
+                                abstain_reason="unverifiable_binding")
+                    return item
             if sb["status"] == "wrong_cell":               # case 4 — cross-row
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="binding_wrong_cell")
@@ -651,7 +694,7 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
                 item.update(evidence_status=UNSUPPORTED, final=ABSTAINED,
                             abstain_reason="table_value_unbound")
                 return item
-    grounded = _ground(value, chunks, field=field)
+    grounded = prose[:2] if prose else _ground(value, chunks, field=field)
     if grounded is None:
         item.update(evidence_status=UNSUPPORTED,
                     abstain_reason="evidence_span_not_found_in_paper_chunks", confidence=0.2)
@@ -661,14 +704,15 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
         evidence_span=sentence[:400], source=hit.get("source"),
         representation=hit.get("representation"), section=hit.get("section"),
         page_or_node=hit.get("page_or_node"), block_id=hit.get("block_id"),
-        char_start=hit.get("char_start"), char_end=hit.get("char_end"),
+        char_start=prose[2] if prose else hit.get("char_start"),
+        char_end=prose[3] if prose else hit.get("char_end"),
         evidence_status=EXPLICIT, provenance_valid=True, confidence=0.8)
 
     if field in ("metrics", "results"):
         attr = attribute_claim(
-            hit.get("text") or "", value,
+            sentence if prose else hit.get("text") or "", value,
             block_type=hit.get("block_type"), section=hit.get("section"),
-            section_context=_section_context(chunks, hit.get("section") or ""),
+            section_context="" if prose else _section_context(chunks, hit.get("section") or ""),
             own_author_surnames=surnames)
         item["attribution"] = attr["attribution"]
         item["attribution_confidence"] = attr["confidence"]
@@ -678,11 +722,15 @@ def _gate_value(field: str, value: str, chunks: list[dict[str, Any]],
         if attr["attribution"] == UNKNOWN:
             item.update(final=ABSTAINED, abstain_reason="ownership_unverified")
             return item
+    if prose:
+        item.update(evidence_status=PROSE_GROUNDED, evidence_span=sentence)
     item["final"] = RETURNED
     return item
 
 
-def _as_list(v: Any) -> list[str]:
+def _as_list(v: Any, field: str | None = None) -> list[str]:
+    if field == "metrics":
+        return atomic_metrics(v)
     if isinstance(v, list):
         return [str(x).strip() for x in v if str(x).strip()]
     if isinstance(v, str) and v.strip():
@@ -700,7 +748,7 @@ def gate_paper(record: dict[str, Any], chunks: list[dict[str, Any]],
 
     no_full_text = acquisition_status != FULL_TEXT
     for field in ("datasets", "metrics"):
-        for value in _as_list(record.get(field)):
+        for value in _as_list(record.get(field), field):
             if no_full_text:
                 it = _evidence_item(field, value)
                 it["abstain_reason"] = "no_validated_full_text"
@@ -785,10 +833,10 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
                     stats["no_full_text_quant_fields"] += 1
                     if it["final"] == ABSTAINED:
                         stats["no_full_text_quant_abstained"] += 1
-                if it["evidence_status"] in (EXPLICIT,):
+                if it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED):
                     stats["provenance_checked"] += 1
                     stats["provenance_valid"] += 1 if it["provenance_valid"] else 0
-                if field in ("metrics", "results") and it["evidence_status"] == EXPLICIT:
+                if field in ("metrics", "results") and it["evidence_status"] in (EXPLICIT, PROSE_GROUNDED):
                     stats["attribution"][it["attribution"]] = \
                         stats["attribution"].get(it["attribution"], 0) + 1
         evidence_out.append({"paper_id": pid, "acquisition_status": acq,

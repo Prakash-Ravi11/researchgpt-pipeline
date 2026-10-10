@@ -199,13 +199,62 @@ def _unit(u: str | None) -> str | None:
     return {"week": "weeks", "day": "days", "year": "years"}.get(u, u)
 
 
-def mentions(text: str) -> list[dict[str, Any]]:
+def _identifier_spans(text: str) -> list[tuple[int, int]]:
+    spans = []
+    for match in re.finditer(r"(?<!\w)[A-Za-z0-9]+(?:[-_/@][A-Za-z0-9]+)*(?!\w)", text):
+        token = match.group()
+        if not (any(c.isalpha() for c in token) and any(c.isdigit() for c in token)):
+            continue
+        # An attached physical unit is a measurement, not a metric identifier.
+        if re.fullmatch(_N + _UNIT, token, re.I):
+            continue
+        spans.append(match.span())
+    return spans
+
+
+_CHANGE_NOUN = re.compile(r"^\s+(?:improvement|increase|decrease|reduction|gain|boost|drop|decline|"
+                          r"difference|margin|change)\b", re.I)
+_AMOUNT_HEAD = re.compile(r"(?:\b(?:a|an|the)|\b(?:average|mean|total)\s+of|"
+                          r"\b(?:reports?|reported|achiev\w*|obtain\w*|show\w*|observ\w*|yield\w*))\s*$", re.I)
+_QUANTITY_BOUNDARY = re.compile(r"[;!?]|\.(?=\s|$)|\b(?:but|while|whereas)\b", re.I)
+_COORDINATED_VALUES = re.compile(r"\s*(?:,\s*)?(?:and\s+|or\s+)?", re.I)
+
+
+def _quantity_roles(text: str, values: list[dict[str, Any]]) -> None:
+    for i, value in enumerate(values):
+        start = values[i - 1]['end'] if i else 0
+        prefix = text[start:value['start']]
+        prefix = _QUANTITY_BOUNDARY.split(prefix)[-1]
+        # A new coordinated phrase has its own grammatical head.
+        local = re.split(r",|\b(?:and|or)\s+(?=(?:we|our|this|the|it|they)\b)", prefix, flags=re.I)[-1]
+        value['delta'] = bool(_DELTA.search(local))
+        if i and values[i - 1]['delta'] and _COORDINATED_VALUES.fullmatch(prefix):
+            value['delta'] = True
+        if not _CHANGE_NOUN.match(text[value['end']:]):
+            continue
+        first = i
+        while first and _COORDINATED_VALUES.fullmatch(text[values[first - 1]['end']:values[first]['start']]):
+            first -= 1
+        head_start = values[first - 1]['end'] if first else 0
+        head = _QUANTITY_BOUNDARY.split(text[head_start:values[first]['start']])[-1]
+        head = re.split(r",|\b(?:and|or)\b", head, flags=re.I)[-1]
+        # In "scores of X increase", X belongs to the subject phrase. Only an
+        # amount phrase ("a X increase", "reported X improvement") licenses the noun.
+        if not head.strip() or _AMOUNT_HEAD.search(head):
+            for member in values[first:i + 1]:
+                member['delta'] = True
+
+
+def mentions(text: str, identifier_spans: list[tuple[int, int]] | None = None) -> list[dict[str, Any]]:
     """ClaimFrame values (PREREG D2), in claim order, with their structure."""
     w = text or ""
     out: list[dict[str, Any]] = []
+    identifiers = _identifier_spans(w) + (identifier_spans or [])
     skip = 0
     for m in _NUMBER.finditer(w):
         s, e = m.span()
+        if any(a <= s and e <= b for a, b in identifiers):
+            continue
         digits = m.group(2).replace(",", "")
         if s < skip or not ("." in digits or len(digits) >= 2):
             continue
@@ -270,6 +319,7 @@ def mentions(text: str) -> list[dict[str, Any]]:
             e += un.end()
         rec["end"] = skip = e
         out.append(rec)
+    _quantity_roles(w, out)
     return out
 
 
@@ -612,8 +662,9 @@ def _in(s: int, e: int, spans: list[tuple[int, int]]) -> bool:
 
 def _frame(w: str, idx: dict[str, Any], off: frozenset[str]) -> dict[str, Any]:
     toks = _tokens(w, idx["syn"])
-    ms = mentions(w)
     matches, rejected = _match_forms(w, toks, idx)
+    ms = mentions(w, [(x['s'], x['e']) for x in matches
+                      if x['q'] and any(c.isalpha() for c in w[x['s']:x['e']])])
     covered = [(x["s"], x["e"]) for x in matches]
     own = [(m.start(), m.end()) for m in _OWN_REF.finditer(w)]
     alias = [(t[2], t[3], t[1]) for t in toks if t[1] in idx["aliases"]]
@@ -1338,7 +1389,7 @@ def gate_paper_v2(record: dict[str, Any], chunks: list[dict[str, Any]], acquisit
     evidence: dict[str, list[dict[str, Any]]] = {"datasets": [], "metrics": [], "results": []}
     no_full_text = acquisition_status != G.FULL_TEXT
     for field in ("datasets", "metrics"):
-        for value in G._as_list(record.get(field)):
+        for value in G._as_list(record.get(field), field):
             if no_full_text:
                 it = G._evidence_item(field, value)
                 it["abstain_reason"] = "no_validated_full_text"

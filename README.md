@@ -10,7 +10,7 @@ runs on your own machine. No paper text is sent to a hosted model.
 
 | | |
 |---|---|
-| **Python** | 3.10 or newer (`.python-version` records 3.10.18, the development version) |
+| **Python** | **3.10.18**, the canonical project runtime pinned in `.python-version` |
 | **Ollama** | running locally, with the configured model pulled |
 | **Disk** | ~2 GB for the embedding model, plus whatever your corpus needs |
 | **GPU** | optional. CUDA is used when present; without it everything still runs on CPU, **substantially slower** |
@@ -19,9 +19,16 @@ runs on your own machine. No paper text is sent to a hosted model.
 
 ## Install
 
+Use Python 3.10.18 to create the environment. In the existing Windows checkout, use
+`.\.venv\Scripts\python.exe` for project commands and checks. Activate that environment
+before using the shorter `python` and `pip` commands below. The optional historical
+borderless environment is not the production runtime; its dependencies have not been
+consolidated into this environment. See [current project state](PROJECT_STATE.md).
+
 ```bash
 git clone <this-repo> researchgpt
 cd researchgpt
+python -c "import sys; assert sys.version_info[:3] == (3, 10, 18), sys.version"
 python -m venv .venv
 ```
 

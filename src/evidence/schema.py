@@ -37,10 +37,11 @@ STRUCTURED_REPR_RANK = {REPR_JATS: 0, REPR_LATEX: 1, REPR_PDF: 2}
 
 # --- evidence status -----------------------------------------------------
 EXPLICIT = "EXPLICIT"
+PROSE_GROUNDED = "PROSE_GROUNDED"
 MISSING = "MISSING"
 INFERRED = "INFERRED"
 UNSUPPORTED = "UNSUPPORTED"
-EVIDENCE_STATUSES = {EXPLICIT, MISSING, INFERRED, UNSUPPORTED}
+EVIDENCE_STATUSES = {EXPLICIT, PROSE_GROUNDED, MISSING, INFERRED, UNSUPPORTED}
 
 # --- attribution -------------------------------------------------------
 OWN_PAPER = "OWN_PAPER"
@@ -55,6 +56,33 @@ ABSTAINED = "ABSTAINED"
 EVIDENCE_FIELDS = ["dataset", "metrics", "results", "method", "limitations"]
 # fields that genuinely require article body text (not answerable from an abstract)
 FULLTEXT_ONLY_FIELDS = {"dataset", "metrics", "results"}
+
+
+def atomic_metrics(value: Any) -> list[str]:
+    """Split legacy metric lists without splitting qualifiers or thousands separators."""
+    values = value if isinstance(value, list) else [value]
+    out = []
+    for item in values:
+        if not isinstance(item, str):
+            continue
+        start, depth = 0, 0
+        for i, char in enumerate(item):
+            if char in "([":
+                depth += 1
+            elif char in ")]":
+                depth = max(0, depth - 1)
+            elif char == "," and depth == 0:
+                if (re.search(r"(?<![\w.])\d{1,3}(?:,\d{3})*$", item[:i])
+                        and re.match(r"\d{3}(?!\w)", item[i + 1:])):
+                    continue
+                atom = item[start:i].strip()
+                if atom:
+                    out.append(atom)
+                start = i + 1
+        atom = item[start:].strip()
+        if atom:
+            out.append(atom)
+    return out
 
 
 def canonical_acquisition_record(paper_id: str) -> dict[str, Any]:

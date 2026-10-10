@@ -40,6 +40,7 @@ import requests
 import yaml
 from tqdm import tqdm
 from src.config import resolve_device
+from src.evidence.schema import atomic_metrics
 
 EXTRACTION_SYSTEM_PROMPT = """You are extracting structured information from an academic paper for a literature review, \
 at the depth a PhD-level researcher would expect and cite directly in their own writing — not a one-line gloss. \
@@ -58,7 +59,7 @@ Given the paper text below, respond with ONLY a JSON object with these exact key
   * Self-collected/experimental data with no formal name — DESCRIBE it concretely using THIS paper's own actual details (sample size, population, and duration/condition IF the paper states one). Do not invent a duration or session length if the paper doesn't specify one — write "duration not stated" instead. Vary your phrasing paper to paper; if you notice yourself writing the same duration or session description across different papers, that is a signal you are copying a pattern rather than reading this specific paper's actual method — go back and check.
   * Survey, interview, or observational data — describe the source and scale, e.g. "survey responses from 200 university students"
   Only return an empty list if this is a purely theoretical, conceptual, or literature-review paper with no underlying empirical data of any kind — that should be rare.
-- "metrics": list of what was measured or evaluated — formal metrics (e.g. "Dice score", "accuracy") for computational work, OR the behavioral/outcome measures for empirical work (e.g. "device pickup frequency", "self-reported distraction", "time-on-task"). Empty list only if truly nothing was measured/compared.
+- "metrics": an array of plain strings, with exactly one measured quantity per item — formal metrics (e.g. ["Dice score", "accuracy"]) for computational work, OR behavioral/outcome measures for empirical work (e.g. ["device pickup frequency", "self-reported distraction", "time-on-task"]). Never combine distinct metrics in one comma-separated string. Empty list only if truly nothing was measured/compared.
 - "key_findings": 2-3 sentence headline takeaway — the single most important, specific result or claim, written so it could stand alone as a citation-worthy sentence
 
 Respond with ONLY the JSON object, no other text."""
@@ -397,7 +398,8 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
                       num_ctx: int = 8192, seed: int | None = None,
                       num_predict: int | None = None,
                       deadline_seconds: float | None = None,
-                      meta_out: dict | None = None) -> dict | None:
+                      meta_out: dict | None = None,
+                      response_schema: dict | None = None) -> dict | None:
     """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict, None,
     or the sentinel {"_deadline_exceeded": True, "_elapsed_s": ...} when the hard
     wall-clock deadline fires.
@@ -438,7 +440,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_content},
         ],
-        "format": "json",
+        "format": response_schema if response_schema is not None else "json",
         "stream": True,  # stream so the deadline can be enforced between chunks
         "options": options,
     }
@@ -542,6 +544,19 @@ _STRING_EXTRACTION_FIELDS = [
 ]
 _LIST_EXTRACTION_FIELDS = ["datasets", "metrics"]
 _EXTRACTION_SCHEMA_KEYS = tuple(_STRING_EXTRACTION_FIELDS) + tuple(_LIST_EXTRACTION_FIELDS)
+EXTRACTION_JSON_SCHEMA = {
+    "type": "object",
+    "properties": {
+        **{field: {"type": "string"} for field in _STRING_EXTRACTION_FIELDS},
+        **{field: {"type": "array", "items": {"type": "string"}}
+           for field in _LIST_EXTRACTION_FIELDS},
+    },
+    "required": list(_EXTRACTION_SCHEMA_KEYS),
+    "additionalProperties": False,
+}
+EXTRACTION_JSON_SCHEMA["properties"]["metrics"]["description"] = (
+    "One measured quantity per string; separate distinct metrics into separate items."
+)
 
 # Bump when EXTRACTION_SYSTEM_PROMPT*, the schema, the domain-variant routing, or
 # the conformance/repair logic changes. This string + a hash of the SELECTED
@@ -550,7 +565,7 @@ _EXTRACTION_SCHEMA_KEYS = tuple(_STRING_EXTRACTION_FIELDS) + tuple(_LIST_EXTRACT
 # instead of silently reusing a cached result produced from different inputs.
 # (Before this, the cache key was paper_id alone — a selection change would have
 # shown no effect because every already-extracted paper was served from cache.)
-EXTRACTION_PROMPT_VERSION = "2026-09-03.numpredict-deadline"  # +num_predict cap / wall-clock deadline change output; re-extract
+EXTRACTION_PROMPT_VERSION = "2026-10-10.atomic-metrics-schema"
 
 # R2 — biomedical / clinical / wet-lab prompt variant. Same 10 keys, same
 # "ONLY JSON" contract as EXTRACTION_SYSTEM_PROMPT; only the field DEFINITIONS
@@ -568,7 +583,7 @@ nested object or a markdown heading):
 - "novelty_claim": what the paper claims is new — its core contribution in the authors' own framing
 - "limitations": limitations the authors state, or clearly evident ones (sample size, single centre, retrospective design, confounding, no control group)
 - "datasets": the data the findings rest on — describe the STUDY POPULATION OR MATERIAL concretely from THIS paper, e.g. "retrospective cohort of 214 glioblastoma patients, single centre 2015-2021", "fetal rat brain tissue, n=24, embryonic day 21", "1,032 chest radiographs from the public NIH ChestX-ray14 set". Use a named public dataset name verbatim if one is used. Empty list only for a pure review or theoretical paper.
-- "metrics": what was measured or evaluated — outcome measures, endpoints, assay readouts, and statistical tests (e.g. "overall survival", "Dice similarity coefficient", "CD39 immunoreactivity", "sensitivity and specificity", "Mann-Whitney U test"). Empty list only if nothing was measured.
+- "metrics": an array of plain strings, with exactly one measured quantity per item — outcome measures, endpoints, assay readouts, and statistical tests (e.g. ["overall survival", "Dice similarity coefficient", "CD39 immunoreactivity", "sensitivity", "specificity", "Mann-Whitney U test"]). Never combine distinct metrics in one comma-separated string. Empty list only if nothing was measured.
 - "key_findings": 2-3 sentence headline takeaway, written so it could stand alone as a citation
 
 Respond with ONLY the JSON object, no other text."""
@@ -601,6 +616,7 @@ SCHEMA_REPAIR_PROMPT = """The JSON below was produced as a paper extraction but 
 Rewrite it as a SINGLE valid JSON object with EXACTLY these keys and no others:
 "summary", "problem_addressed", "method", "results", "inferences", "novelty_claim", "limitations", "key_findings" \
 (each a plain string), and "datasets", "metrics" (each an array of plain strings).
+Each metrics item must name exactly one measured quantity; split comma-separated metric lists into separate items.
 Move any content that sits under a different key, a nested object, a markdown heading, or a leading-colon key into \
 the closest matching field above. Flatten nested objects and tables into readable prose inside the right field. \
 Do NOT add any information that is not already present in the input. Use "" (or [] for datasets/metrics) for a \
@@ -624,7 +640,14 @@ def check_schema_conformance(parsed: dict) -> tuple[bool, list[str]]:
             issues.append(f"{f}_is_{type(parsed[f]).__name__}")
     for f in _LIST_EXTRACTION_FIELDS:
         v = parsed.get(f)
-        if isinstance(v, dict):
+        if f == "metrics":
+            if not isinstance(v, list):
+                issues.append("metrics_is_not_list")
+            elif any(not isinstance(x, str) for x in v):
+                issues.append("metrics_has_nonstring_items")
+            elif any(not x.strip() or atomic_metrics(x) != [x.strip()] for x in v):
+                issues.append("metrics_has_nonatomic_items")
+        elif isinstance(v, dict):
             issues.append(f"{f}_is_dict")
         elif isinstance(v, list) and any(isinstance(x, dict) for x in v):
             issues.append(f"{f}_has_nested_objects")
@@ -663,7 +686,9 @@ def salvage_nonconformant(parsed: dict) -> dict:
             out[f] = v if isinstance(v, str) else ("" if v is None else str(v))
     for f in _LIST_EXTRACTION_FIELDS:
         v = parsed.get(f, [])
-        if isinstance(v, list):
+        if f == "metrics":
+            out[f] = atomic_metrics(v)
+        elif isinstance(v, list):
             if any(isinstance(x, dict) for x in v):
                 flattened.append(f)
             out[f] = [_stringify(x).strip() for x in v if _stringify(x).strip()]
@@ -745,6 +770,7 @@ def repair_schema(parsed: dict, llm_cfg: dict) -> dict | None:
         seed=llm_cfg.get("seed"),
         num_predict=reservation,
         deadline_seconds=float(llm_cfg.get("extraction_deadline_seconds", EXTRACTION_DEADLINE_SECONDS)),
+        response_schema=EXTRACTION_JSON_SCHEMA,
     )
     return None if isinstance(rep, dict) and rep.get("_deadline_exceeded") else rep
 
@@ -783,7 +809,9 @@ def normalize_extraction(extraction: dict) -> dict:
         normalized[field] = _stringify(normalized.get(field, ""))
     for field in _LIST_EXTRACTION_FIELDS:
         value = normalized.get(field, [])
-        if isinstance(value, list):
+        if field == "metrics":
+            normalized[field] = atomic_metrics(value)
+        elif isinstance(value, list):
             normalized[field] = [_stringify(item).strip() for item in value if _stringify(item).strip()]
         elif value:
             normalized[field] = [_stringify(value).strip()]
@@ -837,6 +865,7 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
         num_predict=reservation,
         deadline_seconds=deadline,
         meta_out=meta,
+        response_schema=EXTRACTION_JSON_SCHEMA,
     )
     done_reason = meta.get("done_reason")
     truncated = done_reason == "length"

@@ -1,5 +1,11 @@
 # BLOCKED
 
+Latest status (2026-10-09): the context audit is complete; the binder remains unreleased.
+Both subsequent repair attempts were reverted. S1=19 and S2=25 remain FAIL; S3's last
+identity check passed. One current offline reproduction run confirms 11 failed / 21
+passed on Python 3.10.18. Current evidence, expected outcomes and next action are in
+[PROJECT_STATE.md](PROJECT_STATE.md). Entries below are historical blocker records.
+
 ## 2026-09-19 Phase 4 — Denominator reconciliation
 
 **What I was doing:**

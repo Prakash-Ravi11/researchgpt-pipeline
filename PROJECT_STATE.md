@@ -1,5 +1,190 @@
 # PROJECT STATE
 
+## Current handoff and session log - 2026-10-09
+
+**Read this section first.** The September snapshot below is historical. The current
+task is an evidence-first audit requested by the user: establish the intended product
+result, verify binder/S2/S3 status, compare existing technical approaches, and use one
+Python runtime before considering an implementation. The attached DOCX is evidence
+to assess, not an instruction to implement its proposed remedies.
+
+### Intended result and scope
+
+Produce useful paper and corpus outputs whose quantitative claims identify the correct
+source, table or prose span, metric, entity, quantity role and unit. Improve coverage
+without accepting a wrong association. Report coverage separately from correctness;
+neither a source offset nor a passing test suite proves semantic correctness.
+
+This session may update current handoff/runtime documentation and run bounded offline
+checks. Do not infer authorization for enabling v2, changing frozen gold/scoring,
+installing packages, deleting environments, or running a corpus-replacing search.
+
+### Verified starting point
+
+- Branch `exp/phase11-binder`, HEAD `99427ce`. Both subsequent binder repair attempts
+  were reverted. Latest chronology: `runs/phase11_binder/comparison_phase10_phase11.md:604`.
+- Retained binder: S1 **FAIL**, 19 gold-unit flags; S2 **FAIL**, 25 loss occurrences
+  (3 gold units + 22 sweep associations); S3 last measured **PASS**, 30/30 PDFs,
+  55 pairs/18 claims identical, newline canary 0. These are not independent samples
+  or held-out product accuracy. Source: comparison report lines 631-637.
+- Current binder SHA-256:
+  `31b6dbd94fc43861cd2128d5da8927e7ec11c2fa50af0477fd11423398b84da0`;
+  unchanged from `6536d5c`. Latest cached product evidence is 0/75 verified returned
+  items per policy (`docs/evaluation/checkpoints/phase_11_binder.md:22`).
+- Existing untracked files are preserved: `docs/diagnosis/`, `out/`,
+  `src/evaluation/candidate_gold/`, and the numeric-metric/change-role test files.
+- Canonical runtime for this work: **Python 3.10.18**,
+  `.venv/Scripts/python.exe`, matching `.python-version`. No alternate-runtime matrix.
+  The historical optional borderless environment is not silently interchangeable:
+  its pinned NumPy requires a newer Python; do not delete it or claim migration complete.
+
+### Progress log
+
+1. Read current instructions, latest checkpoints/commits, and the supplied DOCX.
+   Read-only DOCX extraction first hit a constrained PowerShell API, then a console
+   encoding error; extraction succeeded with the existing 3.10 interpreter and UTF-8.
+   No intermediate document files were created.
+2. Reconciled stale root/evaluation summaries with the October 8 reversion report.
+   The apparent S2 improvement 25 to 17 belonged to a rejected patch: six desired
+   recoveries plus two unsafe improvement-to-p-value associations. The later guard
+   failed `The Dice scores of 0.37 increase after tuning.` and was also reverted.
+3. Confirmed the supported working interpreter and identified optional borderless
+   dependency incompatibility. Runtime inventory is not runtime migration.
+4. **Completed focused run**, Python 3.10.18, offline guard active/startup canary PASS:
+   `python -B -m pytest -q --tb=no -p no:cacheprovider
+   tests/test_binder_v2_numeric_metric_labels.py tests/test_binder_v2_change_roles.py`.
+   Expected and actual: **11 failed, 21 passed**, exit 1; pytest time 0.21 seconds.
+   Four failures concern numeric metric labels; seven concern postposed change roles.
+   Purpose: verify the retained defects, not attempt repair. No rerun or full matrix.
+5. **Completed in-memory sanity check**, same interpreter and guard, exit 0:
+   default binder is `legacy`; source hash matches the retained hash above;
+   `data_50` is absent; `_value_sane('metrics', 'Accuracy, Precision, Recall, F1')`
+   returns True, while `Performance gains over baselines` returns False.
+   Decision: the DOCX's composite-string explanation is insufficient for current code.
+6. Completed focused primary-source research and the outcome comparison below.
+   Updated this log, README runtime guidance, evaluation progress and blocker pointer.
+   No new files, source/test/config changes, dependencies, environments, LLM calls,
+   corpus runs, commits or pushes. The initial untracked files remain intact.
+7. Final documentation review: `git diff --check` passed; tracked implementation,
+   tests, configs and requirements have no diff. Only four existing Markdown files
+   changed. Checked implementation references and corrected the table-library attribution
+   to PyMuPDF; the pdfplumber source is a comparison, not this production implementation.
+
+### What is established, and where progress is blocked
+
+S2 and S3 here are **release criteria**, not pipeline Stages 2 and 3. Stage 2 parsing
+and Stage 3 indexing were not rerun or newly certified by this audit.
+
+| Area | Current evidence | Limit or blocker |
+|---|---|---|
+| Binder logic | Current 32 focused cases reproduce 11 failing cases; legacy is the default | Numeric metric prefixes enter quantity parsing; postposed changes lack a correct local grammatical relation (`src/evidence/binder_v2.py:202`, `:216`, `:613`) |
+| S1 | Frozen FAIL: 19 gold-unit flags | 17 lack reconstructed gold targets; two concern extra Mask cells excluded by reconstructed headers. These are not 19 independently established semantic errors (`runs/phase11_binder/comparison_phase10_phase11.md:163`) |
+| S2 | Frozen FAIL: 3 gold-unit losses + 22 sweep losses | Repeated associations across representations; two losses reject unsafe improvement-to-p-value matches. Do not optimize the total alone (`src/evaluation/binder_10/validate_10.py:237`; comparison report `:145`) |
+| S3 | Last measured PASS on identical retained source | Legacy identity only; not a correctness or product-success test. Not rerun this session (`comparison_phase10_phase11.md:631`) |
+| PDF representation | Ruled cells already extracted and carried to chunks | Borderless remains off; missing or malformed target rows/columns cannot be repaired by binder matching alone (`src/evidence/represent.py:184`, `:348`, `:385`; `src/processing/pdf_parser.py:193`) |
+| Product output | Latest cached comparison: 0/75 returned-with-verified-bind per policy | No new held-out/end-to-end result; cannot identify the largest current production bottleneck from synthetic/oracle scores (`docs/evaluation/phase_11_binder.md:157`) |
+
+The original 443-claim corpus, the Phase 11 gold/sweep sets, and the 75 cached product
+items are different denominators. Do not pool them or apply one set's gains to another.
+
+### Reconciliation with the supplied DOCX
+
+Source: `C:/Users/Praka/Downloads/ResearchIQ_Bottleneck_Analysis_and_Remediation.docx`.
+The report records 50 papers, 29,575 chunks, 443 candidates and 171 retained items
+(datasets 126/165; metrics 44/184; results 1/94). Its referenced `data_50` artifacts
+were not located here, so these counts remain report claims, not reproduced results.
+
+- "PDFs have no table cells" does not describe current ruled-table extraction.
+- `_ground` already supports numerical-result paraphrases using number anchors plus
+  lexical support; the 0.8 containment rule remains for nonnumeric matching/metrics
+  (`src/evidence/gate.py:190`). This is not full semantic verification.
+- `_value_sane` checks numbers or recognized metric tokens, not atomic string count
+  (`src/evidence/gate.py:231`). The comma-separated example passes, as measured above.
+- Extraction already requests arrays and checks some schema violations, but the client
+  sends `format: 'json'` and validation is permissive (`src/summarization/summarize.py:441`,
+  `:603`, `:611`). JSON Schema could constrain shape; arrays alone do not guarantee
+  atomic metric meaning or recovery of all 59 reported rejections.
+- Dataset identity currently uses literal strings in the gap matrix
+  (`src/synthesis/gap_analysis.py:61`). Alias handling is a plausible separate issue;
+  neither 112 current unique datasets nor a reduction to 65-70 is verified here.
+- Rejected claims are not automatically hallucinations. Missing structure, unverified
+  ownership, unsupported paraphrase and incorrect generation require separate evidence.
+- The promises of +66 results, +59 metrics, >90% recovery and 100% correctness are
+  projections, not acceptance evidence. Character offsets prove location, not the
+  correct subject/metric/unit/quantity-role association.
+
+### Existing approaches researched before choosing a repair
+
+Primary sources checked on 2026-10-09; this is a focused comparison, not a claim to
+have exhausted every possible technical solution. No packages were installed.
+
+| Approach and source | Relevant capability | Decision for this checkout |
+|---|---|---|
+| [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/page.html#Page.find_tables); [pdfplumber comparison](https://github.com/jsvine/pdfplumber/blob/stable/README.md) | Table detection and structured cells | Current ruled-table code uses PyMuPDF; inspect failed representation cases before considering a different parser |
+| [Docling](https://docling-project.github.io/docling/reference/pipeline_options/) | Table structure recognition with cell matching and accuracy/speed options | Existing optional backend, not an untried cure; enabling it needs independent correctness and runtime evidence |
+| [GROBID Quantities guidelines](https://grobid-quantities.readthedocs.io/en/latest/guidelines/) and [quantity reasoning research](https://aclanthology.org/Q15-1001/) | Explicit values, units, intervals and association to quantified objects | Useful design inspiration; does not prove a solution to local absolute-vs-change grammar or justify a new dependency |
+| [Ollama structured outputs](https://docs.ollama.com/capabilities/structured-outputs) | JSON Schema in `format`, followed by validation | Candidate for a later isolated extraction-shape evaluation; no promised semantic or binding improvement |
+| [RapidFuzz](https://rapidfuzz.github.io/RapidFuzz/Usage/fuzz.html) | String similarity for candidate matching | Similarity is not dataset identity. Preserve dataset year/split/version; use verified aliases before fuzzy merges |
+| [EQUATE](https://aclanthology.org/K19-1033/) | Benchmarks numerical entailment and symbolic reasoning; finds limitations in the NLI models it tested | Historical evidence for testing numerical counterexamples, not a verdict on every current model. An uncalibrated 0.90 NLI threshold cannot establish project precision |
+
+### Candidate comparison and expected outputs before implementation
+
+| Candidate | Expected benefit | Failure risk / decision |
+|---|---|---|
+| Repeat isolated numeric-prefix patch | Recover correctly named multi-metric values | Already exposed two improvement-to-p-value bindings; reject repeating alone |
+| Repeat adjacent change-word guard | Reject some postposed improvement amounts | Already fails an absolute score used as the subject of "increase"; reject repeating alone |
+| Local grammatical quantity roles plus recognized metric spans | Distinguish identifiers, absolute values and change magnitudes together | Best-supported next bounded design; ambiguity must abstain; still unimplemented/unvalidated |
+| Full parser/NLI replacement or blanket prose fallback | Potentially wider coverage | Broader dependencies and new semantic risks; no measured need or guaranteed gain; defer |
+
+The proposed design must satisfy the following decision table before a patch is accepted:
+
+| Input family | Required outcome |
+|---|---|
+| `73Rho of 1.624` | Metric name is not a numeric measurement; 1.624 binds only to its own metric/subject |
+| `73Rho of 73` | Preserve the external value 73 once; do not discard or duplicate it because the label contains 73 |
+| `0.37 mm improvement` / `improved by 0.37 mm` | Treat 0.37 as change magnitude; never bind it to an absolute-score or p-value cell |
+| `The Dice scores of 0.37 increase after tuning` | Preserve 0.37 as an absolute score, not a change amount |
+| Bare p-value, effect size, event count | Keep distinct quantity roles; a change predicate does not turn the subject into a delta |
+| Absolute value plus separate improvement | Keep independently supported absolute binding; exclude only the change amount |
+| Threshold, uncertainty, punctuation, respectively, duplicate value | Preserve existing boundaries and correspondence; no cross-quantity borrowing |
+| Missing/wrong cell, mismatched unit/subject, ambiguous ownership or relation | Abstain with the actual reason; do not promote a matching number alone |
+
+Conditional development target: recover the **six C026 loss occurrences** while keeping
+the **two unsafe associations rejected**. That would imply S2 25 to 19 only if there are
+no other movements; S1 is expected to remain 19 until its separate representation/scoring
+issues are resolved. These are hypotheses, not measured gains or a path to automatic
+enablement. Preserve the frozen scorer and report any semantic adjudication separately.
+S3 must remain unchanged. Product success requires later independent evidence that correct
+returned claims increase; no numeric product target can be justified from this checkout yet.
+
+### Next action
+
+The context/status audit is complete. No binder repair was attempted. The next bounded
+implementation should start from the decision table above and existing counterexamples,
+with explicit expected outcomes before editing. Use one candidate and meaningful controls;
+do not repeat the full two-runtime matrix. Review new associations, not only aggregate
+scores. Keep S1/S2 failures visible and legacy as default until actual release evidence exists.
+
+One runtime is selected for active work, **3.10.18**. Full retirement of the optional
+environment is not claimed: `requirements-borderless.txt:24` pins an incompatible NumPy;
+the installed optional stack also contains SciPy/NetworkX/pandas/rpds-py versions excluding
+3.10. The current doctor accepts >=3.10 (`scripts/doctor.py:43`), so it does not enforce
+the exact canonical pin. No dependencies, launchers or runtime checks were changed by this
+context-first audit; historical runtime evidence remains intact.
+
+### Resume protocol
+
+Read this current section, then only the latest cited evidence needed for the task.
+Check `git status --short`. Record each meaningful run's purpose, expected result,
+actual result and decision here. Compare candidate outcomes and counterexamples before
+patching; do not repeat the rejected regex/number-filter patches in isolation. Preserve
+historical reports and frozen evaluation criteria. Update current entry points, rather
+than rewriting every historical Markdown file or creating duplicate logs.
+
+---
+
+## Historical snapshot - 2026-09-06
+
 Written from the files in this repository. Every number below names the file it came from.
 Where a value is not in any file, it says **UNKNOWN** rather than an estimate.
 

@@ -10,6 +10,22 @@
 > when a phase brief asks for them. Phases 09A, 09B and the phase 10 package do; phases 00–08 did not.
 
 ## Current Phase
+
+**Context and status audit complete (2026-10-09); binder repair remains incomplete.**
+Canonical handoff and run log: [PROJECT_STATE.md](../../PROJECT_STATE.md), current section.
+HEAD at audit start: `99427ce`. The two post-Phase-11 repair attempts were reverted;
+retained binder SHA-256 is `31b6dbd94fc43861cd2128d5da8927e7ec11c2fa50af0477fd11423398b84da0`.
+S1 FAIL (19 flags), S2 FAIL (25 repeated loss occurrences), S3 last measured PASS on
+identical source. S3 is legacy identity, not proof of binder v2 correctness.
+One fresh offline run of the existing numeric-metric/change-role reproductions on
+Python 3.10.18: **11 failed / 21 passed**, expected baseline; no repair or rerun.
+The older all-green test matrix below predates the two untracked reproduction files.
+Legacy remains default; no held-out or fresh end-to-end success is established.
+The attached 443-claim report was assessed as historical evidence; proposed recovery
+counts are unverified. Current PDF ruled-table support already exists.
+
+## Historical Phase 11 checkpoint - 2026-10-07
+
 **Phase 11 Binder v2: R4/R5 complete; NO ENABLE (2026-10-07).**
 The guard-only resumption passed all four required self-tests and all 16 A4 combinations:
 243 full pytest, 37 standalone pipeline, 63 experiment and 123 regression checks per
@@ -48,12 +64,13 @@ No final tag exists at report time. Final session reply records the actual publi
 `phase_10_binder`, 2026-10-06. The experiment is complete; the binder is not approved for production.
 
 ## Next Action
-Stop after the single authorized R5 push attempt and conditional completion tag. Do not start
-cell-selection evaluation, end-to-end testing, Part B or bottleneck fixes in this session.
-S1/S2 release failures remain visible; no enablement or held-out success is established.
-Legacy stays default. Consult the final session reply for the actual push/tag outcome.
+Use the current decision table and candidate comparison in `PROJECT_STATE.md` before
+implementing a bounded repair. Do not repeat either rejected patch in isolation or
+re-run the old two-runtime matrix. Python 3.10.18 is the sole active runtime for this work.
+Preserve frozen evaluation, separate representation/scoring limitations from semantic
+binding defects, and keep legacy default. This audit made documentation changes only.
 
-## Repository State
+## Historical Repository State - Phase 11 checkpoint
 - Active experiment branch: `exp/phase11-binder`, based on pushed/tagged Phase 10 `050f8de`.
   R1/R2/R3: a0ed08d / d619db9 / 6536d5c. Guard fix and complete R4/R5 receipts accompany this report.
   A4 resumption: baseline/diagnosis `5ef7bc8`, failing tests `089aa62`, E1 `0184ebb`, E2 `198c922`, E3 `6cc9b5c`.
