@@ -37,6 +37,9 @@ def load_corpus(paths_cfg: dict) -> dict:
     for s in summaries:
         pid = s["paper_id"]
         raw = raw_papers.get(pid, {})
+        if paths_cfg.get("scientific_results_dir"):
+            from src.evidence.v2.store import project_from_store
+            s = project_from_store(s, raw, paths_cfg["scientific_results_dir"])
         merged[pid] = {
             "paper_id": pid,
             "title": s.get("title", raw.get("title", "")),
@@ -67,6 +70,10 @@ def load_corpus(paths_cfg: dict) -> dict:
             'evidence_coverage': s.get('coverage', {}),
             "extraction_failed": bool(s.get("_extraction_failed", False)),
         }
+
+        if paths_cfg.get("scientific_results_dir"):
+            merged[pid].update({key: s.get(key) for key in ("scientific_facts", "qualitative_results",
+                               "scientific_extraction", "evidence")})
 
     # Normalize cluster keys to strings — JSON object keys always deserialize as
     # strings even though cluster_id is an int elsewhere in the pipeline.

@@ -1,0 +1,9 @@
+# Existing isolated project environment; no installations/upgrades performed.
+pymupdf==1.28.2
+requests==2.34.2
+PyYAML==6.0.3
+# Optional local semantic proposer requires matching tokenizer files already on disk.
+transformers==5.15.0
+tokenizers==0.22.2
+# Validation only:
+pytest==9.1.1
