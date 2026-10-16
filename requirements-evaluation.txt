@@ -1,5 +1,0 @@
-# Optional evaluation dependencies, installed in the existing Python 3.10.18 .venv.
-# Keep evaluation-only packages out of the production runtime requirements.
-ragas==0.2.15
-bert-score==0.3.13
-langchain-ollama==0.2.3

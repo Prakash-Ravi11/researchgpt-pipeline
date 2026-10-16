@@ -170,8 +170,6 @@ def process_paper_grounded(paper: dict, latex_parity_tolerance: float | None = N
 
     legacy_source = ("full_text" if doc["representation"] in ("pdf", "jats_xml", "latex")
                      else "abstract_only")
-    import hashlib
-    source_digest=hashlib.sha256(data).hexdigest() if data is not None else None
     records = []
     for i, c in enumerate(ev_chunks):
         records.append({
@@ -185,7 +183,6 @@ def process_paper_grounded(paper: dict, latex_parity_tolerance: float | None = N
             "chunk_index": i,
             "text": c["text"],
             # provenance (§O)
-            'source_sha256': source_digest,
             "representation": c["representation"],
             "section": c["section"],
             "page_or_node": c["page_or_node"],
@@ -197,7 +194,6 @@ def process_paper_grounded(paper: dict, latex_parity_tolerance: float | None = N
             # can bind a quantitative claim to the actual (row, column) cell.
             **({"table_cells": c["table_cells"], "table_caption": c.get("table_caption", "")}
                if c.get("table_cells") else {}),
-            **({'association_tables': c['association_tables']} if c.get('association_tables') else {}),
             **({"latex_parity_fallback": parity_fallback} if parity_fallback else {}),
         })
     return records
