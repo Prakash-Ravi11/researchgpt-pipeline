@@ -273,7 +273,7 @@ def _assemble(chunks: list[dict], max_words: int) -> str:
     return " ".join(parts)
 
 
-def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[str, dict]:
+def build_retrieval_aware_papers(config: dict, max_words: int = 2500, *, paper_ids=None, chunks_override=None) -> dict[str, dict]:
     """Retrieval-aware replacement for reconstruct_paper_texts. Same output shape."""
     import chromadb
     from sentence_transformers import SentenceTransformer
@@ -282,7 +282,10 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
     emb_cfg = config["embedding"]
     sel_cfg = _selection_cfg(config)
 
-    all_chunks = _load_chunks_json(paths_cfg["processed_dir"])
+    all_chunks = list(chunks_override) if chunks_override is not None else _load_chunks_json(paths_cfg['processed_dir'])
+    if paper_ids is not None:
+        allowed=set(paper_ids)
+        all_chunks=[c for c in all_chunks if c['paper_id'] in allowed]
     by_paper = defaultdict(list)
     for c in all_chunks:
         by_paper[c["paper_id"]].append(c)
@@ -328,6 +331,9 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
 
         papers[paper_id] = {"paper_id": paper_id, "title": title, "year": year,
                             "venue": venue, "text": text}
+        if grounded_schema and bool((config.get('evidence_grounding') or {}).get('enabled')):
+            papers[paper_id]['_evidence_chunks'] = paper_chunks
+            papers[paper_id]['_source_sha256'] = paper_chunks[0].get('source_sha256')
 
     # Release the embedding model BEFORE returning. Stage 4 extraction runs
     # immediately after this and asks Ollama to load qwen2.5:7b; on a 6 GB card the
@@ -357,3 +363,59 @@ def build_retrieval_aware_papers(config: dict, max_words: int = 2500) -> dict[st
     except OSError:
         pass  # inspection artifact only; never block a run on it
     return papers
+
+
+
+def prepare_grounded_extractor_input(paper, max_words):
+    """Bounded, paper-independent source selection retaining complete associations.
+
+    Schema evidence uses dataset/setup, quantitative/table and discussion cues.
+    Legacy selection still determines ordinary prose when no grounded source is
+    supplied. No acceptance fixture or target benchmark enters the selector.
+    """
+    from src.evidence.verifier import association_sources,_author_limitation_context,ASSOCIATION_VERSION
+    chunks=paper.get('_evidence_chunks')
+    if not isinstance(chunks,list) or not chunks:return paper['text'],None
+    tables=association_sources(chunks)
+    table_lines=[]
+    for table in tables.values():
+        table_lines.append('SOURCE TABLE '+table['table_id']+' '+table['page']+' '+table['caption'])
+        grouped={}
+        for cell in table['cells']:
+            grouped.setdefault((cell['row'],cell['method'],cell['configuration']),[]).append(cell)
+        for (row,method,config),cells in grouped.items():
+            table_lines.append('ROW '+str(row)+' '+method+' | '+config+' | '+'; '.join(
+                c['dataset']+' '+c['metric']+' '+c['value'] for c in cells))
+    parts=[];supplied=[];used=0
+    if table_lines:
+        block='\n'.join(table_lines)
+        count=len(block.split())
+        if count<=max_words*.5:
+            parts.append(block);used+=count
+    categories={'setup':[],'results':[],'discussion':[],'method':[]}
+    for c in chunks:
+        sec=(c.get('section') or '').casefold();text=c['text'];low=text.casefold()
+        if 'reference' in sec:continue
+        if _author_limitation_context(text,sec):categories['discussion'].append(c)
+        elif any(t in low for t in ('evaluation metric','dataset','benchmark')):categories['setup'].append(c)
+        elif any(t in sec for t in ('result','experiment')) or any(t in low[:120] for t in ('comparison','results','evaluation')):categories['results'].append(c)
+        elif 'method' in sec or 'we propose' in low or 'we introduce' in low:categories['method'].append(c)
+    seen=set();capacity=max_words-used
+    for category,records in categories.items():
+        quota=max(1,capacity//4);words=0
+        for c in records:
+            if c['chunk_id'] in seen:continue
+            count=len(c['text'].split())+6
+            if words+count>quota or used+count>max_words:continue
+            parts.append('[SOURCE '+c['chunk_id']+' '+c['page_or_node']+' '+c['section']+']\n'+c['text'])
+            supplied.append({'chunk_id':c['chunk_id'],'page':c['page_or_node'],'section':c['section'],
+                             'truncated':False,'char_start':c['char_start'],'char_end':c['char_end']})
+            seen.add(c['chunk_id']);words+=count;used+=count
+    if not parts:return paper['text'],None
+    # Metadata hashes include all inspected source, not merely the LLM window.
+    import hashlib
+    fingerprint=hashlib.sha256(json.dumps({'version':ASSOCIATION_VERSION,'chunks':chunks},sort_keys=True).encode('utf-8')).hexdigest()
+    return '\n\n'.join(parts),{'version':ASSOCIATION_VERSION,'source_fingerprint':fingerprint,
+        'max_words':max_words,'used_words':len(' '.join(parts).split()),'supplied_chunks':supplied,
+        'table_ids':[t['table_id'] for t in tables.values()], 'truncated_chunks':[],
+        'inspection':'all indexed source chunks; not proof of absence from the PDF'}

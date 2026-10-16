@@ -153,7 +153,7 @@ async function openRecord(paperId) {
     </div>
     <div class="ledger-row">
       <div class="ledger-row__label">Results</div>
-      <div class="ledger-row__value">${p.results || "Not extracted."}</div>
+      <div class="ledger-row__value">${p.results || "Not extracted."}${renderAssociatedResults(p)}</div>
     </div>
     <div class="ledger-row">
       <div class="ledger-row__label">Inferences</div>
@@ -165,7 +165,7 @@ async function openRecord(paperId) {
     </div>
     <div class="ledger-row">
       <div class="ledger-row__label">Limitations</div>
-      <div class="ledger-row__value">${p.limitations || "Not extracted."}</div>
+      <div class="ledger-row__value">${p.limitations || "Not extracted."}${p.limitation_evidence?.length ? '<p>Source quotations; automated assessment. Independent semantic review is pending.</p>' : ''}</div>
     </div>
     <div class="ledger-row">
       <div class="ledger-row__label">Findings</div>
@@ -855,3 +855,17 @@ el("#compare-toggle").addEventListener("click", openCompare);
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlays(); });
 
 init();
+
+function associatedText(value) {
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+
+function renderAssociatedResults(paper) {
+  if (!Array.isArray(paper.quantitative_results) || !paper.quantitative_results.length) return "";
+  const rows = paper.quantitative_results.map(row => {
+    const source = row.source || {};
+    const page = String(source.page || "").replace(/^p/, "");
+    return `<tr><td>${associatedText(row.method)}</td><td>${associatedText(row.configuration?.llm)} / ${associatedText(row.configuration?.retriever)}</td><td>${associatedText(row.dataset)}</td><td>${associatedText(row.metric)}</td><td>${associatedText(row.value)} (${associatedText(row.unit)})</td><td><a href="/api/papers/${encodeURIComponent(paper.paper_id)}/pdf#page=${encodeURIComponent(page)}" target="_blank" rel="noopener">Page ${associatedText(page)}, row ${associatedText(source.row)}, column ${associatedText(source.col)}</a></td></tr>`;
+  }).join("");
+  return `<details><summary>${paper.quantitative_results.length} source-associated measurements</summary><table><thead><tr><th>Method</th><th>Configuration</th><th>Dataset</th><th>Metric</th><th>Value</th><th>PDF source</th></tr></thead><tbody>${rows}</tbody></table></details>`;
+}

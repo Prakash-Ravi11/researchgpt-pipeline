@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "distinct_passed": 154,
+  "test_runs": [
+    {
+      "path": "verified\\checks.xml",
+      "executed": 150
+    },
+    {
+      "path": "final\\selection_checks.xml",
+      "executed": 24
+    }
+  ],
+  "executed_including_repeats": 174,
+  "modules": {
+    "tests.test_prose_attribution_replay_repairs": 14,
+    "tests.test_prose_attribution_source": 7,
+    "tests.test_prose_attribution_support": 9,
+    "tests.test_prose_attribution_extractor": 6,
+    "tests.test_prose_attribution_tables": 1,
+    "tests.test_prose_attribution_deadline_guard": 3,
+    "tests.test_extraction_associations": 41,
+    "tests.test_pdf_table_cells": 30,
+    "tests.test_extraction_metric_schema": 20,
+    "tests.test_binder_v2": 19,
+    "tests.test_prose_attribution_selection": 4
+  },
+  "model_requests": 0,
+  "note": "Synthetic transport HTTP test uses its own fake server, never Ollama."
+}

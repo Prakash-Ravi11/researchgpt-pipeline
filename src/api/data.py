@@ -59,6 +59,12 @@ def load_corpus(paths_cfg: dict) -> dict:
             "datasets": s.get("datasets", []),
             "metrics": s.get("metrics", []),
             "key_findings": s.get("key_findings", ""),
+            'quantitative_results': s.get('quantitative_results', []),
+            'comparisons': s.get('comparisons', []),
+            'field_states': s.get('field_states', {}),
+            'limitation_evidence': s.get('limitation_evidence', []),
+            'reviewer_inferences': s.get('reviewer_inferences', []),
+            'evidence_coverage': s.get('coverage', {}),
             "extraction_failed": bool(s.get("_extraction_failed", False)),
         }
 

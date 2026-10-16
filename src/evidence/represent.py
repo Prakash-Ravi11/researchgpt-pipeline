@@ -183,6 +183,12 @@ def blocks_from_pdf(data: bytes, paper_id: str, source: str) -> list[dict[str, A
                 captions.append((b, pno, tuple(pb[:4])))
     _attach_pdf_table_cells(doc, captions)
     _attach_borderless_cells(data, doc, captions)
+    # Additive coordinates-only associations; never replace existing text/cells.
+    for table in _pdf_association_tables(doc, paper_id):
+        for block in out:
+            if block['page_or_node'] == table['page'] and table['caption'] in block['text']:
+                block.setdefault('association_tables', []).append(table)
+                break
     doc.close()
     return out
 
@@ -721,3 +727,112 @@ def build_document(acq_record: dict[str, Any], data: bytes | None,
         "n_tables_fallback_pdf": sum(1 for b in tbl if b.get("table_parse_status") == "fallback_pdf"),
         "blocks": blocks,
     }
+
+
+
+def _pdf_association_tables(doc, paper_id):
+    """Conservative adapter for horizontally ruled, aligned numeric PDF tables.
+
+    Captions may share a PDF text block with the final data rows. All identifiers,
+    headers, row configurations and cell rectangles come from actual page words.
+    No OCR, expected answers, page numbers or benchmark names guide detection.
+    Ambiguous grids stay unresolved rather than becoming approved associations.
+    """
+    import statistics
+    tables = []
+    previous = {}
+    number = re.compile(r'^[+-]?\d+(?:\.\d+)?%?$')
+    caption_pattern = re.compile(r'(?m)^Table\s*(\d+)\s*[:.]\s+', re.I)
+    def center(word): return (word[0]+word[2])/2
+    def box(seq):
+        return [min(w[0] for w in seq),min(w[1] for w in seq),max(w[2] for w in seq),max(w[3] for w in seq)]
+    def lines(seq):
+        groups=[]
+        for word in sorted(seq,key=lambda w:(w[1],w[0])):
+            group=next((g for g in groups if abs(g[0][1]-word[1])<2.5),None)
+            if group is None:groups.append([word])
+            else:group.append(word)
+        return [sorted(g,key=lambda w:w[0]) for g in groups]
+    for page_no,page in enumerate(doc,1):
+        words=page.get_text('words')
+        drawings=page.get_drawings()
+        for block in page.get_text('blocks'):
+            if block[6]!=0:continue
+            for match in caption_pattern.finditer(block[4]):
+                caption=block[4][match.start():].strip()
+                cap_words=[w for w in words if w[5]==block[5] and w[4].casefold()=='table']
+                if len(cap_words)!=1:continue
+                cap_word=cap_words[0]
+                cap_line=[w for w in words if w[5:7]==cap_word[5:7]]
+                cap_box=box(cap_line)
+                rules=sorted({round(d['rect'].y0,3) for d in drawings
+                    if d['rect'].height<1 and d['rect'].width>.65*(cap_box[2]-cap_box[0])
+                    and d['rect'].x0>=cap_box[0]-5 and d['rect'].x1<=cap_box[2]+5
+                    and d['rect'].y0<cap_box[1]})
+                if len(rules)<2 or cap_box[1]-rules[-1]>60:continue
+                selected=[rules[-1]]
+                for y in reversed(rules[:-1]):
+                    if selected[-1]-y>60:break
+                    selected.append(y)
+                if len(selected)<2:continue
+                top,bottom=min(selected),max(selected)
+                within=[w for w in words if cap_box[0]-2<=w[0] and w[2]<=cap_box[2]+2
+                        and top-1<=w[1] and w[3]<=bottom+1]
+                numeric=[w for w in within if number.fullmatch(w[4])]
+                groups=lines(numeric)
+                if len(groups)<2:continue
+                counts={len(g) for g in groups}
+                if len(counts)!=1:continue
+                columns=next(iter(counts))
+                if columns<2:continue
+                positions=[statistics.median(center(g[c]) for g in groups) for c in range(columns)]
+                if any(abs(center(g[c])-positions[c])>4 for g in groups for c in range(columns)):continue
+                first_y=min(w[1] for w in numeric)
+                upper=[w for w in within if w[3]<first_y and w[0]>min(w[0] for w in numeric)-15]
+                candidates=[g for g in lines(upper) if len(g)==columns]
+                if not candidates:continue
+                metric_line=max(candidates,key=lambda g:g[0][1])
+                if any(abs(center(w)-positions[c])>6 for c,w in enumerate(metric_line)):continue
+                config_headers=[w for w in within if w[3]<first_y and re.fullmatch(r'(?:LLM/Retri\w+|LLM|Model|Backbone)',w[4],re.I)]
+                if len(config_headers)!=1:continue
+                config_header=config_headers[0]
+                dataset_lines=[g for g in lines(upper) if g[0][3]<metric_line[0][1] and 1<=len(g)<=columns]
+                if not dataset_lines:continue
+                datasets=max(dataset_lines,key=lambda g:g[0][1])
+                # Multi-word group headers can remain separate only when each
+                # numeric column has one geometrically nearest header grouping.
+                boundaries=[(center(a)+center(b))/2 for a,b in zip(datasets,datasets[1:])]
+                dataset_for=[]
+                for x in positions:
+                    j=sum(x>edge for edge in boundaries)
+                    dataset_for.append(datasets[j])
+                tid=f'{paper_id}:pdf:p{page_no}:table{match.group(1)}'
+                cells=[]
+                row_records=[]
+                for row_index,values in enumerate(groups,1):
+                    y=values[0][1]
+                    left=[w for w in within if abs(w[1]-y)<2.5 and w[2]<min(v[0] for v in values)+.5]
+                    method_words=sorted([w for w in left if w[0]<config_header[0]-1],key=lambda w:w[0])
+                    configuration_words=sorted([w for w in left if w[0]>=config_header[0]-1],key=lambda w:w[0])
+                    if not method_words or not configuration_words:break
+                    method=' '.join(w[4] for w in method_words)
+                    config=' '.join(w[4] for w in configuration_words)
+                    row_records.append({'row':row_index,'method':method,'configuration':config,
+                        'method_bbox':box(method_words),'configuration_bbox':box(configuration_words)})
+                    for column,(value,metric,dataset) in enumerate(zip(values,metric_line,dataset_for),1):
+                        cells.append({'cell_id':f'{tid}:r{row_index}:c{column}', 'row':row_index,'col':column,
+                            'method':method,'configuration':config,'dataset':dataset[4],'metric':metric[4],
+                            'value':value[4],'caption':caption,'page':f'p{page_no}',
+                            'bbox':list(value[:4]),'method_bbox':box(method_words),
+                            'configuration_bbox':box(configuration_words),
+                            'dataset_header_bbox':list(dataset[:4]),'metric_header_bbox':list(metric[:4]),
+                            'source_word_ids':[list(value[5:8])],
+                            'source_headers':{'dataset':dataset[4],'metric':metric[4],'configuration':config_header[4]}})
+                else:
+                    table={'table_id':tid,'table_number':match.group(1),'page':f'p{page_no}',
+                        'caption':caption,'caption_bbox':cap_box,'bbox':[cap_box[0],top,cap_box[2],bottom],
+                        'rows':row_records,'cells':cells,'backend':'pdf_words_and_horizontal_rules',
+                        'continuation_context':caption if 'continu' in caption.casefold() else None}
+                    tables.append(table)
+                    previous[match.group(1)]=table
+    return tables

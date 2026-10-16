@@ -1,0 +1,10 @@
+{
+  "newly_supported_final_proposals": 4,
+  "newly_supported_attempt_proposals_including_revisions": 8,
+  "previously_accepted_final_proposals_rejected": 0,
+  "paired_optional_field_recovery": {
+    "restored_year": 1,
+    "restored_location": 1
+  },
+  "final_necessary_rejections_or_unresolved_retained": 38
+}

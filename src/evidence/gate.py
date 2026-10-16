@@ -937,7 +937,7 @@ def _as_list(v: Any, field: str | None = None) -> list[str]:
     return []
 
 
-def gate_paper(record: dict[str, Any], chunks: list[dict[str, Any]],
+def _gate_paper_base(record: dict[str, Any], chunks: list[dict[str, Any]],
                acquisition_status: str, surnames: list[str]) -> dict[str, Any]:
     """Return {datasets, metrics, results, evidence, acquisition_status} for one paper."""
     if _binder_policy() != "legacy":                  # phase 10 router (binder_v2.py)
@@ -975,6 +975,75 @@ def gate_paper(record: dict[str, Any], chunks: list[dict[str, Any]],
 
     return {"datasets": gated_datasets, "metrics": gated_metrics, "results": gated_results,
             "acquisition_status": acquisition_status, "evidence": evidence}
+
+
+
+def gate_paper(record: dict[str, Any], chunks: list[dict[str, Any]],
+               acquisition_status: str, surnames: list[str]) -> dict[str, Any]:
+    """Keep existing gates, adding only fully associated host-parsed evidence."""
+    payload=record.get('_association_evidence')
+    if payload is None or acquisition_status != FULL_TEXT:
+        base=_gate_paper_base(record,chunks,acquisition_status,surnames)
+        if record.get('_limitation_evidence') is not None:
+            from src.evidence.verifier import validate_associated_evidence
+            envelope={f:{'status':'not_found_in_supplied_evidence','values':[]} for f in ('datasets','metrics')}
+            envelope['results']={'status':'not_found_in_supplied_evidence','rows':[]}
+            envelope['limitations']={'status':'extracted','values':record['_limitation_evidence']}
+            checked=validate_associated_evidence(envelope,chunks)
+            base['limitations']=record.get('limitations','') if not checked['rejections'] else ''
+            base['limitation_evidence']=record['_limitation_evidence'] if not checked['rejections'] else []
+            base['reviewer_inferences']=record.get('_reviewer_inferences',[])
+            base['field_states']={f:('extracted' if base.get(f) else 'extraction_failed' if record.get('_extraction_failed') else 'not_found_in_supplied_evidence') for f in ('datasets','metrics','results','limitations')}
+        return base
+    from src.evidence.verifier import (validate_associated_evidence,ownership_sources,
+                                       derived_comparisons,validate_comparisons,grounded_field_repair)
+    verdict=validate_associated_evidence(payload,chunks)
+    reasons=verdict['rejections']
+    comparisons=derived_comparisons(verdict['accepted'],chunks) if not reasons else []
+    supplied_comparisons=payload.get('comparisons',[]) if isinstance(payload,dict) else []
+    reasons += validate_comparisons(supplied_comparisons,verdict['accepted'])
+    if reasons:
+        evidence={f:[] for f in ('datasets','metrics','results')}
+        item=_evidence_item('results',record.get('results',''))
+        item.update(evidence_status=UNSUPPORTED,abstain_reason='invalid_association_payload')
+        evidence['results'].append(item)
+        return {'datasets':[],'metrics':[],'results':'','acquisition_status':acquisition_status,
+                'evidence':evidence,'association_rejections':reasons}
+    own=[row for row in verdict['accepted'] if ownership_sources(row['method'],chunks)]
+    repaired,_=grounded_field_repair(record,chunks)
+    evidence={f:[] for f in ('datasets','metrics','results')}
+    def item(field,value,row):
+        proof=_evidence_item(field,value)
+        proof.update(evidence_status=EXPLICIT,final=RETURNED,provenance_valid=True,
+            attribution=OWN_PAPER if field!='datasets' else UNKNOWN,
+            attribution_confidence=1.0 if field!='datasets' else 0.,confidence=1.0,
+            confidence_basis='exact structural/identity association, not a calibrated semantic probability',
+            representation='pdf',source='full_text',section='results',page_or_node=row['source']['page'],
+            evidence_span=str(row['value']),source_cell=row['source'],
+            method=row['method'],configuration=row['configuration'],dataset=row['dataset'],metric=row['metric'],
+            unit=row['unit'],ownership_source=ownership_sources(row['method'],chunks),
+            structural_binding={'status':'bound','structured':True,'association':'method_configuration_dataset_metric_value_cell'})
+        return proof
+    seen_datasets=set();seen_metrics=set()
+    for row in own:
+        if row['dataset'] not in seen_datasets:
+            evidence['datasets'].append(item('datasets',row['dataset'],row));seen_datasets.add(row['dataset'])
+        if row['metric'] not in seen_metrics:
+            evidence['metrics'].append(item('metrics',row['metric'],row));seen_metrics.add(row['metric'])
+        value=f"{row['method']} ({row['configuration']['llm']}/{row['configuration']['retriever']}) on {row['dataset']}: {row['metric']} {row['value']:g} ({row['unit']})."
+        evidence['results'].append(item('results',value,row))
+    states={f:payload[f]['status'] for f in ('datasets','metrics','results','limitations')}
+    return {'datasets':list(dict.fromkeys(r['dataset'] for r in own)),
+        'metrics':list(dict.fromkeys(r['metric'] for r in own)),
+        'results':repaired.get('results','') if own else '', 'limitations':repaired.get('limitations',''),
+        'acquisition_status':acquisition_status,'evidence':evidence,
+        'quantitative_results':own,'comparisons':comparisons,'field_states':states,
+        'limitation_evidence':payload['limitations']['values'],
+        'reviewer_inferences':record.get('_reviewer_inferences',[]),
+        'coverage':{'associated_source_rows':len(verdict['accepted']),'owned_rows_returned':len(own),
+                    'limitation_quotes':len(payload['limitations']['values']),
+                    'independently_verified_limitations':0,'document_complete':False,
+                    'note':'Coverage of unsupported tables/figures and unsupplied prose remains unknown'}}
 
 
 def _paper_acquisition_status(meta: dict[str, Any]) -> str:
@@ -1019,6 +1088,8 @@ def run_evidence_gate(config: dict) -> dict[str, Any]:
         rec["results"] = gated["results"]
         rec["acquisition_status"] = acq
         rec["evidence"] = gated["evidence"]
+        for key in ('limitations','quantitative_results','comparisons','field_states','limitation_evidence','reviewer_inferences','coverage','association_rejections'):
+            if key in gated: rec[key]=gated[key]
 
         for field, items in gated["evidence"].items():
             for it in items:

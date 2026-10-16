@@ -109,3 +109,69 @@ def run_monitor(evidence_out: list[dict[str, Any]], gate_stats: dict[str, Any],
           f"C provenance={c['rate']} ({c['status']}) | "
           f"D no-full-text leaks={d['no_full_text_returned_items']} ({d['status']})")
     return report
+
+
+
+def atomic_json_write(path, value):
+    """Unique same-directory temporary file, UTF-8, then atomic replacement."""
+    import os
+    import tempfile
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=path.name+'.', suffix='.tmp', dir=path.parent)
+    try:
+        with os.fdopen(descriptor, 'w', encoding='utf-8', newline='\n') as stream:
+            json.dump(value, stream, ensure_ascii=False, allow_nan=False, indent=2)
+            stream.write('\n')
+            stream.flush()
+            os.fsync(stream.fileno())
+        os.replace(temporary, path)
+    finally:
+        temp_path = Path(temporary)
+        if temp_path.exists():
+            temp_path.unlink()
+
+
+class ExtractionTrace:
+    """Opt-in request-local tracing. Storage failures never alter extraction."""
+    def __init__(self, directory, metadata):
+        import uuid
+        self.run_id = uuid.uuid4().hex
+        self.directory = Path(directory) / self.run_id
+        self.metadata = dict(metadata)
+        self.errors = []
+        self.checkpoints = []
+        self.state = 'running'
+        self.emit('start', {'metadata': self.metadata})
+
+    def emit(self, checkpoint, value):
+        import logging
+        import re
+        from datetime import datetime, timezone
+        if not isinstance(checkpoint, str) or not re.fullmatch(r'[a-z][a-z0-9_-]{0,63}', checkpoint):
+            self.errors.append({'checkpoint': repr(checkpoint), 'error': 'invalid_checkpoint_name'})
+            return False
+        index = len(self.checkpoints)
+        record = {'run_id': self.run_id, 'checkpoint': checkpoint, 'sequence': index,
+                  'timestamp_utc': datetime.now(timezone.utc).isoformat(), 'data': value}
+        entry = {'checkpoint': checkpoint, 'sequence': index, 'stored': False}
+        self.checkpoints.append(entry)
+        try:
+            path = self.directory / f'{index:03d}_{checkpoint}.json'
+            atomic_json_write(path, record)
+            entry.update(stored=True, path=str(path))
+            return True
+        except Exception as exc:
+            error = {'checkpoint': checkpoint, 'error_type': type(exc).__name__, 'error': str(exc)}
+            self.errors.append(error)
+            logging.getLogger(__name__).warning('Extraction trace persistence failed: %s', error)
+            return False
+
+    def finish(self, state):
+        if state not in ('completed', 'failed', 'cache_hit'):
+            self.errors.append({'checkpoint': 'finalize', 'error': 'invalid_completion_state'})
+            return False
+        stored = self.emit('finalize', {'state': state, 'checkpoints': list(self.checkpoints),
+                                       'persistence_errors': list(self.errors)})
+        self.state = state if stored else 'finalization_failed'
+        return stored

@@ -53,7 +53,7 @@ Given the paper text below, respond with ONLY a JSON object with these exact key
 - "results": the concrete outcomes reported — actual numbers, benchmark scores, or statistically/behaviorally described findings (e.g. "device use dropped in the low-accessibility condition, but total work/leisure time was unchanged") where stated. Empty string only if the paper reports no concrete outcome at all.
 - "inferences": 3-4 sentences on what the AUTHORS THEMSELVES conclude, argue, or interpret their results to mean — their discussion/argument, distinct from the raw outcome in "results"
 - "novelty_claim": what the paper itself claims is new — its core contribution, framed in the authors' own words/argument, not a generic restatement
-- "limitations": limitations the authors explicitly state, or that are clearly evident from the method (sample size, generalizability, missing controls, etc.) — write "Not stated" only if genuinely none are discussable
+- "limitations": only limitations explicitly stated by these authors; preserve their qualifiers and quote the supporting sentence. Keep reviewer inferences out of this field — use an empty string when no author statement is found in the supplied evidence; a limited window cannot establish that none are reported
 - "datasets": list of the data this paper's findings are actually based on. This is MANDATORY — virtually every empirical paper, computational or behavioral, has SOME underlying data, even if it has no formal benchmark name:
   * Named public benchmarks (e.g. "ImageNet", "FeTA") — use the name as given
   * Self-collected/experimental data with no formal name — DESCRIBE it concretely using THIS paper's own actual details (sample size, population, and duration/condition IF the paper states one). Do not invent a duration or session length if the paper doesn't specify one — write "duration not stated" instead. Vary your phrasing paper to paper; if you notice yourself writing the same duration or session description across different papers, that is a signal you are copying a pattern rather than reading this specific paper's actual method — go back and check.
@@ -61,6 +61,8 @@ Given the paper text below, respond with ONLY a JSON object with these exact key
   Only return an empty list if this is a purely theoretical, conceptual, or literature-review paper with no underlying empirical data of any kind — that should be rare.
 - "metrics": an array of plain strings, with exactly one measured quantity per item — formal metrics (e.g. ["Dice score", "accuracy"]) for computational work, OR behavioral/outcome measures for empirical work (e.g. ["device pickup frequency", "self-reported distraction", "time-on-task"]). Never combine distinct metrics in one comma-separated string. Empty list only if truly nothing was measured/compared.
 - "key_findings": 2-3 sentence headline takeaway — the single most important, specific result or claim, written so it could stand alone as a citation-worthy sentence
+
+Preserve every comparative qualification: method variant, model/retriever configuration, dataset and metric. Never generalize one setting to all settings. Source quotations and reviewer inferences are distinct.\
 
 Respond with ONLY the JSON object, no other text."""
 
@@ -351,9 +353,8 @@ def load_extraction_cache(processed_dir: str) -> dict:
 
 def save_extraction_cache(processed_dir: str, cache: dict) -> None:
     path = Path(processed_dir) / "extraction_cache.json"
-    tmp_path = path.with_suffix(".json.tmp")
-    tmp_path.write_text(json.dumps(cache, indent=2), encoding="utf-8")
-    tmp_path.replace(path)
+    from src.evidence.monitor import atomic_json_write
+    atomic_json_write(path, cache)
 
 
 def _parse_json_response(content: str) -> dict:
@@ -399,7 +400,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
                       num_predict: int | None = None,
                       deadline_seconds: float | None = None,
                       meta_out: dict | None = None,
-                      response_schema: dict | None = None) -> dict | None:
+                      response_schema: dict | None = None, trace=None) -> dict | None:
     """Call Ollama chat endpoint with JSON-constrained output. Returns parsed dict, None,
     or the sentinel {"_deadline_exceeded": True, "_elapsed_s": ...} when the hard
     wall-clock deadline fires.
@@ -450,8 +451,12 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
     # deadline would misfire on cold model load (first token can take >3s).
     read_gap = timeout
 
+    if trace is not None:
+        trace.emit('llm_request', {'payload': payload, 'timeout_seconds': timeout, 'deadline_seconds': deadline_seconds, 'max_retries': max_retries})
     for attempt in range(max_retries + 1):
         resp = None
+        parts = []
+        chunk = {}
         try:
             start = time.monotonic()
             resp = requests.post(url, json=payload, stream=True, timeout=(10, read_gap))
@@ -460,6 +465,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             done_reason = None
             for line in resp.iter_lines(decode_unicode=True):
                 if deadline_seconds is not None and (time.monotonic() - start) > deadline_seconds:
+                    if trace is not None: trace.emit('llm_raw', {'attempt':attempt,'content':''.join(parts),'completion':{'done_reason':'deadline'},'state':'incomplete_generation'})
                     resp.close()  # calling thread owns the socket -> immediate teardown
                     elapsed = round(time.monotonic() - start, 1)
                     print(f"    Wall-clock deadline {deadline_seconds}s exceeded — connection closed")
@@ -480,12 +486,17 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
                     done_reason = chunk.get("done_reason")
                     break
             content = "".join(parts)
+            if trace is not None:
+                trace.emit('llm_raw', {'attempt': attempt, 'content': content, 'completion': chunk, 'elapsed_s': time.monotonic()-start})
             if isinstance(meta_out, dict):
                 meta_out.update(done_reason=done_reason, elapsed_s=round(time.monotonic() - start, 1))
             if not content:
                 raise ValueError("Ollama stream produced no content")
-            return _parse_json_response(content)
-        except requests.exceptions.Timeout:
+            parsed = _parse_json_response(content)
+            if trace is not None: trace.emit('llm_parsed', {'attempt': attempt, 'parsed': parsed})
+            return parsed
+        except requests.exceptions.Timeout as exc:
+            if trace is not None: trace.emit('llm_error', {'attempt': attempt, 'error_type': type(exc).__name__, 'error': str(exc), 'state': 'timeout', 'partial_content': ''.join(parts), 'completion': chunk})
             if resp is not None:
                 resp.close()
             if attempt < max_retries:
@@ -494,6 +505,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             print(f"    Still stalled after {max_retries + 1} attempts — skipping this paper")
             return None
         except requests.exceptions.RequestException as e:
+            if trace is not None: trace.emit('llm_error', {'attempt': attempt, 'error_type': type(e).__name__, 'error': str(e), 'state': 'runtime_error', 'partial_content': ''.join(parts), 'completion': chunk})
             if resp is not None:
                 resp.close()
             if attempt < max_retries:
@@ -501,6 +513,7 @@ def call_ollama_json(base_url: str, model: str, system_prompt: str, user_content
             print(f"    Ollama request failed after {max_retries + 1} attempts: {e}")
             return None
         except (json.JSONDecodeError, KeyError, TypeError, ValueError) as e:
+            if trace is not None: trace.emit('llm_error', {'attempt': attempt, 'error_type': type(e).__name__, 'error': str(e), 'state': 'parse_error', 'partial_content': ''.join(parts), 'completion': chunk})
             if resp is not None:
                 resp.close()
             if attempt < max_retries:
@@ -565,7 +578,7 @@ EXTRACTION_JSON_SCHEMA["properties"]["metrics"]["description"] = (
 # instead of silently reusing a cached result produced from different inputs.
 # (Before this, the cache key was paper_id alone — a selection change would have
 # shown no effect because every already-extracted paper was served from cache.)
-EXTRACTION_PROMPT_VERSION = "2026-10-10.atomic-metrics-schema"
+EXTRACTION_PROMPT_VERSION = "2026-10-13.source-associations-author-quotes"
 
 # R2 — biomedical / clinical / wet-lab prompt variant. Same 10 keys, same
 # "ONLY JSON" contract as EXTRACTION_SYSTEM_PROMPT; only the field DEFINITIONS
@@ -843,9 +856,29 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
     result that reads like "the paper reported no metrics".
     """
     text = paper["text"]
+    source_selection = None
+    if paper.get('_evidence_chunks'):
+        from src.summarization.retrieval_aware import prepare_grounded_extractor_input
+        text,source_selection=prepare_grounded_extractor_input(paper,int(llm_cfg.get('max_context_words',2500)))
+    trace = llm_cfg.get('_diagnostic_trace')
+    if trace is None and llm_cfg.get('diagnostics_dir'):
+        from src.evidence.monitor import ExtractionTrace
+        trace = ExtractionTrace(llm_cfg['diagnostics_dir'], {'paper_id': paper_id,
+            'source_sha256': paper.get('_source_sha256'), 'prompt_version': EXTRACTION_PROMPT_VERSION,
+            'schema_sha256': hashlib.sha256(json.dumps(EXTRACTION_JSON_SCHEMA,sort_keys=True).encode()).hexdigest(),
+            'selected_text_sha256': hashlib.sha256(text.encode('utf-8')).hexdigest(),
+            'source_chunks': paper.get('_source_chunks'), 'selection': paper.get('_selection'),
+            'model': llm_cfg.get('model'), 'temperature': llm_cfg.get('temperature',0.), 'seed': llm_cfg.get('seed')})
     cached = cache.get(paper_id)
-    if _cache_entry_reusable(cached, text):
-        return paper_id, normalize_extraction(cached)
+    cache_hit = _cache_entry_reusable(cached, text) and (source_selection is None or cached.get('_source_fingerprint')==source_selection['source_fingerprint'])
+    if trace and source_selection: trace.emit('selection', {'decisions':source_selection,'text':text})
+    if trace: trace.emit('cache', {'hit': cache_hit, 'cached_prompt_version': cached.get('_prompt_version') if isinstance(cached,dict) else None})
+    if cache_hit:
+        result = normalize_extraction(cached)
+        if trace:
+            trace.emit('validated', result)
+            trace.finish('cache_hit')
+        return paper_id, result
 
     reservation = int(llm_cfg.get("extraction_output_reservation", EXTRACTION_OUTPUT_RESERVATION))
     deadline = float(llm_cfg.get("extraction_deadline_seconds", EXTRACTION_DEADLINE_SECONDS))
@@ -865,7 +898,9 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
         num_predict=reservation,
         deadline_seconds=deadline,
         meta_out=meta,
+        max_retries=0 if paper.get('_evidence_chunks') else 2,
         response_schema=EXTRACTION_JSON_SCHEMA,
+        trace=trace,
     )
     done_reason = meta.get("done_reason")
     truncated = done_reason == "length"
@@ -936,6 +971,17 @@ def _extract_single_paper(paper_id: str, paper: dict, llm_cfg: dict, cache: dict
             extraction["datasets"] = merged
             if none_found:
                 extraction["_no_dataset_stated"] = True
+
+    if paper.get('_evidence_chunks'):
+        from src.evidence.verifier import grounded_field_repair
+        extraction,association_verdict=grounded_field_repair(extraction,paper['_evidence_chunks'])
+        if source_selection: extraction['_source_fingerprint']=source_selection['source_fingerprint']
+        if trace: trace.emit('associations', {'extraction':extraction,'validation':association_verdict})
+
+    if trace:
+        trace.emit('validated', {'extraction': extraction, 'schema_issues': issues, 'completion': meta})
+        if not llm_cfg.get('_diagnostic_trace'):
+            trace.finish('failed' if extraction.get('_extraction_failed') or extraction.get('_extraction_nonconformant') else 'completed')
 
     extraction["_domain_variant"] = variant
     extraction["_conformance"] = conformance
