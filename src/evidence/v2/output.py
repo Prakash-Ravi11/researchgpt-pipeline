@@ -20,7 +20,7 @@ def render_fact(fact):
     suffix = f" ({tail})" if tail else ""
     if m["unit"] == "percent" and "%" in m["raw"]:
         unit = ""
-    return f'{negation}{fact["subject"]}: {fact["metric_label"]} {prefix}{m["raw"]}{unit}{suffix}.' 
+    return f'{negation}{fact["subject"]}: {fact["metric_label"]} {prefix}{m["raw"]}{unit}{suffix}.'
 
 def project_record(record, extraction):
     if extraction.get("enabled") is not True:
