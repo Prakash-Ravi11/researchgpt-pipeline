@@ -23,7 +23,11 @@ def append(path,row):
 
 def baseline(args,folder,model):
     from src.processing.pdf_parser import process_paper_grounded
-    from src.summarization.summarize import _extract_single_paper
+    import src.summarization.summarize as summarizer
+    _extract_single_paper=summarizer._extract_single_paper
+    original_estimator=summarizer.estimate_num_ctx
+    # Benchmark-only configuration: common model window; frozen source files stay unchanged.
+    summarizer.estimate_num_ctx=lambda *a,**k:int(model["num_ctx"])
     from src.evidence.gate import gate_paper
     from src.evidence.monitor import ExtractionTrace
     import requests
@@ -69,6 +73,7 @@ def baseline(args,folder,model):
         trace.finish("completed")
     finally:
         requests.sessions.Session.send=original
+        summarizer.estimate_num_ctx=original_estimator
     return {"state":"partial" if record.get("_extraction_failed") or record.get("_extraction_nonconformant") else "completed",
             "partial":bool(record.get("_extraction_failed") or record.get("_extraction_nonconformant")),
             "candidate_units":len(chunks),"returned_numeric_rows":len(gated.get("quantitative_results",[])),
@@ -137,8 +142,9 @@ def main():
         "order":"alternating by paper","selection":"preselected calibration" if args.paper_ids else "all frozen 30 papers",
         "scope_excludes":["acquisition","embedding/index creation","dense retrieval","browser"],
         "baseline_path":"existing process_paper_grounded -> grounded extractor selection -> model -> gate",
-        "settings_difference":"Baseline retains its context estimator; v2 uses 8192. Compare recorded requests.",
-        "independent_accuracy":"NOT MEASURED","promotion_conditions_equal":False}
+        "settings_difference":None,"common_num_ctx":model["num_ctx"],
+        "benchmark_configuration_hook":"Baseline context estimator fixed in memory to common num_ctx; prompts, schemas, parsers and acceptance policy unchanged.",
+        "independent_accuracy":"NOT MEASURED","model_settings_equal_by_configuration":True,"promotion_conditions_equal":False}
     write(args.output/"manifest.json",manifest)
     import requests
     rows=[]
@@ -187,7 +193,7 @@ def main():
                        for arm in ("baseline","current")},
              "independent_accuracy":"NOT MEASURED","equal_correct_coverage":"NOT MEASURED",
              "promotion_latency_verdict":"NOT MEASURED",
-             "reason":"Settings differ, scope excludes retrieval setup, and independently correct coverage is unavailable"}
+             "reason":"Scope excludes retrieval setup and independently correct coverage is unavailable; common model settings are recorded separately"}
     write(args.output/"comparison.json",summary)
     print(json.dumps({"timing":summary["timing"],"promotion_latency_verdict":summary["promotion_latency_verdict"]}))
 if __name__=="__main__":main()
