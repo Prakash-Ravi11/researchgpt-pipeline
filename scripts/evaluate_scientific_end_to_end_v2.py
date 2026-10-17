@@ -75,6 +75,8 @@ def baseline(args,folder,model):
             "model_requests":counter,"correct_coverage":None,"source_coverage_proven":False}
 
 def worker(args):
+    if not args.output.is_absolute() or not args.code_root.is_absolute():
+        raise ValueError("Worker source and output paths must be absolute")
     sys.path.insert(0,str(args.code_root))
     folder=args.output;folder.mkdir(parents=True,exist_ok=True)
     model=json.loads(args.model_config.read_text(encoding="utf-8"))
@@ -119,6 +121,7 @@ def main():
     if args.worker:return worker(args)
     if args.output.exists():raise ValueError("Choose a fresh paired-run directory")
     args.output.mkdir(parents=True)
+    args.output=args.output.resolve()
     args.baseline_code=args.baseline_code.resolve()
     corpus=json.loads(args.corpus.read_text(encoding="utf-8"))
     model=json.loads(args.model_config.read_text(encoding="utf-8"))
