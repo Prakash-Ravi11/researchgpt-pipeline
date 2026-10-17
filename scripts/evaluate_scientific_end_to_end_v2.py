@@ -119,6 +119,7 @@ def main():
     if args.worker:return worker(args)
     if args.output.exists():raise ValueError("Choose a fresh paired-run directory")
     args.output.mkdir(parents=True)
+    args.baseline_code=args.baseline_code.resolve()
     corpus=json.loads(args.corpus.read_text(encoding="utf-8"))
     model=json.loads(args.model_config.read_text(encoding="utf-8"))
     sources=[s for s in corpus["corpus"] if not args.paper_ids or s["paper_id"] in args.paper_ids]

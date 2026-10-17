@@ -118,6 +118,13 @@ def interpret(document, folder, *, config=Config(enabled=True), model=None, run_
         for decision in decisions:
             if decision["candidate_id"] == candidate["id"]:
                 decision.update(state="processed", reason="verbatim_qualitative_source_quotation", fact_ids=[fact["id"]])
+    # Persist host results before optional model work; a killed worker leaves genuine partial evidence.
+    for name,rows in [("source_units",document["units"]),("table_structures",document["tables"]),
+                      ("packets",packets),("facts_before_model",facts),("decisions_before_model",decisions)]:
+        write_jsonl(folder/(name+".jsonl"),rows)
+    atomic_json_write(folder/"partial_checkpoint.json",{"state":"model_pending","run_id":run_id,
+        "source_sha256":document["source_sha256"],"fact_count":len(facts),"candidate_count":len(decisions),
+        "processing_complete":False,"semantic_complete":False})
     # Semantic packets are explicit unresolved work until the optional local proposer validates them.
     from .semantic import resolve_packets
     semantic_facts, requests, semantic_errors = resolve_packets(document, packets, folder,

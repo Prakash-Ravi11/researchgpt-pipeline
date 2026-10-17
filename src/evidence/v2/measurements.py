@@ -53,6 +53,8 @@ def metric_identity(label):
     return hits[0] if len(hits) == 1 else None
 
 def range_problem(metric, measurement):
+    if measurement.get("uncertainty") is not None and Decimal(measurement["uncertainty"]) < 0:
+        return "negative_uncertainty"
     vals = [Decimal(measurement[k]) for k in ("value", "lower", "upper")
             if measurement.get(k) is not None]
     if metric == "r2":

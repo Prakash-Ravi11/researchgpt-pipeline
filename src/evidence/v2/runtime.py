@@ -53,8 +53,65 @@ def cache_key(document, model, config):
     import hashlib
     code = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in Path(__file__).parent.glob("*.py")}
     settings = {k:v for k,v in vars(config).items() if k != "cache_directory"}
-    return identity({"document": document, "implementation": code, "model": model, "config": settings,
+    tokenizer_hashes={}
+    if model and model.get("tokenizer_path"):
+        for name in ("tokenizer.json","tokenizer_config.json"):
+            path=Path(model["tokenizer_path"])/name
+            tokenizer_hashes[name]=hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+    return identity({"document": document, "implementation": code, "model": model,
+                     "tokenizer_files":tokenizer_hashes,"config": settings,
                      "policy": POLICY_VERSION, "schema": SCHEMA_VERSION, "prompt": PROMPT_VERSION})
+
+
+def terminate_owned(process):
+    """Terminate the owned Windows launcher and descendants, then reap it."""
+    if process.poll() is not None:
+        return
+    if os.name=="nt":
+        subprocess.run(["taskkill","/PID",str(process.pid),"/T","/F"],
+                       stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=10)
+    else:
+        process.kill()
+    if process.poll() is None:
+        process.kill()
+    process.wait(timeout=10)
+
+
+def run_model_request(request,directory,seconds):
+    """Reuse October's worker/protocol with an owned process-tree timeout boundary."""
+    folder=Path(directory);folder.mkdir(parents=True,exist_ok=True)
+    request_path=folder/"request.json";response_path=folder/"response.json"
+    atomic_json_write(request_path,request)
+    command=[sys.executable,"-B","-m","src.evidence.prose_attribution.request_worker",
+             "--request",str(request_path.resolve()),"--response",str(response_path.resolve())]
+    started=time.monotonic()
+    child=subprocess.Popen(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    timeout=False
+    try:
+        stdout,stderr=child.communicate(timeout=max(.001,seconds))
+    except subprocess.TimeoutExpired:
+        timeout=True
+        terminate_owned(child)
+        stdout,stderr=child.communicate()
+    elapsed=time.monotonic()-started
+    result=json.loads(response_path.read_text(encoding="utf-8")) if response_path.is_file() else {"parsed":None}
+    completion={}
+    raw=folder/"raw_response.ndjson"
+    if raw.is_file():
+        for line in raw.read_text(encoding="utf-8").splitlines():
+            try:
+                row=json.loads(line)
+                if row.get("done"):completion=row
+            except ValueError:
+                continue
+    result.update(host_elapsed_s=elapsed,hard_timeout=timeout,worker_exit_code=child.returncode,
+                  stdout=stdout.decode("utf-8",errors="replace"),stderr=stderr.decode("utf-8",errors="replace"),
+                  completion=completion)
+    if timeout or elapsed>seconds:
+        result.update(parsed=None,late_completion_rejected=True,completion_before_guard=completion,
+                      completion={**completion,"done_reason":"deadline_exceeded"})
+    atomic_json_write(folder/"host_result.json",result)
+    return result
 
 def parse_bounded(source, paper_id, directory, seconds):
     folder = Path(directory); folder.mkdir(parents=True, exist_ok=True)
@@ -66,14 +123,14 @@ def parse_bounded(source, paper_id, directory, seconds):
     try:
         stdout, stderr = process.communicate(timeout=seconds)
     except subprocess.TimeoutExpired:
-        process.kill()
+        terminate_owned(process)
         stdout, stderr = process.communicate()
         atomic_json_write(folder / "parser_completion.json", {"state": "timeout",
             "elapsed_seconds": time.monotonic()-started, "exit_code": process.returncode})
         return None, "parser_timeout"
     finally:
         if process.poll() is None:
-            process.kill(); process.wait()
+            terminate_owned(process)
     record = {"state": "complete" if process.returncode == 0 else "error",
               "elapsed_seconds": time.monotonic()-started, "exit_code": process.returncode,
               "stderr": stderr.decode("utf-8", errors="replace")}

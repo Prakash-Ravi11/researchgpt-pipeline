@@ -165,4 +165,7 @@ def build_table_facts(document):
                 previous=cell_decisions.get(item["id"])
                 if previous and previous[0]=="unresolved":
                     cell_decisions[item["id"]]=("processed","source_supported_experimental_setting",[fact["id"]])
+    for packet in packets:
+        packet["measurement_ids"]=[i for i in packet["measurement_ids"] if cell_decisions[i][0]=="unresolved"]
+    packets=[p for p in packets if p["measurement_ids"]]
     return facts, cell_decisions, packets

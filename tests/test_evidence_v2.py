@@ -262,3 +262,57 @@ def test_evaluation_cannot_promote_unreviewed_labels_or_slow_latency():
     assert gates["gates"]["accepted_tuple_precision"]["verdict"]=="FAIL"
     assert gates["gates"]["uncached_p95"]["verdict"]=="FAIL"
     assert not gates["eligible_for_promotion"]
+
+def test_outcome_priority_preserves_unselected_numeric_candidates(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    from src.evidence.v2 import semantic
+    import src.evidence.prose_attribution.extractor as old
+    chosen=[]
+    monkeypatch.setattr(semantic,"local_tokenizer",lambda _:SimpleNamespace(encode=lambda _:[]))
+    def fake_extract(source,*args,**kwargs):
+        chosen.append(source.document_id)
+        return {"accepted_claims":[]}
+    monkeypatch.setattr(old,"extract_document",fake_extract)
+    units=[{"id":"author","type":"paragraph","raw_text":"Author affiliation 7.","token_ids":[],
+            "page":1,"bbox":None},
+           {"id":"result","type":"paragraph","raw_text":"The method improved Dice to 81.9%.","token_ids":[],
+            "page":2,"bbox":None}]
+    d={"paper_id":"p","source_sha256":"a"*64,"units":units,"candidates":[
+        {"id":"n1","unit_id":"author","kind":"numeric","table_id":None},
+        {"id":"n2","unit_id":"result","kind":"numeric","table_id":None},
+        {"id":"q2","unit_id":"result","kind":"qualitative","table_id":None,"outcome_signal":True}]}
+    before=json.loads(json.dumps(d))
+    semantic.resolve_prose(d,tmp_path,config=Config(enabled=True,local_model_enabled=True),
+        model={"base_url":"http://localhost:11434","model":"qwen2.5:7b","tokenizer_path":str(tmp_path)},
+        deadline=time.monotonic()+10)
+    assert chosen[0]=="p:1" and set(chosen)=={"p:0","p:1"} and d==before
+
+
+def test_host_checkpoint_precedes_model_failure(tmp_path,monkeypatch):
+    from src.evidence.v2 import semantic
+    d=table_document([["Method","Dice (%)"],["Alpha","81.9"]])
+    def fail(*args,**kwargs):
+        raise RuntimeError("transport unavailable")
+    monkeypatch.setattr(semantic,"resolve_packets",fail)
+    with pytest.raises(RuntimeError):
+        interpret(d,tmp_path)
+    checkpoint=json.loads((tmp_path/"partial_checkpoint.json").read_text(encoding="utf-8"))
+    facts=[json.loads(line) for line in (tmp_path/"facts_before_model.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert checkpoint["state"]=="model_pending" and len(facts)==1
+    assert not checkpoint["semantic_complete"] and not (tmp_path/"result.json").exists()
+
+def test_owned_process_tree_cancellation_stops_redirected_interpreter(tmp_path):
+    import subprocess,sys
+    from src.evidence.v2.runtime import terminate_owned
+    marker=tmp_path/"late.txt"
+    child=subprocess.Popen([sys.executable,"-B","-c",
+        "import pathlib,sys,time;time.sleep(1);pathlib.Path(sys.argv[1]).write_text('late')",str(marker)],
+        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    terminate_owned(child)
+    child.communicate()
+    time.sleep(1.2)
+    assert child.poll() is not None and not marker.exists()
+
+
+def test_r2_still_rejects_negative_uncertainty():
+    assert range_problem("r2",parse_measurement("-150 +/- -2"))=="negative_uncertainty"
