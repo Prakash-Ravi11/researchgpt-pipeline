@@ -1,5 +1,5 @@
 """Experimental scientific extraction; never enabled by import."""
-SOURCE_VERSION = "scientific-source-v1"
+SOURCE_VERSION = "scientific-source-v2"
 POLICY_VERSION = "scientific-acceptance-v1"
 SCHEMA_VERSION = "scientific-relations-v1"
 PROMPT_VERSION = "scientific-relations-v1"

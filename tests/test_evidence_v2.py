@@ -316,3 +316,22 @@ def test_owned_process_tree_cancellation_stops_redirected_interpreter(tmp_path):
 
 def test_r2_still_rejects_negative_uncertainty():
     assert range_problem("r2",parse_measurement("-150 +/- -2"))=="negative_uncertainty"
+
+def test_roman_caption_and_explicit_continued_table_keep_source_scope(tmp_path):
+    import pymupdf
+    from src.evidence.v2.inventory import inventory_pdf
+    pdf=pymupdf.open()
+    for caption,score in [("TABLE IV. Reported held-out results.","81.9"),("TABLE IV (continued). Reported held-out results.","82.1")]:
+        page=pdf.new_page();page.insert_text((50,60),caption)
+        xs=[50,200,300];ys=[80,110,140]
+        for x in xs:page.draw_line((x,80),(x,140))
+        for y in ys:page.draw_line((50,y),(300,y))
+        for r,row in enumerate([["Method","Dice (%)"],["Alpha",score]]):
+            for c,text in enumerate(row):page.insert_text((xs[c]+5,ys[r]+20),text)
+    path=tmp_path/"continued.pdf";pdf.save(path);pdf.close()
+    document=inventory_pdf(path,"p")
+    assert len(document["tables"])==2
+    first,second=document["tables"]
+    assert second["continuation_of"]==first["id"] and first["caption"].startswith("TABLE IV.")
+    facts=build_table_facts(document)[0]
+    assert len(facts)==2 and all("held-out" in f["caption"] for f in facts)

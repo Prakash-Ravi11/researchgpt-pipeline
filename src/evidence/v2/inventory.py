@@ -87,7 +87,7 @@ def inventory_pdf(path, paper_id):
                     horizontal=overlap/max(1,min(b[2]-b[0],table.bbox[2]-table.bbox[0]))
                     return horizontal>=.5 and ((b[3]<=table.bbox[1] and table.bbox[1]-b[3]<=100)
                         or (b[1]>=table.bbox[3] and b[1]-table.bbox[3]<=70))
-                nearby=[b for b in blocks if adjacent_caption(b) and re.match(r"\s*Table\s+\d+",b[4],re.I)]
+                nearby=[b for b in blocks if adjacent_caption(b) and re.match(r"\s*Table\s+(?:\d+|[IVXLCDM]+)\b",b[4],re.I)]
                 caption=nearby[0] if len(nearby)==1 else None
                 cap = unit(f"p{pno}:t{ti}:caption", caption[4] if caption else "", pno,
                            list(caption[:4]) if caption else None, "caption")
@@ -103,10 +103,10 @@ def inventory_pdf(path, paper_id):
                 signature = [c["raw_text"] for c in cells if c["row"] == 0]
                 continued = None
                 if re.search(r"continu", cap["raw_text"], re.I):
-                    label = re.match(r"\s*Table\s+(\d+)", cap["raw_text"], re.I)
+                    label = re.match(r"\s*Table\s+(\d+|[IVXLCDM]+)\b", cap["raw_text"], re.I)
                     for prev in reversed(tables):
-                        previous_label = re.match(r"\s*Table\s+(\d+)", prev["caption"], re.I)
-                        if label and previous_label and label[1] == previous_label[1] and prev["header_signature"] == signature:
+                        previous_label = re.match(r"\s*Table\s+(\d+|[IVXLCDM]+)\b", prev["caption"], re.I)
+                        if label and previous_label and label[1].upper() == previous_label[1].upper() and prev["header_signature"] == signature:
                             continued = prev["id"]; break
                 slots=[]
                 for ri, gridrow in enumerate(table.rows):
