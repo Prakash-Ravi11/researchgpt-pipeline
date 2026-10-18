@@ -335,3 +335,60 @@ def test_roman_caption_and_explicit_continued_table_keep_source_scope(tmp_path):
     assert second["continuation_of"]==first["id"] and first["caption"].startswith("TABLE IV.")
     facts=build_table_facts(document)[0]
     assert len(facts)==2 and all("held-out" in f["caption"] for f in facts)
+
+
+@pytest.fixture
+def interrupted_sidecar(tmp_path,monkeypatch):
+    import hashlib
+    from src.evidence.v2 import runner,semantic
+    from src.evidence.monitor import atomic_json_write
+    source=tmp_path/"source.pdf";source.write_bytes(b"recorded source fixture")
+    sha=hashlib.sha256(source.read_bytes()).hexdigest()
+    document=table_document([["Method","Dice (%)"],["Alpha","81.9"]])
+    document["source_sha256"]=sha
+    for unit in document["units"]:unit["source_sha256"]=sha
+    def parsed(source,paper_id,folder,seconds):
+        atomic_json_write(folder/"parsed.json",document)
+        return document,None
+    def unavailable(*args,**kwargs):raise RuntimeError("transport unavailable")
+    monkeypatch.setattr(runner,"parse_bounded",parsed)
+    monkeypatch.setattr(semantic,"resolve_packets",unavailable)
+    store=tmp_path/"sidecars";folder=store/identity({"paper_id":"p"})
+    with pytest.raises(RuntimeError,match="transport unavailable"):
+        extract(source,"p",folder,config=Config(enabled=True))
+    return store,folder,sha
+
+
+def test_opt_in_api_recovers_host_facts_after_model_interruption(tmp_path,interrupted_sidecar):
+    from src.api.data import load_corpus
+    store,folder,sha=interrupted_sidecar
+    raw=tmp_path/"raw";processed=tmp_path/"processed";raw.mkdir();processed.mkdir()
+    (raw/"collected_papers.json").write_text(json.dumps([{"paperId":"p","document_sha256":sha}]))
+    (processed/"paper_summaries.json").write_text(json.dumps([{"paper_id":"p","results":"Legacy 999%"}]))
+    (processed/"clusters.json").write_text("{}")
+    cfg={"raw_metadata_dir":str(raw),"processed_dir":str(processed)}
+    assert load_corpus(cfg)["papers"]["p"]["results"]=="Legacy 999%"
+    before={str(p):p.read_bytes() for p in folder.rglob("*") if p.is_file()}
+    out=load_corpus({**cfg,"scientific_results_dir":str(store)})["papers"]["p"]
+    assert len(out["scientific_facts"])==1 and out["quantitative_results"][0]["value"]=="81.9"
+    assert out["scientific_extraction"]["state"]=="partial"
+    assert not out["scientific_extraction"]["coverage"]["processing_complete"]
+    assert "999%" not in out["results"]
+    assert before=={str(p):p.read_bytes() for p in folder.rglob("*") if p.is_file()}
+    assert not (folder/"result.json").exists()
+
+
+@pytest.mark.parametrize("tamper",["measurement","subject","decisions","source","invalid_final"])
+def test_interrupted_checkpoint_rejects_changed_or_mismatched_evidence(interrupted_sidecar,tamper):
+    store,folder,sha=interrupted_sidecar
+    if tamper in {"measurement","subject"}:
+        p=folder/"facts_before_model.jsonl";facts=[json.loads(x) for x in p.read_text().splitlines()]
+        if tamper=="measurement":facts[0]["measurement"]["value"]="99"
+        else:facts[0]["subject"]="Another method"
+        p.write_text("\n".join(json.dumps(f) for f in facts)+"\n")
+    elif tamper=="decisions":(folder/"decisions_before_model.jsonl").write_text("")
+    elif tamper=="source":sha="b"*64
+    else:(folder/"result.json").write_text("{}")
+    out=project_from_store({"paper_id":"p","results":"Legacy 999%"},{"document_sha256":sha},store)
+    assert out["scientific_facts"]==[] and out["scientific_extraction"]["state"]=="deferred"
+    assert out["scientific_extraction"]["reason"]=="scientific_sidecar_identity_or_integrity_failure"
