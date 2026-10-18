@@ -1,0 +1,183 @@
+{
+  "status": "experimental_disabled_not_eligible_for_promotion",
+  "BASELINE_SHA": "18af9febca88e122b05f6baef7ecbca0068eca4d",
+  "IMPLEMENTATION_START_SHA": "ac1202d52fa9db53f1b7abfa621a70d32d808514",
+  "controlled_model_run_SHA": "97da982afc3ba9c44398ea4e83d3f082739c239e",
+  "checkpoint_reader_SHA": "1aa3e80524cdcc0d154a06384d25dd108ecd0f61",
+  "default_enabled": false,
+  "branch": "phase-12-new-implementation",
+  "controlled_run": {
+    "completed_unique_arms": 60,
+    "timing": {
+      "baseline": {
+        "runs": 30,
+        "p50_seconds": 33.44550000000163,
+        "p95_seconds": 34.617349999962606,
+        "max_seconds": 36.51600000000326,
+        "timeouts": 0,
+        "partial": 26
+      },
+      "current": {
+        "runs": 30,
+        "p50_seconds": 120.65700000000652,
+        "p95_seconds": 120.759849999976,
+        "max_seconds": 120.84299999999348,
+        "timeouts": 29,
+        "partial": 30
+      }
+    },
+    "request_counts": {
+      "baseline": 30,
+      "current": 135
+    },
+    "completion_counts": {
+      "('baseline', 'no_final_done_event')": 26,
+      "('current', 'no_final_done_event')": 87,
+      "('current', 'stop')": 48,
+      "('baseline', 'stop')": 4
+    },
+    "host_request_state_counts": {
+      "('baseline', 'no_host_result_artifact')": 30,
+      "('current', 'request_hard_timeout')": 59,
+      "('current', 'host_recorded_response')": 48,
+      "('current', 'no_host_result_artifact')": 28
+    },
+    "known_token_counter_totals": {
+      "('current', 'prompt_eval_count')": 95594,
+      "('current', 'eval_count')": 14113,
+      "('baseline', 'prompt_eval_count')": 8047,
+      "('baseline', 'eval_count')": 1497
+    },
+    "requests_missing_token_counters": {
+      "('baseline', 'prompt_eval_count')": 26,
+      "('baseline', 'eval_count')": 26,
+      "('current', 'prompt_eval_count')": 87,
+      "('current', 'eval_count')": 87
+    },
+    "memory": {
+      "process_peak_working_set_bytes": {
+        "baseline": 206585856,
+        "current": 182468608
+      },
+      "measured_worker_count": {
+        "baseline": 30,
+        "current": 1
+      },
+      "scope": "Worker counters only where measured; model service/GPU peak and killed-worker peak are unavailable"
+    },
+    "model_settings_match_all_recorded_requests": true
+  },
+  "source_inventory": {
+    "candidate_breakdown": {
+      "non_table_visual": 1248,
+      "non_table_qualitative": 11233,
+      "non_table_numeric": 26436,
+      "table_numeric": 2463
+    },
+    "pages": {
+      "total": 570,
+      "status_inventoried": 570,
+      "table_status_None": 570
+    },
+    "tables": {
+      "total": 133,
+      "status_inventoried": 122,
+      "status_unresolved": 11
+    },
+    "scope": "Actual source-v2 inventories from all 30 controlled arms; no accuracy inference"
+  },
+  "saved_checkpoint_replay": {
+    "scope": "saved_host_checkpoint_to_API_projection_only",
+    "model_requests": 0,
+    "frozen_run_unchanged": true,
+    "frozen_files_checked": 2617,
+    "before_numeric_records": 0,
+    "after_numeric_records": 56,
+    "before_qualitative_quotations": 32,
+    "after_qualitative_quotations": 236,
+    "before_structurally_complete_exact_tuples": 0,
+    "after_structurally_complete_exact_tuples": 0,
+    "exact_tuple_fields": [
+      "source_sha256",
+      "subject",
+      "metric",
+      "measurement",
+      "experimental_scope",
+      "measurement_origin",
+      "modality"
+    ],
+    "independently_correct_tuple_recovery": "NOT MEASURED",
+    "timing": {
+      "runs": 30,
+      "p50_seconds": 0.1879999999946449,
+      "p95_seconds": 0.44890000000596025,
+      "max_seconds": 0.5,
+      "timeouts": 0,
+      "partial": 30
+    }
+  },
+  "regression": {
+    "combined_interim_passed": 220,
+    "latest_focused_passed": 45,
+    "existing_checks_in_combined_run": 184,
+    "known_baseline_failures": []
+  },
+  "saved_october_claim_preservation": {
+    "before": 21,
+    "after": 21,
+    "all_fields_preserved": true,
+    "scope": "adapter and serialization preservation; zero inference; not independent correctness"
+  },
+  "preparatory_actual_request_artifacts": {
+    "calibration-model": 2,
+    "paired-model-final": 1,
+    "failed-relative-output-artifacts": 1,
+    "paired-model-verified": 5,
+    "paired-corpus-model": 12
+  },
+  "gates": {
+    "accepted_tuple_precision_95_or_baseline": "NOT MEASURED",
+    "exact_tuple_recall_80_or_baseline": "NOT MEASURED",
+    "preserve_all_independently_correct_baseline_facts": "NOT MEASURED",
+    "zero_accepted_wrong_cell_metric_study_in_executed_regression_fixtures": "PASS",
+    "enumerated_candidate_accounting": "PASS",
+    "processing_and_semantic_completeness": "FAIL",
+    "uncached_full_stack_p50_at_equal_correct_coverage": "NOT MEASURED",
+    "uncached_full_stack_p95_at_equal_correct_coverage": "NOT MEASURED",
+    "measured_pdf_to_output_no_slowdown": "FAIL",
+    "independently_reviewed_18_target_17_interpreted_and_15_correct": "NOT MEASURED",
+    "visual_repair_correctness_gain": "NOT MEASURED",
+    "local_default_processing_and_disabled_feature": "PASS",
+    "bounded_request_and_process_cancellation_regressions": "PASS",
+    "cold_model_loading_and_cache_hit_benchmark": "NOT MEASURED",
+    "full_model_service_gpu_memory_and_no_oom_gate": "NOT MEASURED",
+    "production_and_input_preservation": "PASS"
+  },
+  "eligible_for_promotion": false,
+  "remaining_gaps": [
+    "Independent accuracy labels unavailable",
+    "29/30 v2 document timeouts and all 30 partial",
+    "Typed dataset/split/comparator and measurement-origin coverage incomplete",
+    "Scientific prose uncertainty/schema coverage incomplete",
+    "OCR/visual repair and structured XML/LaTeX integration not demonstrated",
+    "Full production acquisition/index/retrieval/browser timing not measured",
+    "Killed-worker/model-service/GPU peak memory not measured"
+  ],
+  "local_artifacts": "../../.run/evidence_v2/phase12",
+  "artifact_privacy": "Raw requests, responses, PDFs, labels, quotations and detailed before/after records remain ignored local files",
+  "preservation": {
+    "passed": true,
+    "hash_checks": 6606,
+    "copied_input_records": 3023,
+    "pdf_records": 30,
+    "frozen_code_files": 500,
+    "mismatches": [],
+    "extra_frozen_files": [],
+    "dependency_drift": [],
+    "original_tracked_and_index_clean": true,
+    "production_feature_enabled": false,
+    "controlled_files_rechecked": 2617,
+    "changed_controlled_files": [],
+    "initial_audit_comparator_error": "439 CRLF archive members falsely differed from LF Git blob hashes; exact canonical archive comparison confirmed all 500 unchanged; original audit retained"
+  }
+}
