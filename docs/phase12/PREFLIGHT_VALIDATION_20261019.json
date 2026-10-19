@@ -1,0 +1,185 @@
+{
+  "status": "experimental_disabled_not_promotable",
+  "date": "2026-10-19",
+  "before_SHA": "e6ecdcce3fc5f76131040ab89cf433afa12fddc2",
+  "implementation_SHA": "bcee259fb094be8c8b0c86320fcc45c134120285",
+  "scope": "uncached_v2_PDF_to_API_projection_before_after_preflight",
+  "selected_controls": [
+    "P002",
+    "P003",
+    "P010"
+  ],
+  "timing": {
+    "before": {
+      "runs": 3,
+      "p50_seconds": 121.17200000002049,
+      "p95_seconds": 121.5094999999681,
+      "max_seconds": 121.54699999996228,
+      "timeouts": 3,
+      "partial": 3
+    },
+    "after": {
+      "runs": 3,
+      "p50_seconds": 7.3439999999827705,
+      "p95_seconds": 13.755599999992409,
+      "max_seconds": 14.46799999999348,
+      "timeouts": 0,
+      "partial": 3
+    }
+  },
+  "request_attempts": {
+    "before": 12,
+    "after": 0
+  },
+  "request_evidence_counts": {
+    "('before', 'host_request_timeout')": 9,
+    "('before', 'request_attempts')": 12,
+    "('before', 'requests_without_raw_stream_file')": 12,
+    "('before', 'successful_raw_stop')": 0,
+    "('before', 'requests_with_unknown_prompt_eval_count')": 12,
+    "('before', 'requests_with_unknown_eval_count')": 12,
+    "('before', 'no_host_result_after_document_interrupt')": 3
+  },
+  "known_token_totals": {},
+  "timing_by_initial_model_residency": {
+    "before": {
+      "resident": {
+        "runs": 1,
+        "p50_seconds": 121.04700000002049,
+        "p95_seconds": 121.04700000002049,
+        "max_seconds": 121.04700000002049,
+        "timeouts": 1,
+        "partial": 0
+      },
+      "not_resident": {
+        "runs": 2,
+        "p50_seconds": 121.35949999999139,
+        "p95_seconds": 121.5282499999652,
+        "max_seconds": 121.54699999996228,
+        "timeouts": 2,
+        "partial": 0
+      }
+    },
+    "after": {
+      "resident": {
+        "runs": 1,
+        "p50_seconds": 4.51600000000326,
+        "p95_seconds": 4.51600000000326,
+        "max_seconds": 4.51600000000326,
+        "timeouts": 0,
+        "partial": 0
+      },
+      "not_resident": {
+        "runs": 2,
+        "p50_seconds": 10.905999999988126,
+        "p95_seconds": 14.111799999992945,
+        "max_seconds": 14.46799999999348,
+        "timeouts": 0,
+        "partial": 0
+      }
+    }
+  },
+  "totals": {
+    "before": {
+      "numeric_records": 24,
+      "qualitative_quotations": 46,
+      "structurally_complete_exact_tuples": 0
+    },
+    "after": {
+      "numeric_records": 24,
+      "qualitative_quotations": 46,
+      "structurally_complete_exact_tuples": 0
+    }
+  },
+  "preservation": [
+    {
+      "paper_id": "P002",
+      "facts_before": 32,
+      "facts_after": 32,
+      "all_before_facts_preserved": true,
+      "new_fact_ids": [],
+      "candidate_denominator_unchanged": true
+    },
+    {
+      "paper_id": "P003",
+      "facts_before": 24,
+      "facts_after": 24,
+      "all_before_facts_preserved": true,
+      "new_fact_ids": [],
+      "candidate_denominator_unchanged": true
+    },
+    {
+      "paper_id": "P010",
+      "facts_before": 14,
+      "facts_after": 14,
+      "all_before_facts_preserved": true,
+      "new_fact_ids": [],
+      "candidate_denominator_unchanged": true
+    }
+  ],
+  "candidate_accounting": {
+    "before": {
+      "candidates": 3416,
+      "accounted": 3416,
+      "processed": 74,
+      "deferred": 3342
+    },
+    "after": {
+      "candidates": 3416,
+      "accounted": 3416,
+      "processed": 74,
+      "deferred": 3342
+    }
+  },
+  "new_numeric_facts": 0,
+  "new_complete_exact_tuples": 0,
+  "independent_correct_tuple_recovery": "NOT MEASURED",
+  "regression": {
+    "combined_tests": 233,
+    "failures_and_errors": 0,
+    "seconds": 193.6,
+    "focused_tests": 49,
+    "focused_seconds": 22.84
+  },
+  "accepted_october_records": {
+    "count": 21,
+    "all_retained_by_preflight": true,
+    "all_adapter_outputs_unchanged": true,
+    "new_model_requests": 0
+  },
+  "input_preservation": {
+    "passed": true,
+    "hash_checks": 6606,
+    "copied_input_records": 3023,
+    "pdf_records": 30,
+    "frozen_code_files": 500,
+    "dependency_drift": [],
+    "original_tracked_and_index_clean": true,
+    "production_feature_enabled": false,
+    "controlled_files_rechecked": 2617,
+    "changed_controlled_files": []
+  },
+  "before_code_snapshot_files_unchanged": 528,
+  "new_control_files_preserved": 232,
+  "gates": {
+    "preflight_control_fact_and_denominator_preservation": "PASS",
+    "three_control_return_deadlines": "PASS",
+    "processing_and_semantic_completeness": "FAIL",
+    "independent_precision": "NOT MEASURED",
+    "independent_exact_tuple_recall": "NOT MEASURED",
+    "equal_correct_coverage_full_stack_latency": "NOT MEASURED",
+    "updated_30_paper_performance": "NOT MEASURED",
+    "eligible_for_promotion": false
+  },
+  "limitations": [
+    "Only three preselected controls, one run per arm",
+    "All three outputs remain partial",
+    "Prior 12 requests have no recorded raw response stream; both token counters unknown for all 12",
+    "No new numeric facts or complete tuples",
+    "Current scientific prose relationship coverage remains insufficient",
+    "The service-side cause of missing response streams is unresolved",
+    "Full-stack timing and independent labels remain unavailable"
+  ],
+  "local_artifacts": ".run/evidence_v2/phase12/resume-20261019",
+  "raw_artifacts_not_uploaded": true
+}

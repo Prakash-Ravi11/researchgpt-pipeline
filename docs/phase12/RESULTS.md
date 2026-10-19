@@ -1,5 +1,8 @@
 # Phase 12 implementation and measured limits
 
+The [19 October preflight continuation](PREFLIGHT_RESULTS_20261019.md) records a subsequent
+bounded correction. The original 30-paper measurements below remain frozen.
+
 Phase 12 remains experimental and disabled by default. Implementation and the
 controlled evaluation are recorded; reliable scientific extraction is not established.
 No promotion, merge, deployment, global package upgrade, model replacement or paid API was used.
