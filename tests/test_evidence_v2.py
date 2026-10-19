@@ -269,6 +269,7 @@ def test_outcome_priority_preserves_unselected_numeric_candidates(tmp_path,monke
     import src.evidence.prose_attribution.extractor as old
     chosen=[]
     monkeypatch.setattr(semantic,"local_tokenizer",lambda _:SimpleNamespace(encode=lambda _:[]))
+    monkeypatch.setattr(semantic,"prose_preflight",lambda _:{"can_propose":True})
     def fake_extract(source,*args,**kwargs):
         chosen.append(source.document_id)
         return {"accepted_claims":[]}
@@ -392,3 +393,68 @@ def test_interrupted_checkpoint_rejects_changed_or_mismatched_evidence(interrupt
     out=project_from_store({"paper_id":"p","results":"Legacy 999%"},{"document_sha256":sha},store)
     assert out["scientific_facts"]==[] and out["scientific_extraction"]["state"]=="deferred"
     assert out["scientific_extraction"]["reason"]=="scientific_sidecar_identity_or_integrity_failure"
+
+
+
+def test_preflight_preserves_supported_original_prose_ownership():
+    from src.evidence.prose_attribution.source import SourceDocument
+    from src.evidence.v2.preflight import prose_preflight
+    source=SourceDocument.from_text("p","A farm used DeltaDrip's irrigation system. The farm reduced water use by 17%.")
+    assert prose_preflight(source)["can_propose"]
+
+
+def test_prose_without_current_host_witness_is_deferred_without_model_or_tokenizer(tmp_path,monkeypatch):
+    from src.evidence.v2 import semantic
+    def forbidden(*args,**kwargs):raise AssertionError("No admissible host relationship; no model or tokenizer work")
+    monkeypatch.setattr(semantic,"run_request",forbidden)
+    monkeypatch.setattr(semantic,"local_tokenizer",forbidden)
+    text="The method achieved Dice of 0.91."
+    document={"paper_id":"p","source_sha256":"a"*64,"units":[{"id":"u","type":"paragraph",
+        "raw_text":text,"token_ids":[],"page":1,"bbox":None}],"candidates":[
+        {"id":"n","unit_id":"u","kind":"numeric","table_id":None}]}
+    before=deepcopy(document)
+    facts,requests,errors=semantic.resolve_prose(document,tmp_path,config=Config(enabled=True,local_model_enabled=True),
+        model={"base_url":"http://localhost:11434","model":"qwen2.5:7b","tokenizer_path":str(tmp_path)},deadline=time.monotonic()+10)
+    assert not facts and not requests and document==before
+    row=json.loads((tmp_path/"preflight.jsonl").read_text().splitlines()[0])
+    assert row["state"]=="deferred" and row["candidate_denominator_retained"]
+    assert errors==["current_prose_validator_has_no_supported_ownership_witness"]
+
+
+def test_invalid_table_relationship_is_deferred_without_model(tmp_path,monkeypatch):
+    from src.evidence.v2 import semantic
+    def forbidden(*args,**kwargs):raise AssertionError("Impossible table proposal must not invoke a model")
+    monkeypatch.setattr(semantic,"run_request",forbidden)
+    monkeypatch.setattr(semantic,"local_tokenizer",forbidden)
+    document=table_document([["Unidentified axis","Dice (%)"],["Alpha","81.9"]])
+    packets=build_table_facts(document)[2];before=deepcopy(document)
+    facts,requests,errors=semantic.resolve_packets(document,packets,tmp_path,config=Config(enabled=True,local_model_enabled=True),
+        model={"base_url":"http://localhost:11434","model":"qwen2.5:7b","tokenizer_path":str(tmp_path)},deadline=time.monotonic()+10)
+    assert not facts and not requests and document==before
+    assert errors==["current_host_table_rules_require_source_or_structure_repair"]
+    row=json.loads((tmp_path/"preflight.jsonl").read_text().splitlines()[0])
+    assert row["blocked"][0]["unit_id"]=="t:r1:c1" and row["candidate_denominator_retained"]
+
+
+def test_admissible_table_proposal_still_runs_and_preserves_spans(tmp_path,monkeypatch):
+    from types import SimpleNamespace
+    from src.evidence.v2 import semantic
+    document=table_document([["Method","Dice (%)"],["Alpha","81.9"]])
+    table=document["tables"][0];value=next(u for u in document["units"] if u["id"]=="t:r1:c1")
+    expected=relation_for_cell(table,[u for u in document["units"] if u["type"]=="table_cell"],value)[0]
+    proposal={k:expected[k] for k in ["measurement_id","subject_id","metric_id","scope_ids","ownership_ids"]}
+    captured=[]
+    def transport(request,folder,seconds):
+        captured.append(json.loads(request["user_content"]))
+        folder.mkdir(parents=True)
+        content=json.dumps({"proposals":[proposal]})
+        (folder/"raw_response.ndjson").write_text(json.dumps({"message":{"content":content},"done":True,"done_reason":"stop"}))
+        return {"hard_timeout":False,"completion":{"done_reason":"stop"}}
+    monkeypatch.setattr(semantic,"run_request",transport)
+    monkeypatch.setattr(semantic,"local_tokenizer",lambda _:SimpleNamespace(encode=lambda _:[]))
+    packet={"id":"pending","table_id":"t","measurement_ids":[value["id"]],"evidence_ids":table["cell_ids"]+[table["caption_id"]]}
+    facts,requests,errors=semantic.resolve_packets(document,[packet],tmp_path,config=Config(enabled=True,local_model_enabled=True),
+        model={"base_url":"http://localhost:11434","model":"qwen2.5:7b","tokenizer_path":str(tmp_path)},deadline=time.monotonic()+10)
+    assert len(requests)==len(facts)==1 and not errors
+    assert facts==build_table_facts(document)[0]
+    assert all(u["row_span"]==1 and u["col_span"]==1 for u in captured[0]["evidence"] if u["type"]=="table_cell")

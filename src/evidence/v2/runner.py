@@ -120,9 +120,20 @@ def interpret(document, folder, *, config=Config(enabled=True), model=None, run_
                     o["start"]<=candidate["start"]<o["end"] for o in occurrences):
                 decision.update(state="processed",reason="source_supported_prose_relation",fact_ids=[fact["id"]])
     exhausted = time.monotonic() >= started + config.document_seconds
+    blocked_units={}
+    preflight=folder/"preflight.jsonl"
+    if preflight.is_file():
+        for line in preflight.read_text(encoding="utf-8").splitlines():
+            row=json.loads(line)
+            if row.get("state")!="deferred":continue
+            if row.get("target_unit_id"):blocked_units[row["target_unit_id"]]=row["reason"]
+            for item in row.get("blocked",[]):blocked_units[item["unit_id"]]=row["reason"]
+    by_candidate={c["id"]:c for c in document["candidates"]}
     for decision in decisions:
         if decision["state"] == "unresolved" and (exhausted or semantic_errors):
-            decision.update(state="deferred", reason="document_deadline" if exhausted else semantic_errors[0])
+            unit_id=by_candidate[decision["candidate_id"]]["unit_id"]
+            decision.update(state="deferred", reason=blocked_units.get(unit_id) or
+                            ("document_deadline" if exhausted else "semantic_work_incomplete"))
     counts = coverage(document, decisions)
     result = {"enabled": True, "policy_version": POLICY_VERSION, "run_id": run_id,
         "paper_id": document["paper_id"], "source_sha256": document["source_sha256"], "representation_id": document["representation_id"],

@@ -8,6 +8,7 @@ from . import PROMPT_VERSION, SCHEMA_VERSION
 from .runtime import append_event
 from .table_facts import validate_relation
 from .contracts import verify_document
+from .preflight import table_preflight, prose_preflight
 from .runtime import run_model_request as run_request
 
 @lru_cache(maxsize=2)
@@ -45,7 +46,7 @@ def resolve_packets(document, packets, folder, *, config, model, deadline):
     tokenizer_path = model.get("tokenizer_path")
     if not tokenizer_path or not Path(tokenizer_path).is_dir():
         return [], [], ["local_model_tokenizer_unavailable"]
-    tokenizer = local_tokenizer(str(tokenizer_path))
+    tokenizer = None
     evidence = verify_document(document)
     facts, requests, errors = [], [], []
     from .runner import strict_response
@@ -53,7 +54,14 @@ def resolve_packets(document, packets, folder, *, config, model, deadline):
         remaining = deadline-time.monotonic()
         if remaining <= 0 or len(requests) >= config.max_model_requests:
             errors.append("semantic_request_or_time_budget");break
-        units = [{k:evidence[i].get(k) for k in ("id","type","raw_text","page","bbox","row","col","rowspan","colspan")}
+        guard=table_preflight(document,packet)
+        if not guard["can_propose"]:
+            append_event(Path(folder)/"preflight.jsonl",{"packet_kind":"table","packet_id":packet["id"],
+                "state":"deferred","new_model_requests":0,"candidate_denominator_retained":True,**guard})
+            errors.append(guard["reason"])
+            continue
+        if tokenizer is None:tokenizer=local_tokenizer(str(tokenizer_path))
+        units = [{k:evidence[i].get(k) for k in ("id","type","raw_text","page","bbox","row","col","row_span","col_span")}
                  for i in packet["evidence_ids"]]
         content = json.dumps({"packet": packet, "evidence": units}, ensure_ascii=False)
         response_schema = schema(packet["evidence_ids"])
@@ -112,7 +120,7 @@ def resolve_prose(document, folder, *, config, model, deadline, request_offset=0
     path=model.get("tokenizer_path")
     if not path or not Path(path).is_dir():
         return [], [], ["local_model_tokenizer_unavailable"]
-    tokenizer=local_tokenizer(str(path))
+    tokenizer=None
     units=[u for u in document["units"] if u["type"]=="paragraph" and
            (not u["token_ids"] or len(u.get("table_token_ids",[]))<len(u["token_ids"]))]
     numeric_units={c["unit_id"] for c in document["candidates"] if c["kind"]=="numeric" and not c["table_id"]}
@@ -134,6 +142,14 @@ def resolve_prose(document, folder, *, config, model, deadline, request_offset=0
         text="\n\n".join(b["text"] for b in blocks)
         source=SourceDocument.from_text(document["paper_id"]+":"+str(position),text,blocks=blocks,
             metadata={"source_kind":"scientific_paper","original_source_sha256":document["source_sha256"]})
+        guard=prose_preflight(source)
+        if not guard["can_propose"]:
+            append_event(Path(folder)/"preflight.jsonl",{"packet_kind":"prose","packet_id":source.document_id,
+                "target_unit_id":unit["id"],"state":"deferred","new_model_requests":0,
+                "candidate_denominator_retained":True,**guard})
+            errors.append(guard["reason"])
+            continue
+        if tokenizer is None:tokenizer=local_tokenizer(str(path))
         def transport(request,directory,seconds):
             if request_offset+len(requests)>=config.max_model_requests:
                 raise RuntimeError("Shared request budget exhausted")
